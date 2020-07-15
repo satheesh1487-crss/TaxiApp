@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaxiAppsWebAPICore</name>
+    </assembly>
+    <members>
+        <member name="M:TaxiAppsWebAPICore.Controllers.RoleController.RoleList">
+            <summary>
+            Use to List Roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiAppsWebAPICore.Controllers.RoleController.RoleDetails(System.Int64)">
+            <summary>
+            Use to Get Role Details based on ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiAppsWebAPICore.Controllers.RoleController.AddRole(TaxiAppsWebAPICore.Roles)">
+            <summary>
+            Use to Add Roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiAppsWebAPICore.Controllers.RoleController.EditRole(System.Int64,TaxiAppsWebAPICore.Roles)">
+            <summary>
+            Use to Edit Role
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiAppsWebAPICore.Controllers.UserController.GetsuperAdminData">
+            <summary>
+            Use to display List of Admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiAppsWebAPICore.Controllers.ValuesController.Get">
+            <summary>
+            Use to List values
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiAppsWebAPICore.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+            Use to get Specific value details
+            </summary>
+            <param name="id">Mandatory</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
