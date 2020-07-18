@@ -38,5 +38,22 @@ namespace TaxiAppsWebAPICore.Controllers
             countryList.Add(new VehicleList() { Id = 8, Image = "sasa", IsActive = true, Name = "mini" });
             return this.OK<List<VehicleList>>(countryList);
         }
+
+        [HttpGet]
+        [Route("manageVehiclePrice")]
+        [Authorize]
+        public IActionResult ManageVehiclePrice()
+        {
+            List<ManageVehiclePriceList> countryList = new List<ManageVehiclePriceList>();
+            countryList.Add(new ManageVehiclePriceList() { Id = 1, Image = "sasa", IsActive = true, Name = "mini" });
+            countryList.Add(new ManageVehiclePriceList() { Id = 2, Image = "sasa", IsActive = true, Name = "Auto" });
+            countryList.Add(new ManageVehiclePriceList() { Id = 3, Image = "sasa", IsActive = true, Name = "Suv" });
+            countryList.Add(new ManageVehiclePriceList() { Id = 4, Image = "sasa", IsActive = true, Name = "mini" });
+            countryList.Add(new ManageVehiclePriceList() { Id = 5, Image = "sasa", IsActive = true, Name = "mini" });
+            countryList.Add(new ManageVehiclePriceList() { Id = 6, Image = "sasa", IsActive = true, Name = "Auto" });
+            countryList.Add(new ManageVehiclePriceList() { Id = 7, Image = "sasa", IsActive = true, Name = "Suv" });
+            countryList.Add(new ManageVehiclePriceList() { Id = 8, Image = "sasa", IsActive = true, Name = "mini" });
+            return this.OK<List<ManageVehiclePriceList>>(countryList);
+        }
     }
 }
