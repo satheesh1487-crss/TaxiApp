@@ -42,22 +42,38 @@ namespace TaxiAppsWebAPICore.Controllers
         //}
 
      [HttpGet]
-        [Route("GetUserData")]
+        [Route("UserList")]
         [Authorize]
-        public IActionResult GetUserData()
+        public IActionResult GetUserList()
         {
             List<UserListModel> adminLists = new List<UserListModel>();
-            adminLists.Add(new UserListModel() { UserID=1,Name="Ram Kumar",EMail="ram@gmail.com",phoneNo="+919994203132" });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Ram Kumar", EMail = "ram@gmail.com", phoneNo = "+919994203134" });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Satheesh Kumar", EMail = "satheesh@gmail.com", phoneNo = "+919994203135" });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Prakash Kumar", EMail = "prakash@gmail.com", phoneNo = "+919994203136" });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Kannan Kumar", EMail = "kannan@gmail.com", phoneNo = "+919994203137" });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Kumar", EMail = "sundar@gmail.com", phoneNo = "+919994203139" });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Ganesh", EMail = "sundar@gmail.com", phoneNo = "+919994203130" });
+            adminLists.Add(new UserListModel() { UserID=1,Name="Ram Kumar",EMail="ram@gmail.com",PhoneNo="+919994203132", IsActive = true });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Ram Kumar", EMail = "ram@gmail.com", PhoneNo = "+919994203134", IsActive = true });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Satheesh Kumar", EMail = "satheesh@gmail.com", PhoneNo = "+919994203135", IsActive = true });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Prakash Kumar", EMail = "prakash@gmail.com", PhoneNo = "+919994203136", IsActive = true });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Kannan Kumar", EMail = "kannan@gmail.com", PhoneNo = "+919994203137", IsActive = true });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Kumar", EMail = "sundar@gmail.com", PhoneNo = "+919994203139", IsActive = true });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Ganesh", EMail = "sundar@gmail.com", PhoneNo = "+919994203130", IsActive = false });
+            return this.OK<List<UserListModel>>(adminLists);
+        }
+
+        [HttpGet]
+        [Route("BlockedUserList")]
+        [Authorize]
+        public IActionResult GetBlockedUserList()
+        {
+            List<UserListModel> adminLists = new List<UserListModel>();
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Ram Kumar", EMail = "ram@gmail.com", PhoneNo = "+919994203132",IsActive = false });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Ram Kumar", EMail = "ram@gmail.com", PhoneNo = "+919994203134", IsActive = false });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Satheesh Kumar", EMail = "satheesh@gmail.com", PhoneNo = "+919994203135", IsActive = false });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Prakash Kumar", EMail = "prakash@gmail.com", PhoneNo = "+919994203136", IsActive = false });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Kannan Kumar", EMail = "kannan@gmail.com", PhoneNo = "+919994203137", IsActive = false });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Kumar", EMail = "sundar@gmail.com", PhoneNo = "+919994203139", IsActive = false });
+            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Ganesh", EMail = "sundar@gmail.com", PhoneNo = "+919994203130", IsActive = false });
             return this.OK<List<UserListModel>>(adminLists);
         }
         //[HttpGet("GetAdminData")]
-       
+
         //[Authorize(Policy = Policies.Admin)]
         //public IActionResult GetAdminData()
         //{

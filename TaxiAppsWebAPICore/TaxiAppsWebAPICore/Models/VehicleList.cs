@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace TaxiAppsWebAPICore.Models
 {
-    public class ManageVehiclePriceList
+    public class VehicleList
     {
         [JsonProperty("id")]
         public int Id { set; get; }

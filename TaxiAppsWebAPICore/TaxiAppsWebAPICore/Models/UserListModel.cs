@@ -13,8 +13,10 @@ namespace TaxiAppsWebAPICore.Models
         [JsonProperty("eMail")]
         public string EMail { get; set; }
         [JsonProperty("phoneNo")]
-        public string phoneNo { get; set; }
+        public string PhoneNo { get; set; }
         [JsonProperty("userId")]
-        public int UserID { get; set; } 
+        public int UserID { get; set; }
+        [JsonProperty("isActive")]
+        public bool IsActive { get; set; }
     }
 }
