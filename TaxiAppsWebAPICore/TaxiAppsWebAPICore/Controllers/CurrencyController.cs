@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -28,19 +28,27 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ListCurrency()
         {
-            List<CountryList> countryList = new List<CountryList>();
-            var countryData = _context.TabCountry.ToList();
-            foreach (var country in countryData)
-            {
-                countryList.Add(new CountryList()
-                {
-                    CountryId = country.CountryId,
-                    CountryCode = country.Code,
-                    CountryName = country.Name,
-                    MobileCode = country.DCode,
-                });
-            }
-            return this.OK<List<CountryList>>(countryList);
+
+            List<CurrencyList> currencylist = new List<CurrencyList>();
+            currencylist.Add(new CurrencyList() { CurrencyId = 1,   CurrencyName = "Australia", Symbol = "AUD", StandardName = "AUD", IsActive = true });
+            currencylist.Add(new CurrencyList() { CurrencyId = 2, CurrencyName = "USA", Symbol = "$", StandardName = "USD", IsActive = true });
+            currencylist.Add(new CurrencyList() { CurrencyId = 3, CurrencyName = "India", Symbol = "₹", StandardName = "INR", IsActive = true });
+            currencylist.Add(new CurrencyList() { CurrencyId = 4, CurrencyName = "Jordan Dinar", Symbol = "JOD", StandardName = "JOD", IsActive = true });
+            return this.OK<List<CurrencyList>>(currencylist);
+
+            //List<CountryList> countryList = new List<CountryList>();
+            //var countryData = _context.TabCountry.ToList();
+            //foreach (var country in countryData)
+            //{
+            //    countryList.Add(new CountryList()
+            //    {
+            //        CountryId = country.CountryId,
+            //        CountryCode = country.Code,
+            //        CountryName = country.Name,
+            //        MobileCode = country.DCode,
+            //    });
+            //}
+            //return this.OK<List<CountryList>>(countryList);
         }
 
         [HttpPost]

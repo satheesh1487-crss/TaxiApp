@@ -12,5 +12,13 @@ namespace TaxiAppsWebAPICore.Models
 
         [JsonProperty("currencyName")]
         public string CurrencyName { get; set; }
+
+        [JsonProperty("symbol")]
+        public string Symbol { get; set; }
+
+        [JsonProperty("standardName")]
+        public string StandardName { get; set; }
+        [JsonProperty("isActive")]
+        public bool IsActive { get; set; }
     }
 }
