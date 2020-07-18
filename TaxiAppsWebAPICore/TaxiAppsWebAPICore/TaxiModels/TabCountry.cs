@@ -11,6 +11,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public TabCountry()
         {
             TabAdmin = new HashSet<TabAdmin>();
+            TabAdminDetails = new HashSet<TabAdminDetails>();
         }
 
         [Key]
@@ -39,5 +40,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
 
         [InverseProperty("ZoneAccessNavigation")]
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }
+        [InverseProperty("Country")]
+        public virtual ICollection<TabAdminDetails> TabAdminDetails { get; set; }
     }
 }

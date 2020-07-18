@@ -110,7 +110,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public IList<AdminList> GetAdminList(TaxiAppzDBContext context)
+        public List<AdminList> GetAdminList(TaxiAppzDBContext context)
         {
             List<AdminList> adminLists = new List<AdminList>();
             var admindata = context.TabAdmin.Include(l => l.LanguageNavigation).Include(r => r.RoleNavigation).
@@ -122,7 +122,6 @@ namespace TaxiAppsWebAPICore
                     RegistrationCode = admin.RegistrationCode,
                     FirstName = admin.Firstname,
                     LastName = admin.Lastname,
-                    EmailID = admin.Email,
                     ContactNo = admin.PhoneNumber,
                     AreaName = admin.AreaName,
                     EmergencyContactNo = admin.EmergencyNumber,
@@ -139,7 +138,7 @@ namespace TaxiAppsWebAPICore
                         LongName = admin.LanguageNavigation.Name,
                         ShortName = admin.LanguageNavigation.ShortLang
                     },
-                    Countrys = new Country()
+                    Country = new Country()
                     {
                         CountryID = admin.ZoneAccessNavigation.CountryId,
                         TimeZone = admin.ZoneAccessNavigation.TimeZone
@@ -147,7 +146,52 @@ namespace TaxiAppsWebAPICore
 
                 });
             }       
-            return null;
+            return adminLists != null ? adminLists : null;
+        }
+
+        public AdminList GetAdminDetails(long roleid, TaxiAppzDBContext context)
+        {
+            AdminList admindetails = new AdminList();
+            var admindata = context.TabAdmin.Include(l => l.LanguageNavigation).Include(r => r.RoleNavigation).
+                Include(z => z.ZoneAccessNavigation).Where(i => i.Id == roleid).FirstOrDefault();
+           var admindtls = context.TabAdminDetails.Where(d => d.AdminId == roleid).FirstOrDefault();
+            admindetails.RegistrationCode = admindata.RegistrationCode;
+            admindetails.FirstName = admindata.Firstname;
+            admindetails.LastName = admindata.Lastname;
+           // admindetails.EmailID = admindata.Email;
+            admindetails.ContactNo = admindata.PhoneNumber;
+            admindetails.AreaName = admindata.AreaName;
+            admindetails.EmergencyContactNo = admindata.EmergencyNumber;
+            admindetails.IsActive = admindata.IsActive.ToString();
+            admindetails.Role = new Roles()
+            {
+                RoleID = admindata.RoleNavigation.Roleid,
+                RoleName = admindata.RoleNavigation.RoleName,
+                DisplayName = admindata.RoleNavigation.DisplayName
+            };
+            admindetails.Language = new Language()
+            {
+                LanguageID = admindata.LanguageNavigation.Languageid,
+                LongName = admindata.LanguageNavigation.Name,
+                ShortName = admindata.LanguageNavigation.ShortLang
+            };
+            admindetails.Country = new Country()
+            {
+                CountryID = admindata.ZoneAccessNavigation.CountryId,
+                TimeZone = admindata.ZoneAccessNavigation.TimeZone,
+                Name = admindata.ZoneAccessNavigation.Name
+            };
+            admindetails.AdminDetails = new AdminDetails()
+            {
+                Address = admindtls.Address,
+                City = admindtls.City,
+                PostalCode = admindtls.PostalCode,
+                DocumentName = admindtls.Document,
+                Document = admindtls.Document,
+                DriverDocumentCount = admindtls.DriverDocumentCount,
+                IsActive = admindtls.IsActive.ToString()
+            };
+            return admindetails != null ? admindetails : null;
         }
     }
 }

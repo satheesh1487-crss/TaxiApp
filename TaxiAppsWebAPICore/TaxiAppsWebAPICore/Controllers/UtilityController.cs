@@ -43,24 +43,24 @@ namespace TaxiAppsWebAPICore.Controllers
 
 
         //TODO:: Please add table name 
-        [HttpGet]
-        [Route("getCurrency")]
-        [Authorize]
-        public IActionResult GetCurrency()
-        {
-            List<CurrencyList> curList = new List<CurrencyList>();
-            var countryData = _context.Tab.ToList();
-            foreach (var currency in curList)
-            {
-                curList.Add(new CurrencyList()
-                {
-                    CurrencyId = currency.CurrencyId,
-                    CurrencyName = currency.CurrencyName
-                    
-                });
-            }
-            return this.OK<List<CurrencyList>>(curList);
-        }
+        //[HttpGet]
+        //[Route("getCurrency")]
+        //[Authorize]
+        //public IActionResult GetCurrency()
+        //{
+        //    List<CurrencyList> curList = new List<CurrencyList>();
+        //    var countryData = _context.t.ToList();
+        //    foreach (var currency in curList)
+        //    {
+        //        curList.Add(new CurrencyList()
+        //        {
+        //            CurrencyId = currency.CurrencyId,
+        //            CurrencyName = currency.CurrencyName
+
+        //        });
+        //    }
+        //    return this.OK<List<CurrencyList>>(curList);
+        //}
 
     }
 }

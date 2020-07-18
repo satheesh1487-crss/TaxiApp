@@ -10,6 +10,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
     {
         public TabAdmin()
         {
+            TabAdminDetails = new HashSet<TabAdminDetails>();
             TabRefreshtoken = new HashSet<TabRefreshtoken>();
         }
 
@@ -75,6 +76,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(ZoneAccess))]
         [InverseProperty(nameof(TabCountry.TabAdmin))]
         public virtual TabCountry ZoneAccessNavigation { get; set; }
+        [InverseProperty("Admin")]
+        public virtual ICollection<TabAdminDetails> TabAdminDetails { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<TabRefreshtoken> TabRefreshtoken { get; set; }
     }

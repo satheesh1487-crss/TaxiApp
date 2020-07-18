@@ -14,8 +14,8 @@ namespace TaxiAppsWebAPICore
         public string FirstName { get; set; }
         [JsonProperty("lastName")]
         public string LastName { get; set; }
-        [JsonProperty("emailID")]
-        public string EmailID { get; set; }
+        //[JsonProperty("emailID")]
+        //public string EmailID { get; set; }
         [JsonProperty("contactNo")]
         public string ContactNo { get; set; }
         //[JsonProperty("role")]
@@ -33,10 +33,12 @@ namespace TaxiAppsWebAPICore
         public string EmergencyContactNo { get; set; }
         // public long RoleID { get; set; }
         [JsonProperty("role")]
-        public  Roles Role { set; get; }
+        public Roles Role { set; get; }
         [JsonProperty("language")]
         public Language Language { set; get; }
         [JsonProperty("country")]
-        public Country Countrys { set; get; }
+        public Country Country { set; get; }
+        [JsonProperty("adminDetails")]
+        public AdminDetails AdminDetails { set; get; }
     }
 }

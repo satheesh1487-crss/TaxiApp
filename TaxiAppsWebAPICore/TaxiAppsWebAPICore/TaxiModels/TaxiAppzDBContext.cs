@@ -16,7 +16,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         }
 
         public virtual DbSet<TabAdmin> TabAdmin { get; set; }
+        public virtual DbSet<TabAdminDetails> TabAdminDetails { get; set; }
         public virtual DbSet<TabCommonLanguages> TabCommonLanguages { get; set; }
+        public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
@@ -27,7 +29,6 @@ namespace TaxiAppsWebAPICore.TaxiModels
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Name=TaxiAppzDB");
-                //optionsBuilder.UseLazyLoadingProxies();
             }
         }
 
@@ -53,12 +54,55 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("fk_tab_Country_id");
             });
 
+            modelBuilder.Entity<TabAdminDetails>(entity =>
+            {
+                entity.HasKey(e => e.Admindtlsid)
+                    .HasName("PK__tab_admi__052BF0DCF4AABBEF");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Admin)
+                    .WithMany(p => p.TabAdminDetails)
+                    .HasForeignKey(d => d.AdminId)
+                    .HasConstraintName("FK__tab_admin__admin__6383C8BA");
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.TabAdminDetails)
+                    .HasForeignKey(d => d.CountryId)
+                    .HasConstraintName("FK__tab_admin__Count__6477ECF3");
+            });
+
             modelBuilder.Entity<TabCommonLanguages>(entity =>
             {
                 entity.HasKey(e => e.Languageid)
                     .HasName("PK__tab_Comm__B93751832661A59F");
 
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+            });
+
+            modelBuilder.Entity<TabCountries>(entity =>
+            {
+                entity.Property(e => e.Active).HasDefaultValueSql("('1')");
+
+                entity.Property(e => e.CountryCode).HasDefaultValueSql("('')");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CurrencyDecimals).HasDefaultValueSql("('0')");
+
+                entity.Property(e => e.Iso31662).HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Iso31663).HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Name).HasDefaultValueSql("('')");
+
+                entity.Property(e => e.RegionCode).HasDefaultValueSql("('')");
+
+                entity.Property(e => e.SubRegionCode).HasDefaultValueSql("('')");
+
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<TabCountry>(entity =>
