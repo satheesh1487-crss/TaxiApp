@@ -63,5 +63,40 @@ namespace TaxiAppsWebAPICore.Controllers
             driverlist.Add(new Driver() { DriverId = 3, RegisterationCode = "00125", DriverName = "Dinesh", Amount = "JOD 23.00", BonusReason = "Demo", Phone = "9894996328", IsActive = false });
             return this.OK<List<Driver>>(driverlist);
         }
+
+        [HttpGet]
+        [Route("WalletList")]
+        [Authorize]
+        public IActionResult WalletList()
+        {
+            List<ManageWallet> wallet = new List<ManageWallet>();
+            wallet.Add(new ManageWallet() { WalletID = 1, RegisterationCode = "00123", Name = "Sundar", Rating = "5", Phone = "9894996328", Email = "sasi28it@gmail.com", IsActive = true });
+            wallet.Add(new ManageWallet() { WalletID = 2, RegisterationCode = "00124", Name = "Ganesh", Rating = "4.98", Phone = "9894996328", Email = "sasikumarnplus@gmail.com", IsActive = true });
+            wallet.Add(new ManageWallet() { WalletID = 3, RegisterationCode = "00125", Name = "Dinesh", Rating = "4.60", Phone = "9894996328", Email = "company@mail.com", IsActive = false });
+            return this.OK<List<ManageWallet>>(wallet);
+        }
+        
+        [HttpGet]
+        [Route("AccountPaymentList")]
+        [Authorize]
+        public IActionResult AccountPaymentList()
+        {
+            List<ManageAccountPayment> Accountpayment = new List<ManageAccountPayment>();
+            Accountpayment.Add(new ManageAccountPayment() { AccountID = 1, RegisterationCode = "00123", Name = "Sundar", Rating = "5", Phone = "9894996328", Email = "sasi28it@gmail.com", IsActive = true });
+            Accountpayment.Add(new ManageAccountPayment() { AccountID = 2, RegisterationCode = "00124", Name = "Ganesh", Rating = "4.98", Phone = "9894996328", Email = "sasikumarnplus@gmail.com", IsActive = true });
+            Accountpayment.Add(new ManageAccountPayment() { AccountID = 3, RegisterationCode = "00125", Name = "Dinesh", Rating = "4.60", Phone = "9894996328", Email = "company@mail.com", IsActive = false });
+            return this.OK<List<ManageAccountPayment>>(Accountpayment);
+        }
+        [HttpGet]
+        [Route("EarningPaymentList")]
+        [Authorize]
+        public IActionResult EarningPaymentList()
+        {
+            List<ManageEarningPayment> Earningpayment = new List<ManageEarningPayment>();
+            Earningpayment.Add(new ManageEarningPayment() { EarningID = 1, RegisterationCode = "00123", Name = "Sundar", Rating = "5", Phone = "9894996328", Email = "sasi28it@gmail.com", IsActive = true });
+            Earningpayment.Add(new ManageEarningPayment() { EarningID = 2, RegisterationCode = "00124", Name = "Ganesh", Rating = "4.98", Phone = "9894996328", Email = "sasikumarnplus@gmail.com", IsActive = true });
+            Earningpayment.Add(new ManageEarningPayment() { EarningID = 3, RegisterationCode = "00125", Name = "Dinesh", Rating = "4.60", Phone = "9894996328", Email = "company@mail.com", IsActive = false });
+            return this.OK<List<ManageEarningPayment>>(Earningpayment);
+        }
     }
 }
