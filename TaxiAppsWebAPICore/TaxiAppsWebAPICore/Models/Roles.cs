@@ -34,11 +34,11 @@ namespace TaxiAppsWebAPICore
     public class Language
     {
         private string isActive;
-        [JsonProperty("languageID")]
+        [JsonProperty("languageId")]
         public long LanguageID { get; set; }
-        [JsonProperty("shortName")]
+        [JsonProperty("languageshortname")]
         public string ShortName { get; set; }
-        [JsonProperty("longName")]
+        [JsonProperty("languageName")]
         public string LongName { get; set; }
       
         [JsonProperty("isActive")]

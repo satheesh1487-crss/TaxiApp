@@ -45,5 +45,25 @@ namespace TaxiAppsWebAPICore.Controllers
             DARoles dARoles = new DARoles();
             return this.OK<AdminList>(dARoles.GetAdminDetails(Adminid, _context));
         }
+        //[HttpPost]
+        //[Route("GetSuperAdminAdd")]
+        //[Authorize(Policy = "superAdmin")]
+        //public IActionResult GetSuperAdminAdd([FromBody] AdminList adminList)
+        //{
+        //    DARoles dARoles = new DARoles();
+        //    return this.OK<AdminList>(dARoles.GetAdminDetails(Adminid, _context));
+        //}
+        /// <summary>
+        /// Use to edit admin details 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("EditAdminDetails")]
+        [Authorize(Policy = "superAdmin")]
+        public IActionResult EditAdminDetails([FromBody] AdminList adminList)
+        {
+            DARoles dARoles = new DARoles();
+            return this.OK(dARoles.EditAdminDetails( _context,adminList));
+        }
     }
 }

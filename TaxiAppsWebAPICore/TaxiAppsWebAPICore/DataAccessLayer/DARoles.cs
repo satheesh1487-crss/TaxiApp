@@ -112,86 +112,148 @@ namespace TaxiAppsWebAPICore
 
         public List<AdminList> GetAdminList(TaxiAppzDBContext context)
         {
-            List<AdminList> adminLists = new List<AdminList>();
-            var admindata = context.TabAdmin.Include(l => l.LanguageNavigation).Include(r => r.RoleNavigation).
-                Include(z => z.ZoneAccessNavigation).ToList();
-            foreach (var admin in admindata)
+            try
             {
-                adminLists.Add(new AdminList()
+                List<AdminList> adminLists = new List<AdminList>();
+                var admindata = context.TabAdmin.Include(l => l.LanguageNavigation).Include(r => r.RoleNavigation).
+                    Include(z => z.ZoneAccessNavigation).ToList();
+                foreach (var admin in admindata)
                 {
-                    RegistrationCode = admin.RegistrationCode,
-                    FirstName = admin.Firstname,
-                    LastName = admin.Lastname,
-                    ContactNo = admin.PhoneNumber,
-                    AreaName = admin.AreaName,
-                    EmergencyContactNo = admin.EmergencyNumber,
-                    IsActive = admin.IsActive.ToString(),
-                    Role = new Roles()
+                    adminLists.Add(new AdminList()
                     {
-                        RoleID = admin.RoleNavigation.Roleid,
-                        RoleName = admin.RoleNavigation.RoleName,
-                        DisplayName = admin.RoleNavigation.DisplayName
-                    },
-                    Language = new Language()
-                    {
-                        LanguageID = admin.LanguageNavigation.Languageid,
-                        LongName = admin.LanguageNavigation.Name,
-                        ShortName = admin.LanguageNavigation.ShortLang
-                    },
-                    Country = new Country()
-                    {
-                        CountryID = admin.ZoneAccessNavigation.CountryId,
-                        TimeZone = admin.ZoneAccessNavigation.TimeZone
-                    }
+                        AdminID=admin.Id,
+                        RegistrationCode = admin.RegistrationCode,
+                        FirstName = admin.Firstname,
+                        LastName = admin.Lastname,
+                        ContactNo = admin.PhoneNumber,
+                        AreaName = admin.AreaName,
+                        EmergencyContactNo = admin.EmergencyNumber,
+                        IsActive = admin.IsActive.ToString(),
+                        Roles = new Roles()
+                        {
+                            RoleID = admin.RoleNavigation.Roleid,
+                            RoleName = admin.RoleNavigation.RoleName,
+                            DisplayName = admin.RoleNavigation.DisplayName
+                        },
+                        Language = new Language()
+                        {
+                            LanguageID = admin.LanguageNavigation.Languageid,
+                            LongName = admin.LanguageNavigation.Name,
+                            ShortName = admin.LanguageNavigation.ShortLang
+                        },
+                        Country = new Country()
+                        {
+                            CountryID = admin.ZoneAccessNavigation.CountryId,
+                            TimeZone = admin.ZoneAccessNavigation.TimeZone
+                        }
 
-                });
-            }       
-            return adminLists != null ? adminLists : null;
+                    });
+                }
+                return adminLists != null ? adminLists : null;
+            }
+            catch(Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "GetAdminList", context);
+                return null;
+
+            }
         }
 
         public AdminList GetAdminDetails(long roleid, TaxiAppzDBContext context)
         {
-            AdminList admindetails = new AdminList();
-            var admindata = context.TabAdmin.Include(l => l.LanguageNavigation).Include(r => r.RoleNavigation).
-                Include(z => z.ZoneAccessNavigation).Where(i => i.Id == roleid).FirstOrDefault();
-           var admindtls = context.TabAdminDetails.Where(d => d.AdminId == roleid).FirstOrDefault();
-            admindetails.RegistrationCode = admindata.RegistrationCode;
-            admindetails.FirstName = admindata.Firstname;
-            admindetails.LastName = admindata.Lastname;
-           // admindetails.EmailID = admindata.Email;
-            admindetails.ContactNo = admindata.PhoneNumber;
-            admindetails.AreaName = admindata.AreaName;
-            admindetails.EmergencyContactNo = admindata.EmergencyNumber;
-            admindetails.IsActive = admindata.IsActive.ToString();
-            admindetails.Role = new Roles()
+            try
             {
-                RoleID = admindata.RoleNavigation.Roleid,
-                RoleName = admindata.RoleNavigation.RoleName,
-                DisplayName = admindata.RoleNavigation.DisplayName
-            };
-            admindetails.Language = new Language()
+                AdminList admindetails = new AdminList();
+                var admindata = context.TabAdmin.Include(l => l.LanguageNavigation).Include(r => r.RoleNavigation).
+                    Include(z => z.ZoneAccessNavigation).Where(i => i.Id == roleid).FirstOrDefault();
+                var admindtls = context.TabAdminDetails.Where(d => d.AdminId == roleid).FirstOrDefault();
+                admindetails.RegistrationCode = admindata.RegistrationCode;
+                admindetails.FirstName = admindata.Firstname;
+                admindetails.LastName = admindata.Lastname;
+                // admindetails.EmailID = admindata.Email;
+                admindetails.ContactNo = admindata.PhoneNumber;
+                admindetails.AreaName = admindata.AreaName;
+                admindetails.EmergencyContactNo = admindata.EmergencyNumber;
+                admindetails.IsActive = admindata.IsActive.ToString();
+                admindetails.Roles = new Roles()
+                {
+                    RoleID = admindata.RoleNavigation.Roleid,
+                    RoleName = admindata.RoleNavigation.RoleName,
+                    DisplayName = admindata.RoleNavigation.DisplayName
+                };
+                admindetails.Language = new Language()
+                {
+                    LanguageID = admindata.LanguageNavigation.Languageid,
+                    LongName = admindata.LanguageNavigation.Name,
+                    ShortName = admindata.LanguageNavigation.ShortLang
+                };
+                admindetails.Country = new Country()
+                {
+                    CountryID = admindata.ZoneAccessNavigation.CountryId,
+                    TimeZone = admindata.ZoneAccessNavigation.TimeZone,
+                    Name = admindata.ZoneAccessNavigation.Name
+                };
+                admindetails.AdminDetails = new AdminDetails()
+                {
+                    Address = admindtls.Address,
+                    City = admindtls.City,
+                    PostalCode = admindtls.PostalCode,
+                    DocumentName = admindtls.Document,
+                    Document = admindtls.Document,
+                    DriverDocumentCount = admindtls.DriverDocumentCount,
+                    IsActive = admindtls.IsActive.ToString()
+                };
+                return admindetails != null ? admindetails : null;
+            }
+            catch(Exception ex)
             {
-                LanguageID = admindata.LanguageNavigation.Languageid,
-                LongName = admindata.LanguageNavigation.Name,
-                ShortName = admindata.LanguageNavigation.ShortLang
-            };
-            admindetails.Country = new Country()
+                Extention.insertlog(ex.Message, "Admin", "GetAdminDetails", context);
+                return null;
+            }
+        }
+
+        public bool EditAdminDetails(TaxiAppzDBContext context, AdminList adminList)
+        {
+            try
             {
-                CountryID = admindata.ZoneAccessNavigation.CountryId,
-                TimeZone = admindata.ZoneAccessNavigation.TimeZone,
-                Name = admindata.ZoneAccessNavigation.Name
-            };
-            admindetails.AdminDetails = new AdminDetails()
+
+                TabAdmin admin = new TabAdmin();
+                var fetchadmin = context.TabAdmin.Where(a => a.Id == adminList.AdminID).FirstOrDefault();
+                fetchadmin.Firstname = adminList.FirstName;
+                fetchadmin.Lastname = adminList.LastName;
+                //  admin.RegistrationCode = adminList.RegistrationCode;  // need to check for format with nPlus team
+                fetchadmin.Email = adminList.EmailID;
+                fetchadmin.PhoneNumber = adminList.ContactNo;
+                fetchadmin.EmergencyNumber = adminList.EmergencyContactNo;
+                fetchadmin.Language = Convert.ToInt32(adminList.Language.LanguageID); // need to pass only id
+                fetchadmin.ZoneAccess = Convert.ToInt32(adminList.Country.CountryID); // need to pass only id 
+                fetchadmin.Role = Convert.ToInt32(adminList.Role);
+                //  admin.ProfilePic = adminList.ProfilePic;
+                fetchadmin.AreaName = adminList.AreaName;
+                fetchadmin.UpdatedAt = DateTime.Now;
+                fetchadmin.IsActive = 1;
+                context.Update(fetchadmin);
+                context.SaveChanges();
+                TabAdminDetails adminDetails = new TabAdminDetails();
+                var admindetails = context.TabAdminDetails.Where(ad => ad.AdminId == adminList.AdminID).FirstOrDefault();
+                admindetails.AdminId = adminDetails.AdminId;
+                admindetails.Address = adminList.AdminDetails.Address;
+                admindetails.PostalCode = adminList.AdminDetails.PostalCode;
+                admindetails.CountryId = adminList.Country.CountryID;
+                adminDetails.Timezone = adminList.Country.TimeZone;
+                //   adminDetails.Document = adminList.AdminDetails.DocumentName;
+                adminDetails.DocumentName = adminList.AdminDetails.DocumentName;
+                adminDetails.DriverDocumentCount = adminList.AdminDetails.DriverDocumentCount;
+                adminDetails.IsActive = 1;
+                context.Update(adminDetails);
+                context.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
             {
-                Address = admindtls.Address,
-                City = admindtls.City,
-                PostalCode = admindtls.PostalCode,
-                DocumentName = admindtls.Document,
-                Document = admindtls.Document,
-                DriverDocumentCount = admindtls.DriverDocumentCount,
-                IsActive = admindtls.IsActive.ToString()
-            };
-            return admindetails != null ? admindetails : null;
+                Extention.insertlog(ex.Message, "Admin", "SaveAdminDetails", context);
+                return false;
+            }
         }
     }
 }

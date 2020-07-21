@@ -20,28 +20,42 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Use to display List of Country
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("getCountry")]
         [Authorize]
         public IActionResult GetCountry()
         {
-            List<CountryList> countryList = new List<CountryList>();
-            var countryData = _context.TabCountry.ToList();
-            foreach (var country in countryData)
-            {
-                countryList.Add(new CountryList()
-                {
-                    CountryId = country.CountryId,
-                    CountryCode = country.Code,
-                    CountryName= country.Name,
-                    MobileCode = country.DCode,
-                });
-            }
-            return this.OK<List<CountryList>>(countryList);
+            DAAdmin dAAdmin = new DAAdmin();
+            return this.OK<List<CountryList>>(dAAdmin.GetCountryList(_context));
         }
-
-
+        /// <summary>
+        /// Use to Get Zone access by passing country id 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetZoneAccess")]
+        [Authorize]
+        public IActionResult GetZoneAccess(long countryid)
+        {
+            DAAdmin dAAdmin = new DAAdmin();
+            return this.OK<List<CountryList>>(dAAdmin.GetTimeZoneList(_context,countryid));
+        }
+        /// <summary>
+        /// Use to Get list of languages
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetLanguageList")]
+        [Authorize]
+        public IActionResult GetLanguageList()
+        {
+            DAAdmin dAAdmin = new DAAdmin();
+            return this.OK<List<Language>>(dAAdmin.GetLanguageList(_context));
+        }
         //TODO:: Please add table name 
         //[HttpGet]
         //[Route("getCurrency")]
