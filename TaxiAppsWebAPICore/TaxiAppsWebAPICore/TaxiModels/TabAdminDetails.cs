@@ -52,6 +52,13 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public DateTime? UpdatedAt { get; set; }
         [Column("deleted_at", TypeName = "datetime")]
         public DateTime? DeletedAt { get; set; }
+        [Column("updated_by")]
+        [StringLength(200)]
+        public string UpdatedBy { get; set; }
+        public int? IsDeleted { get; set; }
+        [Column("deleted_by")]
+        [StringLength(200)]
+        public string DeletedBy { get; set; }
 
         [ForeignKey(nameof(AdminId))]
         [InverseProperty(nameof(TabAdmin.TabAdminDetails))]

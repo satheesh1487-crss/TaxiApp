@@ -33,6 +33,16 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [Column("Updated_At", TypeName = "datetime")]
         public DateTime? UpdatedAt { get; set; }
         public int? IsActive { get; set; }
+        [Column("updated_by")]
+        [StringLength(150)]
+        public string UpdatedBy { get; set; }
+        [Column("Deleted_at", TypeName = "datetime")]
+        public DateTime? DeletedAt { get; set; }
+        [Column("deleted_by")]
+        [StringLength(150)]
+        public string DeletedBy { get; set; }
+        [Column("isDelete")]
+        public int? IsDelete { get; set; }
 
         [InverseProperty("RoleNavigation")]
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }

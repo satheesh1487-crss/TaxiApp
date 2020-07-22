@@ -38,6 +38,16 @@ namespace TaxiAppsWebAPICore.TaxiModels
             {
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
                 entity.HasOne(d => d.LanguageNavigation)
                     .WithMany(p => p.TabAdmin)
                     .HasForeignKey(d => d.Language)
@@ -62,6 +72,14 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
 
                 entity.HasOne(d => d.Admin)
                     .WithMany(p => p.TabAdminDetails)
@@ -134,6 +152,14 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasName("PK__tab_role__8AF5CA32CD07C8D1");
 
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
             });
 
             modelBuilder.Entity<TblErrorlog>(entity =>

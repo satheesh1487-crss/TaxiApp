@@ -66,6 +66,16 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public string ProfilePic { get; set; }
         [Column("zone_access")]
         public long? ZoneAccess { get; set; }
+        [Column("created_by")]
+        [StringLength(200)]
+        public string CreatedBy { get; set; }
+        [Column("updated_by")]
+        [StringLength(200)]
+        public string UpdatedBy { get; set; }
+        public int? IsDeleted { get; set; }
+        [Column("deleted_by")]
+        [StringLength(200)]
+        public string DeletedBy { get; set; }
 
         [ForeignKey(nameof(Language))]
         [InverseProperty(nameof(TabCommonLanguages.TabAdmin))]

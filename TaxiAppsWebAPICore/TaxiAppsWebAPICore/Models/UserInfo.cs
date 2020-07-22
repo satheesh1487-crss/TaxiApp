@@ -18,6 +18,8 @@ namespace TaxiAppsWebAPICore.Models
         public string Role { get; set; }
         [JsonProperty("expiredate")]
         public DateTime ExpireDate { get; set; }
+        [JsonProperty("inserteddate")]
+        public DateTime? InsertedDate { get; set; }
     }
     
 }

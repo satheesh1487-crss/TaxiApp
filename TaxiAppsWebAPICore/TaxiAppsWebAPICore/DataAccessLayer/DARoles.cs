@@ -48,7 +48,7 @@ namespace TaxiAppsWebAPICore
                     _role.DisplayName = roleresult.DisplayName;
                     _role.Description = roleresult.Description;
                     _role.IsActive = roleresult.IsActive.ToString();
-                     return _role;
+                    return _role;
                 }
                 _role.Status = "No Data Found";
                 return _role;
@@ -81,7 +81,7 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
-        public bool EditRole(TaxiAppzDBContext context,long id, Roles roles)
+        public bool EditRole(TaxiAppzDBContext context, long id, Roles roles)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace TaxiAppsWebAPICore
                 {
                     adminLists.Add(new AdminList()
                     {
-                        AdminID=admin.Id,
+                        AdminID = admin.Id,
                         RegistrationCode = admin.RegistrationCode,
                         FirstName = admin.Firstname,
                         LastName = admin.Lastname,
@@ -151,7 +151,7 @@ namespace TaxiAppsWebAPICore
                 }
                 return adminLists != null ? adminLists : null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "GetAdminList", context);
                 return null;
@@ -205,7 +205,7 @@ namespace TaxiAppsWebAPICore
                 };
                 return admindetails != null ? admindetails : null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "GetAdminDetails", context);
                 return null;
@@ -230,7 +230,7 @@ namespace TaxiAppsWebAPICore
                 fetchadmin.Role = Convert.ToInt32(adminList.Role);
                 //  admin.ProfilePic = adminList.ProfilePic;
                 fetchadmin.AreaName = adminList.AreaName;
-                fetchadmin.UpdatedAt = DateTime.Now;
+                fetchadmin.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 fetchadmin.IsActive = 1;
                 context.Update(fetchadmin);
                 context.SaveChanges();
@@ -243,15 +243,110 @@ namespace TaxiAppsWebAPICore
                 adminDetails.Timezone = adminList.Country.TimeZone;
                 //   adminDetails.Document = adminList.AdminDetails.DocumentName;
                 adminDetails.DocumentName = adminList.AdminDetails.DocumentName;
-                adminDetails.DriverDocumentCount = adminList.AdminDetails.DriverDocumentCount;
+               // adminDetails.DriverDocumentCount = adminList.AdminDetails.DriverDocumentCount;
+               adminDetails.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 adminDetails.IsActive = 1;
                 context.Update(adminDetails);
                 context.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "SaveAdminDetails", context);
+                return false;
+            }
+        }
+
+        public bool AddAdminDetails(TaxiAppzDBContext context, AdminList adminList)
+        {
+            try
+            {
+                TabAdmin admin = new TabAdmin();
+                admin.Firstname = adminList.FirstName;
+                admin.Lastname = adminList.LastName;
+                //  admin.RegistrationCode = adminList.RegistrationCode;  // need to check for format with nPlus team
+                admin.Email = adminList.EmailID;
+                admin.PhoneNumber = adminList.ContactNo;
+                admin.EmergencyNumber = adminList.EmergencyContactNo;
+                admin.Language = Convert.ToInt32(adminList.Language.LanguageID); // need to pass only id
+                admin.ZoneAccess = Convert.ToInt32(adminList.Country.CountryID); // need to pass only id 
+                admin.Role = Convert.ToInt32(adminList.Role);
+                //  admin.ProfilePic = adminList.ProfilePic;
+                admin.AreaName = adminList.AreaName;
+                admin.CreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                admin.IsActive = 1;
+                context.TabAdmin.Add(admin);
+                context.SaveChanges();
+                long adminid = admin.Id;
+                TabAdminDetails adminDetails = new TabAdminDetails();
+
+                adminDetails.AdminId = adminid;
+                adminDetails.Address = adminList.AdminDetails.Address;
+                adminDetails.PostalCode = adminList.AdminDetails.PostalCode;
+                adminDetails.CountryId = adminList.Country.CountryID;
+                adminDetails.Timezone = adminList.Country.TimeZone;
+                //   adminDetails.Document = adminList.AdminDetails.DocumentName;
+                adminDetails.DocumentName = adminList.AdminDetails.DocumentName;
+                adminDetails.DriverDocumentCount = adminList.AdminDetails.DriverDocumentCount;
+                adminDetails.CreatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                adminDetails.IsActive = 1;
+                context.Update(adminDetails);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "SaveAdminDetails", context);
+                return false;
+            }
+        }
+
+        public bool DeleteRole(TaxiAppzDBContext context, long id)
+        {
+            try
+            {
+                TabRoles Insertdata = new TabRoles();
+                var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
+                if (updatedate != null)
+                {
+                    updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                    updatedate.DeletedBy = "Admin";
+                    updatedate.IsDelete = 1;
+                    context.Update(updatedate);
+                    context.SaveChanges();
+                    return true;
+
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "DeleteRole", context);
+                return false;
+            }
+        }
+
+        public bool DisableRole(TaxiAppzDBContext context, long id)
+        {
+            try
+            {
+                TabRoles Insertdata = new TabRoles();
+                var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
+                if (updatedate != null)
+                {
+                    updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                    updatedate.UpdatedBy = "Admin";
+                    updatedate.IsActive = 1;
+                    context.Update(updatedate);
+                    context.SaveChanges();
+                    return true;
+
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "DisableRole", context);
                 return false;
             }
         }

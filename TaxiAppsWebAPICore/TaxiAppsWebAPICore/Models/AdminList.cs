@@ -10,7 +10,7 @@ namespace TaxiAppsWebAPICore
         public long AdminID { get; set; }
         [JsonProperty("registerCode")]
         public string RegistrationCode { get; set; }
-        [JsonProperty("language")]
+        [JsonProperty("languages")]
         public string AdminLanguage { get; set; }
         [JsonProperty("firstName")]
         public string FirstName { get; set; }
@@ -20,7 +20,7 @@ namespace TaxiAppsWebAPICore
         public string EmailID { get; set; }
         [JsonProperty("contactNo")]
         public string ContactNo { get; set; }
-        [JsonProperty("role")]
+        [JsonProperty("roles")]
         public string Role { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
