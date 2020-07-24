@@ -11,7 +11,7 @@ namespace TaxiAppsWebAPICore
         public List<CountryList> GetCountryList(TaxiAppzDBContext context)
         {
             List<CountryList> countryList = new List<CountryList>();
-            var countryData = context.TabCountry.Distinct().ToList();
+            var countryData = context.TabCountry.ToList();
             foreach (var country in countryData)
             {
                 countryList.Add(new CountryList()
@@ -19,26 +19,23 @@ namespace TaxiAppsWebAPICore
                     CountryId = country.CountryId,
                     CountryCode = country.Code,
                     CountryName = country.Name,
-                    MobileCode = country.DCode,
-                    TimeZoneaccess = country.TimeZone
+                    MobileCode = country.DCode
                 });
             }
             return countryList == null ? null : countryList;
         }
-        public List<CountryList> GetTimeZoneList(TaxiAppzDBContext context,long countryid)
+        public List<Timezone> GetTimeZoneList(TaxiAppzDBContext context,long countryid)
         {
-            List<CountryList> timezonelist = new List<CountryList>();
-            var Timezonelist = context.TabCountry.Where(c => c.CountryId == countryid).ToList();
+            List<Timezone> timezonelist = new List<Timezone>();
+            var Timezonelist = context.TabTimezone.Where(c => c.Countryid == countryid).ToList();
             foreach (var timezone in Timezonelist)
             {
-                timezonelist.Add(new CountryList()
+                timezonelist.Add(new Timezone()
                 {
-                     TimeZoneaccess = timezone.TimeZone,
-                     CountryId=timezone.CountryId,
-                     CountryName=timezone.Name,
-                     CountryCode=timezone.Code
-                    
-                });
+                    TimeZoneDescription = timezone.Zonedescription,
+                    TimeZoneid = timezone.Timezoneid
+
+                }) ;
             }
             return timezonelist == null ? null : timezonelist;
         }

@@ -44,6 +44,8 @@ namespace TaxiAppsWebAPICore
         public Language Language { set; get; }
         [JsonProperty("country")]
         public Country Country { set; get; }
+        [JsonProperty("timezones")]
+        public Timezone Timezones { set; get; }
         [JsonProperty("adminDetails")]
         public AdminDetails AdminDetails { set; get; }
     }

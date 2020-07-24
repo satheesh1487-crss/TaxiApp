@@ -20,8 +20,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabCommonLanguages> TabCommonLanguages { get; set; }
         public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
+        public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
+        public virtual DbSet<TabTimezone> TabTimezone { get; set; }
+        public virtual DbSet<TabUser> TabUser { get; set; }
         public virtual DbSet<TblErrorlog> TblErrorlog { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -62,6 +65,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabAdmin)
                     .HasForeignKey(d => d.ZoneAccess)
                     .HasConstraintName("fk_tab_Country_id");
+
+                entity.HasOne(d => d.ZoneAccess1)
+                    .WithMany(p => p.TabAdmin)
+                    .HasForeignKey(d => d.ZoneAccess)
+                    .HasConstraintName("fk_tab_timezone_id");
             });
 
             modelBuilder.Entity<TabAdminDetails>(entity =>
@@ -135,6 +143,33 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.DCode).IsUnicode(false);
             });
 
+            modelBuilder.Entity<TabCurrencies>(entity =>
+            {
+                entity.HasKey(e => e.Currencyid)
+                    .HasName("PK__tab_curr__DAF1B622C7683A66");
+
+                entity.Property(e => e.Code).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Currency).IsUnicode(false);
+
+                entity.Property(e => e.DecimalSeparator).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Symbol).IsUnicode(false);
+
+                entity.Property(e => e.ThousandSeparator).IsUnicode(false);
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.TabCurrencies)
+                    .HasForeignKey(d => d.Countryid)
+                    .HasConstraintName("FK__tab_curre__count__0E6E26BF");
+            });
+
             modelBuilder.Entity<TabRefreshtoken>(entity =>
             {
                 entity.HasKey(e => e.Reftokenid)
@@ -160,6 +195,75 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabTimezone>(entity =>
+            {
+                entity.HasKey(e => e.Timezoneid)
+                    .HasName("PK__tab_time__71C7553D1AB8C0E3");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.TabTimezone)
+                    .HasForeignKey(d => d.Countryid)
+                    .HasConstraintName("FK__tab_timez__count__07C12930");
+            });
+
+            modelBuilder.Entity<TabUser>(entity =>
+            {
+                entity.Property(e => e.City).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DeviceToken).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                entity.Property(e => e.Gender).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Lastname).IsUnicode(false);
+
+                entity.Property(e => e.LoginBy).IsUnicode(false);
+
+                entity.Property(e => e.LoginMethod).IsUnicode(false);
+
+                entity.Property(e => e.OtpVerificationCode).IsUnicode(false);
+
+                entity.Property(e => e.Password).IsUnicode(false);
+
+                entity.Property(e => e.PhoneNumber).IsUnicode(false);
+
+                entity.Property(e => e.ProfilePic).IsUnicode(false);
+
+                entity.Property(e => e.SocialUniqueId).IsUnicode(false);
+
+                entity.Property(e => e.State).IsUnicode(false);
+
+                entity.Property(e => e.Token).IsUnicode(false);
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.TabUser)
+                    .HasForeignKey(d => d.Countryid)
+                    .HasConstraintName("FK__tab_user__countr__14270015");
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.TabUser)
+                    .HasForeignKey(d => d.Currencyid)
+                    .HasConstraintName("FK__tab_user__curren__160F4887");
+
+                entity.HasOne(d => d.Timezone)
+                    .WithMany(p => p.TabUser)
+                    .HasForeignKey(d => d.Timezoneid)
+                    .HasConstraintName("FK__tab_user__timezo__151B244E");
             });
 
             modelBuilder.Entity<TblErrorlog>(entity =>

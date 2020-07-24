@@ -12,6 +12,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         {
             TabAdmin = new HashSet<TabAdmin>();
             TabAdminDetails = new HashSet<TabAdminDetails>();
+            TabCurrencies = new HashSet<TabCurrencies>();
+            TabTimezone = new HashSet<TabTimezone>();
+            TabUser = new HashSet<TabUser>();
         }
 
         [Key]
@@ -25,9 +28,6 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [Column("d_code")]
         [StringLength(20)]
         public string DCode { get; set; }
-        [Column("time_zone")]
-        [StringLength(200)]
-        public string TimeZone { get; set; }
         [Column("Created_By")]
         [StringLength(100)]
         public string CreatedBy { get; set; }
@@ -42,5 +42,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }
         [InverseProperty("Country")]
         public virtual ICollection<TabAdminDetails> TabAdminDetails { get; set; }
+        [InverseProperty("Country")]
+        public virtual ICollection<TabCurrencies> TabCurrencies { get; set; }
+        [InverseProperty("Country")]
+        public virtual ICollection<TabTimezone> TabTimezone { get; set; }
+        [InverseProperty("Country")]
+        public virtual ICollection<TabUser> TabUser { get; set; }
     }
 }
