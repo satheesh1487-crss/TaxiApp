@@ -144,7 +144,7 @@ namespace TaxiAppsWebAPICore
                         Country = new Country()
                         {
                             CountryID = admin.ZoneAccessNavigation.CountryId,
-                            TimeZone = admin.ZoneAccessNavigation.TimeZone
+                            Name = admin.ZoneAccessNavigation.Name
                         }
 
                     });
@@ -166,6 +166,7 @@ namespace TaxiAppsWebAPICore
                 AdminList admindetails = new AdminList();
                 var admindata = context.TabAdmin.Include(l => l.LanguageNavigation).Include(r => r.RoleNavigation).
                     Include(z => z.ZoneAccessNavigation).Where(i => i.Id == roleid).FirstOrDefault();
+                var timezone = context.TabTimezone.Where(t => t.Timezoneid == admindata.ZoneAccess1.Timezoneid).FirstOrDefault();
                 var admindtls = context.TabAdminDetails.Where(d => d.AdminId == roleid).FirstOrDefault();
                 admindetails.RegistrationCode = admindata.RegistrationCode;
                 admindetails.FirstName = admindata.Firstname;
@@ -190,8 +191,12 @@ namespace TaxiAppsWebAPICore
                 admindetails.Country = new Country()
                 {
                     CountryID = admindata.ZoneAccessNavigation.CountryId,
-                    TimeZone = admindata.ZoneAccessNavigation.TimeZone,
                     Name = admindata.ZoneAccessNavigation.Name
+                };
+                admindetails.Timezones = new Timezone()
+                {
+                    TimeZoneid = admindata.ZoneAccess1.Timezoneid,
+                    TimeZoneDescription = admindata.ZoneAccess1.Zonedescription
                 };
                 admindetails.AdminDetails = new AdminDetails()
                 {
@@ -226,7 +231,7 @@ namespace TaxiAppsWebAPICore
                 fetchadmin.PhoneNumber = adminList.ContactNo;
                 fetchadmin.EmergencyNumber = adminList.EmergencyContactNo;
                 fetchadmin.Language = Convert.ToInt32(adminList.Language.LanguageID); // need to pass only id
-                fetchadmin.ZoneAccess = Convert.ToInt32(adminList.Country.CountryID); // need to pass only id 
+                 fetchadmin.ZoneAccess = Convert.ToInt32(adminList.Timezones.TimeZoneid); // need to pass only id 
                 fetchadmin.Role = Convert.ToInt32(adminList.Role);
                 //  admin.ProfilePic = adminList.ProfilePic;
                 fetchadmin.AreaName = adminList.AreaName;
@@ -269,7 +274,7 @@ namespace TaxiAppsWebAPICore
                 admin.PhoneNumber = adminList.ContactNo;
                 admin.EmergencyNumber = adminList.EmergencyContactNo;
                 admin.Language = Convert.ToInt32(adminList.Language.LanguageID); // need to pass only id
-                admin.ZoneAccess = Convert.ToInt32(adminList.Country.CountryID); // need to pass only id 
+                admin.ZoneAccess = Convert.ToInt32(adminList.Timezones.TimeZoneid); // need to pass only id 
                 admin.Role = Convert.ToInt32(adminList.Role);
                 //  admin.ProfilePic = adminList.ProfilePic;
                 admin.AreaName = adminList.AreaName;
@@ -305,7 +310,7 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-                TabRoles Insertdata = new TabRoles();
+               
                 var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
                 if (updatedate != null)
                 {
@@ -330,7 +335,7 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-                TabRoles Insertdata = new TabRoles();
+                
                 var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
                 if (updatedate != null)
                 {

@@ -20,8 +20,8 @@ namespace TaxiAppsWebAPICore
         
         [JsonProperty("countryId")]
         public long CountryId { get; set; }
-        [JsonProperty("timezoneaccess")]
-        public string TimeZoneaccess { get; set; }
+        [JsonProperty("timezone")]
+        public Timezone Timezone { get; set; }
     }
 
 }

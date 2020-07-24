@@ -84,6 +84,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [InverseProperty(nameof(TabRoles.TabAdmin))]
         public virtual TabRoles RoleNavigation { get; set; }
         [ForeignKey(nameof(ZoneAccess))]
+        [InverseProperty(nameof(TabTimezone.TabAdmin))]
+        public virtual TabTimezone ZoneAccess1 { get; set; }
+        [ForeignKey(nameof(ZoneAccess))]
         [InverseProperty(nameof(TabCountry.TabAdmin))]
         public virtual TabCountry ZoneAccessNavigation { get; set; }
         [InverseProperty("Admin")]

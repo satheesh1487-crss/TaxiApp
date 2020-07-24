@@ -20,41 +20,15 @@ namespace TaxiAppsWebAPICore.Controllers
             {
             _context = context;
            }
-        //[HttpGet]
-        //[Route("GetUserData")]
-        //[Authorize(Policy = Policies.User)]
-        //public IActionResult GetUserData()
-        //{
-        //    return Ok("This is a response from user method");
-        //}
-        /// <summary>
-        /// Use to display List of Admin
-        /// </summary>
-        /// <returns></returns>
-        //[HttpGet]
-        //[Route("GetsuperAdminData")]
-        //[Authorize(Policy = "superAdmin")]
-        //public IActionResult GetsuperAdminData()
-        //{
-        //    DARoles dARoles = new DARoles();
-        //    return this.OK<List<AdminList>>(dARoles.GetAdminList(_context));
-         
-        //}
+        
 
      [HttpGet]
         [Route("UserList")]
         [Authorize]
         public IActionResult GetUserList()
         {
-            List<UserListModel> adminLists = new List<UserListModel>();
-            adminLists.Add(new UserListModel() { UserID=1,Name="Ram Kumar",EMail="ram@gmail.com",PhoneNo="+919994203132", IsActive = true });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Ram Kumar", EMail = "ram@gmail.com", PhoneNo = "+919994203134", IsActive = true });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Satheesh Kumar", EMail = "satheesh@gmail.com", PhoneNo = "+919994203135", IsActive = true });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Prakash Kumar", EMail = "prakash@gmail.com", PhoneNo = "+919994203136", IsActive = true });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Kannan Kumar", EMail = "kannan@gmail.com", PhoneNo = "+919994203137", IsActive = true });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Kumar", EMail = "sundar@gmail.com", PhoneNo = "+919994203139", IsActive = true });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Ganesh", EMail = "sundar@gmail.com", PhoneNo = "+919994203130", IsActive = false });
-            return this.OK<List<UserListModel>>(adminLists);
+            DAUsers dAUsers = new DAUsers();
+            return this.OK<List<UserListModel>>(dAUsers.GetUserList(_context));
         }
 
         [HttpGet]
@@ -62,22 +36,32 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult GetBlockedUserList()
         {
-            List<UserListModel> adminLists = new List<UserListModel>();
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Ram Kumar", EMail = "ram@gmail.com", PhoneNo = "+919994203132",IsActive = false });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Ram Kumar", EMail = "ram@gmail.com", PhoneNo = "+919994203134", IsActive = false });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Satheesh Kumar", EMail = "satheesh@gmail.com", PhoneNo = "+919994203135", IsActive = false });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Prakash Kumar", EMail = "prakash@gmail.com", PhoneNo = "+919994203136", IsActive = false });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Kannan Kumar", EMail = "kannan@gmail.com", PhoneNo = "+919994203137", IsActive = false });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Kumar", EMail = "sundar@gmail.com", PhoneNo = "+919994203139", IsActive = false });
-            adminLists.Add(new UserListModel() { UserID = 1, Name = "Sundar Ganesh", EMail = "sundar@gmail.com", PhoneNo = "+919994203130", IsActive = false });
-            return this.OK<List<UserListModel>>(adminLists);
+            DAUsers dAUsers = new DAUsers();
+            return this.OK<List<UserListModel>>(dAUsers.GetBlockedUserList(_context));
         }
-        //[HttpGet("GetAdminData")]
-
-        //[Authorize(Policy = Policies.Admin)]
-        //public IActionResult GetAdminData()
-        //{
-        //    return Ok("This is a response from Admin method");
-        //}
+        [HttpGet]
+        [Route("GetUserEdit")]
+        [Authorize]
+        public IActionResult GetUserEdit(long userid)
+        {
+            DAUsers dAUsers = new DAUsers();
+            return this.OK<UserListModel>(dAUsers.GetUserEdit(userid, _context));
+        }
+        [HttpGet]
+        [Route("DeleteUser")]
+        [Authorize]
+        public IActionResult DeleteUser(long userid)
+        {
+            DAUsers dAUsers = new DAUsers();
+            return this.OKResponse(dAUsers.DeleteUser(_context,userid) == true ? "Deleted Successfully" : "Deletion Failed");
+        }
+        [HttpGet]
+        [Route("InActiveuser")]
+        [Authorize]
+        public IActionResult InActiveuser(long userid)
+        {
+            DAUsers dAUsers = new DAUsers();
+            return this.OKResponse(dAUsers.DisableUser(_context, userid) == true ? "Disabled Successfully" : "Disabled Failed");
+        }
     }
 }

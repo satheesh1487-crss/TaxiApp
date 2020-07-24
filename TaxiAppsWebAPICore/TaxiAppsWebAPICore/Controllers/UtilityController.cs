@@ -33,7 +33,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OK<List<CountryList>>(dAAdmin.GetCountryList(_context));
         }
         /// <summary>
-        /// Use to Get Zone access by passing country id 
+        /// Use to Get Zone zone list by passing country id 
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -42,7 +42,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetZoneAccess(long countryid)
         {
             DAAdmin dAAdmin = new DAAdmin();
-            return this.OK<List<CountryList>>(dAAdmin.GetTimeZoneList(_context,countryid));
+            return this.OK<List<Timezone>>(dAAdmin.GetTimeZoneList(_context,countryid));
         }
         /// <summary>
         /// Use to Get list of languages
