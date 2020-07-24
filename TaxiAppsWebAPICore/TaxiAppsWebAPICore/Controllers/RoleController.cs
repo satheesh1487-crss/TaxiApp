@@ -67,13 +67,13 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteRole(long id)
         {
             DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.DeleteRole(_context, id) ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dARoles.DeleteRole(_context, id) ? "Deleted Successfully" : "Deletion Failed");
         }
         [HttpPut("DisableRole")]
         public IActionResult DisableRole(long id)
         {
             DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.DisableRole(_context, id) ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dARoles.DisableRole(_context, id) ? "Disable Successfully" : "Disable Failed");
         }
     }
 }
