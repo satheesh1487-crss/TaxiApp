@@ -10,6 +10,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
     {
         public TabCurrencies()
         {
+            TabServicelocation = new HashSet<TabServicelocation>();
             TabUser = new HashSet<TabUser>();
         }
 
@@ -55,6 +56,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabCurrencies))]
         public virtual TabCountry Country { get; set; }
+        [InverseProperty("Currency")]
+        public virtual ICollection<TabServicelocation> TabServicelocation { get; set; }
         [InverseProperty("Currency")]
         public virtual ICollection<TabUser> TabUser { get; set; }
     }

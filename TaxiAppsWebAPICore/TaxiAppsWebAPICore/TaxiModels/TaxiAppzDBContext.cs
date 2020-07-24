@@ -23,6 +23,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
+        public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
         public virtual DbSet<TabTimezone> TabTimezone { get; set; }
         public virtual DbSet<TabUser> TabUser { get; set; }
         public virtual DbSet<TblErrorlog> TblErrorlog { get; set; }
@@ -195,6 +196,37 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabServicelocation>(entity =>
+            {
+                entity.HasKey(e => e.Servicelocid)
+                    .HasName("PK__tab_serv__03B9BBF9F2E26C97");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DeletedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.TabServicelocation)
+                    .HasForeignKey(d => d.Countryid)
+                    .HasConstraintName("FK__tab_servi__count__2645B050");
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.TabServicelocation)
+                    .HasForeignKey(d => d.Currencyid)
+                    .HasConstraintName("FK__tab_servi__curre__2739D489");
+
+                entity.HasOne(d => d.Timezone)
+                    .WithMany(p => p.TabServicelocation)
+                    .HasForeignKey(d => d.Timezoneid)
+                    .HasConstraintName("FK__tab_servi__timez__282DF8C2");
             });
 
             modelBuilder.Entity<TabTimezone>(entity =>

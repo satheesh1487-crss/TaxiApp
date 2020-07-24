@@ -11,6 +11,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public TabTimezone()
         {
             TabAdmin = new HashSet<TabAdmin>();
+            TabServicelocation = new HashSet<TabServicelocation>();
             TabUser = new HashSet<TabUser>();
         }
 
@@ -46,6 +47,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual TabCountry Country { get; set; }
         [InverseProperty("ZoneAccess1")]
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }
+        [InverseProperty("Timezone")]
+        public virtual ICollection<TabServicelocation> TabServicelocation { get; set; }
         [InverseProperty("Timezone")]
         public virtual ICollection<TabUser> TabUser { get; set; }
     }
