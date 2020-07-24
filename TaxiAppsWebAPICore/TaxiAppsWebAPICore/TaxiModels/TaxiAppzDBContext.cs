@@ -17,6 +17,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
 
         public virtual DbSet<TabAdmin> TabAdmin { get; set; }
         public virtual DbSet<TabAdminDetails> TabAdminDetails { get; set; }
+        public virtual DbSet<TabCommonCurrency> TabCommonCurrency { get; set; }
         public virtual DbSet<TabCommonLanguages> TabCommonLanguages { get; set; }
         public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
@@ -24,8 +25,12 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
+        public virtual DbSet<TabSos> TabSos { get; set; }
         public virtual DbSet<TabTimezone> TabTimezone { get; set; }
+        public virtual DbSet<TabTypes> TabTypes { get; set; }
         public virtual DbSet<TabUser> TabUser { get; set; }
+        public virtual DbSet<TabZone> TabZone { get; set; }
+        public virtual DbSet<TabZonepolygon> TabZonepolygon { get; set; }
         public virtual DbSet<TblErrorlog> TblErrorlog { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -101,6 +106,25 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("FK__tab_admin__Count__6477ECF3");
             });
 
+            modelBuilder.Entity<TabCommonCurrency>(entity =>
+            {
+                entity.HasKey(e => e.Currencyid)
+                    .HasName("PK__tab_comm__DAF1B62278E5F2B1");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CurrencySymbol).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Currencies)
+                    .WithMany(p => p.TabCommonCurrency)
+                    .HasForeignKey(d => d.Currenciesid)
+                    .HasConstraintName("FK__tab_commo__curre__6EC0713C");
+            });
+
             modelBuilder.Entity<TabCommonLanguages>(entity =>
             {
                 entity.HasKey(e => e.Languageid)
@@ -146,7 +170,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
 
             modelBuilder.Entity<TabCurrencies>(entity =>
             {
-                entity.HasKey(e => e.Currencyid)
+                entity.HasKey(e => e.Currenciesid)
                     .HasName("PK__tab_curr__DAF1B622C7683A66");
 
                 entity.Property(e => e.Code).IsUnicode(false);
@@ -229,6 +253,18 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("FK__tab_servi__timez__282DF8C2");
             });
 
+            modelBuilder.Entity<TabSos>(entity =>
+            {
+                entity.HasKey(e => e.Sosid)
+                    .HasName("PK__tab_SOS__860933B66F746209");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+            });
+
             modelBuilder.Entity<TabTimezone>(entity =>
             {
                 entity.HasKey(e => e.Timezoneid)
@@ -244,6 +280,18 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabTimezone)
                     .HasForeignKey(d => d.Countryid)
                     .HasConstraintName("FK__tab_timez__count__07C12930");
+            });
+
+            modelBuilder.Entity<TabTypes>(entity =>
+            {
+                entity.HasKey(e => e.Typeid)
+                    .HasName("PK__tab_type__F0528D02D8690A2C");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<TabUser>(entity =>
@@ -296,6 +344,42 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabUser)
                     .HasForeignKey(d => d.Timezoneid)
                     .HasConstraintName("FK__tab_user__timezo__151B244E");
+            });
+
+            modelBuilder.Entity<TabZone>(entity =>
+            {
+                entity.HasKey(e => e.Zoneid)
+                    .HasName("PK__tab_zone__2F74DB51C7D6F85A");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Unit).IsUnicode(false);
+
+                entity.HasOne(d => d.Serviceloc)
+                    .WithMany(p => p.TabZone)
+                    .HasForeignKey(d => d.Servicelocid)
+                    .HasConstraintName("FK__tab_zone__servic__59C55456");
+            });
+
+            modelBuilder.Entity<TabZonepolygon>(entity =>
+            {
+                entity.HasKey(e => e.Zonepolygonid)
+                    .HasName("PK__tab_zone__05C6EB76CBA1E296");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabZonepolygon)
+                    .HasForeignKey(d => d.Zoneid)
+                    .HasConstraintName("FK__tab_zonep__zonei__5F7E2DAC");
             });
 
             modelBuilder.Entity<TblErrorlog>(entity =>
