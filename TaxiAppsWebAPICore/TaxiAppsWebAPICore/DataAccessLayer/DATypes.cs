@@ -140,7 +140,7 @@ namespace TaxiAppsWebAPICore
                 {
 
 
-                    updatedate.IsActive = isStatus;
+                    updatedate.IsActive = isStatus==true?1:0;
                     updatedate.UpdatedAt = DateTime.UtcNow;
                     updatedate.UpdatedBy = "admin";
                     context.Update(updatedate);
