@@ -24,15 +24,48 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ZoneList()
         {
-            List<ManageZone> zonelist = new List<ManageZone>();
-            zonelist.Add(new ManageZone() { Zoneid = 1, ZoneName = "Chennai", IsActive = true  });
-            zonelist.Add(new ManageZone() { Zoneid = 2, ZoneName = "Australia", IsActive = true });
-            zonelist.Add(new ManageZone() { Zoneid = 3, ZoneName = "Tunisia", IsActive = true });
-            zonelist.Add(new ManageZone() { Zoneid = 4, ZoneName = "palani", IsActive = true });
-            zonelist.Add(new ManageZone() { Zoneid = 5, ZoneName = "Canada", IsActive = true });
-            zonelist.Add(new ManageZone() { Zoneid = 6, ZoneName = "coimbatore", IsActive = true });
-            
-            return this.OK<List<ManageZone>>(zonelist);
+            DAZone dAZone = new DAZone();
+            return this.OK<List<ManageZone>>(dAZone.ListZone(_context));
+        }
+        [HttpPost]
+        [Route("GetZonedetails")]
+        [Authorize]
+        public IActionResult GetZonedetails(long zoneid)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<ManageZone>(dAZone.GetZonedetails(zoneid, _context));
+        }
+        [HttpPost]
+        [Route("AddZone")]
+        [Authorize]
+        public IActionResult AddZone([FromBody] ManageZoneAdd manageZone)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.AddZone(manageZone, _context) ? "Zone Created" : "Zone Creation Failed");
+        }
+        [HttpPost]
+        [Route("EditZone")]
+        [Authorize]
+        public IActionResult EditZone([FromBody] ManageZoneAdd manageZone)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.EditZone(manageZone, _context) ? "Zone Updated" : "Zone Updation Failed");
+        }
+        [HttpPost]
+        [Route("DeleteZone")]
+        [Authorize]
+        public IActionResult DeleteZone(long zoneid)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.DeleteZone(zoneid, _context) ? "Zone Deleted" : "Zone Deletion Failed");
+        }
+        [HttpPost]
+        [Route("ActiveZone")]
+        [Authorize]
+        public IActionResult ActiveZone(long zoneid)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.ActiveZone(zoneid, _context) ? "Zone Active/Inactive" : "Failed");
         }
     }
 }

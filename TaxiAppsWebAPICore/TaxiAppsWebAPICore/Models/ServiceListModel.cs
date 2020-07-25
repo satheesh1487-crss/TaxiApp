@@ -27,3 +27,4 @@ namespace TaxiAppsWebAPICore.Models
         public string TimeZone { get; set; }
     }
 }
+    
