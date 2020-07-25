@@ -73,7 +73,7 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         [HttpGet]
-        [Route("getTypebyId")]
+        [Route("getCurrencybyId")]
         [Authorize]
         public IActionResult GetTypebyId(long id)
         {
