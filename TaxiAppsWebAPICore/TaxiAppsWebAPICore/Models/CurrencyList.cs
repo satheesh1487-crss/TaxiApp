@@ -8,7 +8,7 @@ namespace TaxiAppsWebAPICore.Models
     public class CurrencyList
     {
         [JsonProperty("currencyId")]
-        public int CurrencyId { get; set; }
+        public long CurrencyId { get; set; }
 
         [JsonProperty("currencyName")]
         public string CurrencyName { get; set; }

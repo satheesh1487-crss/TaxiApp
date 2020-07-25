@@ -29,26 +29,8 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult ListCurrency()
         {
 
-            List<CurrencyList> currencylist = new List<CurrencyList>();
-            currencylist.Add(new CurrencyList() { CurrencyId = 1,   CurrencyName = "Australia", Symbol = "AUD", StandardName = "AUD", IsActive = true });
-            currencylist.Add(new CurrencyList() { CurrencyId = 2, CurrencyName = "USA", Symbol = "$", StandardName = "USD", IsActive = true });
-            currencylist.Add(new CurrencyList() { CurrencyId = 3, CurrencyName = "India", Symbol = "₹", StandardName = "INR", IsActive = true });
-            currencylist.Add(new CurrencyList() { CurrencyId = 4, CurrencyName = "Jordan Dinar", Symbol = "JOD", StandardName = "JOD", IsActive = true });
-            return this.OK<List<CurrencyList>>(currencylist);
-
-            //List<CountryList> countryList = new List<CountryList>();
-            //var countryData = _context.TabCountry.ToList();
-            //foreach (var country in countryData)
-            //{
-            //    countryList.Add(new CountryList()
-            //    {
-            //        CountryId = country.CountryId,
-            //        CountryCode = country.Code,
-            //        CountryName = country.Name,
-            //        MobileCode = country.DCode,
-            //    });
-            //}
-            //return this.OK<List<CountryList>>(countryList);
+            DACurrency dACurrency = new DACurrency();
+            return this.OK<List<CurrencyList>>(dACurrency.ListCurrency(_context));
         }
 
         [HttpPost]
@@ -56,8 +38,8 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult SaveCurrency(CurrencyInfo currencyInfo)
         {
-            DACurrency dARoles = new DACurrency();
-            return this.OKResponse(dARoles.AddCurrency(_context, currencyInfo) ? "Inserted Successfully" : "Insertion Failed");
+            DACurrency dACurrency = new DACurrency();
+            return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo) ? "Inserted Successfully" : "Insertion Failed");
         }
 
         [HttpPut]
@@ -65,9 +47,38 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditCurrency(CurrencyInfo currencyInfo)
         {
-            DACurrency dARoles = new DACurrency();
-            return this.OKResponse(dARoles.EditCurrency(_context, currencyInfo) ? "Inserted Successfully" : "Insertion Failed");
+            DACurrency dACurrency = new DACurrency();
+            return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo) ? "Inserted Successfully" : "Insertion Failed");
         }
+        //TODO:: check parent record is deleted
+        //TODO:: GET user name
+        [HttpDelete]
+        [Route("deleteCurrency")]
+        [Authorize]
+        public IActionResult DeleteCurrency(long id)
+        {
+            DACurrency dACurrency = new DACurrency();
+            return this.OKResponse(dACurrency.DeleteCurrency(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+        }
+
+        [HttpGet]
+        [Route("getTypebyId")]
+        [Authorize]
+        public IActionResult GetTypebyId(long id)
+        {
+            DACurrency dACurrency = new DACurrency();
+            return this.OK<CurrencyInfo>(dACurrency.GetbyCurrencyId(_context, id));
+        }
+
+        [HttpPut]
+        [Route("statusType")]
+        [Authorize]
+        public IActionResult StatusType(long id, bool isStatus)
+        {
+            DACurrency dACurrency = new DACurrency();
+            return this.OKResponse(dACurrency.StatusType(_context, id, isStatus) ? "Inserted Successfully" : "Insertion Failed");
+        }
+
     }
 
 }

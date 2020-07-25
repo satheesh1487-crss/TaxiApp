@@ -10,7 +10,7 @@ namespace TaxiAppsWebAPICore.Models
         [JsonProperty("currencyID")]
         public int CurrencyID { get; set; }
         [JsonProperty("standardId")]
-        public int StandardId { get; set; }
+        public long ?StandardId { get; set; }
 
         [JsonProperty("currencySymbol")]
         public string CurrencySymbol { get; set; }
