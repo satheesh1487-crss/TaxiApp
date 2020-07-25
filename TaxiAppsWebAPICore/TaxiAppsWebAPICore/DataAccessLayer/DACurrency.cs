@@ -18,7 +18,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
                 currencylist.Add(new CurrencyList()
                 {
-                    IsActive = currency.IsActive == 0 ? false : true,
+                    IsActive = currency.IsActive == 1 ? true : false,
                     CurrencyId = currency.Currencyid,
                     CurrencyName = currency.Currencyname,
                     StandardName = currency.Currencies.Currency,
@@ -52,7 +52,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 currency.Currencyname = currencyInfo.CurrencyName;
                 currency.CurrencySymbol = currencyInfo.CurrencySymbol;
                 currency.Currenciesid = currencyInfo.StandardId;
-                currency.IsActive = 0;
+                currency.IsActive = 1;
                 currency.IsDeleted = 0;
                 currency.CreatedAt = DateTime.UtcNow;
                 currency.UpdatedAt = DateTime.UtcNow;
@@ -81,7 +81,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     updatedate.Currencyname = currencyInfo.CurrencyName;
                     updatedate.CurrencySymbol = currencyInfo.CurrencySymbol;
                     updatedate.Currenciesid = currencyInfo.StandardId;
-                    updatedate.IsActive = 0;
+                    updatedate.IsActive = 1;
                     updatedate.IsDeleted = 0;
 
                     updatedate.UpdatedAt = DateTime.UtcNow;
