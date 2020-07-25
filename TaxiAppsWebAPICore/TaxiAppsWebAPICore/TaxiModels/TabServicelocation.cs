@@ -8,6 +8,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
     [Table("tab_servicelocation")]
     public partial class TabServicelocation
     {
+        public TabServicelocation()
+        {
+            TabZone = new HashSet<TabZone>();
+        }
+
         [Key]
         [Column("servicelocid")]
         public long Servicelocid { get; set; }
@@ -48,5 +53,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(Timezoneid))]
         [InverseProperty(nameof(TabTimezone.TabServicelocation))]
         public virtual TabTimezone Timezone { get; set; }
+        [InverseProperty("Serviceloc")]
+        public virtual ICollection<TabZone> TabZone { get; set; }
     }
 }
