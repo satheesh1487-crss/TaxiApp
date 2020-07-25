@@ -33,7 +33,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetRoleList", context);
+                Extention.insertlog(ex.Message, "Admin", "ListService", context);
                 return null;
             }
         }
@@ -59,7 +59,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddRole", context);
+                Extention.insertlog(ex.Message, "Admin", "AddService", context);
                 return false;
             }
         }
@@ -89,7 +89,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditRole", context);
+                Extention.insertlog(ex.Message, "Admin", "EditService", context);
                 return false;
             }
         }
@@ -115,7 +115,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditRole", context);
+                Extention.insertlog(ex.Message, "Admin", "DeleteService", context);
                 return false;
             }
         }
@@ -140,7 +140,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetRoleList", context);
+                Extention.insertlog(ex.Message, "Admin", "GetbyServiceId", context);
                 return null;
             }
         }

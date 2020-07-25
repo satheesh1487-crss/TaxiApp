@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
@@ -27,16 +28,60 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ListType()
         {
-            List<VehicleTypeList> countryList = new List<VehicleTypeList>();
-            countryList.Add(new VehicleTypeList() { Id=1, Image = "sasa", IsActive = true , Name = "mini" });
-            countryList.Add(new VehicleTypeList() { Id = 2, Image = "sasa", IsActive = true, Name = "Auto" });
-            countryList.Add(new VehicleTypeList() { Id = 3, Image = "sasa", IsActive = true, Name = "Suv" });
-            countryList.Add(new VehicleTypeList() { Id = 4, Image = "sasa", IsActive = true, Name = "mini" });
-            countryList.Add(new VehicleTypeList() { Id = 5, Image = "sasa", IsActive = true, Name = "mini" });
-            countryList.Add(new VehicleTypeList() { Id = 6, Image = "sasa", IsActive = true, Name = "Auto" });
-            countryList.Add(new VehicleTypeList() { Id = 7, Image = "sasa", IsActive = true, Name = "Suv" });
-            countryList.Add(new VehicleTypeList() { Id = 8, Image = "sasa", IsActive = true, Name = "mini" });
-            return this.OK<List<VehicleTypeList>>(countryList);
+            DATypes dATypes = new DATypes();
+            return this.OK<List<VehicleTypeList>>(dATypes.ListType(_context));
+            
+        }
+
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
+        [HttpPost]
+        [Route("saveType")]
+        [Authorize]
+        public IActionResult SaveType([FromBody] VehicleTypeInfo vehicleTypeInfo)
+        {
+            DATypes dATypes = new DATypes();
+            return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo) ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
+        [HttpPut]
+        [Route("editType")]
+        [Authorize]
+        public IActionResult EditType([FromBody] VehicleTypeInfo vehicleTypeInfo)
+        {
+            DATypes dATypes = new DATypes();
+            return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo) ? "Updated Successfully" : "Updation Failed");
+        }
+
+        //TODO:: check parent record is deleted
+        //TODO:: GET user name
+        [HttpDelete]
+        [Route("deleteType")]
+        [Authorize]
+        public IActionResult DeleteType(long id)
+        {
+            DATypes dATypes = new DATypes();
+            return this.OKResponse(dATypes.DeleteType(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+        }
+
+        [HttpGet]
+        [Route("getTypebyId")]
+        [Authorize]
+        public IActionResult GetTypebyId(long id)
+        {
+            DATypes dATypes = new DATypes();
+            return this.OK<VehicleTypeInfo>(dATypes.GetbyTypeId(_context, id));
+        }
+
+        [HttpPut]
+        [Route("statusType")]
+        [Authorize]
+        public IActionResult StatusType(long id, bool isStatus)
+        {
+            DATypes dATypes = new DATypes();
+            return this.OKResponse(dATypes.StatusType(_context, id, isStatus) ? "Inserted Successfully" : "Insertion Failed");
         }
 
         [HttpGet]

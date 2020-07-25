@@ -21,7 +21,7 @@ namespace TaxiAppsWebAPICore.Controllers
             _context = context;
         }
 
-        //TODO:: Please updfate table name 
+        
         [HttpGet]
         [Route("list")]
         [Authorize]
@@ -31,7 +31,8 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OK<List<ServiceListModel>>(dAService.ListService(_context));
         }
 
-        //TODO:: Please updfate table name 
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
         [HttpPost]
         [Route("save")]
         [Authorize]
@@ -41,7 +42,8 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAService.AddService(_context, serviceInfo) ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        //TODO:: Please updfate table name 
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
         [HttpPut]
         [Route("edit")]
         [Authorize]
@@ -51,7 +53,8 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAService.EditService(_context, serviceInfo) ? "Updated Successfully" : "Updation Failed");
         }
 
-        //TODO:: Please updfate table name 
+        //TODO:: check parent record is deleted
+        //TODO:: GET user name 
         [HttpDelete]
         [Route("delete")]
         [Authorize]
@@ -61,7 +64,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAService.DeleteService(_context, id) ? "Deleted Successfully" : "Deletion Failed");
         }
 
-        //TODO:: Please updfate table name 
+       
         [HttpGet]
         [Route("getbyId")]
         [Authorize]
