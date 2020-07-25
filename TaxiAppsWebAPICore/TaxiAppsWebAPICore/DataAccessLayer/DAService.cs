@@ -33,7 +33,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetRoleList", context);
+                Extention.insertlog(ex.Message, "Admin", "ListService", context);
                 return null;
             }
         }

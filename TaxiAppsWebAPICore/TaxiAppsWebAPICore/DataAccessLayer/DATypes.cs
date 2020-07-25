@@ -9,30 +9,30 @@ namespace TaxiAppsWebAPICore
 {
     public class DATypes
     {
-        public List<VehicleTypeList> listofVehicles(TaxiAppzDBContext context)
+        public List<VehicleTypeList> ListType(TaxiAppzDBContext context)
         {
             List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
-            var vechilesTupe = context.TabTypes.ToList();
+            var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList();
             foreach (var vechiles in vechilesTupe)
             {
                 vehicleTypeLists.Add(new VehicleTypeList()
                 {
-                    Id = 1,
-                    Image = "",
-                    IsActive = true,
-                    Name = ""
+                    Id = vechiles.Typeid,
+                    Image = vechiles.Imagename,
+                    IsActive = vechiles.IsActive==0?false:true,
+                    Name = vechiles.Typename
                 });
             }
             return vehicleTypeLists;
         }
-        public bool AddTyoe(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo)
+        public bool AddType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo)
         {
             try
             {
                 TabTypes tabTypes = new TabTypes();
-                tabTypes.Countryid = vehicleTypeInfo.Id;
-                tabTypes.Timezoneid = vehicleTypeInfo.Image;
-                tabTypes.Currencyid = vehicleTypeInfo.Name;
+                tabTypes.Typeid = vehicleTypeInfo.Id;
+                tabTypes.Imagename = vehicleTypeInfo.Image;
+                tabTypes.Typename = vehicleTypeInfo.Name;
                 tabTypes.IsActive = 0;
                 tabTypes.IsDeleted = 0;
                 tabTypes.CreatedAt = DateTime.UtcNow;
@@ -55,12 +55,12 @@ namespace TaxiAppsWebAPICore
             try
             {
 
-                var updatedate = context.TabTypes.Where(r => r.Servicelocid == vehicleTypeInfo.Id && r.IsDeleted == 0).FirstOrDefault();
+                var updatedate = context.TabTypes.Where(r => r.Typeid == vehicleTypeInfo.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (updatedate != null)
                 {
-                    updatedate.Countryid = vehicleTypeInfo.Id;
-                    updatedate.Timezoneid = vehicleTypeInfo.Image;
-                    updatedate.Currencyid = vehicleTypeInfo.Name;
+                  
+                    updatedate.Imagename = vehicleTypeInfo.Image;
+                    updatedate.Typename = vehicleTypeInfo.Name;
                     updatedate.IsActive = 0;
                     updatedate.IsDeleted = 0;
 
@@ -86,7 +86,7 @@ namespace TaxiAppsWebAPICore
             try
             {
 
-                var updatedate = context.TabTypes.Where(r => r.Servicelocid == id && r.IsDeleted == 0).FirstOrDefault();
+                var updatedate = context.TabTypes.Where(r => r.Typeid == id && r.IsDeleted == 0).FirstOrDefault();
                 if (updatedate != null)
                 {
 
@@ -112,12 +112,12 @@ namespace TaxiAppsWebAPICore
             try
             {
                 VehicleTypeInfo vehicleTypeInfo = new VehicleTypeInfo();
-                var listService = context.TabTypes.FirstOrDefault(t => t.Servicelocid == id && t.IsDeleted == 0);
+                var listService = context.TabTypes.FirstOrDefault(t => t.Typeid == id && t.IsDeleted == 0);
                 if (listService != null)
                 {
-                    vehicleTypeInfo.Id = listService.Countryid;
-                    vehicleTypeInfo.Image = listService.Currencyid;
-                    vehicleTypeInfo.Name = listService.Currencyid;
+                    vehicleTypeInfo.Id = listService.Typeid;
+                    vehicleTypeInfo.Image = listService.Imagename;
+                    vehicleTypeInfo.Name = listService.Typename;
                     
                 }
 
@@ -129,5 +129,32 @@ namespace TaxiAppsWebAPICore
                 return null;
             }
         }
+
+        public bool StatusTypes(TaxiAppzDBContext context, long id, bool isStatus)
+        {
+            try
+            {
+
+                var updatedate = context.TabTypes.Where(r => r.Typeid == id && r.IsDeleted == 0).FirstOrDefault();
+                if (updatedate != null)
+                {
+
+
+                    updatedate.IsActive = isStatus;
+                    updatedate.UpdatedAt = DateTime.UtcNow;
+                    updatedate.UpdatedBy = "admin";
+                    context.Update(updatedate);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "EditRole", context);
+                return false;
+            }
+        }
+
     }
 }
