@@ -45,12 +45,12 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddRole", context);
+                Extention.insertlog(ex.Message, "Admin", "AddType", context);
                 return false;
             }
         }
 
-        public bool EditTypes(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo)
+        public bool EditType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo)
         {
             try
             {
@@ -76,12 +76,12 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditRole", context);
+                Extention.insertlog(ex.Message, "Admin", "EditType", context);
                 return false;
             }
         }
 
-        public bool DeleteTypes(TaxiAppzDBContext context, long id)
+        public bool DeleteType(TaxiAppzDBContext context, long id)
         {
             try
             {
@@ -102,12 +102,12 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditRole", context);
+                Extention.insertlog(ex.Message, "Admin", "DeleteType", context);
                 return false;
             }
         }
 
-        public VehicleTypeInfo GetbyTypesId(TaxiAppzDBContext context, long id)
+        public VehicleTypeInfo GetbyTypeId(TaxiAppzDBContext context, long id)
         {
             try
             {
@@ -125,12 +125,12 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetRoleList", context);
+                Extention.insertlog(ex.Message, "Admin", "GetbyTypeId", context);
                 return null;
             }
         }
 
-        public bool StatusTypes(TaxiAppzDBContext context, long id, bool isStatus)
+        public bool StatusType(TaxiAppzDBContext context, long id, bool isStatus)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditRole", context);
+                Extention.insertlog(ex.Message, "Admin", "StatusType", context);
                 return false;
             }
         }

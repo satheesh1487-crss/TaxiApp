@@ -33,6 +33,8 @@ namespace TaxiAppsWebAPICore.Controllers
             
         }
 
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
         [HttpPost]
         [Route("saveType")]
         [Authorize]
@@ -42,22 +44,26 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo) ? "Inserted Successfully" : "Insertion Failed");
         }
 
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
         [HttpPut]
         [Route("editType")]
         [Authorize]
         public IActionResult EditType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
             DATypes dATypes = new DATypes();
-            return this.OKResponse(dATypes.EditTypes(_context, vehicleTypeInfo) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo) ? "Updated Successfully" : "Updation Failed");
         }
 
+        //TODO:: check parent record is deleted
+        //TODO:: GET user name
         [HttpDelete]
         [Route("deleteType")]
         [Authorize]
         public IActionResult DeleteType(long id)
         {
             DATypes dATypes = new DATypes();
-            return this.OKResponse(dATypes.DeleteTypes(_context, id) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dATypes.DeleteType(_context, id) ? "Deleted Successfully" : "Deletion Failed");
         }
 
         [HttpGet]
@@ -66,7 +72,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetTypebyId(long id)
         {
             DATypes dATypes = new DATypes();
-            return this.OK<VehicleTypeInfo>(dATypes.GetbyTypesId(_context, id));
+            return this.OK<VehicleTypeInfo>(dATypes.GetbyTypeId(_context, id));
         }
 
         [HttpPut]
@@ -75,7 +81,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DATypes dATypes = new DATypes();
-            return this.OKResponse(dATypes.StatusTypes(_context, id, isStatus) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dATypes.StatusType(_context, id, isStatus) ? "Inserted Successfully" : "Insertion Failed");
         }
 
         [HttpGet]
