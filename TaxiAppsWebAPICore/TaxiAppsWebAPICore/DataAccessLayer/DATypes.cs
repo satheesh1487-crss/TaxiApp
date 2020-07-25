@@ -9,9 +9,18 @@ namespace TaxiAppsWebAPICore
 {
     public class DATypes
     {
-        public List<VehicleList> listofVehicles(TaxiAppzDBContext context)
+        public List<VehicleTypeList> listofVehicles(TaxiAppzDBContext context)
         {
-            List<VehicleList> vehicleLists = new List<VehicleList>();
+            List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
+            var vechilesTupe = context.TabTypes.ToList();
+            foreach (var vechiles in vechilesTupe)
+            {
+                vehicleTypeLists.Add(new VehicleTypeList()
+                {
+                  
+                });
+            }
+            return vehicleTypeLists;
         }
     }
 }
