@@ -12,7 +12,7 @@ namespace TaxiAppsWebAPICore
         public List<VehicleTypeList> ListType(TaxiAppzDBContext context)
         {
             List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
-            var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList();
+            var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderBy(t => t.UpdatedAt);
             foreach (var vechiles in vechilesTupe)
             {
                 vehicleTypeLists.Add(new VehicleTypeList()
