@@ -1,8 +1,9 @@
 using Newtonsoft.Json;
+using System;
 
-namespace TaxiAppsWebAPICore.Models
+namespace TaxiAppsWebAPICore
 {
-    public class VehicleList
+    public class VehicleTypeList
     {
         [JsonProperty("id")]
         public int Id { set; get; }
@@ -13,6 +14,7 @@ namespace TaxiAppsWebAPICore.Models
         public string Image { set; get; }
 
         [JsonProperty("isActive")]
-        public bool IsActive { set; get; }
+        public bool IsActive { set; get; } 
+
     }
 }
