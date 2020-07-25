@@ -24,6 +24,17 @@ namespace TaxiAppsWebAPICore.Controllers
 
         //TODO:: Please updfate table name 
         [HttpGet]
+        [Route("listStandard")]
+        [Authorize]
+        public IActionResult ListStandard()
+        {
+
+            DACurrency dACurrency = new DACurrency();
+            return this.OK<List<StandardList>>(dACurrency.ListStandard(_context));
+        }
+
+        //TODO:: Please updfate table name 
+        [HttpGet] 
         [Route("listCurrency")]
         [Authorize]
         public IActionResult ListCurrency()

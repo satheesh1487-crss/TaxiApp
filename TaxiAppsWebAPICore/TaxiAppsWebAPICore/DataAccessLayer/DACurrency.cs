@@ -27,6 +27,22 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             return currencylist;
         }
+
+        public List<StandardList> ListStandard(TaxiAppzDBContext context)
+        {
+            List<StandardList> standardlist = new List<StandardList>();
+            var currencyList = context.TabCurrencies.Where(t => t.IsDelete == 0).ToList();
+            foreach (var currency in currencyList)
+            {
+                standardlist.Add(new StandardList()
+                {
+                    StandardId=currency.Currenciesid,
+                    StandardName=currency.Currency
+                }); ;
+            }
+            return standardlist;
+        }
+
         public bool AddCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo)
         {
             try
