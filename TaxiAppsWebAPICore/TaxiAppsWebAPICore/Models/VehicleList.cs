@@ -17,4 +17,15 @@ namespace TaxiAppsWebAPICore
         public bool IsActive { set; get; } 
 
     }
+    public class VehicleTypeInfo
+    {
+        [JsonProperty("id")]
+        public int Id { set; get; }
+        [JsonProperty("name")]
+        public string Name { set; get; }
+
+        [JsonProperty("image")]
+        public string Image { set; get; } 
+
+    }
 }
