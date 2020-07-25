@@ -22,12 +22,14 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
         public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
+        public virtual DbSet<TabMenucode> TabMenucode { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
         public virtual DbSet<TabSos> TabSos { get; set; }
         public virtual DbSet<TabTimezone> TabTimezone { get; set; }
         public virtual DbSet<TabTypes> TabTypes { get; set; }
+        public virtual DbSet<TabUploadfiledetails> TabUploadfiledetails { get; set; }
         public virtual DbSet<TabUser> TabUser { get; set; }
         public virtual DbSet<TabZone> TabZone { get; set; }
         public virtual DbSet<TabZonepolygon> TabZonepolygon { get; set; }
@@ -195,6 +197,14 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("FK__tab_curre__count__0E6E26BF");
             });
 
+            modelBuilder.Entity<TabMenucode>(entity =>
+            {
+                entity.HasKey(e => e.Menuid)
+                    .HasName("PK__tab_menu__3B5F7D5C2E9983C9");
+
+                entity.Property(e => e.Menuname).IsUnicode(false);
+            });
+
             modelBuilder.Entity<TabRefreshtoken>(entity =>
             {
                 entity.HasKey(e => e.Reftokenid)
@@ -292,6 +302,20 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+            });
+
+            modelBuilder.Entity<TabUploadfiledetails>(entity =>
+            {
+                entity.HasKey(e => e.Fileid)
+                    .HasName("PK__tab_uplo__C2C7C24418AF6D34");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Extention).IsUnicode(false);
+
+                entity.Property(e => e.Filename).IsUnicode(false);
+
+                entity.Property(e => e.Mimetype).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabUser>(entity =>
