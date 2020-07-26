@@ -100,5 +100,12 @@ namespace TaxiAppsWebAPICore.Controllers
             countryList.Add(new ManageVehiclePriceList() { Id = 8, Image = "sasa", IsActive = true, Name = "mini" });
             return this.OK<List<ManageVehiclePriceList>>(countryList);
         }
+        //[HttpPost]
+        //[Route("managezontype")]
+        //[Authorize]
+        //public ActionResult ManageZoneType([FromBody] ZoneTypeRleation)
+        //{
+
+        //}
     }
 }

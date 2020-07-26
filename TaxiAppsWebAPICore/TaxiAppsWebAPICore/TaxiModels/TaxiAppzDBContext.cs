@@ -33,6 +33,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabUser> TabUser { get; set; }
         public virtual DbSet<TabZone> TabZone { get; set; }
         public virtual DbSet<TabZonepolygon> TabZonepolygon { get; set; }
+        public virtual DbSet<TabZonetypeRelationship> TabZonetypeRelationship { get; set; }
         public virtual DbSet<TblErrorlog> TblErrorlog { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -404,6 +405,38 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabZonepolygon)
                     .HasForeignKey(d => d.Zoneid)
                     .HasConstraintName("FK__tab_zonep__zonei__5F7E2DAC");
+            });
+
+            modelBuilder.Entity<TabZonetypeRelationship>(entity =>
+            {
+                entity.HasKey(e => e.Zonetypeid)
+                    .HasName("PK__tab_zone__87431789CD918029");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Paymentmode).IsUnicode(false);
+
+                entity.Property(e => e.Showbill).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.TabZonetypeRelationship)
+                    .HasForeignKey(d => d.Typeid)
+                    .HasConstraintName("FK__tab_zonet__typei__078C1F06");
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabZonetypeRelationship)
+                    .HasForeignKey(d => d.Zoneid)
+                    .HasConstraintName("FK__tab_zonet__zonei__0697FACD");
             });
 
             modelBuilder.Entity<TblErrorlog>(entity =>

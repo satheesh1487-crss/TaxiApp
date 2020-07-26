@@ -12,8 +12,8 @@ namespace TaxiAppsWebAPICore
         
         [JsonProperty("countryName")]
         public string CountryName { get; set; }
-        [JsonProperty("countrycurrency")]
-        public string CountryCurrency { get; set; }
+        [JsonProperty("currencyCode")]
+        public string CurrencyCode { get; set; }
      
         [JsonProperty("mobileCode")]
         public string MobileCode { get; set; }

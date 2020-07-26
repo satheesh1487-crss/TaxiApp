@@ -45,13 +45,9 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var currencyList = context.TabCurrencies.Where(t => t.IsDelete == 0).ToList();
                 foreach (var currency in currencyList)
                 {
-                    standardlist.Add(new StandardList()
-                    {
-                        StandardId = currency.Currenciesid,
-                        StandardName = currency.Currency
-                    }); ;
-                }
-                return standardlist;
+                    StandardId=currency.Currenciesid,
+                    StandardName=currency.Code
+                }); ;
             }
             catch (Exception ex)
             {

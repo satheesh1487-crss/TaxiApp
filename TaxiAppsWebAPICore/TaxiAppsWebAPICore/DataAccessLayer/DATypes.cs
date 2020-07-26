@@ -164,6 +164,22 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
+        public List<VehicleTypeList> ListZoneType(TaxiAppzDBContext context)
+        {
+            List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
+            var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderBy(t => t.UpdatedAt);
+            foreach (var vechiles in vechilesTupe)
+            {
+                vehicleTypeLists.Add(new VehicleTypeList()
+                {
+                    Id = vechiles.Typeid,
+                    Image = vechiles.Imagename,
+                    IsActive = vechiles.IsActive == 1 ? true : false,
+                    Name = vechiles.Typename
+                });
+            }
+            return vehicleTypeLists;
+        }
 
     }
 }

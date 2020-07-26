@@ -11,6 +11,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public TabZone()
         {
             TabZonepolygon = new HashSet<TabZonepolygon>();
+            TabZonetypeRelationship = new HashSet<TabZonetypeRelationship>();
         }
 
         [Key]
@@ -50,5 +51,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual TabServicelocation Serviceloc { get; set; }
         [InverseProperty("Zone")]
         public virtual ICollection<TabZonepolygon> TabZonepolygon { get; set; }
+        [InverseProperty("Zone")]
+        public virtual ICollection<TabZonetypeRelationship> TabZonetypeRelationship { get; set; }
     }
 }
