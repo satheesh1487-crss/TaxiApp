@@ -129,7 +129,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 {
                     serviceInfo.CountryId = listService.Countryid;
                     serviceInfo.CurrencyId = listService.Currencyid;
-                    serviceInfo.SymbolCurrencyId = listService.Currencyid;
+                    serviceInfo.SymbolCurrencyId = listService.Countryid;
                     serviceInfo.TimezoneId = listService.Timezoneid;
                     serviceInfo.ServiceId = listService.Servicelocid;
                     serviceInfo.ServiceName = listService.Name;
