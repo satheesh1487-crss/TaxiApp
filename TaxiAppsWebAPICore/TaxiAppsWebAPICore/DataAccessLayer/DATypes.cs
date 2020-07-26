@@ -19,7 +19,7 @@ namespace TaxiAppsWebAPICore
                 {
                     Id = vechiles.Typeid,
                     Image = vechiles.Imagename,
-                    IsActive = vechiles.IsActive==1?false:true,
+                    IsActive = vechiles.IsActive==1?true:false,
                     Name = vechiles.Typename
                 });
             }
