@@ -62,10 +62,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpPut]
         [Route("ActiveZone")]
         [Authorize]
-        public IActionResult ActiveZone(long zoneid)
+        public IActionResult ActiveZone(long zoneid,bool isStatus)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZone(zoneid, _context) ? "Zone Active/Inactive" : "Failed");
+            return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context) ? "Zone Active/Inactive" : "Failed");
         }
     }
 }
