@@ -22,7 +22,7 @@ namespace TaxiAppsWebAPICore.Controllers
             _context = context;
         }
 
-        //TODO:: Please updfate table name 
+        //TODO:: Please update table name 
         [HttpGet]
         [Route("listStandard")]
         [Authorize]
@@ -44,6 +44,10 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OK<List<CurrencyList>>(dACurrency.ListCurrency(_context));
         }
 
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
+        //TODO:: check parent record is deleted
+        //TODO:: GET user name
         [HttpPost]
         [Route("saveCurrency")]
         [Authorize]
@@ -53,6 +57,8 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo) ? "Inserted Successfully" : "Insertion Failed");
         }
 
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
         [HttpPut]
         [Route("editCurrency")]
         [Authorize]

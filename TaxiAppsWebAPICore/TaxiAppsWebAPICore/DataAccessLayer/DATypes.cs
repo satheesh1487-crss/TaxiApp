@@ -11,19 +11,28 @@ namespace TaxiAppsWebAPICore
     {
         public List<VehicleTypeList> ListType(TaxiAppzDBContext context)
         {
-            List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
-            var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
-            foreach (var vechiles in vechilesTupe)
+            try
             {
-                vehicleTypeLists.Add(new VehicleTypeList()
+
+                List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
+                var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
+                foreach (var vechiles in vechilesTupe)
                 {
-                    Id = vechiles.Typeid,
-                    Image = vechiles.Imagename,
-                    IsActive = vechiles.IsActive==1?true:false,
-                    Name = vechiles.Typename
-                });
+                    vehicleTypeLists.Add(new VehicleTypeList()
+                    {
+                        Id = vechiles.Typeid,
+                        Image = vechiles.Imagename,
+                        IsActive = vechiles.IsActive == 1 ? true : false,
+                        Name = vechiles.Typename
+                    });
+                }
+                return vehicleTypeLists;
             }
-            return vehicleTypeLists;
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListType", context);
+                return null;
+            }
         }
         public bool AddType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo)
         {

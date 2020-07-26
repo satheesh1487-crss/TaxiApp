@@ -30,12 +30,14 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     });
                 }
                 return rolelist != null ? rolelist : null;
+
             }
             catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "ListService", context);
                 return null;
             }
+
         }
 
         public bool AddService(TaxiAppzDBContext context, ServiceInfo serviceInfo)
@@ -77,7 +79,6 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     updatedate.Currencyid = serviceInfo.CurrencyId;
                     updatedate.Name = serviceInfo.ServiceName;
                     updatedate.UpdatedAt = DateTime.UtcNow;
-
                     updatedate.UpdatedBy = "admin";
                     context.Update(updatedate);
                     context.SaveChanges();

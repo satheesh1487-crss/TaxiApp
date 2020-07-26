@@ -11,23 +11,31 @@ namespace TaxiAppsWebAPICore
     {
         public List<AdminList> List(TaxiAppzDBContext context)
         {
-            List<AdminList> addAdminList = new List<AdminList>();
-            var addAdmin = context.TabAdmin.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
-            foreach (var admin in addAdmin)
+            try
             {
-                addAdminList.Add(new AdminList()
+                List<AdminList> addAdminList = new List<AdminList>();
+                var addAdmin = context.TabAdmin.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
+                foreach (var admin in addAdmin)
                 {
-                    Email =admin.Email,
-                    Id =admin.Id,
-                    Name=admin.Firstname+' '+admin.Lastname,
-                    Role=admin.Role.ToString(),
-                    Operations="",
-                    Phoneno=admin.PhoneNumber,
-                    Rgcode=admin.RegistrationCode,
-                    Status=admin.IsActive==1?true:false
-                });
+                    addAdminList.Add(new AdminList()
+                    {
+                        Email = admin.Email,
+                        Id = admin.Id,
+                        Name = admin.Firstname + ' ' + admin.Lastname,
+                        Role = admin.Role.ToString(),
+                        Operations = "",
+                        Phoneno = admin.PhoneNumber,
+                        Rgcode = admin.RegistrationCode,
+                        Status = admin.IsActive == 1 ? true : false
+                    });
+                }
+                return addAdminList;
             }
-            return addAdminList;
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "List", context);
+                return null;
+            }
         }
 
         public AdminDetails GetbyId(long id, TaxiAppzDBContext context)
@@ -54,14 +62,14 @@ namespace TaxiAppsWebAPICore
                     adminInfo.Rolename = data.Role;
                     adminInfo.TimeZone = data.ZoneAccess;
                     adminInfo.Userlogin = data.Email;
-                 
+
                 }
 
                 return adminInfo != null ? adminInfo : null;
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetbyTypeId", context);
+                Extention.insertlog(ex.Message, "Admin", "GetbyId", context);
                 return null;
             }
         }
@@ -70,7 +78,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 TabAdmin tabAdmin = new TabAdmin();
-                tabAdmin.AdminKey= "";
+                tabAdmin.AdminKey = "";
                 tabAdmin.AdminReference = 0;
                 tabAdmin.AreaName = adminDetails.Area.ToString();
                 tabAdmin.Email = adminDetails.Email;
@@ -96,7 +104,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddType", context);
+                Extention.insertlog(ex.Message, "Admin", "Save", context);
                 return false;
             }
         }
@@ -130,7 +138,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddType", context);
+                Extention.insertlog(ex.Message, "Admin", "Edit", context);
                 return false;
             }
         }
@@ -151,7 +159,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddType", context);
+                Extention.insertlog(ex.Message, "Admin", "Delete", context);
                 return false;
             }
         }
@@ -162,7 +170,7 @@ namespace TaxiAppsWebAPICore
                 var tabAdmin = context.TabAdmin.Where(r => r.Id == id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
                 {
-                    tabAdmin.IsActive = status==true?1:0;
+                    tabAdmin.IsActive = status == true ? 1 : 0;
                     tabAdmin.UpdatedAt = DateTime.UtcNow;
                     tabAdmin.UpdatedBy = "admin";
                     context.TabAdmin.Add(tabAdmin);
@@ -172,7 +180,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddType", context);
+                Extention.insertlog(ex.Message, "Admin", "Status", context);
                 return false;
             }
         }
