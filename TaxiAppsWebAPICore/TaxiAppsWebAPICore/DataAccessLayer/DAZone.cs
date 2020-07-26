@@ -171,21 +171,24 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-                TabZone tabZone = new TabZone();
-                var tabzone = context.TabZone.Where(z => z.Zoneid == zoneid).FirstOrDefault();
+               
+                var tabzone = context.TabZone.Where(z => z.Zoneid == zoneid && z.IsDeleted ==0).FirstOrDefault();
                 var tabpolygondtls = context.TabZonepolygon.Where(z => z.Zoneid == zoneid).ToList();
-                tabzone.IsActive = isStatus ? 1 : 0;
-                tabzone.UpdatedAt = DateTime.UtcNow;
-                tabzone.UpdatedBy = "Admin";
-                context.TabZone.Update(tabzone);
-                foreach (var tabpoly in tabpolygondtls)
+                if (tabzone != null)
                 {
-                    tabpoly.IsActive = isStatus  ? 1  : 0;
-                    tabpoly.UpdatedAt = DateTime.UtcNow;
-                    tabpoly.UpdatedBy = "Admin";
-                    context.TabZonepolygon.Update(tabpoly);
+                    tabzone.IsActive = isStatus==true ? 1 : 0;
+                    tabzone.UpdatedAt = DateTime.UtcNow;
+                    tabzone.UpdatedBy = "Admin";
+                    context.TabZone.Update(tabzone);
+                    foreach (var tabpoly in tabpolygondtls)
+                    {
+                        tabpoly.IsActive = isStatus ? 1 : 0;
+                        tabpoly.UpdatedAt = DateTime.UtcNow;
+                        tabpoly.UpdatedBy = "Admin";
+                        context.TabZonepolygon.Update(tabpoly);
+                    }
+                    context.SaveChanges();
                 }
-                context.SaveChanges();
                 return true;
 
             }
