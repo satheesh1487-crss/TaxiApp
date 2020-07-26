@@ -16,7 +16,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
                 List<ServiceListModel> rolelist = new List<ServiceListModel>();
-                var listService = context.TabServicelocation.Include(t => t.Country).Include(t => t.Timezone).Include(t => t.Currency).Where(t => t.IsDeleted == 0).ToList();
+                var listService = context.TabServicelocation.Include(t => t.Country).Include(t => t.Timezone).Include(t => t.Currency).Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var service in listService)
                 {
                     rolelist.Add(new ServiceListModel()

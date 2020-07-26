@@ -14,7 +14,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public List<CurrencyList> ListCurrency(TaxiAppzDBContext context)
         {
             List<CurrencyList> currencylist = new List<CurrencyList>();
-            var currencyList = context.TabCommonCurrency.Include(t => t.Currencies).Where(t => t.IsDeleted == 0).ToList();
+            var currencyList = context.TabCommonCurrency.Include(t => t.Currencies).Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
             foreach (var currency in currencyList)
             {
                 currencylist.Add(new CurrencyList()
