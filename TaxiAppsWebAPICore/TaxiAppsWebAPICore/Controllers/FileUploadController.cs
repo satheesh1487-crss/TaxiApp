@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaxiAppsWebAPICore.TaxiModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TaxiAppsWebAPICore.Controllers
 {
@@ -17,5 +19,24 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             _context = context;
         }
+        
+         [HttpPost(@"upload")]
+
+        public IActionResult Upload(IFormFile uploadedFile)
+        {
+            try
+            {
+                var storage = StorageFactory.GetStorage();
+                var storagefile = uploadedFile.GetStorageFile();
+                var hash = storage.Save(storagefile);
+
+                return null;
+            }
+            catch (DataValidationException vx)
+            {
+                return null;
+            }
+        }
+
     }
 }
