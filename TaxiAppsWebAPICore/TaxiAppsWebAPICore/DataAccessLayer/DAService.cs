@@ -76,9 +76,9 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     updatedate.Timezoneid = serviceInfo.TimezoneId;
                     updatedate.Currencyid = serviceInfo.CurrencyId;
                     updatedate.Name = serviceInfo.ServiceName;
-                     tabServicelocation.UpdatedAt = DateTime.UtcNow;
-                     
-                    tabServicelocation.UpdatedBy = "admin";
+                    updatedate.UpdatedAt = DateTime.UtcNow;
+
+                    updatedate.UpdatedBy = "admin";
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
