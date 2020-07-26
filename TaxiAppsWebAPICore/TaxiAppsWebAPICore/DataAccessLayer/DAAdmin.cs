@@ -19,7 +19,9 @@ namespace TaxiAppsWebAPICore
                     CountryId = country.CountryId,
                     CountryCode = country.Code,
                     CountryName = country.Name,
-                    MobileCode = country.DCode
+                    MobileCode = country.DCode,
+                    CurrencyCode=country.Currency
+                  
                 });
             }
             return countryList == null ? null : countryList;

@@ -8,6 +8,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
     [Table("tab_types")]
     public partial class TabTypes
     {
+        public TabTypes()
+        {
+            TabZonetypeRelationship = new HashSet<TabZonetypeRelationship>();
+        }
+
         [Key]
         [Column("typeid")]
         public long Typeid { get; set; }
@@ -38,5 +43,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public string DeletedBy { get; set; }
         [Column("Deleted_at", TypeName = "datetime")]
         public DateTime? DeletedAt { get; set; }
+
+        [InverseProperty("Type")]
+        public virtual ICollection<TabZonetypeRelationship> TabZonetypeRelationship { get; set; }
     }
 }

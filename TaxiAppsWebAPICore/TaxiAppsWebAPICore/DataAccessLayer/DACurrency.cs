@@ -38,7 +38,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 standardlist.Add(new StandardList()
                 {
                     StandardId=currency.Currenciesid,
-                    StandardName=currency.Currency
+                    StandardName=currency.Code
                 }); ;
             }
             return standardlist;
