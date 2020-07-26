@@ -30,7 +30,7 @@ namespace TaxiAppsWebAPICore.Controllers
             if (IQAdmin != null)
             {
                 var tokenString = Extention.GenerateJWTToken(IQAdmin, _context);
-                user = new UserInfo() { Email = admin.Email, RememberToken = tokenString, Role = IQAdmin.RoleNavigation.RoleName, ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(30)),InsertedDate = IQAdmin.CreatedAt };
+                user = new UserInfo() { Email = admin.Email, RememberToken = tokenString, Role = IQAdmin.RoleNavigation.RoleName, ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),InsertedDate = IQAdmin.CreatedAt };
                 bool updatetoken = Extention.UpdateToken(IQAdmin.Id,user, _context);
 
                 return this.OK<UserInfo>(user);

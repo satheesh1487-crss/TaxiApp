@@ -21,49 +21,60 @@ namespace TaxiAppsWebAPICore.Controllers
             _context = context;
         }
 
-        /// <summary>
-        /// Use to display List of Admin
-        /// </summary>
-        /// <returns></returns>
+        //TODO:Foreignkey not yet set Roles
         [HttpGet]
-        [Route("GetsuperAdminData")]
+        [Route("list")]
         [Authorize(Policy = "superAdmin")]
-        public IActionResult GetsuperAdminData()
+        public IActionResult List()
         {
-            DARoles dARoles = new DARoles();
-            return this.OK<List<AdminList>>(dARoles.GetAdminList(_context));
+            DASuperAdmin dASuperAdmin = new DASuperAdmin();
+            return this.OK<List<AdminList>>(dASuperAdmin.List(_context));
         }
-        /// <summary>
-        /// Use to get Admin Details to Edit
-        /// </summary>
-        /// <returns></returns>
+        
+
         [HttpGet]
-        [Route("GetSuperAdminDetails")]
+        [Route("getbyId")]
         [Authorize(Policy = "superAdmin")]
-        public IActionResult GetSuperAdminDetails(long Adminid)
+        public IActionResult GetbyId(long Adminid)
         {
-            DARoles dARoles = new DARoles();
-            return this.OK<AdminList>(dARoles.GetAdminDetails(Adminid, _context));
+            DASuperAdmin dASuperAdmin = new DASuperAdmin();
+            return this.OK<AdminDetails>(dASuperAdmin.GetbyId(Adminid, _context));
         }
-        //[HttpPost]
-        //[Route("GetSuperAdminAdd")]
-        //[Authorize(Policy = "superAdmin")]
-        //public IActionResult GetSuperAdminAdd([FromBody] AdminList adminList)
-        //{
-        //    DARoles dARoles = new DARoles();
-        //    return this.OK<AdminList>(dARoles.GetAdminDetails(Adminid, _context));
-        //}
-        /// <summary>
-        /// Use to edit admin details 
-        /// </summary>
-        /// <returns></returns>
+        
         [HttpPost]
-        [Route("EditAdminDetails")]
-        [Authorize(Policy = "superAdmin")]
-        public IActionResult EditAdminDetails([FromBody] AdminList adminList)
+        [Route("save")]
+        [Authorize]
+        public IActionResult Save(AdminDetails adminDetails)
         {
-            DARoles dARoles = new DARoles();
-            return this.OK(dARoles.EditAdminDetails( _context,adminList));
+            DASuperAdmin dASuperAdmin = new DASuperAdmin();
+            return this.OKResponse(dASuperAdmin.Save(_context, adminDetails) ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpPut]
+        [Route("edit")]
+        [Authorize]
+        public IActionResult Edit(AdminDetails adminDetails)
+        {
+            DASuperAdmin dASuperAdmin = new DASuperAdmin();
+            return this.OKResponse(dASuperAdmin.Edit(_context, adminDetails) ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpPut]
+        [Route("status")]
+        [Authorize]
+        public IActionResult Status(long id,bool status)
+        {
+            DASuperAdmin dASuperAdmin = new DASuperAdmin();
+            return this.OKResponse(dASuperAdmin.Status(_context, id, status) ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpPut]
+        [Route("delete")]
+        [Authorize]
+        public IActionResult Delete(long id)
+        {
+            DASuperAdmin dASuperAdmin = new DASuperAdmin();
+            return this.OKResponse(dASuperAdmin.Delete(_context, id) ? "Inserted Successfully" : "Insertion Failed");
         }
     }
 }
