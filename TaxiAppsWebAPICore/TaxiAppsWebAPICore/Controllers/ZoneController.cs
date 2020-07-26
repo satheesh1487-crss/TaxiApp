@@ -27,7 +27,7 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OK<List<ManageZone>>(dAZone.ListZone(_context));
         }
-        [HttpPost]
+        [HttpGet]
         [Route("GetZonedetails")]
         [Authorize]
         public IActionResult GetZonedetails(long zoneid)
@@ -43,7 +43,7 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.AddZone(manageZone, _context) ? "Zone Created" : "Zone Creation Failed");
         }
-        [HttpPost]
+        [HttpPut]
         [Route("EditZone")]
         [Authorize]
         public IActionResult EditZone([FromBody] ManageZoneAdd manageZone)
@@ -51,7 +51,7 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.EditZone(manageZone, _context) ? "Zone Updated" : "Zone Updation Failed");
         }
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteZone")]
         [Authorize]
         public IActionResult DeleteZone(long zoneid)
@@ -59,7 +59,7 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.DeleteZone(zoneid, _context) ? "Zone Deleted" : "Zone Deletion Failed");
         }
-        [HttpPost]
+        [HttpPut]
         [Route("ActiveZone")]
         [Authorize]
         public IActionResult ActiveZone(long zoneid)
