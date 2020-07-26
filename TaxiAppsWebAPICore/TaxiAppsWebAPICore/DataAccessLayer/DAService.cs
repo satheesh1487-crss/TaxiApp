@@ -47,8 +47,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 tabServicelocation.Timezoneid = serviceInfo.TimezoneId;
                 tabServicelocation.Currencyid = serviceInfo.CurrencyId;
                 tabServicelocation.Name = serviceInfo.ServiceName;
-                tabServicelocation.IsActive = 0;
-                tabServicelocation.IsDeleted = 0;
+                
                 tabServicelocation.CreatedAt = DateTime.UtcNow;
                 tabServicelocation.UpdatedAt = DateTime.UtcNow;
                 tabServicelocation.CreatedBy = "admin";
@@ -77,10 +76,9 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     updatedate.Timezoneid = serviceInfo.TimezoneId;
                     updatedate.Currencyid = serviceInfo.CurrencyId;
                     updatedate.Name = serviceInfo.ServiceName;
-                    updatedate.IsActive = 0;
-                    updatedate.IsDeleted = 0;
-                    updatedate.CreatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
+                     tabServicelocation.UpdatedAt = DateTime.UtcNow;
+                     
+                    tabServicelocation.UpdatedBy = "admin";
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
