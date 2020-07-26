@@ -115,5 +115,19 @@ namespace TaxiAppsWebAPICore
             context.SaveChanges();
             return true;
         }
+        
+           /// <summary>
+        /// Get IFormFile object from StorageFileInfo object
+        /// </summary>
+        /// <param name="formFile"></param>
+        internal static StorageFileInfo GetStorageFile(this IFormFile formFile)
+        {
+            return new StorageFileInfo()
+            {
+                FormFile = formFile,
+                Extension = Path.GetExtension(formFile.FileName),
+                UploadId = Guid.NewGuid()
+            };
+        }
     }
 }
