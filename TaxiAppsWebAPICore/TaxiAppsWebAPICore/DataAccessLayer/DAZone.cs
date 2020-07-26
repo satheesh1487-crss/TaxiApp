@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using TaxiAppsWebAPICore.TaxiModels;
 
-namespace TaxiAppsWebAPICore 
+namespace TaxiAppsWebAPICore
 {
     public class DAZone
     {
@@ -32,9 +34,9 @@ namespace TaxiAppsWebAPICore
                 Extention.insertlog(ex.Message.ToString(), "Admin", "ListZone", context);
                 return null;
             }
-          
+
         }
-        public ManageZone  GetZonedetails(long zoneid,TaxiAppzDBContext context)
+        public ManageZone GetZonedetails(long zoneid, TaxiAppzDBContext context)
         {
             try
             {
@@ -63,9 +65,9 @@ namespace TaxiAppsWebAPICore
                 Extention.insertlog(ex.Message.ToString(), "Admin", "GetZonedetails", context);
                 return null;
             }
-           
+
         }
-        public bool AddZone(ManageZoneAdd manageZone,TaxiAppzDBContext context)
+        public bool AddZone(ManageZoneAdd manageZone, TaxiAppzDBContext context)
         {
             try
             {
@@ -75,7 +77,7 @@ namespace TaxiAppsWebAPICore
                 tabZone.Unit = manageZone.Unit;
                 context.TabZone.Add(tabZone);
                 context.SaveChanges();
-             
+
                 foreach (var zonepolygon in manageZone.ZonePolygoneList)
                 {
                     TabZonepolygon tabZonepolygon = new TabZonepolygon();
@@ -86,17 +88,17 @@ namespace TaxiAppsWebAPICore
                     tabZonepolygon.CreatedAt = DateTime.UtcNow;
                     tabZonepolygon.Zoneid = tabZone.Zoneid;
                     context.TabZonepolygon.Add(tabZonepolygon);
-                  
+
                 }
-                 context.SaveChanges();
+                context.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Extention.insertlog(ex.Message.ToString(), "Admin", "AddZone", context);
                 return false;
             }
-           
+
 
         }
 
@@ -110,11 +112,11 @@ namespace TaxiAppsWebAPICore
                 setzone.Servicelocid = manageZone.Serviceslocid;
                 setzone.Unit = manageZone.ZoneName;
                 context.TabZone.Update(setzone);
-               context.TabZonepolygon.RemoveRange(deletezonepolyon);
+                context.TabZonepolygon.RemoveRange(deletezonepolyon);
                 context.SaveChanges();
                 foreach (var zonepoly in manageZone.ZonePolygoneList)
                 {
-                     TabZonepolygon  tabZonepolygon = new TabZonepolygon();
+                    TabZonepolygon tabZonepolygon = new TabZonepolygon();
                     tabZonepolygon.Latitudes = zonepoly.Lat;
                     tabZonepolygon.Longitudes = zonepoly.Lng;
                     tabZonepolygon.Zoneid = setzone.Zoneid;
@@ -123,7 +125,7 @@ namespace TaxiAppsWebAPICore
                     tabZonepolygon.UpdatedBy = "Admin";
                     tabZonepolygon.UpdatedAt = DateTime.UtcNow;
                     context.TabZonepolygon.Add(tabZonepolygon);
-                   
+
                 }
                 context.SaveChanges();
                 return true;
@@ -164,10 +166,10 @@ namespace TaxiAppsWebAPICore
                 Extention.insertlog(ex.Message.ToString(), "Admin", "DeleteZone", context);
                 return false;
             }
-            
+
         }
 
-        public bool ActiveZone(long zoneid,bool isStatus, TaxiAppzDBContext context)
+        public bool ActiveZone(long zoneid, bool isStatus, TaxiAppzDBContext context)
         {
             try
             {
@@ -180,7 +182,7 @@ namespace TaxiAppsWebAPICore
                 context.TabZone.Update(tabzone);
                 foreach (var tabpoly in tabpolygondtls)
                 {
-                    tabpoly.IsActive = isStatus  ? 1  : 0;
+                    tabpoly.IsActive = isStatus ? 1 : 0;
                     tabpoly.UpdatedAt = DateTime.UtcNow;
                     tabpoly.UpdatedBy = "Admin";
                     context.TabZonepolygon.Update(tabpoly);
@@ -195,6 +197,152 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
 
+        }
+
+        public List<ZoneTypeList> ListZoneType(long zoneid, TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<ZoneTypeList> zoneTypeLists = new List<ZoneTypeList>();
+                var zonetypelist = context.TabZonetypeRelationship.Include(t => t.Type).Where(z => z.Zoneid == zoneid && z.IsDelete == 0).ToList();
+                foreach (var zonetype in zonetypelist)
+                {
+                    zoneTypeLists.Add(new ZoneTypeList()
+                    {
+                        Id = zonetype.Typeid,
+                        Name = zonetype.Type.Typename,
+                        IsDefault = zonetype.IsDefault,
+                        IsActive = zonetype.IsActive == 0 ? false : true
+
+                    });
+                }
+                return zoneTypeLists == null ? null : zoneTypeLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "ListZoneType", context);
+                return null;
+            }
+
+        }
+        public bool AddZoneType(long zoneid, ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context)
+        {
+            try
+            {
+                var isrelationshipexist = context.TabZonetypeRelationship.Any(z => z.Zoneid == zoneid);
+                TabZonetypeRelationship tabZonetypeRelationship = new TabZonetypeRelationship();
+                tabZonetypeRelationship.Zoneid = zoneTypeRelation.Zoneid;
+                tabZonetypeRelationship.Typeid = zoneTypeRelation.Typeid;
+                tabZonetypeRelationship.Paymentmode = zoneTypeRelation.Paymentmode;
+                tabZonetypeRelationship.Showbill = zoneTypeRelation.Showbill.ToUpper() == "YES" ? true : false;
+                tabZonetypeRelationship.IsActive = 1;
+                tabZonetypeRelationship.IsDefault = isrelationshipexist ? 0 : 1;
+                context.TabZonetypeRelationship.Add(tabZonetypeRelationship);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "AddZoneType", context);
+                return false;
+            }
+
+        }
+        public ZoneTypeRelation GetZoneTypebyid(long zoneid, long typeid, TaxiAppzDBContext context)
+        {
+            try
+            {
+                ZoneTypeRelation zoneTypeRelation = new ZoneTypeRelation();
+                var zonetype = context.TabZonetypeRelationship.Include(t => t.Zoneid == zoneid && t.Typeid == typeid).FirstOrDefault();
+                if (zonetype != null)
+                {
+                    zoneTypeRelation.Typeid = zonetype.Typeid;
+                    zoneTypeRelation.Paymentmode = zonetype.Paymentmode;
+                    zoneTypeRelation.Showbill = zonetype.Showbill == true ? "YES" : "NO";
+                    return zoneTypeRelation != null ? zoneTypeRelation : null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "GetZoneTypebyid", context);
+                return null;
+            }
+        }
+        public bool EditZoneType(ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context)
+        {
+            try
+            {
+                var zonetypeedit = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneTypeRelation.Zoneid).FirstOrDefault();
+                if (zonetypeedit != null)
+                {
+                    zonetypeedit.Zoneid = zoneTypeRelation.Zoneid;
+                    zonetypeedit.Typeid = zoneTypeRelation.Typeid;
+                    zonetypeedit.Paymentmode = zoneTypeRelation.Paymentmode;
+                    zonetypeedit.Showbill = zoneTypeRelation.Showbill.ToUpper() == "YES" ? true : false;
+                    zonetypeedit.IsActive = 1;
+                    context.TabZonetypeRelationship.Update(zonetypeedit);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "EditZoneType", context);
+                return false;
+            }
+
+        }
+        public bool ActiveZoneType(long zoneid,long typeid,bool isactivestatus, TaxiAppzDBContext context)
+        {
+            try
+            {
+                var zonetypeedit = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneid && z.Typeid == typeid).FirstOrDefault();
+                if (zonetypeedit != null)
+                {
+                    zonetypeedit.IsActive = isactivestatus ? 1 : 0;
+                    context.TabZonetypeRelationship.Update(zonetypeedit);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "EditZoneType", context);
+                return false;
+            }
+        }
+        public bool IsDefaultZoneType(long zoneid, long typeid, TaxiAppzDBContext context)
+        {
+            try
+            {
+                var zonetypeexist = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneid &&   z.IsDefault == 1).FirstOrDefault();
+                if (zonetypeexist != null)
+                {
+                    zonetypeexist.IsDefault = 0;
+                    context.TabZonetypeRelationship.Update(zonetypeexist);
+                    var zonetype = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneid && z.Typeid == typeid).FirstOrDefault();
+                    zonetype.IsDefault = 1 ;
+                    context.TabZonetypeRelationship.Update(zonetype);
+                    context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    var zonetype = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneid && z.Typeid == typeid).FirstOrDefault();
+                    zonetype.IsDefault = 1;
+                    context.TabZonetypeRelationship.Update(zonetype);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "IsDefaultZoneType", context);
+                return false;
+            }
         }
     }
 }

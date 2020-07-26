@@ -67,5 +67,53 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context) ? "Zone Active/Inactive" : "Failed");
         }
+        [HttpGet]
+        [Route("ListZoneType")]
+        [Authorize]
+        public IActionResult ListZoneType(long zoneid)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<List<ZoneTypeList>>(dAZone.ListZoneType(zoneid, _context));
+        }
+        [HttpPost]
+        [Route("AddZoneType")]
+        [Authorize]
+        public IActionResult AddZoneType(long zoneid,ZoneTypeRelation zoneTypeRelation)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.AddZoneType(zoneid, zoneTypeRelation, _context) ? "Saved Successfully" : "Saved Failed");
+        }
+        [HttpGet]
+        [Route("GetZoneTypebyid")]
+        [Authorize]
+        public IActionResult GetZoneTypebyid(long zoneid,long typeid, ZoneTypeRelation zoneTypeRelation)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<ZoneTypeRelation>(dAZone.GetZoneTypebyid(zoneid, typeid, _context));
+        }
+        [HttpPut]
+        [Route("EditZoneType")]
+        [Authorize]
+        public IActionResult EditZoneType(ZoneTypeRelation zoneTypeRelation)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context) ? "Updated Successfully" : "updation Failed");
+        }
+        [HttpPut]
+        [Route("ActiveZoneType")]
+        [Authorize]
+        public IActionResult ActiveZoneType(long zoneid,long typeid,bool isactivestatus,ZoneTypeRelation zoneTypeRelation)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.ActiveZoneType(zoneid,typeid, isactivestatus, _context) ? "Updated Successfully" : "updation Failed");
+        }
+        [HttpPut]
+        [Route("DefaultZoneType")]
+        [Authorize]
+        public IActionResult DefaultZoneType(long zoneid, long typeid, ZoneTypeRelation zoneTypeRelation)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.IsDefaultZoneType(zoneid, typeid, _context) ? "Updated Successfully" : "updation Failed");
+        }
     }
 }
