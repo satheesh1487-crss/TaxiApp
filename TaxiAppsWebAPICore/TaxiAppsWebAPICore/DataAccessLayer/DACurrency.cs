@@ -13,42 +13,58 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
     {
         public List<CurrencyList> ListCurrency(TaxiAppzDBContext context)
         {
-            List<CurrencyList> currencylist = new List<CurrencyList>();
-            var currencyList = context.TabCommonCurrency.Include(t => t.Currencies).Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
-            foreach (var currency in currencyList)
+            try
             {
-                currencylist.Add(new CurrencyList()
+                List<CurrencyList> currencylist = new List<CurrencyList>();
+                var currencyList = context.TabCommonCurrency.Include(t => t.Currencies).Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
+                foreach (var currency in currencyList)
                 {
-                    IsActive = currency.IsActive == 1 ? true : false,
-                    CurrencyId = currency.Currencyid,
-                    CurrencyName = currency.Currencyname,
-                    StandardName = currency.Currencies.Currency,
-                    Symbol = currency.CurrencySymbol
-                }); ;
+                    currencylist.Add(new CurrencyList()
+                    {
+                        IsActive = currency.IsActive == 1 ? true : false,
+                        CurrencyId = currency.Currencyid,
+                        CurrencyName = currency.Currencyname,
+                        StandardName = currency.Currencies.Currency,
+                        Symbol = currency.CurrencySymbol
+                    }); ;
+                }
+                return currencylist;
             }
-            return currencylist;
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListCurrency", context);
+                return null;
+            }
         }
 
         public List<StandardList> ListStandard(TaxiAppzDBContext context)
         {
-            List<StandardList> standardlist = new List<StandardList>();
-            var currencyList = context.TabCurrencies.Where(t => t.IsDelete == 0).ToList();
-            foreach (var currency in currencyList)
+            try
             {
-                standardlist.Add(new StandardList()
+                List<StandardList> standardlist = new List<StandardList>();
+                var currencyList = context.TabCurrencies.Where(t => t.IsDelete == 0).ToList();
+                foreach (var currency in currencyList)
                 {
-                    StandardId=currency.Currenciesid,
-                    StandardName=currency.Currency
-                }); ;
+                    standardlist.Add(new StandardList()
+                    {
+                        StandardId = currency.Currenciesid,
+                        StandardName = currency.Currency
+                    }); ;
+                }
+                return standardlist;
             }
-            return standardlist;
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListStandard", context);
+                return null;
+            }
         }
 
         public bool AddCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo)
         {
             try
             {
-                   if (context.TabCommonCurrency.Any(t => t.Currencyname.ToLowerInvariant() == currencyInfo.CurrencyName.ToLowerInvariant()))
+                if (context.TabCommonCurrency.Any(t => t.Currencyname.ToLowerInvariant() == currencyInfo.CurrencyName.ToLowerInvariant()))
                     throw new DataValidationException($"Artifact with name '{currencyInfo.CurrencyName}' already exists.");
                 TabCommonCurrency currency = new TabCommonCurrency();
                 currency.Currencyid = currencyInfo.CurrencyID;
@@ -67,7 +83,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddType", context);
+                Extention.insertlog(ex.Message, "Admin", "AddCurrency", context);
                 return false;
             }
         }
@@ -99,7 +115,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditType", context);
+                Extention.insertlog(ex.Message, "Admin", "EditCurrency", context);
                 return false;
             }
         }
@@ -125,7 +141,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "DeleteType", context);
+                Extention.insertlog(ex.Message, "Admin", "DeleteCurrency", context);
                 return false;
             }
         }
@@ -138,9 +154,9 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var listService = context.TabCommonCurrency.FirstOrDefault(t => t.Currencyid == id && t.IsDeleted == 0);
                 if (listService != null)
                 {
-                     currencyInfo.CurrencyName= listService.Currencyname;
-                     currencyInfo.CurrencySymbol= listService.CurrencySymbol;
-                     currencyInfo.StandardId= listService.Currenciesid;
+                    currencyInfo.CurrencyName = listService.Currencyname;
+                    currencyInfo.CurrencySymbol = listService.CurrencySymbol;
+                    currencyInfo.StandardId = listService.Currenciesid;
 
                 }
 
@@ -148,7 +164,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetbyTypeId", context);
+                Extention.insertlog(ex.Message, "Admin", "GetbyCurrencyId", context);
                 return null;
             }
         }
