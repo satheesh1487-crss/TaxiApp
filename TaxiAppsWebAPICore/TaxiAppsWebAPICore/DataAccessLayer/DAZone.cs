@@ -167,7 +167,7 @@ namespace TaxiAppsWebAPICore
             
         }
 
-        public bool ActiveZone(long zoneid, TaxiAppzDBContext context)
+        public bool ActiveZone(long zoneid,bool isStatus, TaxiAppzDBContext context)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace TaxiAppsWebAPICore
                 context.TabZone.Update(tabzone);
                 foreach (var tabpoly in tabpolygondtls)
                 {
-                    tabpoly.IsActive = 1;
+                    tabpoly.IsActive = isStatus  ? 0  : 1;
                     tabpoly.UpdatedAt = DateTime.UtcNow;
                     tabpoly.UpdatedBy = "Admin";
                     context.TabZonepolygon.Update(tabpoly);
