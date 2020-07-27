@@ -86,7 +86,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpGet]
         [Route("GetZoneTypebyid")]
         [Authorize]
-        public IActionResult GetZoneTypebyid(long zoneid,long typeid, ZoneTypeRelation zoneTypeRelation)
+        public IActionResult GetZoneTypebyid(long zoneid,long typeid)
         {
             DAZone dAZone = new DAZone();
             return this.OK<ZoneTypeRelation>(dAZone.GetZoneTypebyid(zoneid, typeid, _context));
