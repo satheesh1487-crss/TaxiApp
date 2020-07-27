@@ -22,6 +22,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
         public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
+        public virtual DbSet<TabMenu> TabMenu { get; set; }
+        public virtual DbSet<TabMenuAccess> TabMenuAccess { get; set; }
         public virtual DbSet<TabMenucode> TabMenucode { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
@@ -201,6 +203,32 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabCurrencies)
                     .HasForeignKey(d => d.Countryid)
                     .HasConstraintName("FK__tab_curre__count__0E6E26BF");
+            });
+
+            modelBuilder.Entity<TabMenu>(entity =>
+            {
+                entity.HasKey(e => e.Menuid)
+                    .HasName("PK__menu__3213E83F440BAF20");
+            });
+
+            modelBuilder.Entity<TabMenuAccess>(entity =>
+            {
+                entity.HasKey(e => e.Accessid)
+                    .HasName("PK__tab_Menu__4131EC77F9A578F5");
+
+                entity.Property(e => e.Createdby).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Viewstatus).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Menu)
+                    .WithMany(p => p.TabMenuAccess)
+                    .HasForeignKey(d => d.Menuid)
+                    .HasConstraintName("FK__tab_MenuA__Menui__12FDD1B2");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.TabMenuAccess)
+                    .HasForeignKey(d => d.Roleid)
+                    .HasConstraintName("FK__tab_MenuA__Rolei__13F1F5EB");
             });
 
             modelBuilder.Entity<TabMenucode>(entity =>

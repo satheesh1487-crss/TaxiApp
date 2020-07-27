@@ -73,6 +73,7 @@ namespace TaxiAppsWebAPICore
                 Insertdata.CreatedBy = "Admin";
                 context.TabRoles.Add(Insertdata);
                 context.SaveChanges();
+                //need to add menu access while create the role
                 return true;
             }
             catch (Exception ex)
