@@ -80,7 +80,7 @@ namespace TaxiAppsWebAPICore
                 TabAdmin tabAdmin = new TabAdmin();
                 tabAdmin.AdminKey = "";
                 tabAdmin.AdminReference = 0;
-                tabAdmin.AreaName = adminDetails.Area.ToString();
+                tabAdmin.AreaName = adminDetails.Area;
                 tabAdmin.Email = adminDetails.Email;
                 tabAdmin.EmergencyNumber = adminDetails.Emerphonenumber;
                 tabAdmin.Firstname = adminDetails.Firstname;
@@ -118,7 +118,7 @@ namespace TaxiAppsWebAPICore
                 {
                     tabAdmin.AdminKey = "";
                     tabAdmin.AdminReference = 0;
-                    tabAdmin.AreaName = adminDetails.Area.ToString();
+                    tabAdmin.AreaName = adminDetails.Area;
                     tabAdmin.Email = adminDetails.Email;
                     tabAdmin.EmergencyNumber = adminDetails.Emerphonenumber;
                     tabAdmin.Firstname = adminDetails.Firstname;
