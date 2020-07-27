@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Helper;
+using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore
@@ -73,10 +75,13 @@ namespace TaxiAppsWebAPICore
                 return null;
             }
         }
-        public bool Save(TaxiAppzDBContext context, AdminDetails adminDetails)
+        public bool Save(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
             try
             {
+                if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
+                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+
                 TabAdmin tabAdmin = new TabAdmin();
                 tabAdmin.AdminKey = "";
                 tabAdmin.AdminReference = 0;
@@ -96,8 +101,7 @@ namespace TaxiAppsWebAPICore
                 tabAdmin.IsDeleted = 0;
                 tabAdmin.CreatedAt = DateTime.UtcNow;
                 tabAdmin.UpdatedAt = DateTime.UtcNow;
-                tabAdmin.CreatedBy = "admin";
-                tabAdmin.UpdatedBy = "admin";
+                tabAdmin.UpdatedBy = tabAdmin.CreatedBy = loggedInUser.Email;
                 context.TabAdmin.Add(tabAdmin);
                 context.SaveChanges();
                 return true;
@@ -109,10 +113,13 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool Edit(TaxiAppzDBContext context, AdminDetails adminDetails)
+        public bool Edit(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
             try
             {
+                if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
+                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+
                 var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
                 {
@@ -130,7 +137,7 @@ namespace TaxiAppsWebAPICore
                     tabAdmin.Role = adminDetails.Rolename;
                     tabAdmin.ZoneAccess = adminDetails.TimeZone;
                     tabAdmin.UpdatedAt = DateTime.UtcNow;
-                    tabAdmin.UpdatedBy = "admin";
+                    tabAdmin.UpdatedBy = loggedInUser.Email;
                     context.TabAdmin.Add(tabAdmin);
                     context.SaveChanges();
                 }
@@ -142,7 +149,7 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
-        public bool Delete(TaxiAppzDBContext context, long id)
+        public bool Delete(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -151,7 +158,7 @@ namespace TaxiAppsWebAPICore
                 {
                     tabAdmin.IsDeleted = 1;
                     tabAdmin.DeletedAt = DateTime.UtcNow;
-                    tabAdmin.DeletedBy = "admin";
+                    tabAdmin.DeletedBy = loggedInUser.Email;
                     context.TabAdmin.Add(tabAdmin);
                     context.SaveChanges();
                 }
@@ -163,7 +170,7 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
-        public bool Status(TaxiAppzDBContext context, long id, bool status)
+        public bool Status(TaxiAppzDBContext context, long id, bool status, LoggedInUser loggedInUser)
         {
             try
             {
@@ -172,7 +179,7 @@ namespace TaxiAppsWebAPICore
                 {
                     tabAdmin.IsActive = status == true ? 1 : 0;
                     tabAdmin.UpdatedAt = DateTime.UtcNow;
-                    tabAdmin.UpdatedBy = "admin";
+                    tabAdmin.UpdatedBy = loggedInUser.Email;
                     context.TabAdmin.Add(tabAdmin);
                     context.SaveChanges();
                 }
