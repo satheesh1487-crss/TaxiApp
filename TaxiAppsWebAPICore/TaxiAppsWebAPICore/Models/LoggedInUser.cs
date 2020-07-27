@@ -11,6 +11,8 @@ namespace TaxiAppsWebAPICore.Models
         public string FullName { get; set; }
 
         public string RoleName { get; set; }
- 
+
+        public string Email { get; set; }
+
     }
 }

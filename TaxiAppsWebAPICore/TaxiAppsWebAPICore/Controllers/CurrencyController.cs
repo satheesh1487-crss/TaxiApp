@@ -54,7 +54,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult SaveCurrency(CurrencyInfo currencyInfo)
         {
             DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
         //TODO:: GET user name 
@@ -65,7 +65,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditCurrency(CurrencyInfo currencyInfo)
         {
             DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
         //TODO:: check parent record is deleted
         //TODO:: GET user name
@@ -75,7 +75,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteCurrency(long id)
         {
             DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.DeleteCurrency(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dACurrency.DeleteCurrency(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
 
         [HttpGet]

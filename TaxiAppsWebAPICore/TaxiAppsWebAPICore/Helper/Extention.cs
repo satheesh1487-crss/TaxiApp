@@ -143,7 +143,8 @@ namespace TaxiAppsWebAPICore
             {
                 FullName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("FullName")?.Value,
                 UserName = claimsPrincipal.Identity.Name,
-                RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value
+                RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value,
+                Email="admin"
             };
         }
     }
