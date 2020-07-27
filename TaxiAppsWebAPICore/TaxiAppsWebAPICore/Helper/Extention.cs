@@ -131,5 +131,20 @@ namespace TaxiAppsWebAPICore
                 UploadId = Guid.NewGuid()
             };
         }
+        
+          /// <summary>
+        /// Claims principal
+        /// </summary>
+        /// <param name="claimsPrincipal"></param>
+        /// <returns></returns>
+        internal static LoggedInUser ToAppUser(this ClaimsPrincipal claimsPrincipal)
+        {
+            return new LoggedInUser()
+            {
+                FullName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("FullName")?.Value,
+                UserName = claimsPrincipal.Identity.Name,
+                RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value
+            };
+        }
     }
 }
