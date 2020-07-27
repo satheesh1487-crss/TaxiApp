@@ -10,6 +10,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
     {
         public TabServicelocation()
         {
+            TabAdmin = new HashSet<TabAdmin>();
             TabZone = new HashSet<TabZone>();
         }
 
@@ -48,11 +49,13 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [InverseProperty(nameof(TabCountry.TabServicelocation))]
         public virtual TabCountry Country { get; set; }
         [ForeignKey(nameof(Currencyid))]
-        [InverseProperty(nameof(TabCurrencies.TabServicelocation))]
-        public virtual TabCurrencies Currency { get; set; }
+        [InverseProperty(nameof(TabCommonCurrency.TabServicelocation))]
+        public virtual TabCommonCurrency Currency { get; set; }
         [ForeignKey(nameof(Timezoneid))]
         [InverseProperty(nameof(TabTimezone.TabServicelocation))]
         public virtual TabTimezone Timezone { get; set; }
+        [InverseProperty("AreaNameNavigation")]
+        public virtual ICollection<TabAdmin> TabAdmin { get; set; }
         [InverseProperty("Serviceloc")]
         public virtual ICollection<TabZone> TabZone { get; set; }
     }

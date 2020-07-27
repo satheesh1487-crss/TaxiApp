@@ -23,8 +23,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [Column("admin_reference")]
         public int? AdminReference { get; set; }
         [Column("area_name")]
-        [StringLength(150)]
-        public string AreaName { get; set; }
+        public long? AreaName { get; set; }
         [Column("language")]
         public int? Language { get; set; }
         [Column("firstname")]
@@ -77,6 +76,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [StringLength(200)]
         public string DeletedBy { get; set; }
 
+        [ForeignKey(nameof(AreaName))]
+        [InverseProperty(nameof(TabServicelocation.TabAdmin))]
+        public virtual TabServicelocation AreaNameNavigation { get; set; }
         [ForeignKey(nameof(Language))]
         [InverseProperty(nameof(TabCommonLanguages.TabAdmin))]
         public virtual TabCommonLanguages LanguageNavigation { get; set; }

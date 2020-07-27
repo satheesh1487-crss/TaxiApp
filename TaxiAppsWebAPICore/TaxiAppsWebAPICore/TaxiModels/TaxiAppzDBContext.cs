@@ -60,6 +60,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
 
                 entity.Property(e => e.UpdatedBy).IsUnicode(false);
 
+                entity.HasOne(d => d.AreaNameNavigation)
+                    .WithMany(p => p.TabAdmin)
+                    .HasForeignKey(d => d.AreaName)
+                    .HasConstraintName("FK__tab_admin__area___0E391C95");
+
                 entity.HasOne(d => d.LanguageNavigation)
                     .WithMany(p => p.TabAdmin)
                     .HasForeignKey(d => d.Language)
@@ -256,7 +261,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.TabServicelocation)
                     .HasForeignKey(d => d.Currencyid)
-                    .HasConstraintName("FK__tab_servi__curre__2739D489");
+                    .HasConstraintName("FK__tab_servi__curre__0D44F85C");
 
                 entity.HasOne(d => d.Timezone)
                     .WithMany(p => p.TabServicelocation)

@@ -22,8 +22,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     rolelist.Add(new ServiceListModel()
                     {
                         Country = service.Country.Name,
-                        CurrencyCode = service.Currency.Code,
-                        CurrencySymbol = service.Currency.Symbol,
+                        CurrencyCode = service.Country.Currency,
+                        CurrencySymbol = service.Currency.CurrencySymbol,
                         ServiceId = service.Servicelocid,
                         ServiceName = service.Name,
                         TimeZone = service.Timezone.Zonedescription
