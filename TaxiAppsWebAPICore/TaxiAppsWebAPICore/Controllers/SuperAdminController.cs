@@ -68,7 +68,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dASuperAdmin.Status(_context, id, status, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        [HttpPut]
+        [HttpDelete]
         [Route("delete")]
         [Authorize]
         public IActionResult Delete(long id)

@@ -159,7 +159,7 @@ namespace TaxiAppsWebAPICore
                     tabAdmin.IsDeleted = 1;
                     tabAdmin.DeletedAt = DateTime.UtcNow;
                     tabAdmin.DeletedBy = loggedInUser.Email;
-                    context.TabAdmin.Add(tabAdmin);
+                    context.TabAdmin.Update(tabAdmin);
                     context.SaveChanges();
                 }
                 return true;

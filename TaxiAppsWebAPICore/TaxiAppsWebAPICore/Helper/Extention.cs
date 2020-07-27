@@ -114,7 +114,7 @@ namespace TaxiAppsWebAPICore
             tblErrorlog.FunctionName = functionname;
             TaxiAppzDBContext _context = new TaxiAppzDBContext();
            context.TblErrorlog.Add(tblErrorlog);
-            context.SaveChanges();
+           // context.SaveChanges();
             return true;
         }
         
