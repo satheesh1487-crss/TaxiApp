@@ -51,7 +51,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult AddRole([FromBody] Roles roles)
         {
             DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.AddRole(_context, roles) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dARoles.AddRole(_context, roles, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
         /// <summary>
         /// Use to Edit Role
@@ -61,19 +61,19 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditRole(long id,[FromBody] Roles roles)
         {
             DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.EditRole(_context,id, roles) ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dARoles.EditRole(_context,id, roles, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
         [HttpPut("DeleteRole")]
         public IActionResult DeleteRole(long id)
         {
             DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.DeleteRole(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dARoles.DeleteRole(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
         [HttpPut("DisableRole")]
         public IActionResult DisableRole(long id)
         {
             DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.DisableRole(_context, id) ? "Disable Successfully" : "Disable Failed");
+            return this.OKResponse(dARoles.DisableRole(_context, id, User.ToAppUser()) ? "Disable Successfully" : "Disable Failed");
         }
     }
 }

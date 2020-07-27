@@ -114,7 +114,7 @@ namespace TaxiAppsWebAPICore
             tblErrorlog.FunctionName = functionname;
             TaxiAppzDBContext _context = new TaxiAppzDBContext();
            context.TblErrorlog.Add(tblErrorlog);
-            context.SaveChanges();
+           // context.SaveChanges();
             return true;
         }
         
@@ -143,7 +143,8 @@ namespace TaxiAppsWebAPICore
             {
                 FullName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("FullName")?.Value,
                 UserName = claimsPrincipal.Identity.Name,
-                RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value
+                RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value,
+                Email="admin"
             };
         }
     }

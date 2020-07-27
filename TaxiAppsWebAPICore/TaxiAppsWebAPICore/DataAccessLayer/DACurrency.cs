@@ -43,7 +43,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
                 List<StandardList> standardlist = new List<StandardList>();
                 var currencyList = context.TabCurrencies.Where(t => t.IsDelete == 0).ToList();
-                foreach(var currency in currencyList)
+                foreach (var currency in currencyList)
                 {
                     standardlist.Add(new StandardList()
                     {
@@ -60,7 +60,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public bool AddCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo)
+        public bool AddCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo, LoggedInUser loggedInUser)
         {
             try
             {
@@ -75,8 +75,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 currency.IsDeleted = 0;
                 currency.CreatedAt = DateTime.UtcNow;
                 currency.UpdatedAt = DateTime.UtcNow;
-                currency.CreatedBy = "admin";
-                currency.UpdatedBy = "admin";
+                currency.UpdatedBy = currency.CreatedBy = loggedInUser.Email;
                 context.TabCommonCurrency.Add(currency);
                 context.SaveChanges();
                 return true;
@@ -88,7 +87,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public bool EditCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo)
+        public bool EditCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo, LoggedInUser loggedInUser)
         {
             try
             {
@@ -105,7 +104,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
                     updatedate.UpdatedAt = DateTime.UtcNow;
 
-                    updatedate.UpdatedBy = "admin";
+                    updatedate.UpdatedBy = loggedInUser.Email;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
@@ -120,7 +119,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public bool DeleteCurrency(TaxiAppzDBContext context, long id)
+        public bool DeleteCurrency(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -132,7 +131,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
                     updatedate.IsDeleted = 1;
                     updatedate.DeletedAt = DateTime.UtcNow;
-                    updatedate.DeletedBy = "admin";
+                    updatedate.DeletedBy = loggedInUser.Email;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;

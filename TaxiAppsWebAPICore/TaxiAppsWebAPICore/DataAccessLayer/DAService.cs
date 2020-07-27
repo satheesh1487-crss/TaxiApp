@@ -40,7 +40,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         }
 
-        public bool AddService(TaxiAppzDBContext context, ServiceInfo serviceInfo)
+        public bool AddService(TaxiAppzDBContext context, ServiceInfo serviceInfo,LoggedInUser loggedInUser)
         {
             try
             {
@@ -52,8 +52,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 
                 tabServicelocation.CreatedAt = DateTime.UtcNow;
                 tabServicelocation.UpdatedAt = DateTime.UtcNow;
-                tabServicelocation.CreatedBy = "admin";
-                tabServicelocation.UpdatedBy = "admin";
+                tabServicelocation.UpdatedBy = tabServicelocation.CreatedBy = loggedInUser.Email;
+           
                 context.TabServicelocation.Add(tabServicelocation);
                 context.SaveChanges();
                 return true;
@@ -65,7 +65,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public bool EditService(TaxiAppzDBContext context, ServiceInfo serviceInfo)
+        public bool EditService(TaxiAppzDBContext context, ServiceInfo serviceInfo, LoggedInUser loggedInUser)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     updatedate.Currencyid = serviceInfo.CurrencyId;
                     updatedate.Name = serviceInfo.ServiceName;
                     updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
+                    updatedate.UpdatedBy = loggedInUser.Email;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
@@ -93,7 +93,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public bool DeleteService(TaxiAppzDBContext context, long id)
+        public bool DeleteService(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
                     updatedate.IsDeleted = 1;
                     updatedate.DeletedAt = DateTime.UtcNow;
-                    updatedate.DeletedBy = "admin";
+                    updatedate.DeletedBy = loggedInUser.Email;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;

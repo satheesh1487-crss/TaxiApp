@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore 
@@ -59,7 +60,7 @@ namespace TaxiAppsWebAPICore
                 return null;
             }
         }
-        public bool AddRole(TaxiAppzDBContext context, Roles roles)
+        public bool AddRole(TaxiAppzDBContext context, Roles roles, LoggedInUser loggedInUser)
         {
             try
             {
@@ -70,7 +71,7 @@ namespace TaxiAppsWebAPICore
                 Insertdata.IsActive = 1;
                 Insertdata.AllRights = 1;
                 Insertdata.Locked = 1;
-                Insertdata.CreatedBy = "Admin";
+                Insertdata.CreatedBy = loggedInUser.Email;
                 context.TabRoles.Add(Insertdata);
                 context.SaveChanges();
                 //need to add menu access while create the role
@@ -82,7 +83,7 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
-        public bool EditRole(TaxiAppzDBContext context, long id, Roles roles)
+        public bool EditRole(TaxiAppzDBContext context, long id, Roles roles, LoggedInUser loggedInUser)
         {
             try
             {
@@ -96,7 +97,7 @@ namespace TaxiAppsWebAPICore
                     updatedate.IsActive = roles.IsActive.ToUpper() == "INACTIVE" ? 0 : 1;
                     updatedate.AllRights = 1;
                     updatedate.Locked = 1;
-                    updatedate.CreatedBy = "Admin";
+                    updatedate.CreatedBy = loggedInUser.Email;
                     updatedate.UpdatedAt = DateTime.Now;
                     context.Update(updatedate);
                     context.SaveChanges();
@@ -114,7 +115,7 @@ namespace TaxiAppsWebAPICore
         
        
         
-        public bool DeleteRole(TaxiAppzDBContext context, long id)
+        public bool DeleteRole(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -123,7 +124,7 @@ namespace TaxiAppsWebAPICore
                 if (updatedate != null)
                 {
                     updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.DeletedBy = "Admin";
+                    updatedate.DeletedBy = loggedInUser.Email;
                     updatedate.IsDelete = 1;
                     context.Update(updatedate);
                     context.SaveChanges();
@@ -139,7 +140,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool DisableRole(TaxiAppzDBContext context, long id)
+        public bool DisableRole(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -148,7 +149,7 @@ namespace TaxiAppsWebAPICore
                 if (updatedate != null)
                 {
                     updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.UpdatedBy = "Admin";
+                    updatedate.UpdatedBy = loggedInUser.Email;
                     updatedate.IsActive = 1;
                     context.Update(updatedate);
                     context.SaveChanges();
