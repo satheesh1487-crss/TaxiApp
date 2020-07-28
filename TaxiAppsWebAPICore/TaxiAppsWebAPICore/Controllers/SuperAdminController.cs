@@ -76,5 +76,14 @@ namespace TaxiAppsWebAPICore.Controllers
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
             return this.OKResponse(dASuperAdmin.Delete(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
+
+        [HttpPut]
+        [Route("editpassword")]
+        [Authorize]
+        public IActionResult Editpassword(AdminDetails adminDetails)
+        {
+            DASuperAdmin dASuperAdmin = new DASuperAdmin();
+            return this.OKResponse(dASuperAdmin.Editpassword(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+        }
     }
 }

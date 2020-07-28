@@ -192,5 +192,32 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
+
+        public bool Editpassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
+                //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+
+                var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
+                if (tabAdmin != null)
+                {
+                    tabAdmin.AdminKey = "";
+                    tabAdmin.AdminReference = 0;
+                    tabAdmin.Password = adminDetails.Password;
+                    tabAdmin.UpdatedAt = DateTime.UtcNow;
+                    tabAdmin.UpdatedBy = loggedInUser.Email;
+                    context.TabAdmin.Add(tabAdmin);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "Editpassword", context);
+                return false;
+            }
+        }
     }
 }
