@@ -28,7 +28,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ListType()
         {
-            DATypes dATypes = new DATypes();
+            DAVechile dATypes = new DAVechile();
             return this.OK<List<VehicleTypeList>>(dATypes.ListType(_context));
             
         }
@@ -40,7 +40,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult SaveType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
-            DATypes dATypes = new DATypes();
+            DAVechile dATypes = new DAVechile();
             return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo) ? "Inserted Successfully" : "Insertion Failed");
         }
 
@@ -51,7 +51,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
-            DATypes dATypes = new DATypes();
+            DAVechile dATypes = new DAVechile();
             return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo) ? "Updated Successfully" : "Updation Failed");
         }
 
@@ -62,7 +62,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult DeleteType(long id)
         {
-            DATypes dATypes = new DATypes();
+            DAVechile dATypes = new DAVechile();
             return this.OKResponse(dATypes.DeleteType(_context, id) ? "Deleted Successfully" : "Deletion Failed");
         }
 
@@ -71,7 +71,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult GetTypebyId(long id)
         {
-            DATypes dATypes = new DATypes();
+            DAVechile dATypes = new DAVechile();
             return this.OK<VehicleTypeInfo>(dATypes.GetbyTypeId(_context, id));
         }
 
@@ -80,7 +80,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult StatusType(long id, bool isStatus)
         {
-            DATypes dATypes = new DATypes();
+            DAVechile dATypes = new DAVechile();
             return this.OKResponse(dATypes.StatusType(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 

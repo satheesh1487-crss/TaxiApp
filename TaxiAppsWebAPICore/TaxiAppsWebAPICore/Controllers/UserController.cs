@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,13 +17,13 @@ namespace TaxiAppsWebAPICore.Controllers
     public class UserController : ControllerBase
     {
         private readonly TaxiAppzDBContext _context;
-            public  UserController(TaxiAppzDBContext context)
-            {
+        public UserController(TaxiAppzDBContext context)
+        {
             _context = context;
-           }
-        
+        }
 
-     [HttpGet]
+
+        [HttpGet]
         [Route("UserList")]
         [Authorize]
         public IActionResult GetUserList()
@@ -37,7 +38,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetBlockedUserList()
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OK<List<UserListModel>>(dAUsers.BlockedList(_context));
+            return this.OK<List<UserList>>(dAUsers.BlockedList(_context));
         }
         [HttpGet]
         [Route("GetUserEdit")]
@@ -53,15 +54,15 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteUser(long userid)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Delete(_context,userid) == true ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dAUsers.Delete(_context, userid) == true ? "Deleted Successfully" : "Deletion Failed");
         }
         [HttpPut]
         [Route("InActiveuser")]
         [Authorize]
-        public IActionResult InActiveuser(long userid,bool status)
+        public IActionResult InActiveuser(long userid, bool status)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.DisableUser(_context, userid,status) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.DisableUser(_context, userid, status) == true ? "Disabled Successfully" : "Disabled Failed");
         }
         [HttpPut]
         [Route("Edit")]
@@ -79,5 +80,52 @@ namespace TaxiAppsWebAPICore.Controllers
             DAUsers dAUsers = new DAUsers();
             return this.OKResponse(dAUsers.Save(_context, userInfoList) == true ? "Disabled Successfully" : "Disabled Failed");
         }
+
+        [HttpGet]
+        [Route("downloadUser")]
+        [Authorize]
+        public IActionResult DownloadUser()
+        {
+            DAUsers dAUsers = new DAUsers();
+            var users = dAUsers.List(_context);
+            var userlist = dAUsers.List(_context);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < userlist.Count; i++)
+            {
+                UserList customer = userlist[i];                
+                sb.Append(userlist[i].Email + ',');
+                sb.Append(userlist[i].Name + ',');
+                sb.Append(userlist[i].Phoneno + ',');
+                sb.Append("\r\n");
+
+            }
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "Grid.csv");
+        }
+
+        [HttpPost]
+        [Route("downloadBlocked")]
+        [Authorize]
+        public IActionResult DownloadBlocked()
+        {
+            DAUsers dAUsers = new DAUsers();
+            var users = dAUsers.BlockedList(_context);
+            var userlist = dAUsers.List(_context);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < userlist.Count; i++)
+            {
+                UserList customer = userlist[i];
+                sb.Append(userlist[i].Email + ',');
+                sb.Append(userlist[i].Name + ',');
+                sb.Append(userlist[i].Phoneno + ',');
+                sb.Append("\r\n");
+
+            }
+            
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "Grid.csv");
+        }
+
+
+
+
     }
 }

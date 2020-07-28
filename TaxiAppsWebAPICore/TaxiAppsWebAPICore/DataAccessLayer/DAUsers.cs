@@ -35,21 +35,21 @@ namespace TaxiAppsWebAPICore
                 return null;
             }
         }
-        public List<UserListModel> BlockedList(TaxiAppzDBContext context)
+        public List<UserList> BlockedList(TaxiAppzDBContext context)
         {
             try
             {
-                List<UserListModel> userListModel = new List<UserListModel>();
+                List<UserList> userListModel = new List<UserList>();
                 var userlist = context.TabUser.Where(u => u.IsActive == 0 && u.IsDelete == 0).ToList();
                 foreach (var user in userlist)
                 {
-                    userListModel.Add(new UserListModel()
+                    userListModel.Add(new UserList()
                     {
                         Name = user.Firstname + ' ' + user.Lastname,
-                        EMail = user.Email,
-                        PhoneNo = user.PhoneNumber,
-                        IsActive = user.IsActive == 1 ? true : false,
-                        UserID = user.Id
+                        Email = user.Email,
+                        Phoneno = user.PhoneNumber,
+                        Status = user.IsActive == 1 ? true : false,
+                        Id = user.Id
                     });
                 }
                 return userListModel == null ? null : userListModel;
@@ -155,7 +155,7 @@ namespace TaxiAppsWebAPICore
                     tabUser.Email = userInfoList.Email;
                     tabUser.Firstname = userInfoList.Firstname;
                     tabUser.Lastname = userInfoList.Lastname;
-                    tabUser.Password = userInfoList.Password;
+                   // tabUser.Password = userInfoList.Password;
                     tabUser.PhoneNumber = userInfoList.Phonenumber;
                     tabUser.ProfilePic = userInfoList.ProfilePicture;
                     tabUser.State = userInfoList.State;
