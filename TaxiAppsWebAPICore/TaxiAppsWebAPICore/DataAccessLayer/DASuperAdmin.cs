@@ -117,8 +117,8 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-                if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
-                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
+                  //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
                 var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
@@ -180,10 +180,11 @@ namespace TaxiAppsWebAPICore
                     tabAdmin.IsActive = status == true ? 1 : 0;
                     tabAdmin.UpdatedAt = DateTime.UtcNow;
                     tabAdmin.UpdatedBy = loggedInUser.Email;
-                    context.TabAdmin.Add(tabAdmin);
+                    context.Update(tabAdmin);
                     context.SaveChanges();
+                    return true;
                 }
-                return true;
+                return false;
             }
             catch (Exception ex)
             {

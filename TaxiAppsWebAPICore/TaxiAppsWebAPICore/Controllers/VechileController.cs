@@ -81,7 +81,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DATypes dATypes = new DATypes();
-            return this.OKResponse(dATypes.StatusType(_context, id, isStatus) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dATypes.StatusType(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
         [HttpGet]

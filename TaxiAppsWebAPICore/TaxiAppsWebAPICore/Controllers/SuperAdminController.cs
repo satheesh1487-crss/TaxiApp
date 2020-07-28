@@ -56,7 +56,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Edit(AdminDetails adminDetails)
         {
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Edit(_context, adminDetails, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dASuperAdmin.Edit(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
         [HttpPut]
@@ -65,7 +65,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Status(long id,bool status)
         {
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Status(_context, id, status, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dASuperAdmin.Status(_context, id, status, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
         [HttpDelete]
@@ -74,7 +74,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Delete(long id)
         {
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Delete(_context, id, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dASuperAdmin.Delete(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
     }
 }
