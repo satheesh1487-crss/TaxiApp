@@ -11,6 +11,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public TabRoles()
         {
             TabAdmin = new HashSet<TabAdmin>();
+            TabMenuAccess = new HashSet<TabMenuAccess>();
         }
 
         [Key]
@@ -46,5 +47,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
 
         [InverseProperty("RoleNavigation")]
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }
+        [InverseProperty("Role")]
+        public virtual ICollection<TabMenuAccess> TabMenuAccess { get; set; }
     }
 }
