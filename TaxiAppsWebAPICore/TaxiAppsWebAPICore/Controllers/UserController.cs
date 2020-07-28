@@ -28,7 +28,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetUserList()
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OK<List<UserListModel>>(dAUsers.GetUserList(_context));
+            return this.OK<List<UserList>>(dAUsers.List(_context));
         }
 
         [HttpGet]
@@ -37,7 +37,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetBlockedUserList()
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OK<List<UserListModel>>(dAUsers.GetBlockedUserList(_context));
+            return this.OK<List<UserListModel>>(dAUsers.BlockedList(_context));
         }
         [HttpGet]
         [Route("GetUserEdit")]
@@ -45,23 +45,39 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetUserEdit(long userid)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OK<UserListModel>(dAUsers.GetUserEdit(userid, _context));
+            return this.OK<UserListModel>(dAUsers.GetbyId(userid, _context));
         }
-        [HttpGet]
+        [HttpDelete]
         [Route("DeleteUser")]
         [Authorize]
         public IActionResult DeleteUser(long userid)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.DeleteUser(_context,userid) == true ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dAUsers.Delete(_context,userid) == true ? "Deleted Successfully" : "Deletion Failed");
         }
-        [HttpGet]
+        [HttpPut]
         [Route("InActiveuser")]
         [Authorize]
-        public IActionResult InActiveuser(long userid)
+        public IActionResult InActiveuser(long userid,bool status)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.DisableUser(_context, userid) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.DisableUser(_context, userid,status) == true ? "Disabled Successfully" : "Disabled Failed");
+        }
+        [HttpPut]
+        [Route("Edit")]
+        [Authorize]
+        public IActionResult Edit(UserInfoList userInfoList)
+        {
+            DAUsers dAUsers = new DAUsers();
+            return this.OKResponse(dAUsers.Edit(_context, userInfoList) == true ? "Disabled Successfully" : "Disabled Failed");
+        }
+        [HttpPost]
+        [Route("Save")]
+        [Authorize]
+        public IActionResult Save(UserInfoList userInfoList)
+        {
+            DAUsers dAUsers = new DAUsers();
+            return this.OKResponse(dAUsers.Save(_context, userInfoList) == true ? "Disabled Successfully" : "Disabled Failed");
         }
     }
 }
