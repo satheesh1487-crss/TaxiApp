@@ -85,5 +85,6 @@ namespace TaxiAppsWebAPICore.Controllers
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
             return this.OKResponse(dASuperAdmin.Editpassword(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
+       
     }
 }

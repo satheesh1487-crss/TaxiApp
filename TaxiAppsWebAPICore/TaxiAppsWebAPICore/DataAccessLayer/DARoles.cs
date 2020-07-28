@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -163,6 +164,78 @@ namespace TaxiAppsWebAPICore
                 Extention.insertlog(ex.Message, "Admin", "DisableRole", context);
                 return false;
             }
+        }
+        public bool AddMenuAccess(long fromroleid,long toroleid,TaxiAppzDBContext context)
+        {
+            try
+            {
+                var menulist = context.TabMenuAccess.Include(t => t.Role).Where(r => r.Roleid == fromroleid &&  r.Viewstatus == true).ToList();
+             //   var menulist = context.TabMenu.ToList();
+                if (menulist.Count > 0)
+
+                {
+                    var menuaccesslist = context.TabMenuAccess.Where(t => t.Roleid == toroleid).ToList();
+                    if (menuaccesslist.Count > 0)
+                    {
+                        context.TabMenuAccess.RemoveRange(menuaccesslist);
+                        context.SaveChanges();
+                       
+                        foreach (var menu in menulist)
+                        {
+                            TabMenuAccess tabMenuAccess = new TabMenuAccess();
+                            tabMenuAccess.Menuid = menu.Menuid;
+                            tabMenuAccess.Roleid = toroleid;
+                            tabMenuAccess.Viewstatus = false;
+                            tabMenuAccess.Createdby = DateTime.UtcNow;
+                            context.TabMenuAccess.Add(tabMenuAccess);
+                            context.SaveChanges();
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        
+                        foreach (var menu in menulist)
+                        {
+                            TabMenuAccess tabMenuAccess = new TabMenuAccess();
+                            tabMenuAccess.Menuid = menu.Menuid;
+                            tabMenuAccess.Roleid = toroleid;
+                            tabMenuAccess.Viewstatus = false;
+                            tabMenuAccess.Createdby = DateTime.UtcNow;
+                            context.TabMenuAccess.Add(tabMenuAccess);
+                            context.SaveChanges();
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch(Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "AddMenuAccess", context);
+                return false;
+            }
+          
+        }
+       
+        public string GetMenukey(string rolename,TaxiAppzDBContext context)
+        {
+            string menuname = null;
+            try
+            {
+                var menulist = context.TabMenuAccess.Include( r => r.Menu).Include(t => t.Role).Where(s => s.Role.RoleName == rolename && s.Viewstatus == true).ToList();
+                if (menulist.Count > 0)
+                {
+                    return menuname = string.Join(",", menulist.Select( x => x.Menu.Menukey));
+                }
+                return menuname;
+            }
+            catch(Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "Menukey", context);
+                return null;
+            }
+
         }
     }
 }

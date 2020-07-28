@@ -75,5 +75,12 @@ namespace TaxiAppsWebAPICore.Controllers
             DARoles dARoles = new DARoles();
             return this.OKResponse(dARoles.DisableRole(_context, id, User.ToAppUser()) ? "Disable Successfully" : "Disable Failed");
         }
+        [HttpPost]
+        [Route("AddMenuAccess")]
+        public IActionResult AddMenuAccess(long fromroleid,long toroleid)
+        {
+            DARoles dARoles = new DARoles();
+            return this.OKResponse(dARoles.AddMenuAccess(fromroleid, toroleid,_context) ? "Updated Successfully" : "Updation Failed");
+        }
     }
 }

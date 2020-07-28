@@ -61,12 +61,14 @@ namespace TaxiAppsWebAPICore
                 insertlog("Token Generation", userinfo.Email, "GenerateJWTToken",context);
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]));
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
+                DARoles dARoles = new DARoles();
+               
                 var claims = new[]
                 {
                 new Claim(JwtRegisteredClaimNames.Sub, userinfo.Firstname),
                 new Claim("lastName", userinfo.Lastname),
                 new Claim("role", userinfo.RoleNavigation.RoleName),
+                 new Claim("menukey",dARoles.GetMenukey(userinfo.RoleNavigation.RoleName,context)),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
