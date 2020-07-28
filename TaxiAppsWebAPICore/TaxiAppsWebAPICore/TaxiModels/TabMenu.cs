@@ -21,6 +21,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [Column("parentID")]
         public long? ParentId { get; set; }
         public bool? IsActive { get; set; }
+        [Column("menukey")]
+        [StringLength(100)]
+        public string Menukey { get; set; }
 
         [InverseProperty("Menu")]
         public virtual ICollection<TabMenuAccess> TabMenuAccess { get; set; }
