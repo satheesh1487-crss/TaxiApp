@@ -12,7 +12,7 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("name")]
         public string Name { set; get; }
 
-        [JsonProperty("image")]
+        [JsonProperty("`    ")]
         public string Image { set; get; }
 
         [JsonProperty("isActive")]

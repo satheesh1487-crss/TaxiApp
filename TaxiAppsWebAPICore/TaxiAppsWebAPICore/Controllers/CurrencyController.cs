@@ -65,7 +65,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditCurrency(CurrencyInfo currencyInfo)
         {
             DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
         //TODO:: check parent record is deleted
         //TODO:: GET user name
@@ -93,7 +93,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.StatusType(_context, id, isStatus) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dACurrency.StatusType(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
     }

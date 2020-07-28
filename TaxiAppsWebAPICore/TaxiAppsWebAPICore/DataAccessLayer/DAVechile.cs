@@ -7,7 +7,7 @@ using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore
 {
-    public class DATypes
+    public class DAVechile
     {
         public List<VehicleTypeList> ListType(TaxiAppzDBContext context)
         {
@@ -179,6 +179,29 @@ namespace TaxiAppsWebAPICore
                 });
             }
             return vehicleTypeLists;
+        }
+
+        public List<VehicleTypeList> List(TaxiAppzDBContext context)
+        {
+            try
+            {
+
+                List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
+                var vechilesTupe = context.TabSos.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
+                foreach (var vechiles in vechilesTupe)
+                {
+                    vehicleTypeLists.Add(new VehicleTypeList()
+                    {
+                        
+                    });
+                }
+                return vehicleTypeLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListType", context);
+                return null;
+            }
         }
 
     }

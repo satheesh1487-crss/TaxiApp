@@ -117,8 +117,8 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-                if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
-                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
+                  //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
                 var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
@@ -180,6 +180,34 @@ namespace TaxiAppsWebAPICore
                     tabAdmin.IsActive = status == true ? 1 : 0;
                     tabAdmin.UpdatedAt = DateTime.UtcNow;
                     tabAdmin.UpdatedBy = loggedInUser.Email;
+                    context.Update(tabAdmin);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "Status", context);
+                return false;
+            }
+        }
+
+        public bool Editpassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
+                //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+
+                var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
+                if (tabAdmin != null)
+                {
+                    tabAdmin.AdminKey = "";
+                    tabAdmin.AdminReference = 0;
+                    tabAdmin.Password = adminDetails.Password;
+                    tabAdmin.UpdatedAt = DateTime.UtcNow;
+                    tabAdmin.UpdatedBy = loggedInUser.Email;
                     context.TabAdmin.Add(tabAdmin);
                     context.SaveChanges();
                 }
@@ -187,7 +215,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "Status", context);
+                Extention.insertlog(ex.Message, "Admin", "Editpassword", context);
                 return false;
             }
         }
