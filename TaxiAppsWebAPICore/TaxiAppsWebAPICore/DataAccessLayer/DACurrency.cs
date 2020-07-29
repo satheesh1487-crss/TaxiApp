@@ -82,7 +82,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddCurrency", context);
+                Extention.insertlog(ex.Message, loggedInUser.Email, "AddCurrency", context);
                 return false;
             }
         }
@@ -114,7 +114,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditCurrency", context);
+                Extention.insertlog(ex.Message, loggedInUser.Email, "EditCurrency", context);
                 return false;
             }
         }
@@ -140,7 +140,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "DeleteCurrency", context);
+                Extention.insertlog(ex.Message, loggedInUser.Email, "DeleteCurrency", context);
                 return false;
             }
         }
