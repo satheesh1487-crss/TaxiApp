@@ -15,7 +15,7 @@ namespace TaxiAppsWebAPICore.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-   public  class VechileController : ControllerBase
+    public class VechileController : ControllerBase
     {
         private readonly TaxiAppzDBContext _context;
         public VechileController(TaxiAppzDBContext context)
@@ -30,10 +30,10 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAVechile dATypes = new DAVechile();
             return this.OK<List<VehicleTypeList>>(dATypes.ListType(_context));
-            
+
         }
 
-        //TODO:: GET user name 
+
         //TODO:: Duplicate record check
         [HttpPost]
         [Route("saveType")]
@@ -44,7 +44,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        //TODO:: GET user name 
+
         //TODO:: Duplicate record check
         [HttpPut]
         [Route("editType")]
@@ -56,7 +56,6 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         //TODO:: check parent record is deleted
-        //TODO:: GET user name
         [HttpDelete]
         [Route("deleteType")]
         [Authorize]
@@ -112,7 +111,6 @@ namespace TaxiAppsWebAPICore.Controllers
 
         }
 
-        //TODO:: GET user name 
         //TODO:: Duplicate record check
         [HttpPost]
         [Route("saveEmer")]
@@ -123,7 +121,6 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        //TODO:: GET user name 
         //TODO:: Duplicate record check
         [HttpPut]
         [Route("editEmer")]
@@ -135,7 +132,6 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         //TODO:: check parent record is deleted
-        //TODO:: GET user name
         [HttpDelete]
         [Route("deleteEmer")]
         [Authorize]

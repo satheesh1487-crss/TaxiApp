@@ -34,7 +34,7 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         //TODO:: Please updfate table name 
-        [HttpGet] 
+        [HttpGet]
         [Route("listCurrency")]
         [Authorize]
         public IActionResult ListCurrency()
@@ -44,10 +44,9 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OK<List<CurrencyList>>(dACurrency.ListCurrency(_context));
         }
 
-        //TODO:: GET user name 
+
         //TODO:: Duplicate record check
         //TODO:: check parent record is deleted
-        //TODO:: GET user name
         [HttpPost]
         [Route("saveCurrency")]
         [Authorize]
@@ -57,7 +56,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        //TODO:: GET user name 
+
         //TODO:: Duplicate record check
         [HttpPut]
         [Route("editCurrency")]
@@ -67,8 +66,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DACurrency dACurrency = new DACurrency();
             return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
+
         //TODO:: check parent record is deleted
-        //TODO:: GET user name
         [HttpDelete]
         [Route("deleteCurrency")]
         [Authorize]

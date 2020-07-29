@@ -48,6 +48,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAUsers dAUsers = new DAUsers();
             return this.OK<UserListModel>(dAUsers.GetbyId(userid, _context));
         }
+
+        //TODO:: check parent record is deleted
         [HttpDelete]
         [Route("DeleteUser")]
         [Authorize]
@@ -56,6 +58,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAUsers dAUsers = new DAUsers();
             return this.OKResponse(dAUsers.Delete(_context, userid, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("InActiveuser")]
         [Authorize]
@@ -64,6 +68,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAUsers dAUsers = new DAUsers();
             return this.OKResponse(dAUsers.DisableUser(_context, userid, status, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("Edit")]
         [Authorize]
@@ -72,6 +78,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAUsers dAUsers = new DAUsers();
             return this.OKResponse(dAUsers.Edit(_context, userInfoList, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpPost]
         [Route("Save")]
         [Authorize]

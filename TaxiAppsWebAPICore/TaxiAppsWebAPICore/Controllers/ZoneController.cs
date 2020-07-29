@@ -35,6 +35,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OK<ManageZone>(dAZone.GetZonedetails(zoneid, _context));
         }
+
+        //TODO:: check parent record is deleted
         [HttpPost]
         [Route("AddZone")]
         [Authorize]
@@ -43,6 +45,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.AddZone(manageZone, _context, User.ToAppUser()) ? "Zone Created" : "Zone Creation Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("EditZone")]
         [Authorize]
@@ -51,6 +55,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.EditZone(manageZone, _context, User.ToAppUser()) ? "Zone Updated" : "Zone Updation Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpDelete]
         [Route("DeleteZone")]
         [Authorize]
@@ -75,6 +81,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OK<List<ZoneTypeList>>(dAZone.ListZoneType(zoneid, _context));
         }
+
+        //TODO:: check parent record is deleted
         [HttpPost]
         [Route("AddZoneType")]
         [Authorize]
@@ -91,6 +99,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DAZone dAZone = new DAZone();
             return this.OK<ZoneTypeRelation>(dAZone.GetZoneTypebyid(zoneid, typeid, _context));
         }
+
+        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("EditZoneType")]
         [Authorize]
