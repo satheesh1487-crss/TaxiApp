@@ -26,7 +26,7 @@ namespace TaxiAppsWebAPICore.Controllers
             UserInfo userInfo = new UserInfo();
             List<TabAdmin> adminlist = _context.TabAdmin.ToList();
             var user = new UserInfo();
-            var IQAdmin = _context.TabAdmin.Include(a => a.RoleNavigation).Where(a => a.Email == admin.Email && a.Password == admin.Password).FirstOrDefault();
+            var IQAdmin = _context.TabAdmin.Include(a => a.RoleNavigation).Where(a => a.Email.ToLower().Contains(admin.Email.ToLower()) && a.Password == admin.Password).FirstOrDefault();
             if (IQAdmin != null)
             {
                 var tokenString = Extention.GenerateJWTToken(IQAdmin, _context);

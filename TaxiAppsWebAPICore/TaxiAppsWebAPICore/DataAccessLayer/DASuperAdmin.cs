@@ -75,18 +75,22 @@ namespace TaxiAppsWebAPICore
                 return null;
             }
         }
-        public bool Save(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
+        public string Save(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
             try
             {
-                if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
-                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+               
+                var emailid = context.TabAdmin.Where(t => t.Email.ToLower().Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
+                if (emailid != null)
+                  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
+                //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
                 TabAdmin tabAdmin = new TabAdmin();
                 tabAdmin.AdminKey = "";
                 tabAdmin.AdminReference = 0;
                 tabAdmin.AreaName = adminDetails.Area;
-                tabAdmin.Email = adminDetails.Email;
+                tabAdmin.Email = adminDetails.Email.ToLower();
                 tabAdmin.EmergencyNumber = adminDetails.Emerphonenumber;
                 tabAdmin.Firstname = adminDetails.Firstname;
                 tabAdmin.Language = adminDetails.Languagename;
@@ -104,12 +108,12 @@ namespace TaxiAppsWebAPICore
                 tabAdmin.UpdatedBy = tabAdmin.CreatedBy = loggedInUser.Email;
                 context.TabAdmin.Add(tabAdmin);
                 context.SaveChanges();
-                return true;
+                return "Inserted Successfully";
             }
             catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "Save", context);
-                return false;
+                return ex.Message;
             }
         }
 
