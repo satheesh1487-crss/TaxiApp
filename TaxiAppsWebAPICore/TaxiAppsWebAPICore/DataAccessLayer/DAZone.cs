@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore 
@@ -66,7 +67,7 @@ namespace TaxiAppsWebAPICore
             }
            
         }
-        public bool AddZone(ManageZoneAdd manageZone,TaxiAppzDBContext context)
+        public bool AddZone(ManageZoneAdd manageZone,TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -101,7 +102,7 @@ namespace TaxiAppsWebAPICore
 
         }
 
-        public bool EditZone(ManageZoneAdd manageZone, TaxiAppzDBContext context)
+        public bool EditZone(ManageZoneAdd manageZone, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -138,7 +139,7 @@ namespace TaxiAppsWebAPICore
 
         }
 
-        public bool DeleteZone(long zoneid, TaxiAppzDBContext context)
+        public bool DeleteZone(long zoneid, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -168,7 +169,7 @@ namespace TaxiAppsWebAPICore
             
         }
 
-        public bool ActiveZone(long zoneid,bool isStatus, TaxiAppzDBContext context)
+        public bool ActiveZone(long zoneid,bool isStatus, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -226,7 +227,7 @@ namespace TaxiAppsWebAPICore
             }
 
         }
-        public bool AddZoneType(long zoneid, ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context)
+        public bool AddZoneType(long zoneid, ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -270,7 +271,7 @@ namespace TaxiAppsWebAPICore
                 return null;
             }
         }
-        public bool EditZoneType(ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context)
+        public bool EditZoneType(ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -295,7 +296,7 @@ namespace TaxiAppsWebAPICore
             }
 
         }
-        public bool ActiveZoneType(long zoneid, long typeid, bool isactivestatus, TaxiAppzDBContext context)
+        public bool ActiveZoneType(long zoneid, long typeid, bool isactivestatus, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -315,7 +316,7 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
-        public bool IsDefaultZoneType(long zoneid, long typeid, TaxiAppzDBContext context)
+        public bool IsDefaultZoneType(long zoneid, long typeid, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {

@@ -21,18 +21,18 @@ namespace TaxiAppsWebAPICore.Controllers
             _context = context;
         }
 
-        
+
         [HttpGet]
         [Route("list")]
         [Authorize]
         public IActionResult List()
         {
-         var data = User.ToAppUser();
+            var data = User.ToAppUser();
             DAService dAService = new DAService();
             return this.OK<List<ServiceListModel>>(dAService.ListService(_context));
         }
 
-        
+
         //TODO:: Duplicate record check
         [HttpPost]
         [Route("save")]
@@ -43,7 +43,6 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAService.AddService(_context, serviceInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        //TODO:: GET user name 
         //TODO:: Duplicate record check
         [HttpPut]
         [Route("edit")]
@@ -55,7 +54,6 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         //TODO:: check parent record is deleted
-        //TODO:: GET user name 
         [HttpDelete]
         [Route("delete")]
         [Authorize]
@@ -65,7 +63,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAService.DeleteService(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
 
-       
+
         [HttpGet]
         [Route("getbyId")]
         [Authorize]

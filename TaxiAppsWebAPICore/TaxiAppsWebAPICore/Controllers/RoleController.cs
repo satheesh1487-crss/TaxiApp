@@ -45,6 +45,7 @@ namespace TaxiAppsWebAPICore.Controllers
         }
         /// <summary>
         /// Use to Add Roles
+        /// //TODO:: check parent record is deleted
         /// </summary>
         /// <returns></returns>
         [HttpPost("AddRole")]
@@ -55,6 +56,7 @@ namespace TaxiAppsWebAPICore.Controllers
         }
         /// <summary>
         /// Use to Edit Role
+        /// //TODO:: check parent record is deleted
         /// </summary>
         /// <returns></returns>
         [HttpPut("EditRole")]
@@ -63,18 +65,24 @@ namespace TaxiAppsWebAPICore.Controllers
             DARoles dARoles = new DARoles();
             return this.OKResponse(dARoles.EditRole(_context,id, roles, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpPut("DeleteRole")]
         public IActionResult DeleteRole(long id)
         {
             DARoles dARoles = new DARoles();
             return this.OKResponse(dARoles.DeleteRole(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpPut("DisableRole")]
         public IActionResult DisableRole(long id)
         {
             DARoles dARoles = new DARoles();
             return this.OKResponse(dARoles.DisableRole(_context, id, User.ToAppUser()) ? "Disable Successfully" : "Disable Failed");
         }
+
+        //TODO:: check parent record is deleted
         [HttpPost]
         [Route("AddMenuAccess")]
         public IActionResult AddMenuAccess(long fromroleid,long toroleid)

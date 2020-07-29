@@ -40,7 +40,8 @@ namespace TaxiAppsWebAPICore.Controllers
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
             return this.OK<AdminDetails>(dASuperAdmin.GetbyId(Adminid, _context));
         }
-        
+
+        //TODO:: check parent record is deleted
         [HttpPost]
         [Route("save")]
         [Authorize]
@@ -50,6 +51,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dASuperAdmin.Save(_context, adminDetails, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
+        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("edit")]
         [Authorize]
@@ -59,6 +61,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dASuperAdmin.Edit(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
+        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("status")]
         [Authorize]
@@ -68,6 +71,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dASuperAdmin.Status(_context, id, status, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
+        //TODO:: check parent record is deleted
         [HttpDelete]
         [Route("delete")]
         [Authorize]
@@ -77,6 +81,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dASuperAdmin.Delete(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
 
+        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("editpassword")]
         [Authorize]

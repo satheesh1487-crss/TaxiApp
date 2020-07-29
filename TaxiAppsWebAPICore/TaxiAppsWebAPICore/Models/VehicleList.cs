@@ -30,6 +30,34 @@ namespace TaxiAppsWebAPICore
         public string Image { set; get; } 
 
     }
+
+    public class VehicleEmerList
+    {
+        [JsonProperty("id")]
+        public long Id { set; get; }
+        [JsonProperty("name")]
+        public string Name { set; get; }
+
+        [JsonProperty("number")]
+        public string Number { set; get; }
+
+        [JsonProperty("isActive")]
+        public bool IsActive { set; get; }
+
+    }
+
+    public class VehicleEmerInfo
+    {
+        [JsonProperty("id")]
+        public long Id { set; get; }
+        [JsonProperty("name")]
+        public string Name { set; get; }
+
+        [JsonProperty("number")]
+        public string Number { set; get; }
+
+    }
+
     public class ZoneTypeList
     {
         [JsonProperty("id")]

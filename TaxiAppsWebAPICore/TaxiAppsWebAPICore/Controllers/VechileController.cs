@@ -15,7 +15,7 @@ namespace TaxiAppsWebAPICore.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-   public  class VechileController : ControllerBase
+    public class VechileController : ControllerBase
     {
         private readonly TaxiAppzDBContext _context;
         public VechileController(TaxiAppzDBContext context)
@@ -30,10 +30,10 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAVechile dATypes = new DAVechile();
             return this.OK<List<VehicleTypeList>>(dATypes.ListType(_context));
-            
+
         }
 
-        //TODO:: GET user name 
+
         //TODO:: Duplicate record check
         [HttpPost]
         [Route("saveType")]
@@ -41,10 +41,10 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult SaveType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        //TODO:: GET user name 
+
         //TODO:: Duplicate record check
         [HttpPut]
         [Route("editType")]
@@ -52,18 +52,17 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo) ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
         //TODO:: check parent record is deleted
-        //TODO:: GET user name
         [HttpDelete]
         [Route("deleteType")]
         [Authorize]
         public IActionResult DeleteType(long id)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.DeleteType(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dATypes.DeleteType(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
 
         [HttpGet]
@@ -81,7 +80,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.StatusType(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
+            return this.OKResponse(dATypes.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
         [HttpGet]
@@ -100,6 +99,65 @@ namespace TaxiAppsWebAPICore.Controllers
             countryList.Add(new ManageVehiclePriceList() { Id = 8, Image = "sasa", IsActive = true, Name = "mini" });
             return this.OK<List<ManageVehiclePriceList>>(countryList);
         }
-       
+
+
+        [HttpGet]
+        [Route("listEmer")]
+        [Authorize]
+        public IActionResult ListEmer()
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OK<List<VehicleEmerList>>(dAVechile.ListEmer(_context));
+
+        }
+
+        //TODO:: Duplicate record check
+        [HttpPost]
+        [Route("saveEmer")]
+        [Authorize]
+        public IActionResult SaveEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        //TODO:: Duplicate record check
+        [HttpPut]
+        [Route("editEmer")]
+        [Authorize]
+        public IActionResult EditEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.EditEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+        }
+
+        //TODO:: check parent record is deleted
+        [HttpDelete]
+        [Route("deleteEmer")]
+        [Authorize]
+        public IActionResult DeleteEmer(long id)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.DeleteEmer(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
+        }
+
+        [HttpGet]
+        [Route("getbyEmerId")]
+        [Authorize]
+        public IActionResult GetbyEmerId(long id)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OK<VehicleEmerInfo>(dAVechile.GetbyEmerId(_context, id));
+        }
+
+        [HttpPut]
+        [Route("statusEmer")]
+        [Authorize]
+        public IActionResult StatusEmer(long id, bool isStatus)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
+        }
+
     }
 }

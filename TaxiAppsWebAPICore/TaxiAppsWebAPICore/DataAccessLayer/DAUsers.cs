@@ -87,7 +87,7 @@ namespace TaxiAppsWebAPICore
             }
 
         }
-        public bool Delete(TaxiAppzDBContext context, long id)
+        public bool Delete(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool Save(TaxiAppzDBContext context, UserInfoList userInfoList)
+        public bool Save(TaxiAppzDBContext context, UserInfoList userInfoList, LoggedInUser loggedInUser)
         {
             try
             {
@@ -142,7 +142,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool Edit(TaxiAppzDBContext context, UserInfoList userInfoList)
+        public bool Edit(TaxiAppzDBContext context, UserInfoList userInfoList, LoggedInUser loggedInUser)
         {
             try
             {
@@ -175,7 +175,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool DisableUser(TaxiAppzDBContext context, long id, bool status)
+        public bool DisableUser(TaxiAppzDBContext context, long id, bool status, LoggedInUser loggedInUser)
         {
             try
             {
