@@ -100,6 +100,68 @@ namespace TaxiAppsWebAPICore.Controllers
             countryList.Add(new ManageVehiclePriceList() { Id = 8, Image = "sasa", IsActive = true, Name = "mini" });
             return this.OK<List<ManageVehiclePriceList>>(countryList);
         }
-       
+
+
+        [HttpGet]
+        [Route("listEmer")]
+        [Authorize]
+        public IActionResult ListEmer()
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OK<List<VehicleEmerList>>(dAVechile.ListEmer(_context));
+
+        }
+
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
+        [HttpPost]
+        [Route("saveEmer")]
+        [Authorize]
+        public IActionResult SaveEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo) ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        //TODO:: GET user name 
+        //TODO:: Duplicate record check
+        [HttpPut]
+        [Route("editEmer")]
+        [Authorize]
+        public IActionResult EditEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.EditEmer(_context, vehicleEmerInfo) ? "Updated Successfully" : "Updation Failed");
+        }
+
+        //TODO:: check parent record is deleted
+        //TODO:: GET user name
+        [HttpDelete]
+        [Route("deleteEmer")]
+        [Authorize]
+        public IActionResult DeleteEmer(long id)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.DeleteEmer(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+        }
+
+        [HttpGet]
+        [Route("getbyEmerId")]
+        [Authorize]
+        public IActionResult GetbyEmerId(long id)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OK<VehicleEmerInfo>(dAVechile.GetbyEmerId(_context, id));
+        }
+
+        [HttpPut]
+        [Route("statusEmer")]
+        [Authorize]
+        public IActionResult StatusEmer(long id, bool isStatus)
+        {
+            DAVechile dAVechile = new DAVechile();
+            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
+        }
+
     }
 }
