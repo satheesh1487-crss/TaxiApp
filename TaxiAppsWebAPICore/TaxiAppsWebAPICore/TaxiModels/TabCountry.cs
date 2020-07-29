@@ -13,6 +13,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
             TabAdmin = new HashSet<TabAdmin>();
             TabAdminDetails = new HashSet<TabAdminDetails>();
             TabCurrencies = new HashSet<TabCurrencies>();
+            TabDrivers = new HashSet<TabDrivers>();
             TabServicelocation = new HashSet<TabServicelocation>();
             TabTimezone = new HashSet<TabTimezone>();
             TabUser = new HashSet<TabUser>();
@@ -45,6 +46,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual ICollection<TabAdminDetails> TabAdminDetails { get; set; }
         [InverseProperty("Country")]
         public virtual ICollection<TabCurrencies> TabCurrencies { get; set; }
+        [InverseProperty("Country")]
+        public virtual ICollection<TabDrivers> TabDrivers { get; set; }
         [InverseProperty("Country")]
         public virtual ICollection<TabServicelocation> TabServicelocation { get; set; }
         [InverseProperty("Country")]

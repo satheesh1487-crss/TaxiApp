@@ -11,6 +11,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public TabServicelocation()
         {
             TabAdmin = new HashSet<TabAdmin>();
+            TabDrivers = new HashSet<TabDrivers>();
             TabZone = new HashSet<TabZone>();
         }
 
@@ -56,6 +57,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual TabTimezone Timezone { get; set; }
         [InverseProperty("AreaNameNavigation")]
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }
+        [InverseProperty("Serviceloc")]
+        public virtual ICollection<TabDrivers> TabDrivers { get; set; }
         [InverseProperty("Serviceloc")]
         public virtual ICollection<TabZone> TabZone { get; set; }
     }

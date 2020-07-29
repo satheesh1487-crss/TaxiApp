@@ -22,6 +22,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
         public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
+        public virtual DbSet<TabDrivers> TabDrivers { get; set; }
         public virtual DbSet<TabMenu> TabMenu { get; set; }
         public virtual DbSet<TabMenuAccess> TabMenuAccess { get; set; }
         public virtual DbSet<TabMenucode> TabMenucode { get; set; }
@@ -203,6 +204,61 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabCurrencies)
                     .HasForeignKey(d => d.Countryid)
                     .HasConstraintName("FK__tab_curre__count__0E6E26BF");
+            });
+
+            modelBuilder.Entity<TabDrivers>(entity =>
+            {
+                entity.HasKey(e => e.Driverid)
+                    .HasName("PK__tab_Driv__F1B2D17C7A0C01B0");
+
+                entity.Property(e => e.Carcolor).IsUnicode(false);
+
+                entity.Property(e => e.Carmanufacturer).IsUnicode(false);
+
+                entity.Property(e => e.Carmodel).IsUnicode(false);
+
+                entity.Property(e => e.Carnumber).IsUnicode(false);
+
+                entity.Property(e => e.City).IsUnicode(false);
+
+                entity.Property(e => e.Company).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                entity.Property(e => e.Gender).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.NationalId).IsUnicode(false);
+
+                entity.Property(e => e.Password).IsUnicode(false);
+
+                entity.Property(e => e.State).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.TabDrivers)
+                    .HasForeignKey(d => d.Countryid)
+                    .HasConstraintName("FK__tab_Drive__count__18B6AB08");
+
+                entity.HasOne(d => d.Serviceloc)
+                    .WithMany(p => p.TabDrivers)
+                    .HasForeignKey(d => d.Servicelocid)
+                    .HasConstraintName("FK__tab_Drive__servi__19AACF41");
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.TabDrivers)
+                    .HasForeignKey(d => d.Typeid)
+                    .HasConstraintName("FK__tab_Drive__typei__1A9EF37A");
             });
 
             modelBuilder.Entity<TabMenu>(entity =>
