@@ -41,7 +41,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult SaveType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
         //TODO:: GET user name 
@@ -52,7 +52,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo) ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
         //TODO:: check parent record is deleted
@@ -63,7 +63,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteType(long id)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.DeleteType(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dATypes.DeleteType(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
 
         [HttpGet]
@@ -81,7 +81,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.StatusType(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
+            return this.OKResponse(dATypes.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
         [HttpGet]
@@ -120,7 +120,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult SaveEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
         {
             DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
         //TODO:: GET user name 
@@ -131,7 +131,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
         {
             DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.EditEmer(_context, vehicleEmerInfo) ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dAVechile.EditEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
         //TODO:: check parent record is deleted
@@ -142,7 +142,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteEmer(long id)
         {
             DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.DeleteEmer(_context, id) ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dAVechile.DeleteEmer(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
 
         [HttpGet]
@@ -160,7 +160,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusEmer(long id, bool isStatus)
         {
             DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
+            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
     }

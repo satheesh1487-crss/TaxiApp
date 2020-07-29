@@ -93,7 +93,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.StatusType(_context, id, isStatus) ? "Status Changed Successfully" : "Status Changed Failed");
+            return this.OKResponse(dACurrency.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
     }

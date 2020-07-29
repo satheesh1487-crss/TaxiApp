@@ -168,7 +168,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public bool StatusType(TaxiAppzDBContext context, long id, bool isStatus)
+        public bool StatusType(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
             try
             {

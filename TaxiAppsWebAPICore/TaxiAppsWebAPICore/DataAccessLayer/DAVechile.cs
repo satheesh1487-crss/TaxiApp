@@ -34,7 +34,7 @@ namespace TaxiAppsWebAPICore
                 return null;
             }
         }
-        public bool AddType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo)
+        public bool AddType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo, LoggedInUser loggedInUser)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool EditType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo)
+        public bool EditType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo, LoggedInUser loggedInUser)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool DeleteType(TaxiAppzDBContext context, long id)
+        public bool DeleteType(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -139,7 +139,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool StatusType(TaxiAppzDBContext context, long id, bool isStatus)
+        public bool StatusType(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
             try
             {
@@ -207,7 +207,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool SaveEmer(TaxiAppzDBContext context, VehicleEmerInfo vehicleEmerInfo)
+        public bool SaveEmer(TaxiAppzDBContext context, VehicleEmerInfo vehicleEmerInfo, LoggedInUser loggedInUser)
         {
             try
             {
@@ -230,7 +230,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool EditEmer(TaxiAppzDBContext context, VehicleEmerInfo vehicleEmerInfo)
+        public bool EditEmer(TaxiAppzDBContext context, VehicleEmerInfo vehicleEmerInfo, LoggedInUser loggedInUser)
         {
             try
             {
@@ -257,7 +257,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool DeleteEmer(TaxiAppzDBContext context, long id)
+        public bool DeleteEmer(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
@@ -306,7 +306,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool StatusEmer(TaxiAppzDBContext context, long id, bool isStatus)
+        public bool StatusEmer(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
             try
             {

@@ -54,7 +54,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteUser(long userid)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Delete(_context, userid) == true ? "Deleted Successfully" : "Deletion Failed");
+            return this.OKResponse(dAUsers.Delete(_context, userid, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
         }
         [HttpPut]
         [Route("InActiveuser")]
@@ -62,7 +62,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult InActiveuser(long userid, bool status)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.DisableUser(_context, userid, status) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.DisableUser(_context, userid, status, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
         }
         [HttpPut]
         [Route("Edit")]
@@ -70,7 +70,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Edit(UserInfoList userInfoList)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Edit(_context, userInfoList) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.Edit(_context, userInfoList, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
         }
         [HttpPost]
         [Route("Save")]
@@ -78,7 +78,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Save(UserInfoList userInfoList)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Save(_context, userInfoList) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.Save(_context, userInfoList, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
         }
 
         [HttpGet]

@@ -41,7 +41,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult AddZone([FromBody] ManageZoneAdd manageZone)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.AddZone(manageZone, _context) ? "Zone Created" : "Zone Creation Failed");
+            return this.OKResponse(dAZone.AddZone(manageZone, _context, User.ToAppUser()) ? "Zone Created" : "Zone Creation Failed");
         }
         [HttpPut]
         [Route("EditZone")]
@@ -49,7 +49,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditZone([FromBody] ManageZoneAdd manageZone)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.EditZone(manageZone, _context) ? "Zone Updated" : "Zone Updation Failed");
+            return this.OKResponse(dAZone.EditZone(manageZone, _context, User.ToAppUser()) ? "Zone Updated" : "Zone Updation Failed");
         }
         [HttpDelete]
         [Route("DeleteZone")]
@@ -57,7 +57,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteZone(long zoneid)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.DeleteZone(zoneid, _context) ? "Zone Deleted" : "Zone Deletion Failed");
+            return this.OKResponse(dAZone.DeleteZone(zoneid, _context, User.ToAppUser()) ? "Zone Deleted" : "Zone Deletion Failed");
         }
         [HttpPut]
         [Route("ActiveZone")]
@@ -65,7 +65,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult ActiveZone(long zoneid,bool isStatus)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context) ? "Zone Active/Inactive" : "Failed");
+            return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context, User.ToAppUser()) ? "Zone Active/Inactive" : "Failed");
         }
         [HttpGet]
         [Route("ListZoneType")]
@@ -81,7 +81,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult AddZoneType(long zoneid,ZoneTypeRelation zoneTypeRelation)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.AddZoneType(zoneid, zoneTypeRelation, _context) ? "Saved Successfully" : "Saved Failed");
+            return this.OKResponse(dAZone.AddZoneType(zoneid, zoneTypeRelation, _context, User.ToAppUser()) ? "Saved Successfully" : "Saved Failed");
         }
         [HttpGet]
         [Route("GetZoneTypebyid")]
@@ -97,7 +97,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditZoneType(ZoneTypeRelation zoneTypeRelation)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context) ? "Updated Successfully" : "updation Failed");
+            return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
         }
         [HttpPut]
         [Route("ActiveZoneType")]
@@ -105,7 +105,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult ActiveZoneType(long zoneid,long typeid,bool isactivestatus,ZoneTypeRelation zoneTypeRelation)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZoneType(zoneid,typeid, isactivestatus, _context) ? "Updated Successfully" : "updation Failed");
+            return this.OKResponse(dAZone.ActiveZoneType(zoneid,typeid, isactivestatus, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
         }
         [HttpPut]
         [Route("DefaultZoneType")]
@@ -113,7 +113,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DefaultZoneType(long zoneid, long typeid, ZoneTypeRelation zoneTypeRelation)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.IsDefaultZoneType(zoneid, typeid, _context) ? "Updated Successfully" : "updation Failed");
+            return this.OKResponse(dAZone.IsDefaultZoneType(zoneid, typeid, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
         }
     }
 }
