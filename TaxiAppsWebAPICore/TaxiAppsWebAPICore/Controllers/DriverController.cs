@@ -36,9 +36,9 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         [HttpGet]
-        [Route("BlockedUserList")]
+        [Route("BlockedDriverList")]
         [Authorize]
-        public IActionResult GetBlockedUserList()
+        public IActionResult GetBlockedDriverList()
         {
             DADriver dADriver = new DADriver();
             return this.OK<List<DriverList>>(dADriver.BlockedList(_context));
@@ -94,9 +94,9 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         [HttpGet]
-        [Route("downloadUser")]
+        [Route("downloadDriver")]
         [Authorize]
-        public IActionResult DownloadUser()
+        public IActionResult DownloadDriver()
         {
             DADriver dADriver = new DADriver();
             var drivers = dADriver.List(_context);
