@@ -85,10 +85,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpPost]
         [Route("editPassword")]
         [Authorize]
-        public IActionResult EditPassword(AdminDetails adminDetails)
+        public IActionResult EditPassword(AdminPassword adminPassword)
         {
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.EditPassword(_context, adminDetails, User.ToAppUser()));
+            return this.OKResponse(dASuperAdmin.EditPassword(_context, adminPassword, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
     }

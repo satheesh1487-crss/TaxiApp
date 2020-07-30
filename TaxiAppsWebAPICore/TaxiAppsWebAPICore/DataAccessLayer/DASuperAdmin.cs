@@ -197,24 +197,21 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool EditPassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
+        public bool EditPassword(TaxiAppzDBContext context, AdminPassword adminPassword, LoggedInUser loggedInUser)
         {
             try
             {
 
-                var emailid = context.TabAdmin.Where(t => t.Email.Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
+                var emailid = context.TabAdmin.Where(t => t.Id == adminPassword.Id && t.IsDeleted == 0).FirstOrDefault();
                 if (emailid != null)
-                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                    throw new DataValidationException($"This user does not exists.");
                 //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
                 //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
-                TabAdmin tabAdmin = new TabAdmin();
-                
-                tabAdmin.Password = adminDetails.Password;
-                tabAdmin.CreatedAt = DateTime.UtcNow;
-                tabAdmin.UpdatedAt = DateTime.UtcNow;
-                tabAdmin.UpdatedBy = tabAdmin.CreatedBy = loggedInUser.Email;
-                context.TabAdmin.Add(tabAdmin);
+                emailid.Password = adminPassword.Password;
+                emailid.UpdatedAt = DateTime.UtcNow;
+                emailid.UpdatedBy = loggedInUser.Email;
+                context.TabAdmin.Update(emailid);
                 context.SaveChanges();
                 return true;
             }
