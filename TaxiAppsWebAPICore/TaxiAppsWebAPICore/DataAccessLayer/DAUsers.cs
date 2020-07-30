@@ -115,6 +115,7 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
+               
                 TabUser tabUser = new TabUser();
                 tabUser.Address = userInfoList.Address;
                 tabUser.City = userInfoList.City;
@@ -137,7 +138,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "Delete", context);
+                Extention.insertlog(ex.Message, "Admin", "Save", context);
                 return false;
             }
         }
