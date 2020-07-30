@@ -82,14 +82,14 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         //TODO:: check parent record is deleted
-        [HttpPut]
-        [Route("editpassword")]
+        [HttpPost]
+        [Route("editPassword")]
         [Authorize]
-        public IActionResult Editpassword(AdminDetails adminDetails)
+        public IActionResult EditPassword(AdminDetails adminDetails)
         {
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Editpassword(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dASuperAdmin.EditPassword(_context, adminDetails, User.ToAppUser()));
         }
-       
+
     }
 }

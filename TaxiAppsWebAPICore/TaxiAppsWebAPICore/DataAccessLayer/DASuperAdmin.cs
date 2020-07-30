@@ -79,10 +79,10 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-               
+
                 var emailid = context.TabAdmin.Where(t => t.Email.Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
                 if (emailid != null)
-                  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
                 //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
                 //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
@@ -122,7 +122,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
-                  //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
                 var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
@@ -197,30 +197,32 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool Editpassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
+        public string EditPassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
             try
             {
-                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
-                //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
-                var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
-                if (tabAdmin != null)
-                {
-                    tabAdmin.AdminKey = "";
-                    tabAdmin.AdminReference = 0;
-                    tabAdmin.Password = adminDetails.Password;
-                    tabAdmin.UpdatedAt = DateTime.UtcNow;
-                    tabAdmin.UpdatedBy = loggedInUser.Email;
-                    context.TabAdmin.Add(tabAdmin);
-                    context.SaveChanges();
-                }
-                return true;
+                var emailid = context.TabAdmin.Where(t => t.Email.Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
+                if (emailid != null)
+                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
+                //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+
+                TabAdmin tabAdmin = new TabAdmin();
+                tabAdmin.AdminKey = "";
+                tabAdmin.AdminReference = 0;
+                tabAdmin.Password = adminDetails.Password;
+                tabAdmin.CreatedAt = DateTime.UtcNow;
+                tabAdmin.UpdatedAt = DateTime.UtcNow;
+                tabAdmin.UpdatedBy = tabAdmin.CreatedBy = loggedInUser.Email;
+                context.TabAdmin.Add(tabAdmin);
+                context.SaveChanges();
+                return "Inserted Successfully";
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "Editpassword", context);
-                return false;
+                Extention.insertlog(ex.Message, loggedInUser.Email, "EditPassword", context);
+                return ex.Message;
             }
         }
     }
