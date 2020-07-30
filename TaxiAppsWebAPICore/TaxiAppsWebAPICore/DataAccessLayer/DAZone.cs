@@ -352,7 +352,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 List<SetPrice> setPrices = new List<SetPrice>();
-                long getzonetypeid = context.TabZonetypeRelationship.Where(t => t.Zonetypeid == zoneid && t.Typeid == typeid).Select(t => t.Zonetypeid).SingleOrDefault();
+                long getzonetypeid = context.TabZonetypeRelationship.Where(t => t.Zoneid == zoneid && t.Typeid == typeid).Select(t => t.Zonetypeid).SingleOrDefault();
                 if (getzonetypeid != 0)
                 {
                     var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == getzonetypeid).ToList();
@@ -380,7 +380,7 @@ namespace TaxiAppsWebAPICore
                         }
                         return setPrices;
                     }
-                    return null;
+                    return setPrices;
                 }
                 return null;
             }
@@ -422,28 +422,31 @@ namespace TaxiAppsWebAPICore
                 }
                 else
                 {
-                    var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == setPrice[0].SetPriceid).ToList();
+                    var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == setPrice[0].ZoneTypeid).ToList();
                     if(getsetpricelist.Count > 0)
                     {
-                       foreach(var setpricedtls in getsetpricelist)
+                        int index = 0;
+                       foreach(var setpricedtls in setPrice)
                         {
-                            setpricedtls.Zonetypeid = setpricedtls.Zonetypeid;
-                            setpricedtls.Baseprice = setpricedtls.Baseprice;
-                            setpricedtls.Pricepertime = setpricedtls.Pricepertime;
-                            setpricedtls.Basedistance = setpricedtls.Basedistance;
-                            setpricedtls.Priceperdistance = setpricedtls.Priceperdistance;
-                            setpricedtls.Freewaitingtime = setpricedtls.Freewaitingtime;
-                            setpricedtls.Waitingcharges = setpricedtls.Waitingcharges;
-                            setpricedtls.Cancellationfee = setpricedtls.Cancellationfee;
-                            setpricedtls.Dropfee = setpricedtls.Dropfee;
-                            setpricedtls.Admincommtype = setpricedtls.Admincommtype;
-                            setpricedtls.Admincommission = setpricedtls.Admincommission;
-                            setpricedtls.Driversavingper = setpricedtls.Driversavingper;
-                            setpricedtls.RideType = setpricedtls.RideType;
-                            context.TabSetpriceZonetype.Update(setpricedtls);
+                              
+                            getsetpricelist[index].Zonetypeid = setpricedtls.ZoneTypeid;
+                            getsetpricelist[index].Baseprice = setpricedtls.BasePrice;
+                            getsetpricelist[index].Pricepertime = setpricedtls.PricePerTime;
+                            getsetpricelist[index].Basedistance = setpricedtls.BaseDistance;
+                            getsetpricelist[index].Priceperdistance = setpricedtls.PricePerDistance;
+                            getsetpricelist[index].Freewaitingtime = setpricedtls.Freewaitingtime;
+                            getsetpricelist[index].Waitingcharges = setpricedtls.WaitingCharges;
+                            getsetpricelist[index].Cancellationfee = setpricedtls.CancellationFee;
+                            getsetpricelist[index].Dropfee = setpricedtls.DropFee;
+                            getsetpricelist[index].Admincommtype = setpricedtls.admincommtype;
+                            getsetpricelist[index].Admincommission = setpricedtls.admincommission;
+                            getsetpricelist[index].Driversavingper = setpricedtls.Driversavingper;
+                            getsetpricelist[index].RideType = setpricedtls.RideType;
+                            context.TabSetpriceZonetype.Update(getsetpricelist[index]);
+                            index++;
                         }
                         context.SaveChanges();
-                        return false;
+                        return true;
                     }
                 }
                 return false;
