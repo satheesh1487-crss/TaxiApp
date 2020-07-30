@@ -197,7 +197,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public string EditPassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
+        public bool EditPassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
             try
             {
@@ -209,20 +209,19 @@ namespace TaxiAppsWebAPICore
                 //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
                 TabAdmin tabAdmin = new TabAdmin();
-                tabAdmin.AdminKey = "";
-                tabAdmin.AdminReference = 0;
+                
                 tabAdmin.Password = adminDetails.Password;
                 tabAdmin.CreatedAt = DateTime.UtcNow;
                 tabAdmin.UpdatedAt = DateTime.UtcNow;
                 tabAdmin.UpdatedBy = tabAdmin.CreatedBy = loggedInUser.Email;
                 context.TabAdmin.Add(tabAdmin);
                 context.SaveChanges();
-                return "Inserted Successfully";
+                return true;
             }
             catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, loggedInUser.Email, "EditPassword", context);
-                return ex.Message;
+                return false;
             }
         }
     }
