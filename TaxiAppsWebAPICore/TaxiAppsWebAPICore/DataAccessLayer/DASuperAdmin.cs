@@ -80,7 +80,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                
-                var emailid = context.TabAdmin.Where(t => t.Email.ToLower().Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
+                var emailid = context.TabAdmin.Where(t => t.Email.Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
                 if (emailid != null)
                   throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
                 //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))

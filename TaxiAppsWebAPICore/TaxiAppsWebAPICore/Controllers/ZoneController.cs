@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -124,6 +125,22 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.IsDefaultZoneType(zoneid, typeid, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
+        }
+        [HttpGet]
+        [Route("GetSetprice")]
+        [Authorize]
+        public IActionResult GetSetprice(long zoneid, long typeid)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<List<SetPrice>>(dAZone.GetSetprice(zoneid, typeid, _context));
+        }
+        [HttpPut]
+        [Route("EditSetprice")]
+        [Authorize]
+        public IActionResult EditSetprice([FromBody]List<SetPrice> setPrice)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OKResponse(dAZone.EditSetprice(setPrice, _context) ? "Update Successfully" : "Updation Failed");
         }
     }
 }

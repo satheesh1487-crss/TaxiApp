@@ -8,6 +8,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
     [Table("tab_zonetype_relationship")]
     public partial class TabZonetypeRelationship
     {
+        public TabZonetypeRelationship()
+        {
+            TabSetpriceZonetype = new HashSet<TabSetpriceZonetype>();
+        }
+
         [Key]
         [Column("zonetypeid")]
         public long Zonetypeid { get; set; }
@@ -49,5 +54,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(Zoneid))]
         [InverseProperty(nameof(TabZone.TabZonetypeRelationship))]
         public virtual TabZone Zone { get; set; }
+        [InverseProperty("Zonetype")]
+        public virtual ICollection<TabSetpriceZonetype> TabSetpriceZonetype { get; set; }
     }
 }

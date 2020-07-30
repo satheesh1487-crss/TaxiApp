@@ -48,7 +48,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [StringLength(20)]
         public string EmergencyNumber { get; set; }
         [Column("remember_token")]
-        [StringLength(600)]
+        [StringLength(2000)]
         public string RememberToken { get; set; }
         [Column("created_at", TypeName = "datetime")]
         public DateTime? CreatedAt { get; set; }
