@@ -82,7 +82,7 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         //TODO:: check parent record is deleted
-        [HttpPost]
+        [HttpPut]
         [Route("editPassword")]
         [Authorize]
         public IActionResult EditPassword(AdminPassword adminPassword)

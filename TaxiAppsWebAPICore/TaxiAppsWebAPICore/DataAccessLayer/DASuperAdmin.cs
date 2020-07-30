@@ -203,7 +203,7 @@ namespace TaxiAppsWebAPICore
             {
 
                 var emailid = context.TabAdmin.Where(t => t.Id == adminPassword.Id && t.IsDeleted == 0).FirstOrDefault();
-                if (emailid != null)
+                if (emailid == null)
                     throw new DataValidationException($"This user does not exists.");
                 //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
                 //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
