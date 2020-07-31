@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace TaxiAppsWebAPICore
 {
-    public class AdminDetails
+    public class AdminDetails:AdminPassword
     {
-        [JsonProperty("id")]
-        public long Id { get; set; }
-       
+             
         [JsonProperty("firstname")]
         public string Firstname { get; set; }
        
@@ -63,5 +61,13 @@ namespace TaxiAppsWebAPICore
         public string Document { get; set; }
         
 
+    }
+    public class AdminPassword
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("password")]
+        public string Password { get; set; }
     }
 }

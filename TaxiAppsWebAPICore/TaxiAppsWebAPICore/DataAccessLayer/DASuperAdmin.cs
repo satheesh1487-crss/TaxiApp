@@ -79,10 +79,10 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-               
+
                 var emailid = context.TabAdmin.Where(t => t.Email.Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
                 if (emailid != null)
-                  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
                 //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
                 //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
@@ -122,7 +122,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
-                  //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+                //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
                 var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
@@ -197,29 +197,27 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool Editpassword(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
+        public bool EditPassword(TaxiAppzDBContext context, AdminPassword adminPassword, LoggedInUser loggedInUser)
         {
             try
             {
-                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
-                //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
 
-                var tabAdmin = context.TabAdmin.Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
-                if (tabAdmin != null)
-                {
-                    tabAdmin.AdminKey = "";
-                    tabAdmin.AdminReference = 0;
-                    tabAdmin.Password = adminDetails.Password;
-                    tabAdmin.UpdatedAt = DateTime.UtcNow;
-                    tabAdmin.UpdatedBy = loggedInUser.Email;
-                    context.TabAdmin.Add(tabAdmin);
-                    context.SaveChanges();
-                }
+                var emailid = context.TabAdmin.Where(t => t.Id == adminPassword.Id && t.IsDeleted == 0).FirstOrDefault();
+                if (emailid == null)
+                    throw new DataValidationException($"This user does not exists.");
+                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
+                //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+
+                emailid.Password = adminPassword.Password;
+                emailid.UpdatedAt = DateTime.UtcNow;
+                emailid.UpdatedBy = loggedInUser.Email;
+                context.TabAdmin.Update(emailid);
+                context.SaveChanges();
                 return true;
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "Editpassword", context);
+                Extention.insertlog(ex.Message, loggedInUser.Email, "EditPassword", context);
                 return false;
             }
         }

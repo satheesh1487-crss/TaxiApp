@@ -240,8 +240,7 @@ namespace TaxiAppsWebAPICore
 
                     tabSos.Sosname= vehicleEmerInfo.Name;
                     tabSos.ContactNumber = vehicleEmerInfo.Number;
-                    tabSos.IsActive = 0;
-                    tabSos.IsDeleted = 0;
+                  
                     tabSos.UpdatedAt = DateTime.UtcNow;
                     tabSos.UpdatedBy = "admin";
                     context.Update(tabSos);
