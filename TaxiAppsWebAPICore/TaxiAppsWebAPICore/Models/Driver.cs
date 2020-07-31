@@ -122,4 +122,31 @@ namespace TaxiAppsWebAPICore
         public string ProfilePic { get; set; }
 
     }
+    public class DriverAddWallet
+    {
+        [JsonProperty("driverid")]
+        public long DriverId { get; set; }
+
+        [JsonProperty("transactionid")]
+        public long ?Transactionid { get; set; }
+
+        [JsonProperty("currencyid")]
+        public long ?Currencyid { get; set; }
+
+        [JsonProperty("walletamount")]
+        public double ?Walletamount { get; set; }
+    }
+
+    public class DriverFineList
+    {
+        [JsonProperty("fineamount")]
+        public long Fineamount { get; set; }
+
+        [JsonProperty("fine_reason")]
+        public long Fine_reason { get; set; }
+
+        [JsonProperty("finepaid_status")]
+        public long Finepaid_status { get; set; }
+    }
+
 }

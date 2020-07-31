@@ -226,6 +226,58 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 return false;
             }
         }
+
+        public bool AddWallet(TaxiAppzDBContext context, DriverAddWallet driverAddWallet, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                // if (context.TabDrivers.Any(t => t.Email.ToLowerInvariant() == driverInfo.Email.ToLowerInvariant()))
+                //    throw new DataValidationException($"Artifact with name '{driverInfo.Email}' already exists.");
+                TabDriverWallet tabDriverWallet = new TabDriverWallet();
+                tabDriverWallet.Driverid = driverAddWallet.DriverId;
+                tabDriverWallet.Currencyid = driverAddWallet.Currencyid;
+                tabDriverWallet.Transactionid = driverAddWallet.Transactionid;
+                tabDriverWallet.Walletamount = driverAddWallet.Walletamount;
+
+                tabDriverWallet.Createdat = tabDriverWallet.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDriverWallet.Createdby = tabDriverWallet.Updatedby = loggedInUser.Email;
+                tabDriverWallet.IsDelete = false;
+                tabDriverWallet.IsActive = true;
+                context.Add(tabDriverWallet);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, loggedInUser.Email, "AddWallet", context);
+                return false;
+            }
+        }
+
+        public List<DriverAddWallet> ListWallet(TaxiAppzDBContext context)
+        {
+            try
+            {
+
+                List<DriverAddWallet> driverListWallet = new List<DriverAddWallet>();
+                var Walletlist = context.TabDriverWallet.Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+                foreach (var wallet in Walletlist)
+                {
+                    driverListWallet.Add(new DriverAddWallet()
+                    {
+                        Currencyid=wallet.Currencyid,
+                        Transactionid=wallet.Transactionid,
+                        Walletamount=wallet.Walletamount,                        
+                    });
+                }
+                return driverListWallet;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListWallet", context);
+                return null;
+            }
+        }
     }
 
 }

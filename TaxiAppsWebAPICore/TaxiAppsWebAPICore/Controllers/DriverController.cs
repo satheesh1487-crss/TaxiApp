@@ -77,10 +77,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpPut]
         [Route("Edit")]
         [Authorize]
-        public IActionResult Edit(DriverInfo driverInfo)
+        public IActionResult Edit(EditDriver editDriver)
         {
             DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.Edit(_context, driverInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dADriver.Edit(_context, editDriver, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
         }
 
         //TODO:: check parent record is deleted
@@ -146,6 +146,22 @@ namespace TaxiAppsWebAPICore.Controllers
             return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "Grid.csv");
         }
 
-       
+        [HttpPost]
+        [Route("AddWallet")]
+        [Authorize]
+        public IActionResult AddWallet(DriverAddWallet driverAddWallet)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.AddWallet(_context, driverAddWallet, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpGet]
+        [Route("driverWalletList")]
+        [Authorize]
+        public IActionResult GetDriverWalletList()
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<List<DriverAddWallet>>(dADriver.ListWallet(_context));
+        }
     }
 }
