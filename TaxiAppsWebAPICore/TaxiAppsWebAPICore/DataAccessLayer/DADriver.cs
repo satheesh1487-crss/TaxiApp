@@ -127,7 +127,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
-               // if (context.TabDrivers.Any(t => t.Email.ToLowerInvariant() == driverInfo.Email.ToLowerInvariant()))
+                // if (context.TabDrivers.Any(t => t.Email.ToLowerInvariant() == driverInfo.Email.ToLowerInvariant()))
                 //    throw new DataValidationException($"Artifact with name '{driverInfo.Email}' already exists.");
                 TabDrivers tabDrivers = new TabDrivers();
                 tabDrivers.FirstName = driverInfo.FirstName;
@@ -149,7 +149,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 tabDrivers.Carmanufacturer = driverInfo.CarManu;
                 tabDrivers.Caryear = driverInfo.CarYear;
                 tabDrivers.NationalId = driverInfo.NationalId;
-                tabDrivers.Driverregno= (context.TabDrivers.Count() + 1).ToString();
+                tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
                 tabDrivers.CreatedAt = tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 tabDrivers.CreatedBy = tabDrivers.UpdatedBy = loggedInUser.Email;
                 tabDrivers.IsDelete = false;
@@ -165,32 +165,27 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public bool Edit(TaxiAppzDBContext context, DriverInfo driverInfo, LoggedInUser loggedInUser)
+        public bool Edit(TaxiAppzDBContext context, EditDriver editDriver, LoggedInUser loggedInUser)
         {
             try
             {
-                var tabDrivers = context.TabDrivers.Where(r => r.Driverid == driverInfo.DriverId && r.IsDelete == false).FirstOrDefault();
+                var tabDrivers = context.TabDrivers.Where(r => r.Driverid == editDriver.DriverId && r.IsDelete == false).FirstOrDefault();
                 if (tabDrivers != null)
                 {
-                    tabDrivers.FirstName = driverInfo.FirstName;
-                    tabDrivers.LastName = driverInfo.LastName;
-                    tabDrivers.Email = driverInfo.Email;
-                    tabDrivers.ContactNo = driverInfo.ContactNo;
-                    tabDrivers.Gender = driverInfo.Gender;
-                    tabDrivers.Address = driverInfo.Address;
-                    tabDrivers.City = driverInfo.City;
-                    tabDrivers.State = driverInfo.State;
-                    tabDrivers.Countryid = driverInfo.Country;
+                    tabDrivers.FirstName = editDriver.FirstName;
+                    tabDrivers.LastName = editDriver.LastName;
+                    tabDrivers.Email = editDriver.Email;
+                    tabDrivers.ContactNo = editDriver.ContactNo;
+                    tabDrivers.Gender = editDriver.Gender;
+                    tabDrivers.Address = editDriver.Address;
+                    tabDrivers.City = editDriver.City;
+                    tabDrivers.State = editDriver.State;
+                    tabDrivers.Countryid = editDriver.Country;
                     tabDrivers.Company = "";
-                    tabDrivers.Servicelocid = driverInfo.DriverArea;
-                    tabDrivers.Password = driverInfo.Password;
-                    tabDrivers.Typeid = driverInfo.DriverType;
-                    tabDrivers.Carmodel = driverInfo.CarModel;
-                    tabDrivers.Carcolor = driverInfo.CarColour;
-                    tabDrivers.Carnumber = driverInfo.CarNumber;
-                    tabDrivers.Carmanufacturer = driverInfo.CarManu;
-                    tabDrivers.Caryear = driverInfo.CarYear;
-                    tabDrivers.NationalId = driverInfo.NationalId;
+                    tabDrivers.Servicelocid = editDriver.DriverArea;
+                    tabDrivers.Password = editDriver.Password;
+                    tabDrivers.Typeid = editDriver.DriverType;
+                    tabDrivers.NationalId = editDriver.NationalId;
                     //tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
                     tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                     tabDrivers.UpdatedBy = loggedInUser.Email;

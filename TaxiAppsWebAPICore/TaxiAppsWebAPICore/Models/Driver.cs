@@ -52,7 +52,26 @@ namespace TaxiAppsWebAPICore
         public string BonusReason { get; set; }
     }
 
-    public class DriverInfo
+    public class DriverInfo: EditDriver
+    {
+        [JsonProperty("carModel")]
+        public string CarModel { get; set; }
+
+        [JsonProperty("carColour")]
+        public string CarColour { get; set; }
+
+        [JsonProperty("carNumber")]
+        public string CarNumber { get; set; }
+
+        [JsonProperty("carManu")]
+        public string CarManu { get; set; }
+
+        [JsonProperty("carYear")]
+        public int CarYear { get; set; }
+
+        
+    }
+    public class EditDriver
     {
         [JsonProperty("driverid")]
         public long DriverId { get; set; }
@@ -82,10 +101,10 @@ namespace TaxiAppsWebAPICore
         public string State { get; set; }
 
         [JsonProperty("country")]
-        public long ?Country { get; set; }
+        public long? Country { get; set; }
 
         [JsonProperty("driverArea")]
-        public long ?DriverArea { get; set; }
+        public long? DriverArea { get; set; }
 
         [JsonProperty("company")]
         public string Company { get; set; }
@@ -94,27 +113,13 @@ namespace TaxiAppsWebAPICore
         public string Password { get; set; }
 
         [JsonProperty("driverType")]
-        public long ?DriverType { get; set; }
-
-        [JsonProperty("carModel")]
-        public string CarModel { get; set; }
-
-        [JsonProperty("carColour")]
-        public string CarColour { get; set; }
-
-        [JsonProperty("carNumber")]
-        public string CarNumber { get; set; }
-
-        [JsonProperty("carManu")]
-        public string CarManu { get; set; }
-
-        [JsonProperty("carYear")]
-        public int CarYear { get; set; }
+        public long? DriverType { get; set; }
 
         [JsonProperty("nationalId")]
         public string NationalId { get; set; }
 
         [JsonProperty("profilePic")]
         public string ProfilePic { get; set; }
+
     }
 }
