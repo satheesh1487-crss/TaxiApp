@@ -22,6 +22,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
         public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
+        public virtual DbSet<TabDriverBonus> TabDriverBonus { get; set; }
+        public virtual DbSet<TabDriverFine> TabDriverFine { get; set; }
+        public virtual DbSet<TabDriverWallet> TabDriverWallet { get; set; }
         public virtual DbSet<TabDrivers> TabDrivers { get; set; }
         public virtual DbSet<TabMenu> TabMenu { get; set; }
         public virtual DbSet<TabMenuAccess> TabMenuAccess { get; set; }
@@ -205,6 +208,82 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabCurrencies)
                     .HasForeignKey(d => d.Countryid)
                     .HasConstraintName("FK__tab_curre__count__0E6E26BF");
+            });
+
+            modelBuilder.Entity<TabDriverBonus>(entity =>
+            {
+                entity.HasKey(e => e.Driverbonusid)
+                    .HasName("PK__tab_driv__4F800ADF551E801F");
+
+                entity.Property(e => e.Createdat).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Createdby).IsUnicode(false);
+
+                entity.Property(e => e.Deletedby).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Updatedby).IsUnicode(false);
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabDriverBonus)
+                    .HasForeignKey(d => d.Driverid)
+                    .HasConstraintName("FK__tab_drive__Drive__3BFFE745");
+            });
+
+            modelBuilder.Entity<TabDriverFine>(entity =>
+            {
+                entity.HasKey(e => e.Driverfineid)
+                    .HasName("PK__tab_driv__6012F48AFF9B8C44");
+
+                entity.Property(e => e.Createdat).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Createdby).IsUnicode(false);
+
+                entity.Property(e => e.Deletedby).IsUnicode(false);
+
+                entity.Property(e => e.FinepaidStatus).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Updatedby).IsUnicode(false);
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabDriverFine)
+                    .HasForeignKey(d => d.Driverid)
+                    .HasConstraintName("FK__tab_drive__Drive__3552E9B6");
+            });
+
+            modelBuilder.Entity<TabDriverWallet>(entity =>
+            {
+                entity.HasKey(e => e.Driverwalletid)
+                    .HasName("PK__tab_driv__7C05DCF24299CD43");
+
+                entity.Property(e => e.Createdat).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Createdby).IsUnicode(false);
+
+                entity.Property(e => e.Deletedby).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Updatedby).IsUnicode(false);
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.TabDriverWallet)
+                    .HasForeignKey(d => d.Currencyid)
+                    .HasConstraintName("FK__tab_drive__curre__2F9A1060");
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabDriverWallet)
+                    .HasForeignKey(d => d.Driverid)
+                    .HasConstraintName("FK__tab_drive__Drive__2EA5EC27");
             });
 
             modelBuilder.Entity<TabDrivers>(entity =>

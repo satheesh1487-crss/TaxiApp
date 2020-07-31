@@ -8,6 +8,13 @@ namespace TaxiAppsWebAPICore.TaxiModels
     [Table("tab_Drivers")]
     public partial class TabDrivers
     {
+        public TabDrivers()
+        {
+            TabDriverBonus = new HashSet<TabDriverBonus>();
+            TabDriverFine = new HashSet<TabDriverFine>();
+            TabDriverWallet = new HashSet<TabDriverWallet>();
+        }
+
         [Key]
         public long Driverid { get; set; }
         [Required]
@@ -79,6 +86,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public string DeletedBy { get; set; }
         [Column("deleted_at", TypeName = "datetime")]
         public DateTime? DeletedAt { get; set; }
+        [Column("Reward_point")]
+        public long? RewardPoint { get; set; }
 
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabDrivers))]
@@ -89,5 +98,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(Typeid))]
         [InverseProperty(nameof(TabTypes.TabDrivers))]
         public virtual TabTypes Type { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabDriverBonus> TabDriverBonus { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabDriverFine> TabDriverFine { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabDriverWallet> TabDriverWallet { get; set; }
     }
 }
