@@ -33,7 +33,7 @@ namespace TaxiAppsWebAPICore
         public string AcceptanceRatio { get; set; }
 
         [JsonProperty("isActive")]
-        public bool? IsActive { get; set; }     
+        public bool? IsActive { get; set; }
 
     }
 
@@ -52,7 +52,7 @@ namespace TaxiAppsWebAPICore
         public string BonusReason { get; set; }
     }
 
-    public class DriverInfo: EditDriver
+    public class DriverInfo : EditDriver
     {
         [JsonProperty("carModel")]
         public string CarModel { get; set; }
@@ -69,7 +69,7 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("carYear")]
         public int CarYear { get; set; }
 
-        
+
     }
     public class EditDriver
     {
@@ -128,17 +128,41 @@ namespace TaxiAppsWebAPICore
         public long DriverId { get; set; }
 
         [JsonProperty("transactionid")]
-        public long ?Transactionid { get; set; }
+        public long? Transactionid { get; set; }
 
         [JsonProperty("currencyid")]
-        public long ?Currencyid { get; set; }
+        public long? Currencyid { get; set; }
 
         [JsonProperty("walletamount")]
-        public double ?Walletamount { get; set; }
+        public double? Walletamount { get; set; }
+
+        [JsonProperty("date")]
+        public DateTime? TransactionDate { get; set; }
     }
 
-    public class DriverFineList
+    public class DriverListWallet
     {
+        [JsonProperty("amountadded")]
+        public double? Amountadded { get; set; }
+
+        [JsonProperty("amountbalance")]
+        public double? Amountbalance { get; set; }
+
+        [JsonProperty("amountspent")]
+        public double? Amountspent { get; set; }
+
+        [JsonProperty("walletList")]
+        public List<DriverAddWallet> WalletList { get; set; }
+
+    }
+
+    public class DriverFineInfo
+    {
+        [JsonProperty("driverfineid")]
+        public long DriverFineId { get; set; }
+        [JsonProperty("driverid")]
+        public long Driverid { get; set; }
+
         [JsonProperty("fineamount")]
         public long Fineamount { get; set; }
 
@@ -147,6 +171,21 @@ namespace TaxiAppsWebAPICore
 
         [JsonProperty("finepaid_status")]
         public long Finepaid_status { get; set; }
+    }
+    public class DriverFineList
+    {
+        [JsonProperty("fineList")]
+        public List<DriverFineInfo> FineList { get; set; }
+
+        [JsonProperty("registrationCode")]
+        public string RegistrationCode { get; set; }
+
+        [JsonProperty("driverName")]
+        public string DriverName { get; set; }
+
+        [JsonProperty("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
     }
 
 }

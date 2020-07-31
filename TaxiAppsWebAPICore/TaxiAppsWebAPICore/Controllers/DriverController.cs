@@ -25,7 +25,7 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
 
- 
+
         [HttpGet]
         [Route("driverList")]
         [Authorize]
@@ -158,10 +158,19 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpGet]
         [Route("driverWalletList")]
         [Authorize]
-        public IActionResult GetDriverWalletList()
+        public IActionResult GetDriverWalletList(long driverId)
         {
             DADriver dADriver = new DADriver();
-            return this.OK<List<DriverAddWallet>>(dADriver.ListWallet(_context));
+            return this.OK<DriverListWallet>(dADriver.ListWallet(_context, driverId));
+        }
+
+        [HttpGet]
+        [Route("driverFineList")]
+        [Authorize]
+        public IActionResult GetDriverFineList(long driverId)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<List<DriverFineList>>(dADriver.ListFine(_context, driverId));
         }
     }
 }

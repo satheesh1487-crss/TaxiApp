@@ -254,27 +254,59 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public List<DriverAddWallet> ListWallet(TaxiAppzDBContext context)
+        public DriverListWallet ListWallet(TaxiAppzDBContext context,long driverid)
         {
             try
             {
+                DriverListWallet driverLists = new DriverListWallet();
 
                 List<DriverAddWallet> driverListWallet = new List<DriverAddWallet>();
-                var Walletlist = context.TabDriverWallet.Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+                var Walletlist = context.TabDriverWallet.Where(t => t.IsDelete == false && t.Driverid==driverid).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var wallet in Walletlist)
                 {
                     driverListWallet.Add(new DriverAddWallet()
                     {
                         Currencyid=wallet.Currencyid,
                         Transactionid=wallet.Transactionid,
-                        Walletamount=wallet.Walletamount,                        
+                        Walletamount=wallet.Walletamount,    
+                        TransactionDate=wallet.Createdat
                     });
                 }
-                return driverListWallet;
+                driverLists.WalletList = driverListWallet;
+                driverLists.Amountadded = driverListWallet.Sum(t => t.Walletamount);
+                driverLists.Amountbalance = driverListWallet.Sum(t => t.Walletamount);
+                driverLists.Amountspent = driverListWallet.Sum(t => t.Walletamount);
+                return driverLists;
             }
             catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "ListWallet", context);
+                return null;
+            }
+        }
+
+        public List<DriverFineList> ListFine(TaxiAppzDBContext context, long driverid)
+        {
+            try
+            {
+
+                List<DriverFineList> driverFineList = new List<DriverFineList>();
+                var fineList = context.TabDriverFine.Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+                foreach (var fine in fineList)
+                {
+                    driverFineList.Add(new DriverFineList()
+                    {
+                      
+                                                                    
+                        
+                      
+                    });
+                }
+                return driverFineList;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListFine", context);
                 return null;
             }
         }
