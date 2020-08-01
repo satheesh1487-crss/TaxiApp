@@ -8,48 +8,50 @@ namespace TaxiAppsWebAPICore
 {
     public class ManagePromo
     {
-        [JsonProperty("sNo")]
-        public int Sno { get; set; }
+        [JsonProperty("promoID")]
+        public long PromoID { get; set; }
         [JsonProperty("coupencode")]
         public string CoupenCode { get; set; }
         [JsonProperty("estimateAmt")]
-        public Int64 EstimateAmount { get; set; }
+        public double? EstimateAmount { get; set; }
         [JsonProperty("value")]
-        public int Value { get; set; }
+        public long? Value { get; set; }
+        [JsonProperty("zoneid")]
+        public long? Zoneid { get; set; }
         [JsonProperty("type")]
         public string Type { get; set; }
         [JsonProperty("uses")]
-        public Int64 Uses { get; set; }
-
+        public long? Uses { get; set; }
+        [JsonProperty("repeatedlyuse")]
+        public long? RepeatedlyUse { get; set; }
         [JsonProperty("isActive")]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
         [JsonProperty("startdate")]
-        public string StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         [JsonProperty("expirydate")]
-        public string ExpiryDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
         [JsonProperty("operation")]
         public string Operation { get; set; }
     }
 
     public class PromoTransaction
     {
-        [JsonProperty("sNo")]
-        public int Sno { get; set; }
+        [JsonProperty("promoID")]
+        public long PromoID { get; set; }
         [JsonProperty("coupencode")]
         public string CoupenCode { get; set; }
-        [JsonProperty("estimateAmt")]
-        
-        public int Value { get; set; }
+       
+        [JsonProperty("value")]
+        public long? Value { get; set; }
+       
         [JsonProperty("type")]
         public string Type { get; set; }
         [JsonProperty("uses")]
-        public Int64 Uses { get; set; }
-
-        [JsonProperty("userName")]
-        public string UserName { get; set; }
-
+        public long? Uses { get; set; }
+         
         [JsonProperty("operation")]
         public string Operation { get; set; }
     }
+  
 }
