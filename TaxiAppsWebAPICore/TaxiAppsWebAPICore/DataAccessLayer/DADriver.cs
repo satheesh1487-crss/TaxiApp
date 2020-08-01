@@ -286,15 +286,15 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
 
                 List<DriverBonusList> driverfine = new List<DriverBonusList>();
-                var fineList = context.TabDriverFine.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+                var fineList = context.TabDriverBonus.Include(t=>t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var fine in fineList)
                 {
                     driverfine.Add(new DriverBonusList()
                     {
-                        DriverFineId = fine.Driverfineid,
+                        DriverFineId = fine.Driverbonusid,
                         Driverid = fine.Driverid,
-                        Amount = fine.Fineamount,                        
-                        Reason = fine.FineReason,
+                        Amount = fine.Bonusamount,                        
+                        Reason = fine.BonusReason,
                         DriverName = fine.Driver.FirstName + ' ' + fine.Driver.LastName,
                         PhoneNumber = fine.Driver.ContactNo,
                         RegistrationCode = fine.Driver.Driverregno

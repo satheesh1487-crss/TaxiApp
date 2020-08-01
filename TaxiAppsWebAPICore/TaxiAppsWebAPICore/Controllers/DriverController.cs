@@ -245,7 +245,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dADriver.DeleteBonus(_context, id, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("getByBonusId")]
         [Authorize]
         public IActionResult GetByBonusId(long id)
