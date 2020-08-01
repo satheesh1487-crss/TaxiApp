@@ -203,13 +203,117 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-  
+        internal bool AddBonus(TaxiAppzDBContext context, DriverBonusInfo driverBonusInfo, LoggedInUser loggedInUser)
+        {
+            try
+            { 
+                TabDriverBonus tabDriverBonus = new TabDriverBonus();
+                tabDriverBonus.Driverid = driverBonusInfo.Driverid;
+                tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
+                tabDriverBonus.BonusReason = driverBonusInfo.Reason;
+               
+                tabDriverBonus.Createdat = tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDriverBonus.Createdby = tabDriverBonus.Updatedby = loggedInUser.Email;
+                tabDriverBonus.IsDelete = false;
+                tabDriverBonus.IsActive = true;
+                context.Add(tabDriverBonus);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, loggedInUser.Email, "Save", context);
+                return false;
+            }
+        }
+
+        internal bool EditBonus(TaxiAppzDBContext context, DriverBonusInfo driverBonusInfo, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverid == driverBonusInfo.Driverid && r.IsDelete == false).FirstOrDefault();
+                if (tabDriverBonus != null)
+                {
+                    
+                    tabDriverBonus.Driverid = driverBonusInfo.Driverid;
+                    tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
+                    tabDriverBonus.BonusReason = driverBonusInfo.Reason;
+
+                    tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                    tabDriverBonus.Updatedby = loggedInUser.Email;
+                    tabDriverBonus.IsDelete = false;
+                    tabDriverBonus.IsActive = true;
+                    context.Update(tabDriverBonus);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, loggedInUser.Email, "Save", context);
+                return false;
+            }
+        }
+
+        internal bool DeleteBonus(TaxiAppzDBContext context, long driverId, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverid == driverId && r.IsDelete == false).FirstOrDefault();
+                if (tabDriverBonus != null)
+                {                  
+                    
+
+                    tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                    tabDriverBonus.Updatedby = loggedInUser.Email;
+                    tabDriverBonus.IsDelete = false;
+                     
+                    context.Update(tabDriverBonus);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, loggedInUser.Email, "Save", context);
+                return false;
+            }
+        }
+
+        internal List<DriverBonusList> ListBonus(TaxiAppzDBContext context)
+        {
+            try
+            {
+
+                List<DriverBonusList> driverfine = new List<DriverBonusList>();
+                var fineList = context.TabDriverFine.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+                foreach (var fine in fineList)
+                {
+                    driverfine.Add(new DriverBonusList()
+                    {
+                        DriverFineId = fine.Driverfineid,
+                        Driverid = fine.Driverid,
+                        Amount = fine.Fineamount,                        
+                        Reason = fine.FineReason,
+                        DriverName = fine.Driver.FirstName + ' ' + fine.Driver.LastName,
+                        PhoneNumber = fine.Driver.ContactNo,
+                        RegistrationCode = fine.Driver.Driverregno
+
+                    });
+                }
+                return driverfine;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListFine", context);
+                return null;
+            }
+        }
 
         public bool DisableUser(TaxiAppzDBContext context, long id, bool status, LoggedInUser loggedInUser)
         {
             try
             {
-
                 var updatedate = context.TabDrivers.Where(u => u.Driverid == id && u.IsDelete == false).FirstOrDefault();
                 if (updatedate != null)
                 {
@@ -291,8 +395,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public List<DriverFineInfo> ListFine(TaxiAppzDBContext context)
         {
             try
-            {
-              
+            {              
                 List<DriverFineInfo> driverfine = new List<DriverFineInfo>();
                 var fineList = context.TabDriverFine.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var fine in fineList)
@@ -311,9 +414,6 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     });
                 }
                 return driverfine;
-
-
-
             }
             catch (Exception ex)
             {
@@ -414,6 +514,29 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
             }
             return false;
+        }
+
+        public DriverBonusInfo GetByBonusId(long driverId, TaxiAppzDBContext context)
+        {
+            try
+            {
+                DriverBonusInfo driverBonusInfo = new DriverBonusInfo();
+                var drivers = context.TabDriverBonus.Where(u => u.Driverid == driverId && u.IsDelete == false).FirstOrDefault();
+                if (drivers != null)
+                {
+                    driverBonusInfo.Amount = drivers.Bonusamount;
+                    driverBonusInfo.Reason = drivers.BonusReason;
+                    driverBonusInfo.Driverid = drivers.Driverid;
+                }
+                return driverBonusInfo == null ? null : driverBonusInfo;
+
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "GetbyId", context);
+                return null;
+            }
+
         }
     }
 

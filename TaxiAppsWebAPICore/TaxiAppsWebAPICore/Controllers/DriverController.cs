@@ -211,5 +211,47 @@ namespace TaxiAppsWebAPICore.Controllers
             DADriver dADriver = new DADriver();
             return this.OKResponse(dADriver.DeleteFine(_context, Id, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
         }
+
+        [HttpGet]
+        [Route("driverBonusList")]
+        [Authorize]
+        public IActionResult DriverBonusList()
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<List<DriverBonusList>>(dADriver.ListBonus(_context));
+        }
+        [HttpPost]
+        [Route("addBonus")]
+        [Authorize]
+        public IActionResult AddBonus(DriverBonusInfo driverBonusInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.AddBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+        [HttpPut]
+        [Route("editBonus")]
+        [Authorize]
+        public IActionResult EditBonus(DriverBonusInfo driverBonusInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.EditBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+        [HttpDelete]
+        [Route("deleteBonus")]
+        [Authorize]
+        public IActionResult DeleteBonus(long  id)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.DeleteBonus(_context, id, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpDelete]
+        [Route("getByBonusId")]
+        [Authorize]
+        public IActionResult GetByBonusId(long id)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<DriverBonusInfo>(dADriver.GetByBonusId(id,_context));
+        }
     }
 }

@@ -189,4 +189,36 @@ namespace TaxiAppsWebAPICore
 
     }
 
+
+    public class DriverBonusList: DriverFineList
+    {
+        [JsonProperty("driverbonusid")]
+        public long DriverFineId { get; set; } 
+
+        [JsonProperty("driverid")]
+        public long? Driverid { get; set; }
+
+        [JsonProperty("amount")]
+        public double? Amount { get; set; }
+
+        [JsonProperty("reason")]
+        public string Reason { get; set; } 
+
+    }
+    public class DriverBonusInfo  
+    {
+        [JsonProperty("driverbonusid")]
+        public long DriverFineId { get; set; }
+
+        [JsonProperty("driverid")]
+        public long? Driverid { get; set; }
+
+        [JsonProperty("amount")]
+        public double? Amount { get; set; }
+
+        [JsonProperty("reason")]
+        public string Reason { get; set; }
+
+    }
+
 }
