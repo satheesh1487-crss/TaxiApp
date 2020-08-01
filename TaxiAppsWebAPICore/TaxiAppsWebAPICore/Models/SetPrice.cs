@@ -13,32 +13,32 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("zonetypeid")]
         public long? ZoneTypeid { get; set; }
         [JsonProperty("baseprice")]
-        public double BasePrice { get; set; }
+        public decimal? BasePrice { get; set; }
         [JsonProperty("pricepertime")]
-        public double PricePerTime { get; set; }
+        public decimal? PricePerTime { get; set; }
         [JsonProperty("basedistance")]
         public long BaseDistance { get; set; }
         [JsonProperty("priceperdistance")]
-        public double PricePerDistance { get; set; }
+        public decimal? PricePerDistance { get; set; }
         [JsonProperty("freewaitingtime")]
         public long Freewaitingtime { get; set; }
 
         [JsonProperty("waitingcharges")]
-        public double WaitingCharges { get; set; }
+        public decimal? WaitingCharges { get; set; }
 
         [JsonProperty("cancellationfee")]
-        public double? CancellationFee { get; set; }
+        public decimal? CancellationFee { get; set; }
 
         [JsonProperty("dropfee")]
-        public double? DropFee { get; set; }
+        public decimal? DropFee { get; set; }
 
 
         [JsonProperty("admincommtype")]
         public string admincommtype { get; set; }
         [JsonProperty("admincommission")]
-        public double? admincommission { get; set; }
+        public decimal? admincommission { get; set; }
         [JsonProperty("driversavingper")]
-        public double? Driversavingper { get; set; }
+        public decimal? Driversavingper { get; set; }
         [JsonProperty("ridetype")]
         public string RideType { get; set; }
 

@@ -13,29 +13,31 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public long Setpriceid { get; set; }
         [Column("zonetypeid")]
         public long? Zonetypeid { get; set; }
-        public double Baseprice { get; set; }
-        [Column("pricepertime")]
-        public double Pricepertime { get; set; }
+        [Column(TypeName = "decimal(8, 2)")]
+        public decimal? Baseprice { get; set; }
+        [Column("pricepertime", TypeName = "decimal(8, 2)")]
+        public decimal? Pricepertime { get; set; }
         [Column("basedistance")]
         public long Basedistance { get; set; }
-        [Column("priceperdistance")]
-        public double Priceperdistance { get; set; }
+        [Column("priceperdistance", TypeName = "decimal(8, 2)")]
+        public decimal? Priceperdistance { get; set; }
         [Column("freewaitingtime")]
         public long Freewaitingtime { get; set; }
-        [Column("waitingcharges")]
-        public double Waitingcharges { get; set; }
-        [Column("cancellationfee")]
-        public double? Cancellationfee { get; set; }
-        [Column("dropfee")]
-        public double? Dropfee { get; set; }
+        [Column("waitingcharges", TypeName = "decimal(8, 2)")]
+        public decimal? Waitingcharges { get; set; }
+        [Column("cancellationfee", TypeName = "decimal(8, 2)")]
+        public decimal? Cancellationfee { get; set; }
+        [Column("dropfee", TypeName = "decimal(8, 2)")]
+        public decimal? Dropfee { get; set; }
         [Column("admincommtype")]
         [StringLength(100)]
         public string Admincommtype { get; set; }
-        [Column("admincommission")]
-        public double? Admincommission { get; set; }
-        public double? Driversavingper { get; set; }
-        [Column("customseldrifee")]
-        public double? Customseldrifee { get; set; }
+        [Column("admincommission", TypeName = "decimal(8, 2)")]
+        public decimal? Admincommission { get; set; }
+        [Column(TypeName = "decimal(8, 2)")]
+        public decimal? Driversavingper { get; set; }
+        [Column("customseldrifee", TypeName = "decimal(8, 2)")]
+        public decimal? Customseldrifee { get; set; }
         [StringLength(50)]
         public string RideType { get; set; }
         [Column("isActive")]
