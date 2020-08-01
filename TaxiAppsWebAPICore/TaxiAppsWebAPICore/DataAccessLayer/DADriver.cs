@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -254,22 +255,22 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public DriverListWallet ListWallet(TaxiAppzDBContext context,long driverid)
+        public DriverListWallet ListWallet(TaxiAppzDBContext context, long driverid)
         {
             try
             {
                 DriverListWallet driverLists = new DriverListWallet();
 
                 List<DriverAddWallet> driverListWallet = new List<DriverAddWallet>();
-                var Walletlist = context.TabDriverWallet.Where(t => t.IsDelete == false && t.Driverid==driverid).ToList().OrderByDescending(t => t.Updatedat);
+                var Walletlist = context.TabDriverWallet.Where(t => t.IsDelete == false && t.Driverid == driverid).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var wallet in Walletlist)
                 {
                     driverListWallet.Add(new DriverAddWallet()
                     {
-                        Currencyid=wallet.Currencyid,
-                        Transactionid=wallet.Transactionid,
-                        Walletamount=wallet.Walletamount,    
-                        TransactionDate=wallet.Createdat
+                        Currencyid = wallet.Currencyid,
+                        Transactionid = wallet.Transactionid,
+                        Walletamount = wallet.Walletamount,
+                        TransactionDate = wallet.Createdat
                     });
                 }
                 driverLists.WalletList = driverListWallet;
@@ -289,25 +290,60 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
-
                 List<DriverFineList> driverFineList = new List<DriverFineList>();
-                var fineList = context.TabDriverFine.Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+
+                List<DriverFineInfo> driverfine = new List<DriverFineInfo>();
+                var fineList = context.TabDriverFine.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var fine in fineList)
                 {
-                    driverFineList.Add(new DriverFineList()
+                    driverfine.Add(new DriverFineInfo()
                     {
-                      
-                                                                    
-                        
-                      
+                        DriverFineId = fine.Driverfineid,
+                        Driverid = fine.Driverid,
+                        Fineamount = fine.Fineamount,
+                        Finepaid_status = fine.FinepaidStatus,
+                        Fine_reason = fine.FineReason,
+                        DriverName = fine.Driver.FirstName + ' ' + fine.Driver.LastName,
+                        PhoneNumber = fine.Driver.ContactNo,
+                        RegistrationCode = fine.Driver.Driverregno
+
                     });
                 }
                 return driverFineList;
+
+
+
             }
             catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "ListFine", context);
                 return null;
+            }
+        }
+
+        public bool AddFine(TaxiAppzDBContext context, DriverFineInfo driverFineInfo, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                TabDriverFine tabDriverFine = new TabDriverFine();
+             
+                tabDriverFine.Fineamount = driverFineInfo.Fineamount;
+                tabDriverFine.FineReason = driverFineInfo.Fine_reason;
+                //tabDriverFine.Currencyid = driverFineInfo.Currencyid;
+                tabDriverFine.Driverid = driverFineInfo.Driverid;
+                tabDriverFine.FinepaidStatus = false;
+                tabDriverFine.Createdat = tabDriverFine.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDriverFine.Createdby = tabDriverFine.Updatedby = loggedInUser.Email;
+                tabDriverFine.IsDelete = false;
+                tabDriverFine.IsActive = true;
+                context.Add(tabDriverFine);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, loggedInUser.Email, "AddFine", context);
+                return false;
             }
         }
     }

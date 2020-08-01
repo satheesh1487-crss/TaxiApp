@@ -172,5 +172,15 @@ namespace TaxiAppsWebAPICore.Controllers
             DADriver dADriver = new DADriver();
             return this.OK<List<DriverFineList>>(dADriver.ListFine(_context, driverId));
         }
+
+        //TODO:: check parent record is deleted
+        [HttpPost]
+        [Route("addFine")]
+        [Authorize]
+        public IActionResult AddFine(DriverFineInfo driverFineInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.AddFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
     }
 }

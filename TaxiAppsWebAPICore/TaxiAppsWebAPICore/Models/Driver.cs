@@ -156,21 +156,25 @@ namespace TaxiAppsWebAPICore
 
     }
 
-    public class DriverFineInfo
+    public class DriverFineInfo : DriverFineList
     {
         [JsonProperty("driverfineid")]
         public long DriverFineId { get; set; }
+
+        [JsonProperty("currencyid")]
+        public long Currencyid { get; set; }
+
         [JsonProperty("driverid")]
-        public long Driverid { get; set; }
+        public long? Driverid { get; set; }
 
         [JsonProperty("fineamount")]
-        public long Fineamount { get; set; }
+        public double? Fineamount { get; set; }
 
         [JsonProperty("fine_reason")]
-        public long Fine_reason { get; set; }
+        public string Fine_reason { get; set; }
 
         [JsonProperty("finepaid_status")]
-        public long Finepaid_status { get; set; }
+        public bool? Finepaid_status { get; set; }
     }
     public class DriverFineList
     {
