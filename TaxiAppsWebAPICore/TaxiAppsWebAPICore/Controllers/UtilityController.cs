@@ -56,7 +56,14 @@ namespace TaxiAppsWebAPICore.Controllers
             DAAdmin dAAdmin = new DAAdmin();
             return this.OK<List<Language>>(dAAdmin.GetLanguageList(_context));
         }
-       
+        [HttpGet]
+        [Route("ListTypesDuringAddZone")]
+        [Authorize]
+        public IActionResult ListTypesDuringAddZone(long zoneid)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<List<TypeList>>(dAZone.ListTypesDuringAddZone(zoneid, _context));
+        }
         //TODO:: Please add table name 
         //[HttpGet]
         //[Route("getCurrency")]

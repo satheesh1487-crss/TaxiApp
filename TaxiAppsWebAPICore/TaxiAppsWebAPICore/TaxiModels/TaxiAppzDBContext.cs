@@ -29,6 +29,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabMenu> TabMenu { get; set; }
         public virtual DbSet<TabMenuAccess> TabMenuAccess { get; set; }
         public virtual DbSet<TabMenucode> TabMenucode { get; set; }
+        public virtual DbSet<TabPromo> TabPromo { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
@@ -373,6 +374,31 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasName("PK__tab_menu__3B5F7D5C2E9983C9");
 
                 entity.Property(e => e.Menuname).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabPromo>(entity =>
+            {
+                entity.HasKey(e => e.Promoid)
+                    .HasName("PK__tab_prom__E19F75CE92EC1FA4");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoType).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabPromo)
+                    .HasForeignKey(d => d.Zoneid)
+                    .HasConstraintName("FK__tab_promo__zonei__477199F1");
             });
 
             modelBuilder.Entity<TabRefreshtoken>(entity =>

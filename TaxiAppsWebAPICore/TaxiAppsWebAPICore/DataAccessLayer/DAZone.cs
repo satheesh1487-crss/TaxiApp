@@ -460,5 +460,30 @@ namespace TaxiAppsWebAPICore
 
         }
 
+        public List<TypeList> ListTypesDuringAddZone(long zoneid, TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<TypeList> typeLists = new List<TypeList>();
+                var typelist = context.TabZonetypeRelationship.Where(t => t.Zoneid == zoneid).Select(t => t.Typeid).ToList();
+                var types = context.TabTypes.Where(x => !typelist.Contains(x.Typeid) && x.IsActive == 1 && x.IsDeleted == 0).ToList();
+                foreach (var type in types)
+                {
+                    typeLists.Add(new TypeList()
+                    {
+                        Id = type.Typeid,
+                        Name = type.Typename
+                    });
+                }
+                return typeLists == null ? null : typeLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "ListZoneType", context);
+                return null;
+            }
+
+        }
+
     }
 }

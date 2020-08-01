@@ -92,4 +92,13 @@ namespace TaxiAppsWebAPICore
         //[JsonProperty("zoneTypeList")]
         //public List<ZoneTypeList> ZoneTypeList { set; get; }
     }
+    public class TypeList
+    {
+        [JsonProperty("id")]
+        public long Id { set; get; }
+        [JsonProperty("name")]
+        public string Name { set; get; }
+ 
+
+    }
 }

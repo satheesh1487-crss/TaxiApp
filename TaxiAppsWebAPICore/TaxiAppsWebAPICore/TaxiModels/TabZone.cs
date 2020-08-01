@@ -10,6 +10,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
     {
         public TabZone()
         {
+            TabPromo = new HashSet<TabPromo>();
             TabZonepolygon = new HashSet<TabZonepolygon>();
             TabZonetypeRelationship = new HashSet<TabZonetypeRelationship>();
         }
@@ -49,6 +50,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(Servicelocid))]
         [InverseProperty(nameof(TabServicelocation.TabZone))]
         public virtual TabServicelocation Serviceloc { get; set; }
+        [InverseProperty("Zone")]
+        public virtual ICollection<TabPromo> TabPromo { get; set; }
         [InverseProperty("Zone")]
         public virtual ICollection<TabZonepolygon> TabZonepolygon { get; set; }
         [InverseProperty("Zone")]
