@@ -25,7 +25,7 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
 
- 
+
         [HttpGet]
         [Route("driverList")]
         [Authorize]
@@ -77,10 +77,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpPut]
         [Route("Edit")]
         [Authorize]
-        public IActionResult Edit(DriverInfo driverInfo)
+        public IActionResult Edit(EditDriver editDriver)
         {
             DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.Edit(_context, driverInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dADriver.Edit(_context, editDriver, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
         }
 
         //TODO:: check parent record is deleted
@@ -146,6 +146,112 @@ namespace TaxiAppsWebAPICore.Controllers
             return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "Grid.csv");
         }
 
-       
+        [HttpPost]
+        [Route("AddWallet")]
+        [Authorize]
+        public IActionResult AddWallet(DriverAddWallet driverAddWallet)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.AddWallet(_context, driverAddWallet, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpGet]
+        [Route("driverWalletList")]
+        [Authorize]
+        public IActionResult GetDriverWalletList(long driverId)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<DriverListWallet>(dADriver.ListWallet(_context, driverId));
+        }
+
+        [HttpGet]
+        [Route("driverFineList")]
+        [Authorize]
+        public IActionResult GetDriverFineList()
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<List<DriverFineInfo>>(dADriver.ListFine(_context));
+        }
+
+        //TODO:: check parent record is deleted
+        [HttpPost]
+        [Route("addFine")]
+        [Authorize]
+        public IActionResult AddFine(DriverFineInfo driverFineInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.AddFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpGet]
+        [Route("GetDriverFineEdit")]
+        [Authorize]
+        public IActionResult GetDriverFineEdit(long driverid)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<DriverFineInfo>(dADriver.GetbyFineId(driverid, _context));
+        }
+
+        //TODO:: check parent record is deleted
+        [HttpPut]
+        [Route("EditFine")]
+        [Authorize]
+        public IActionResult EditFine(DriverFineInfo driverFineInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.EditFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+        }
+
+        //TODO:: check parent record is deleted
+        [HttpDelete]
+        [Route("DeleteFine")]
+        [Authorize]
+        public IActionResult DeleteFine(long Id)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.DeleteFine(_context, Id, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+        }
+
+        [HttpGet]
+        [Route("driverBonusList")]
+        [Authorize]
+        public IActionResult DriverBonusList()
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<List<DriverBonusList>>(dADriver.ListBonus(_context));
+        }
+        [HttpPost]
+        [Route("addBonus")]
+        [Authorize]
+        public IActionResult AddBonus(DriverBonusInfo driverBonusInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.AddBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+        [HttpPut]
+        [Route("editBonus")]
+        [Authorize]
+        public IActionResult EditBonus(DriverBonusInfo driverBonusInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.EditBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+        [HttpDelete]
+        [Route("deleteBonus")]
+        [Authorize]
+        public IActionResult DeleteBonus(long  id)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.DeleteBonus(_context, id, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpGet]
+        [Route("getByBonusId")]
+        [Authorize]
+        public IActionResult GetByBonusId(long id)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<DriverBonusInfo>(dADriver.GetByBonusId(id,_context));
+        }
     }
 }

@@ -69,9 +69,7 @@ namespace TaxiAppsWebAPICore
                 {
 
                     updatedate.Imagename = vehicleTypeInfo.Image;
-                    updatedate.Typename = vehicleTypeInfo.Name;
-                    updatedate.IsActive = 0;
-                    updatedate.IsDeleted = 0;
+                    updatedate.Typename = vehicleTypeInfo.Name;        
 
                     updatedate.UpdatedAt = DateTime.UtcNow;
 
