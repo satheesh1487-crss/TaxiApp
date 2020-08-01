@@ -203,6 +203,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
+  
+
         public bool DisableUser(TaxiAppzDBContext context, long id, bool status, LoggedInUser loggedInUser)
         {
             try
@@ -286,12 +288,11 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public List<DriverFineList> ListFine(TaxiAppzDBContext context, long driverid)
+        public List<DriverFineInfo> ListFine(TaxiAppzDBContext context)
         {
             try
             {
-                List<DriverFineList> driverFineList = new List<DriverFineList>();
-
+              
                 List<DriverFineInfo> driverfine = new List<DriverFineInfo>();
                 var fineList = context.TabDriverFine.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var fine in fineList)
@@ -309,7 +310,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
                     });
                 }
-                return driverFineList;
+                return driverfine;
 
 
 
@@ -345,6 +346,74 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 Extention.insertlog(ex.Message, loggedInUser.Email, "AddFine", context);
                 return false;
             }
+        }
+
+        public DriverFineInfo GetbyFineId(long driverId, TaxiAppzDBContext context)
+        {
+            try
+            {
+                DriverFineInfo driverFineList = new DriverFineInfo();
+                var fines = context.TabDriverFine.Include(t => t.Driver).Where(u => u.Driverid == driverId && u.IsDelete == false).FirstOrDefault();
+
+                driverFineList.Driverid = fines.Driverid;
+                driverFineList.DriverName = fines.Driver.FirstName + ' ' + fines.Driver.LastName;
+                driverFineList.Fineamount = fines.Fineamount;
+                driverFineList.Fine_reason = fines.FineReason;
+                driverFineList.Finepaid_status = fines.FinepaidStatus;
+                driverFineList.RegistrationCode = fines.Driver.Driverregno;
+                driverFineList.PhoneNumber = fines.Driver.ContactNo;
+
+                return driverFineList == null ? null : driverFineList;
+
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "GetbyFineId", context);
+                return null;
+            }
+
+        }
+
+        public bool EditFine(TaxiAppzDBContext context, DriverFineInfo driverFineInfo, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                var tabDriverFine = context.TabDriverFine.Where(r => r.Driverid == driverFineInfo.DriverFineId && r.IsDelete == false).FirstOrDefault();
+                if (tabDriverFine != null)
+                {
+                    tabDriverFine.Fineamount = driverFineInfo.Fineamount;
+                    tabDriverFine.FinepaidStatus = driverFineInfo.Finepaid_status;
+                    tabDriverFine.FineReason = driverFineInfo.Fine_reason;
+
+                    tabDriverFine.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                    tabDriverFine.Updatedby = loggedInUser.Email;
+                    context.Update(tabDriverFine);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, loggedInUser.Email, "EditFine", context);
+                return false;
+            }
+        }
+
+        internal bool DeleteFine(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
+        {
+            var updatedate = context.TabDriverFine.Where(u => u.Driverid == id && u.IsDelete == false).FirstOrDefault();
+            if (updatedate != null)
+            {
+                updatedate.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.Updatedby = loggedInUser.Email;
+                updatedate.IsDelete = true;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
+
+            }
+            return false;
         }
     }
 

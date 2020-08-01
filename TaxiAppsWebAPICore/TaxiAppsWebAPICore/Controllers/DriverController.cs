@@ -167,10 +167,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpGet]
         [Route("driverFineList")]
         [Authorize]
-        public IActionResult GetDriverFineList(long driverId)
+        public IActionResult GetDriverFineList()
         {
             DADriver dADriver = new DADriver();
-            return this.OK<List<DriverFineList>>(dADriver.ListFine(_context, driverId));
+            return this.OK<List<DriverFineInfo>>(dADriver.ListFine(_context));
         }
 
         //TODO:: check parent record is deleted
@@ -181,6 +181,35 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DADriver dADriver = new DADriver();
             return this.OKResponse(dADriver.AddFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+        }
+
+        [HttpGet]
+        [Route("GetDriverFineEdit")]
+        [Authorize]
+        public IActionResult GetDriverFineEdit(long driverid)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<DriverFineInfo>(dADriver.GetbyFineId(driverid, _context));
+        }
+
+        //TODO:: check parent record is deleted
+        [HttpPut]
+        [Route("EditFine")]
+        [Authorize]
+        public IActionResult EditFine(DriverFineInfo driverFineInfo)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.EditFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+        }
+
+        //TODO:: check parent record is deleted
+        [HttpDelete]
+        [Route("DeleteFine")]
+        [Authorize]
+        public IActionResult DeleteFine(long Id)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OKResponse(dADriver.DeleteFine(_context, Id, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
         }
     }
 }

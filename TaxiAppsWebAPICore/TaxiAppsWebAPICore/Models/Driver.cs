@@ -178,9 +178,6 @@ namespace TaxiAppsWebAPICore
     }
     public class DriverFineList
     {
-        [JsonProperty("fineList")]
-        public List<DriverFineInfo> FineList { get; set; }
-
         [JsonProperty("registrationCode")]
         public string RegistrationCode { get; set; }
 
