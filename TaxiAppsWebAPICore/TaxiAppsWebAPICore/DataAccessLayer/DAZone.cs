@@ -211,7 +211,7 @@ namespace TaxiAppsWebAPICore
                 {
                     zoneTypeLists.Add(new ZoneTypeList()
                     {
-                        Id = zonetype.Typeid,
+                        Id = zonetype.Zonetypeid,
                         Name = zonetype.Type.Typename,
                         IsDefault = zonetype.IsDefault,
                         IsActive = zonetype.IsActive == 0 ? false : true
