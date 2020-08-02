@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -72,10 +73,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ManageDriver()
         {
-            List<ManageDriver> manageDrivers = new List<ManageDriver>();
-            manageDrivers.Add(new ManageDriver() { Sno = 1, ComplaintType = "Complaint", ComplaintTitle = "not pick up the call", Description = "Testing", RequestID = "RES_81117", DriverName = "Vasudev", IsActive = "New" });
+            List<ManagerDriver> manageDrivers = new List<ManagerDriver>();
+            manageDrivers.Add(new ManagerDriver() { Sno = 1, ComplaintType = "Complaint", ComplaintTitle = "not pick up the call", Description = "Testing", RequestID = "RES_81117", DriverName = "Vasudev", IsActive = "New" });
 
-            return this.OK<List<ManageDriver>>(manageDrivers);
+            return this.OK<List<ManagerDriver>>(manageDrivers);
         }
     }
 }
