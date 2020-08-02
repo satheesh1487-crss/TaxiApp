@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaxiAppsWebAPICore.DataAccessLayer;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -23,11 +24,48 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Manageuser()
         {
-            List<ManageUser> manageUsers = new List<ManageUser>();
-            manageUsers.Add(new ManageUser() { Sno = 1, ComplaintType = "Suggestion", ComplaintTitle = "Test Complaint", Description = "Testing", RequestID = "REQ_280", CustomerName = "Vasudev", IsActive = "new" });
-            manageUsers.Add(new ManageUser() { Sno = 2, ComplaintType = "Suggestion", ComplaintTitle = "Test Complaint", Description = "Demo", RequestID = "REQ_281", CustomerName = "Srijha", IsActive = "new" });
-            manageUsers.Add(new ManageUser() { Sno = 3, ComplaintType = "Suggestion", ComplaintTitle = "Test Complaint", Description = "Sample", RequestID = "REQ_282", CustomerName = "Sri Devi", IsActive = "new" });
-            return this.OK<List<ManageUser>>(manageUsers);
+           DAComplaint dAComplaint = new DAComplaint();
+            return this.OK<List<ManageUserComplaint>>(dAComplaint.ListUserComplaintTemplate(_content));
+        }
+        [HttpGet]
+        [Route("UserComplainttemplateDtls")]
+        [Authorize]
+        public IActionResult UserComplainttemplateDtls(long promoid)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK<ManageUserComplaint>(dAComplaint.UserComplainttemplateDtls(promoid, _content));
+        }
+        [HttpPost]
+        [Route("AddUserComplainttemplate")]
+        [Authorize]
+        public IActionResult AddUserComplainttemplate(ManageUserComplaint managePromo)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.AddUserComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+        }
+        [HttpPut]
+        [Route("EditUserComplainttemplate")]
+        [Authorize]
+        public IActionResult EditUserComplainttemplate(ManageUserComplaint managePromo)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.EditUserComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+        }
+        [HttpPut]
+        [Route("IsActiveUserComplaintTemplate")]
+        [Authorize]
+        public IActionResult IsActiveUserComplaintTemplate(long promoid, bool activestatus)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.IsActiveUserComplaintTemplate(promoid, activestatus, _content) ? "Recored Added Successfully" : "Failed to Add");
+        }
+        [HttpDelete]
+        [Route("IsDeleteUserComplaintTemplate")]
+        [Authorize]
+        public IActionResult IsDeleteUserComplaintTemplate(long promoid)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.IsDeleteUserComplaintTemplate(promoid, _content) ? "Recored Added Successfully" : "Failed to Add");
         }
         [HttpGet]
         [Route("ManageDriver")]
