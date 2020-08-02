@@ -78,5 +78,45 @@ namespace TaxiAppsWebAPICore.Controllers
 
             return this.OK<List<ManagerDriver>>(manageDrivers);
         }
+        [HttpGet]
+        [Route("DriverComplainttemplateDtls")]
+        [Authorize]
+        public IActionResult DriverComplainttemplateDtls(long promoid)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK<ManageDriverComplaint>(dAComplaint.DriverComplainttemplateDtls(promoid, _content));
+        }
+        [HttpPost]
+        [Route("AddDriverComplainttemplate")]
+        [Authorize]
+        public IActionResult AddDriverComplainttemplate(ManageDriverComplaint managePromo)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.AddDriverComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+        }
+        [HttpPut]
+        [Route("EditDriverComplainttemplate")]
+        [Authorize]
+        public IActionResult EditDriverComplainttemplate(ManageDriverComplaint managePromo)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.EditDriverComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+        }
+        [HttpPut]
+        [Route("IsActiveDriverComplaintTemplate")]
+        [Authorize]
+        public IActionResult IsActiveDriverComplaintTemplate(long promoid, bool activestatus)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.IsActiveDriverComplaintTemplate(promoid, activestatus, _content) ? "Recored Added Successfully" : "Failed to Add");
+        }
+        [HttpDelete]
+        [Route("IsDeleteDriverComplaintTemplate")]
+        [Authorize]
+        public IActionResult IsDeleteDriverComplaintTemplate(long promoid)
+        {
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK(dAComplaint.IsDeleteDriverComplaintTemplate(promoid, _content) ? "Recored Added Successfully" : "Failed to Add");
+        }
     }
 }
