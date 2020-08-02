@@ -23,9 +23,13 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabCountry> TabCountry { get; set; }
         public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
         public virtual DbSet<TabDriverBonus> TabDriverBonus { get; set; }
+        public virtual DbSet<TabDriverCancellation> TabDriverCancellation { get; set; }
+        public virtual DbSet<TabDriverComplaint> TabDriverComplaint { get; set; }
+        public virtual DbSet<TabDriverDocuments> TabDriverDocuments { get; set; }
         public virtual DbSet<TabDriverFine> TabDriverFine { get; set; }
         public virtual DbSet<TabDriverWallet> TabDriverWallet { get; set; }
         public virtual DbSet<TabDrivers> TabDrivers { get; set; }
+        public virtual DbSet<TabManageDocument> TabManageDocument { get; set; }
         public virtual DbSet<TabMenu> TabMenu { get; set; }
         public virtual DbSet<TabMenuAccess> TabMenuAccess { get; set; }
         public virtual DbSet<TabMenucode> TabMenucode { get; set; }
@@ -39,6 +43,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabTypes> TabTypes { get; set; }
         public virtual DbSet<TabUploadfiledetails> TabUploadfiledetails { get; set; }
         public virtual DbSet<TabUser> TabUser { get; set; }
+        public virtual DbSet<TabUserCancellation> TabUserCancellation { get; set; }
+        public virtual DbSet<TabUserComplaint> TabUserComplaint { get; set; }
         public virtual DbSet<TabZone> TabZone { get; set; }
         public virtual DbSet<TabZonepolygon> TabZonepolygon { get; set; }
         public virtual DbSet<TabZonetypeRelationship> TabZonetypeRelationship { get; set; }
@@ -234,6 +240,86 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("FK__tab_drive__Drive__3BFFE745");
             });
 
+            modelBuilder.Entity<TabDriverCancellation>(entity =>
+            {
+                entity.HasKey(e => e.DriverCancelId)
+                    .HasName("PK__tab_driv__CDFB5C7A795B27A8");
+
+                entity.Property(e => e.Arrivalstatus).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Paymentstatus).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Zonetype)
+                    .WithMany(p => p.TabDriverCancellation)
+                    .HasForeignKey(d => d.Zonetypeid)
+                    .HasConstraintName("FK__tab_drive__zonet__5006DFF2");
+            });
+
+            modelBuilder.Entity<TabDriverComplaint>(entity =>
+            {
+                entity.HasKey(e => e.DriverComplaintId)
+                    .HasName("PK__tab_Driv__79164EE0E63CE269");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabDriverComplaint)
+                    .HasForeignKey(d => d.Zoneid)
+                    .HasConstraintName("FK__tab_Drive__zonei__5B78929E");
+            });
+
+            modelBuilder.Entity<TabDriverDocuments>(entity =>
+            {
+                entity.HasKey(e => e.DriverDocId)
+                    .HasName("PK__tab_Driv__545AF4F6E49E3966");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.Property(e => e.UploadedFileName).IsUnicode(false);
+
+                entity.HasOne(d => d.Document)
+                    .WithMany(p => p.TabDriverDocuments)
+                    .HasForeignKey(d => d.Documentid)
+                    .HasConstraintName("FK__tab_Drive__Docum__6CA31EA0");
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabDriverDocuments)
+                    .HasForeignKey(d => d.Driverid)
+                    .HasConstraintName("FK__tab_Drive__Drive__6BAEFA67");
+            });
+
             modelBuilder.Entity<TabDriverFine>(entity =>
             {
                 entity.HasKey(e => e.Driverfineid)
@@ -340,6 +426,26 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabDrivers)
                     .HasForeignKey(d => d.Typeid)
                     .HasConstraintName("FK__tab_Drive__typei__1A9EF37A");
+            });
+
+            modelBuilder.Entity<TabManageDocument>(entity =>
+            {
+                entity.HasKey(e => e.DocumentId)
+                    .HasName("PK__tab_Mana__1ABEEF6FE4BF9584");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.DocumentName).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabMenu>(entity =>
@@ -589,6 +695,56 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabUser)
                     .HasForeignKey(d => d.Timezoneid)
                     .HasConstraintName("FK__tab_user__timezo__151B244E");
+            });
+
+            modelBuilder.Entity<TabUserCancellation>(entity =>
+            {
+                entity.HasKey(e => e.UserCancelId)
+                    .HasName("PK__tab_User__AAEAADBAE649A4A3");
+
+                entity.Property(e => e.Arrivalstatus).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Paymentstatus).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Zonetype)
+                    .WithMany(p => p.TabUserCancellation)
+                    .HasForeignKey(d => d.Zonetypeid)
+                    .HasConstraintName("FK__tab_User___zonet__55BFB948");
+            });
+
+            modelBuilder.Entity<TabUserComplaint>(entity =>
+            {
+                entity.HasKey(e => e.UserComplaintId)
+                    .HasName("PK__tab_User__9B89799F9E855525");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabUserComplaint)
+                    .HasForeignKey(d => d.Zoneid)
+                    .HasConstraintName("FK__tab_User___zonei__61316BF4");
             });
 
             modelBuilder.Entity<TabZone>(entity =>

@@ -67,7 +67,7 @@ namespace TaxiAppsWebAPICore.Controllers
             DAPromo dAPromo = new DAPromo();
             return this.OK(dAPromo.IsActivePromo(promoid, activestatus,_content) ? "Recored Added Successfully" : "Failed to Add");
         }
-        [HttpPut]
+        [HttpDelete]
         [Route("IsDeletePromo")]
         [Authorize]
         public IActionResult IsDeletePromo(long promoid)

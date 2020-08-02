@@ -250,12 +250,12 @@ namespace TaxiAppsWebAPICore
             }
 
         }
-        public ZoneTypeRelation GetZoneTypebyid(long zoneid, long typeid, TaxiAppzDBContext context)
+        public ZoneTypeRelation GetZoneTypebyid(long zoneid, long zonetypeid, TaxiAppzDBContext context)
         {
             try
             {
                 ZoneTypeRelation zoneTypeRelation = new ZoneTypeRelation();
-                var zonetype = context.TabZonetypeRelationship.Include(t => t.Zoneid == zoneid && t.Typeid == typeid).FirstOrDefault();
+                var zonetype = context.TabZonetypeRelationship.Include(t => t.Zoneid == zoneid && t.Typeid == zonetypeid).FirstOrDefault();
                 if (zonetype != null)
                 {
                     zoneTypeRelation.Typeid = zonetype.Typeid;
@@ -347,13 +347,13 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public List<SetPrice> GetSetprice(long zoneid, long typeid, TaxiAppzDBContext context)
+        public List<SetPrice> GetSetprice(long zoneid, long zonetypeid, TaxiAppzDBContext context)
         {
             try
             {
                 List<SetPrice> setPrices = new List<SetPrice>();
 
-                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == typeid).ToList();
+                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid).ToList();
 
                 foreach (var getprice in getsetpricelist)
                 {

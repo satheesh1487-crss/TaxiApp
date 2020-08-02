@@ -10,7 +10,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
     {
         public TabZonetypeRelationship()
         {
+            TabDriverCancellation = new HashSet<TabDriverCancellation>();
             TabSetpriceZonetype = new HashSet<TabSetpriceZonetype>();
+            TabUserCancellation = new HashSet<TabUserCancellation>();
         }
 
         [Key]
@@ -55,6 +57,10 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [InverseProperty(nameof(TabZone.TabZonetypeRelationship))]
         public virtual TabZone Zone { get; set; }
         [InverseProperty("Zonetype")]
+        public virtual ICollection<TabDriverCancellation> TabDriverCancellation { get; set; }
+        [InverseProperty("Zonetype")]
         public virtual ICollection<TabSetpriceZonetype> TabSetpriceZonetype { get; set; }
+        [InverseProperty("Zonetype")]
+        public virtual ICollection<TabUserCancellation> TabUserCancellation { get; set; }
     }
 }

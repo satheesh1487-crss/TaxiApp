@@ -11,6 +11,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public TabDrivers()
         {
             TabDriverBonus = new HashSet<TabDriverBonus>();
+            TabDriverDocuments = new HashSet<TabDriverDocuments>();
             TabDriverFine = new HashSet<TabDriverFine>();
             TabDriverWallet = new HashSet<TabDriverWallet>();
         }
@@ -100,6 +101,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual TabTypes Type { get; set; }
         [InverseProperty("Driver")]
         public virtual ICollection<TabDriverBonus> TabDriverBonus { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabDriverDocuments> TabDriverDocuments { get; set; }
         [InverseProperty("Driver")]
         public virtual ICollection<TabDriverFine> TabDriverFine { get; set; }
         [InverseProperty("Driver")]
