@@ -6,38 +6,33 @@ using System.Threading.Tasks;
 
 namespace TaxiAppsWebAPICore
 {
-    public class ManageUser
+    public class ManageUserComplaint
     {
-        [JsonProperty("sNo")]
-        public int Sno { get; set; }
-        [JsonProperty("complainttype")]
-        public string ComplaintType { get; set; }
-        [JsonProperty("complainttitle")]
-        public string ComplaintTitle { get; set; }
-        [JsonProperty("description")]
-        public string Description { get; set; }
-        [JsonProperty("requestid")]
-        public string RequestID { get; set; }
-        [JsonProperty("customerName")]
-        public string CustomerName { get; set; }
+        [JsonProperty("userComplaintID")]
+        public long UserCompalintID { get; set; }
+        [JsonProperty("zoneId")]
+        public long? ZoneId { get; set; }
+        [JsonProperty("usercomplainttype")]
+        public string UserComplaintType { get; set; }
+        [JsonProperty("usercomplainttitle")]
+        public string UserComplaintTitle { get; set; }
+
         [JsonProperty("isActive")]
-        public string IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
-    public class ManageDriver
+  
+    public class ManageDriverComplaint
     {
-        [JsonProperty("sNo")]
-        public int Sno { get; set; }
-        [JsonProperty("complainttype")]
-        public string ComplaintType { get; set; }
-        [JsonProperty("complainttitle")]
-        public string ComplaintTitle { get; set; }
-        [JsonProperty("description")]
-        public string Description { get; set; }
-        [JsonProperty("requestid")]
-        public string RequestID { get; set; }
-        [JsonProperty("driverName")]
-        public string DriverName { get; set; }
+        [JsonProperty("driverComplaintID")]
+        public long DriverCompalintID { get; set; }
+        [JsonProperty("zoneId")]
+        public long? ZoneId { get; set; }
+        [JsonProperty("drivercomplainttype")]
+        public string DriverComplaintType { get; set; }
+        [JsonProperty("drivercomplainttitle")]
+        public string DriverComplaintTitle { get; set; }
+
         [JsonProperty("isActive")]
-        public string IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }
