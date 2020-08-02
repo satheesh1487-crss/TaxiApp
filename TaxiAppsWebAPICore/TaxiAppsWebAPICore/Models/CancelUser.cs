@@ -9,7 +9,7 @@ namespace TaxiAppsWebAPICore
     public class CancelUser
     {
         [JsonProperty("sNo")]
-        public int Sno { get; set; }
+        public long Sno { get; set; }
         [JsonProperty("cancellationlist")]
         public string CancellationList { get; set; }
         [JsonProperty("payingstatus")]
@@ -18,10 +18,32 @@ namespace TaxiAppsWebAPICore
         public string Type { get; set; }
         [JsonProperty("arrivalstatus")]
         public string ArrivalStatus { get; set; }
-        
-        [JsonProperty("isActive")]
-        public bool IsActive { get; set; }
 
-        
+        [JsonProperty("isActive")]
+        public bool? IsActive { get; set; }
+    }
+
+    public class CancelUserInfo
+    {
+        [JsonProperty("userCancelId")]
+        public long UserCancelId { get; set; }
+
+        [JsonProperty("zoneArea")]
+        public long ?ZoneArea { get; set; }
+
+        [JsonProperty("paymentstatus")]
+        public string PaymentStatus { get; set; }
+
+        [JsonProperty("arrivalstatus")]
+        public string ArrivalStatus { get; set; }
+
+        [JsonProperty("cancelReasonEnglish")]
+        public string CancelReasonEnglish { get; set; }
+
+        [JsonProperty("cancelReasonArabic")]
+        public string CancelReasonArabic { get; set; }
+
+        [JsonProperty("cancelReasonSpanish")]
+        public string CancelReasonSpanish { get; set; }
     }
 }

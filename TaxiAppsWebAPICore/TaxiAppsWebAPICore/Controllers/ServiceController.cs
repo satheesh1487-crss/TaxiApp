@@ -27,7 +27,6 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult List()
         {
-            var data = User.ToAppUser();
             DAService dAService = new DAService();
             return this.OK<List<ServiceListModel>>(dAService.ListService(_context));
         }
