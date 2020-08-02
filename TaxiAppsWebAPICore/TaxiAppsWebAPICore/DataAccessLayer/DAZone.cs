@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
-namespace TaxiAppsWebAPICore 
+namespace TaxiAppsWebAPICore
 {
     public class DAZone
     {
@@ -34,9 +34,9 @@ namespace TaxiAppsWebAPICore
                 Extention.insertlog(ex.Message.ToString(), "Admin", "ListZone", context);
                 return null;
             }
-          
+
         }
-        public ManageZone  GetZonedetails(long zoneid,TaxiAppzDBContext context)
+        public ManageZone GetZonedetails(long zoneid, TaxiAppzDBContext context)
         {
             try
             {
@@ -65,9 +65,9 @@ namespace TaxiAppsWebAPICore
                 Extention.insertlog(ex.Message.ToString(), "Admin", "GetZonedetails", context);
                 return null;
             }
-           
+
         }
-        public bool AddZone(ManageZoneAdd manageZone,TaxiAppzDBContext context, LoggedInUser loggedInUser)
+        public bool AddZone(ManageZoneAdd manageZone, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace TaxiAppsWebAPICore
                 tabZone.Unit = manageZone.Unit;
                 context.TabZone.Add(tabZone);
                 context.SaveChanges();
-             
+
                 foreach (var zonepolygon in manageZone.ZonePolygoneList)
                 {
                     TabZonepolygon tabZonepolygon = new TabZonepolygon();
@@ -88,17 +88,17 @@ namespace TaxiAppsWebAPICore
                     tabZonepolygon.CreatedAt = DateTime.UtcNow;
                     tabZonepolygon.Zoneid = tabZone.Zoneid;
                     context.TabZonepolygon.Add(tabZonepolygon);
-                  
+
                 }
-                 context.SaveChanges();
+                context.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Extention.insertlog(ex.Message.ToString(), "Admin", "AddZone", context);
                 return false;
             }
-           
+
 
         }
 
@@ -112,11 +112,11 @@ namespace TaxiAppsWebAPICore
                 setzone.Servicelocid = manageZone.Serviceslocid;
                 setzone.Unit = manageZone.ZoneName;
                 context.TabZone.Update(setzone);
-               context.TabZonepolygon.RemoveRange(deletezonepolyon);
+                context.TabZonepolygon.RemoveRange(deletezonepolyon);
                 context.SaveChanges();
                 foreach (var zonepoly in manageZone.ZonePolygoneList)
                 {
-                     TabZonepolygon  tabZonepolygon = new TabZonepolygon();
+                    TabZonepolygon tabZonepolygon = new TabZonepolygon();
                     tabZonepolygon.Latitudes = zonepoly.Lat;
                     tabZonepolygon.Longitudes = zonepoly.Lng;
                     tabZonepolygon.Zoneid = setzone.Zoneid;
@@ -125,7 +125,7 @@ namespace TaxiAppsWebAPICore
                     tabZonepolygon.UpdatedBy = "Admin";
                     tabZonepolygon.UpdatedAt = DateTime.UtcNow;
                     context.TabZonepolygon.Add(tabZonepolygon);
-                   
+
                 }
                 context.SaveChanges();
                 return true;
@@ -166,19 +166,19 @@ namespace TaxiAppsWebAPICore
                 Extention.insertlog(ex.Message.ToString(), "Admin", "DeleteZone", context);
                 return false;
             }
-            
+
         }
 
-        public bool ActiveZone(long zoneid,bool isStatus, TaxiAppzDBContext context, LoggedInUser loggedInUser)
+        public bool ActiveZone(long zoneid, bool isStatus, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
             {
-               
-                var tabzone = context.TabZone.Where(z => z.Zoneid == zoneid && z.IsDeleted ==0).FirstOrDefault();
+
+                var tabzone = context.TabZone.Where(z => z.Zoneid == zoneid && z.IsDeleted == 0).FirstOrDefault();
                 var tabpolygondtls = context.TabZonepolygon.Where(z => z.Zoneid == zoneid).ToList();
                 if (tabzone != null)
                 {
-                    tabzone.IsActive = isStatus==true ? 1 : 0;
+                    tabzone.IsActive = isStatus == true ? 1 : 0;
                     tabzone.UpdatedAt = DateTime.UtcNow;
                     tabzone.UpdatedBy = "Admin";
                     context.TabZone.Update(tabzone);
@@ -347,60 +347,55 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-         public List<SetPrice> GetSetprice(long zoneid,long typeid,TaxiAppzDBContext context)
+        public List<SetPrice> GetSetprice(long zoneid, long typeid, TaxiAppzDBContext context)
         {
             try
             {
                 List<SetPrice> setPrices = new List<SetPrice>();
-                long getzonetypeid = context.TabZonetypeRelationship.Where(t => t.Zoneid == zoneid && t.Typeid == typeid).Select(t => t.Zonetypeid).SingleOrDefault();
-                if (getzonetypeid != 0)
+
+                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == typeid).ToList();
+
+                foreach (var getprice in getsetpricelist)
                 {
-                    var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == getzonetypeid).ToList();
-                    if (getsetpricelist.Count > 0)
+                    setPrices.Add(new SetPrice()
                     {
-                        foreach (var getprice in getsetpricelist)
-                        {
-                            setPrices.Add(new SetPrice()
-                            {
-                                SetPriceid =getprice.Setpriceid,
-                                ZoneTypeid = getprice.Zonetypeid,
-                                BasePrice = getprice.Baseprice,
-                                PricePerTime = getprice.Pricepertime,
-                                BaseDistance = getprice.Basedistance,
-                                PricePerDistance = getprice.Priceperdistance,
-                                Freewaitingtime = getprice.Freewaitingtime,
-                                WaitingCharges = getprice.Waitingcharges,
-                                CancellationFee = getprice.Cancellationfee,
-                                DropFee = getprice.Dropfee,
-                                admincommtype = getprice.Admincommtype,
-                                admincommission = getprice.Admincommission,
-                                Driversavingper = getprice.Driversavingper,
-                                RideType = getprice.RideType
-                            });
-                        }
-                        return setPrices;
-                    }
-                    return setPrices;
+                        SetPriceid = getprice.Setpriceid,
+                        ZoneTypeid = getprice.Zonetypeid,
+                        BasePrice = getprice.Baseprice,
+                        PricePerTime = getprice.Pricepertime,
+                        BaseDistance = getprice.Basedistance,
+                        PricePerDistance = getprice.Priceperdistance,
+                        Freewaitingtime = getprice.Freewaitingtime,
+                        WaitingCharges = getprice.Waitingcharges,
+                        CancellationFee = getprice.Cancellationfee,
+                        DropFee = getprice.Dropfee,
+                        admincommtype = getprice.Admincommtype,
+                        admincommission = getprice.Admincommission,
+                        Driversavingper = getprice.Driversavingper,
+                        RideType = getprice.RideType
+                    });
+
                 }
-                return null;
+                return setPrices;
+
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "EditSetPrice", context);
                 return null;
             }
-           
+
         }
 
         public bool EditSetprice(List<SetPrice> setPrice, TaxiAppzDBContext context)
         {
             try
             {
-                var  setpriceid = setPrice[0].SetPriceid;
-                if(setpriceid == null)
+                foreach (var setprice in setPrice)
                 {
-                    TabSetpriceZonetype tabSetpriceZonetype = new TabSetpriceZonetype();
-                    foreach(SetPrice setprice in setPrice)
+                    var tabSetpriceZonetype = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == setprice.ZoneTypeid && t.RideType == setprice.RideType && t.IsDelete == false).FirstOrDefault();
+                    if (tabSetpriceZonetype != null)
                     {
                         tabSetpriceZonetype.Zonetypeid = setprice.ZoneTypeid;
                         tabSetpriceZonetype.Baseprice = setprice.BasePrice;
@@ -410,47 +405,37 @@ namespace TaxiAppsWebAPICore
                         tabSetpriceZonetype.Freewaitingtime = setprice.Freewaitingtime;
                         tabSetpriceZonetype.Waitingcharges = setprice.WaitingCharges;
                         tabSetpriceZonetype.Cancellationfee = setprice.CancellationFee;
-                                tabSetpriceZonetype.Dropfee = setprice.DropFee;
+                        tabSetpriceZonetype.Dropfee = setprice.DropFee;
                         tabSetpriceZonetype.Admincommtype = setprice.admincommtype;
                         tabSetpriceZonetype.Admincommission = setprice.admincommission;
                         tabSetpriceZonetype.Driversavingper = setprice.Driversavingper;
                         tabSetpriceZonetype.RideType = setprice.RideType;
-                        context.TabSetpriceZonetype.Add(tabSetpriceZonetype);
+                        context.TabSetpriceZonetype.Update(tabSetpriceZonetype);
+                    }
+                    else
+                    {
+                        TabSetpriceZonetype tabSetprice = new TabSetpriceZonetype();
+                        tabSetprice.Zonetypeid = setprice.ZoneTypeid;
+                        tabSetprice.Baseprice = setprice.BasePrice;
+                        tabSetprice.Pricepertime = setprice.PricePerTime;
+                        tabSetprice.Basedistance = setprice.BaseDistance;
+                        tabSetprice.Priceperdistance = setprice.PricePerDistance;
+                        tabSetprice.Freewaitingtime = setprice.Freewaitingtime;
+                        tabSetprice.Waitingcharges = setprice.WaitingCharges;
+                        tabSetprice.Cancellationfee = setprice.CancellationFee;
+                        tabSetprice.Dropfee = setprice.DropFee;
+                        tabSetprice.Admincommtype = setprice.admincommtype;
+                        tabSetprice.Admincommission = setprice.admincommission;
+                        tabSetprice.Driversavingper = setprice.Driversavingper;
+                        tabSetprice.RideType = setprice.RideType;
+                        context.TabSetpriceZonetype.Add(tabSetprice);
                     }
                     context.SaveChanges();
-                    return true;
+                    
                 }
-                else
-                {
-                    var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == setPrice[0].ZoneTypeid).ToList();
-                    if(getsetpricelist.Count > 0)
-                    {
-                        int index = 0;
-                       foreach(var setpricedtls in setPrice)
-                        {
-                              
-                            getsetpricelist[index].Zonetypeid = setpricedtls.ZoneTypeid;
-                            getsetpricelist[index].Baseprice = setpricedtls.BasePrice;
-                            getsetpricelist[index].Pricepertime = setpricedtls.PricePerTime;
-                            getsetpricelist[index].Basedistance = setpricedtls.BaseDistance;
-                            getsetpricelist[index].Priceperdistance = setpricedtls.PricePerDistance;
-                            getsetpricelist[index].Freewaitingtime = setpricedtls.Freewaitingtime;
-                            getsetpricelist[index].Waitingcharges = setpricedtls.WaitingCharges;
-                            getsetpricelist[index].Cancellationfee = setpricedtls.CancellationFee;
-                            getsetpricelist[index].Dropfee = setpricedtls.DropFee;
-                            getsetpricelist[index].Admincommtype = setpricedtls.admincommtype;
-                            getsetpricelist[index].Admincommission = setpricedtls.admincommission;
-                            getsetpricelist[index].Driversavingper = setpricedtls.Driversavingper;
-                            getsetpricelist[index].RideType = setpricedtls.RideType;
-                            context.TabSetpriceZonetype.Update(getsetpricelist[index]);
-                            index++;
-                        }
-                        context.SaveChanges();
-                        return true;
-                    }
-                }
-                return false;
-               
+                return true;
+                 
+
             }
             catch (Exception ex)
             {
