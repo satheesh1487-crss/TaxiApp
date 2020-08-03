@@ -159,5 +159,16 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
         }
 
+
+        [HttpGet]
+        [Route("listTypeWithZone")]
+        [Authorize]
+        public IActionResult ListTypeWithZone()
+        {
+            DAVechile dATypes = new DAVechile();
+            return this.OK<List<VehicleTypeZoneList>>(dATypes.ListTypeWithZone(_context));
+
+        }
+
     }
 }

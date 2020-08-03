@@ -101,4 +101,13 @@ namespace TaxiAppsWebAPICore
  
 
     }
+
+    public class VehicleTypeZoneList
+    {
+        [JsonProperty("id")]
+        public long Id { set; get; }
+        [JsonProperty("name")]
+        public string Name { set; get; } 
+
+    }
 }

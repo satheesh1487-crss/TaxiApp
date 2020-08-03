@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -326,6 +327,30 @@ namespace TaxiAppsWebAPICore
             {
                 Extention.insertlog(ex.Message, "Admin", "StatusEmer", context);
                 return false;
+            }
+        }
+
+        public List<VehicleTypeZoneList> ListTypeWithZone(TaxiAppzDBContext context)
+        {
+            try
+            {
+
+                List<VehicleTypeZoneList> vehicleTypeLists = new List<VehicleTypeZoneList>();
+                var vechilesTupe = context.TabZonetypeRelationship.Include(t=>t.Zone).Include(t => t.Type).Where(t => t.IsDelete == 0&& t.Zone!=null).ToList().OrderByDescending(t => t.UpdatedAt);
+                foreach (var vechiles in vechilesTupe)
+                {
+                    vehicleTypeLists.Add(new VehicleTypeZoneList()
+                    {
+                        Id = vechiles.Zonetypeid,
+                        Name = vechiles.Zone.Zonename + '-' + vechiles.Type.Typename
+                    }); ;
+                }
+                return vehicleTypeLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListType", context);
+                return null;
             }
         }
     }

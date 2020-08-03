@@ -17,7 +17,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 List<Roles> rolelist = new List<Roles>();
-                var listroles = context.TabRoles.ToList();
+                var listroles = context.TabRoles.Where(t=>t.IsDelete==0).ToList();
                 foreach (var role in listroles)
                 {
                     rolelist.Add(new Roles()
