@@ -21,7 +21,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 {
                     cancelUsers.Add(new CancelUser()
                     {
-                        Sno=users.UserCancelId,
+                        Id=users.UserCancelId,
                         ArrivalStatus=users.Arrivalstatus,
                         CancellationList=users.CancellationReasonEnglish,
                         PayingStatus=users.Paymentstatus,
@@ -45,7 +45,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 CancelUserInfo cancelUserInfo = new CancelUserInfo();
                 var users = context.TabUserCancellation.Where(u => u.UserCancelId == userCancelId && u.IsDelete == false).FirstOrDefault();
 
-                cancelUserInfo.UserCancelId = users.UserCancelId;
+                cancelUserInfo.Id = users.UserCancelId;
                 cancelUserInfo.ZoneArea = users.Zonetypeid;
                 cancelUserInfo.PaymentStatus = users.Paymentstatus;
                 cancelUserInfo.CancelReasonEnglish = users.CancellationReasonEnglish;
@@ -97,7 +97,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
-                var tabUserCancellation = context.TabUserCancellation.Where(r => r.UserCancelId == cancelUserInfo.UserCancelId && r.IsDelete == false).FirstOrDefault();
+                var tabUserCancellation = context.TabUserCancellation.Where(r => r.UserCancelId == cancelUserInfo.Id && r.IsDelete == false).FirstOrDefault();
                 if (tabUserCancellation != null)
                 {
                     tabUserCancellation.Arrivalstatus = cancelUserInfo.ArrivalStatus;
@@ -180,7 +180,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 {
                     cancelDrivers.Add(new CancelDriver()
                     {
-                        Sno = drivers.DriverCancelId,
+                        Id = drivers.DriverCancelId,
                         ArrivalStatus = drivers.Arrivalstatus,
                         CancellationList = drivers.CancellationReasonEnglish,
                         PayingStatus = drivers.Paymentstatus,
@@ -204,7 +204,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 CancelDriverInfo cancelDriverInfo = new CancelDriverInfo();
                 var drivers = context.TabDriverCancellation.Where(u => u.DriverCancelId == driverCancelId && u.IsDelete == false).FirstOrDefault();
 
-                cancelDriverInfo.DriverCancelId = drivers.DriverCancelId;
+                cancelDriverInfo.Id = drivers.DriverCancelId;
                 cancelDriverInfo.ZoneArea = drivers.Zonetypeid;
                 cancelDriverInfo.PaymentStatus = drivers.Paymentstatus;
                 cancelDriverInfo.CancelReasonEnglish = drivers.CancellationReasonEnglish;
@@ -256,7 +256,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
-                var tabDriverCancellation = context.TabDriverCancellation.Where(r => r.DriverCancelId == cancelDriverInfo.DriverCancelId && r.IsDelete == false).FirstOrDefault();
+                var tabDriverCancellation = context.TabDriverCancellation.Where(r => r.DriverCancelId == cancelDriverInfo.Id && r.IsDelete == false).FirstOrDefault();
                 if (tabDriverCancellation != null)
                 {
                     tabDriverCancellation.Arrivalstatus = cancelDriverInfo.ArrivalStatus;

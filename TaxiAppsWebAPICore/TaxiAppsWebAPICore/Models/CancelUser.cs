@@ -8,8 +8,8 @@ namespace TaxiAppsWebAPICore
 {
     public class CancelUser
     {
-        [JsonProperty("sNo")]
-        public long Sno { get; set; }
+        [JsonProperty("id")]
+        public long Id { get; set; }
         [JsonProperty("cancellationlist")]
         public string CancellationList { get; set; }
         [JsonProperty("payingstatus")]
@@ -25,8 +25,8 @@ namespace TaxiAppsWebAPICore
 
     public class CancelUserInfo
     {
-        [JsonProperty("userCancelId")]
-        public long UserCancelId { get; set; }
+        [JsonProperty("id")]
+        public long Id { get; set; }
 
         [JsonProperty("zoneArea")]
         public long ?ZoneArea { get; set; }
