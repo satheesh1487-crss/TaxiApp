@@ -62,6 +62,16 @@ namespace TaziappzMobileWebAPI
         //        ContentList = content
         //    });
         //}
+
+        internal static IActionResult OKRESPONSE<T>(this ControllerBase controller, T content,string msg)
+        {
+            return controller.Ok(new APIContentResponse<T>()
+            {
+                success = true,
+                Message = msg,
+                Content =content
+            });
+        }
         internal static string GenerateJWTToken(TabUser userinfo,TaxiAppzDBContext context)
         {
             try
