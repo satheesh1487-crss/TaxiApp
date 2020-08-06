@@ -30,10 +30,16 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabDriverWallet> TabDriverWallet { get; set; }
         public virtual DbSet<TabDrivers> TabDrivers { get; set; }
         public virtual DbSet<TabManageDocument> TabManageDocument { get; set; }
+        public virtual DbSet<TabManageEmail> TabManageEmail { get; set; }
+        public virtual DbSet<TabManageEmailHints> TabManageEmailHints { get; set; }
+        public virtual DbSet<TabManageReferral> TabManageReferral { get; set; }
+        public virtual DbSet<TabManageSms> TabManageSms { get; set; }
+        public virtual DbSet<TabManageSmsHints> TabManageSmsHints { get; set; }
         public virtual DbSet<TabMenu> TabMenu { get; set; }
         public virtual DbSet<TabMenuAccess> TabMenuAccess { get; set; }
         public virtual DbSet<TabMenucode> TabMenucode { get; set; }
         public virtual DbSet<TabPromo> TabPromo { get; set; }
+        public virtual DbSet<TabPushNotification> TabPushNotification { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
@@ -448,6 +454,82 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.UpdatedBy).IsUnicode(false);
             });
 
+            modelBuilder.Entity<TabManageEmail>(entity =>
+            {
+                entity.HasKey(e => e.ManageEmailid)
+                    .HasName("PK__tab_Mana__57CEAE3506B88066");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.Emailtitle).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabManageEmailHints>(entity =>
+            {
+                entity.HasKey(e => e.ManageEmailHint)
+                    .HasName("PK__tab_mana__A0650D00E5482C58");
+
+                entity.Property(e => e.HintDescription).IsUnicode(false);
+
+                entity.Property(e => e.HintKeyword).IsUnicode(false);
+
+                entity.HasOne(d => d.ManageEmail)
+                    .WithMany(p => p.TabManageEmailHints)
+                    .HasForeignKey(d => d.ManageEmailid)
+                    .HasConstraintName("FK__tab_manag__Manag__15A53433");
+            });
+
+            modelBuilder.Entity<TabManageReferral>(entity =>
+            {
+                entity.HasKey(e => e.Managereferral)
+                    .HasName("PK__tab_Mana__A1BB58E9D6FF145D");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabManageSms>(entity =>
+            {
+                entity.HasKey(e => e.ManageSmsid)
+                    .HasName("PK__tab_Mana__FB9C110A6FEBC5FF");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Smstitle).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabManageSmsHints>(entity =>
+            {
+                entity.HasKey(e => e.ManageSmshint)
+                    .HasName("PK__tab_mana__D30D8C94EFCE586D");
+
+                entity.Property(e => e.HintDescription).IsUnicode(false);
+
+                entity.Property(e => e.HintKeyword).IsUnicode(false);
+
+                entity.HasOne(d => d.ManageSms)
+                    .WithMany(p => p.TabManageSmsHints)
+                    .HasForeignKey(d => d.ManageSmsid)
+                    .HasConstraintName("FK__tab_manag__Manag__0A338187");
+            });
+
             modelBuilder.Entity<TabMenu>(entity =>
             {
                 entity.HasKey(e => e.Menuid)
@@ -505,6 +587,24 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabPromo)
                     .HasForeignKey(d => d.Zoneid)
                     .HasConstraintName("FK__tab_promo__zonei__477199F1");
+            });
+
+            modelBuilder.Entity<TabPushNotification>(entity =>
+            {
+                entity.HasKey(e => e.Pushnotificationid)
+                    .HasName("PK__tab_push__2051B54F44533F93");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.HasRedirectUrl).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UploadFileName).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabRefreshtoken>(entity =>
