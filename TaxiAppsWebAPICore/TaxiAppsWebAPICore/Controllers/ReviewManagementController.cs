@@ -24,12 +24,13 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult UsertoDriver()
         {
             List<UsertoDriver> usertoDrivers = new List<UsertoDriver>();
-            usertoDrivers.Add(new UsertoDriver() { Sno = 1, UserName = "Jagan", Rating = Convert.ToDecimal(0), Comment="" ,RequestID = 280, DriverName = "Vasudev", IsActive = true });
+            usertoDrivers.Add(new UsertoDriver() { Sno = 1, UserName = "Jagan", Rating = Convert.ToDecimal(0), Comment = "", RequestID = 280, DriverName = "Vasudev", IsActive = true });
             usertoDrivers.Add(new UsertoDriver() { Sno = 2, UserName = "Dilip", Rating = Convert.ToDecimal(4.95), Comment = "", RequestID = 281, DriverName = "Lakshman", IsActive = true });
             usertoDrivers.Add(new UsertoDriver() { Sno = 3, UserName = "Sasi", Rating = Convert.ToDecimal(3.0), Comment = "", RequestID = 282, DriverName = "Raju", IsActive = true });
             usertoDrivers.Add(new UsertoDriver() { Sno = 4, UserName = "Arjun", Rating = Convert.ToDecimal(4.5), Comment = "", RequestID = 283, DriverName = "Anandh", IsActive = true });
             return this.OK<List<UsertoDriver>>(usertoDrivers);
         }
+
         [HttpGet]
         [Route("DrivertoUser")]
         [Authorize]
@@ -41,6 +42,14 @@ namespace TaxiAppsWebAPICore.Controllers
             drivertoUsers.Add(new DrivertoUser() { Sno = 3, UserName = "Sathish", Rating = Convert.ToDecimal(4.96), Comment = "Additional Comments", RequestID = 282, DriverName = "Jalil", IsActive = true });
             drivertoUsers.Add(new DrivertoUser() { Sno = 4, UserName = "Sundar", Rating = Convert.ToDecimal(4.95), Comment = "Additional Comments", RequestID = 283, DriverName = "Akash", IsActive = true });
             return this.OK<List<DrivertoUser>>(drivertoUsers);
+        }
+
+        [HttpPut]
+        [Route("UpdateReview")]
+        [Authorize]
+        public IActionResult UpdateReview()
+        {
+            return this.OKResponse("Record Updated Successfully");
         }
     }
 }
