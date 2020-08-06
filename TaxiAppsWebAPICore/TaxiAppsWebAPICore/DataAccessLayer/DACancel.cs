@@ -44,15 +44,16 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
                 CancelUserInfo cancelUserInfo = new CancelUserInfo();
                 var users = context.TabUserCancellation.Where(u => u.UserCancelId == userCancelId && u.IsDelete == false).FirstOrDefault();
-
-                cancelUserInfo.Id = users.UserCancelId;
-                cancelUserInfo.Zonetypeid = users.Zonetypeid;
-                cancelUserInfo.PaymentStatus = users.Paymentstatus;
-                cancelUserInfo.CancelReasonEnglish = users.CancellationReasonEnglish;
-                cancelUserInfo.CancelReasonArabic = users.CancellationReasonArabic;
-                cancelUserInfo.CancelReasonSpanish = users.CancellationReasonSpanish;
-                cancelUserInfo.ArrivalStatus = users.Arrivalstatus;               
-
+                if (users != null)
+                {
+                    cancelUserInfo.Id = users.UserCancelId;
+                    cancelUserInfo.Zonetypeid = users.Zonetypeid;
+                    cancelUserInfo.PaymentStatus = users.Paymentstatus;
+                    cancelUserInfo.CancelReasonEnglish = users.CancellationReasonEnglish;
+                    cancelUserInfo.CancelReasonArabic = users.CancellationReasonArabic;
+                    cancelUserInfo.CancelReasonSpanish = users.CancellationReasonSpanish;
+                    cancelUserInfo.ArrivalStatus = users.Arrivalstatus;
+                }
                 return cancelUserInfo == null ? null : cancelUserInfo;
 
             }
@@ -203,15 +204,16 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
                 CancelDriverInfo cancelDriverInfo = new CancelDriverInfo();
                 var drivers = context.TabDriverCancellation.Where(u => u.DriverCancelId == driverCancelId && u.IsDelete == false).FirstOrDefault();
-
-                cancelDriverInfo.Id = drivers.DriverCancelId;
-                cancelDriverInfo.Zonetypeid = drivers.Zonetypeid;
-                cancelDriverInfo.PaymentStatus = drivers.Paymentstatus;
-                cancelDriverInfo.CancelReasonEnglish = drivers.CancellationReasonEnglish;
-                cancelDriverInfo.CancelReasonArabic = drivers.CancellationReasonArabic;
-                cancelDriverInfo.CancelReasonSpanish = drivers.CancellationReasonSpanish;
-                cancelDriverInfo.ArrivalStatus = drivers.Arrivalstatus;
-
+                if (drivers != null)
+                {
+                    cancelDriverInfo.Id = drivers.DriverCancelId;
+                    cancelDriverInfo.Zonetypeid = drivers.Zonetypeid;
+                    cancelDriverInfo.PaymentStatus = drivers.Paymentstatus;
+                    cancelDriverInfo.CancelReasonEnglish = drivers.CancellationReasonEnglish;
+                    cancelDriverInfo.CancelReasonArabic = drivers.CancellationReasonArabic;
+                    cancelDriverInfo.CancelReasonSpanish = drivers.CancellationReasonSpanish;
+                    cancelDriverInfo.ArrivalStatus = drivers.Arrivalstatus;
+                }
                 return cancelDriverInfo == null ? null : cancelDriverInfo;           
 
             }

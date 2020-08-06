@@ -49,7 +49,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult AddPromo(ManagePromo managePromo)
         {
             DAPromo dAPromo = new DAPromo();
-            return this.OK(dAPromo.AddPromo(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAPromo.AddPromo(managePromo, _content ,User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
         }
         [HttpPut]
         [Route("EditPromo")]
