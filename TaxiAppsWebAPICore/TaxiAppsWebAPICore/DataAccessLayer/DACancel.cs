@@ -44,15 +44,16 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
                 CancelUserInfo cancelUserInfo = new CancelUserInfo();
                 var users = context.TabUserCancellation.Where(u => u.UserCancelId == userCancelId && u.IsDelete == false).FirstOrDefault();
-
-                cancelUserInfo.Id = users.UserCancelId;
-                cancelUserInfo.ZoneArea = users.Zonetypeid;
-                cancelUserInfo.PaymentStatus = users.Paymentstatus;
-                cancelUserInfo.CancelReasonEnglish = users.CancellationReasonEnglish;
-                cancelUserInfo.CancelReasonArabic = users.CancellationReasonArabic;
-                cancelUserInfo.CancelReasonSpanish = users.CancellationReasonSpanish;
-                cancelUserInfo.ArrivalStatus = users.Arrivalstatus;               
-
+                if (users != null)
+                {
+                    cancelUserInfo.Id = users.UserCancelId;
+                    cancelUserInfo.Zonetypeid = users.Zonetypeid;
+                    cancelUserInfo.PaymentStatus = users.Paymentstatus;
+                    cancelUserInfo.CancelReasonEnglish = users.CancellationReasonEnglish;
+                    cancelUserInfo.CancelReasonArabic = users.CancellationReasonArabic;
+                    cancelUserInfo.CancelReasonSpanish = users.CancellationReasonSpanish;
+                    cancelUserInfo.ArrivalStatus = users.Arrivalstatus;
+                }
                 return cancelUserInfo == null ? null : cancelUserInfo;
 
             }
@@ -76,7 +77,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 tabUserCancellation.CancellationReasonEnglish = cancelUserInfo.CancelReasonEnglish;
                 tabUserCancellation.CancellationReasonSpanish = cancelUserInfo.CancelReasonSpanish;
                 tabUserCancellation.Paymentstatus = cancelUserInfo.PaymentStatus;                
-                tabUserCancellation.Zonetypeid = cancelUserInfo.ZoneArea;
+                tabUserCancellation.Zonetypeid = cancelUserInfo.Zonetypeid;
 
                 tabUserCancellation.CreatedAt = tabUserCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 tabUserCancellation.CreatedBy = tabUserCancellation.UpdatedBy = loggedInUser.Email;
@@ -105,7 +106,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     tabUserCancellation.CancellationReasonEnglish = cancelUserInfo.CancelReasonEnglish;
                     tabUserCancellation.CancellationReasonSpanish = cancelUserInfo.CancelReasonSpanish;
                     tabUserCancellation.Paymentstatus = cancelUserInfo.PaymentStatus;                
-                    tabUserCancellation.Zonetypeid = cancelUserInfo.ZoneArea;
+                    tabUserCancellation.Zonetypeid = cancelUserInfo.Zonetypeid;
                     tabUserCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                     tabUserCancellation.UpdatedBy = loggedInUser.Email;
                     context.Update(tabUserCancellation);
@@ -203,15 +204,16 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
                 CancelDriverInfo cancelDriverInfo = new CancelDriverInfo();
                 var drivers = context.TabDriverCancellation.Where(u => u.DriverCancelId == driverCancelId && u.IsDelete == false).FirstOrDefault();
-
-                cancelDriverInfo.Id = drivers.DriverCancelId;
-                cancelDriverInfo.ZoneArea = drivers.Zonetypeid;
-                cancelDriverInfo.PaymentStatus = drivers.Paymentstatus;
-                cancelDriverInfo.CancelReasonEnglish = drivers.CancellationReasonEnglish;
-                cancelDriverInfo.CancelReasonArabic = drivers.CancellationReasonArabic;
-                cancelDriverInfo.CancelReasonSpanish = drivers.CancellationReasonSpanish;
-                cancelDriverInfo.ArrivalStatus = drivers.Arrivalstatus;
-
+                if (drivers != null)
+                {
+                    cancelDriverInfo.Id = drivers.DriverCancelId;
+                    cancelDriverInfo.Zonetypeid = drivers.Zonetypeid;
+                    cancelDriverInfo.PaymentStatus = drivers.Paymentstatus;
+                    cancelDriverInfo.CancelReasonEnglish = drivers.CancellationReasonEnglish;
+                    cancelDriverInfo.CancelReasonArabic = drivers.CancellationReasonArabic;
+                    cancelDriverInfo.CancelReasonSpanish = drivers.CancellationReasonSpanish;
+                    cancelDriverInfo.ArrivalStatus = drivers.Arrivalstatus;
+                }
                 return cancelDriverInfo == null ? null : cancelDriverInfo;           
 
             }
@@ -235,7 +237,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 tabDriverCancellation.CancellationReasonEnglish = cancelDriverInfo.CancelReasonEnglish;
                 tabDriverCancellation.CancellationReasonSpanish = cancelDriverInfo.CancelReasonSpanish;
                 tabDriverCancellation.Paymentstatus = cancelDriverInfo.PaymentStatus;
-                tabDriverCancellation.Zonetypeid = cancelDriverInfo.ZoneArea;
+                tabDriverCancellation.Zonetypeid = cancelDriverInfo.Zonetypeid;
 
                 tabDriverCancellation.CreatedAt = tabDriverCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 tabDriverCancellation.CreatedBy = tabDriverCancellation.UpdatedBy = loggedInUser.Email;
@@ -264,7 +266,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     tabDriverCancellation.CancellationReasonEnglish = cancelDriverInfo.CancelReasonEnglish;
                     tabDriverCancellation.CancellationReasonSpanish = cancelDriverInfo.CancelReasonSpanish;
                     tabDriverCancellation.Paymentstatus = cancelDriverInfo.PaymentStatus;
-                    tabDriverCancellation.Zonetypeid = cancelDriverInfo.ZoneArea;
+                    tabDriverCancellation.Zonetypeid = cancelDriverInfo.Zonetypeid;
                     tabDriverCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                     tabDriverCancellation.UpdatedBy = loggedInUser.Email;
                     context.Update(tabDriverCancellation);

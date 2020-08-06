@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Helper;
+using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.DataAccessLayer
@@ -75,10 +77,14 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         }
 
-        public bool AddPromo(ManagePromo managePromo, TaxiAppzDBContext content)
+        public bool AddPromo(ManagePromo managePromo, TaxiAppzDBContext content,LoggedInUser loggedIn)
         {
             try
             {
+               
+                if(!content.TabZone.Any(t => t.Zoneid == managePromo.Zoneid && t.IsActive == 1 && t.IsDeleted == 0))
+                    return  false;
+
                 TabPromo tabPromo = new TabPromo();
                 tabPromo.CouponCode = managePromo.CoupenCode;
                 tabPromo.PromoEstimateAmount = managePromo.EstimateAmount;
@@ -90,8 +96,9 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 tabPromo.StartDate = managePromo.StartDate;
                 tabPromo.EndDate = managePromo.ExpiryDate;
                 tabPromo.IsActive = true;
-                tabPromo.CreatedAt = DateTime.UtcNow;
-                tabPromo.CreatedBy = "Admin";
+                tabPromo.IsDelete = true;
+                tabPromo.UpdatedAt = tabPromo.CreatedAt = DateTime.UtcNow;
+                tabPromo.UpdatedBy = tabPromo.CreatedBy = loggedIn.UserName;
                 content.TabPromo.Add(tabPromo);
                 content.SaveChanges();
                 return true;

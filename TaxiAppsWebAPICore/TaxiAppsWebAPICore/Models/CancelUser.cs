@@ -28,8 +28,8 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonProperty("zoneArea")]
-        public long ?ZoneArea { get; set; }
+        [JsonProperty("zonetypeid")]
+        public long ?Zonetypeid { get; set; }
 
         [JsonProperty("paymentstatus")]
         public string PaymentStatus { get; set; }
