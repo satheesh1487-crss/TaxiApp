@@ -75,6 +75,10 @@ namespace TaxiAppsWebAPICore
                 tabZone.Zonename = manageZone.ZoneName;
                 tabZone.Servicelocid = manageZone.Serviceslocid;
                 tabZone.Unit = manageZone.Unit;
+                tabZone.IsActive = 1;
+                tabZone.IsDeleted = 0;
+                tabZone.CreatedBy = tabZone.UpdatedBy = loggedInUser.UserName;
+                tabZone.CreatedAt = tabZone.UpdatedAt = Extention.GetDateTime();
                 context.TabZone.Add(tabZone);
                 context.SaveChanges();
 
@@ -84,8 +88,8 @@ namespace TaxiAppsWebAPICore
                     tabZonepolygon.Longitudes = zonepolygon.Lng;
                     tabZonepolygon.Latitudes = zonepolygon.Lat;
                     tabZonepolygon.IsActive = 1;
-                    tabZonepolygon.CreatedBy = "Admin";
-                    tabZonepolygon.CreatedAt = DateTime.UtcNow;
+                    tabZonepolygon.CreatedBy = tabZonepolygon.UpdatedBy =loggedInUser.UserName;
+                    tabZonepolygon.CreatedAt = tabZonepolygon.UpdatedAt =Extention.GetDateTime();
                     tabZonepolygon.Zoneid = tabZone.Zoneid;
                     context.TabZonepolygon.Add(tabZonepolygon);
 

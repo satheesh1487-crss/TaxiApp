@@ -146,5 +146,10 @@ namespace TaxiAppsWebAPICore
                 Email="admin"
             };
         }
+
+        internal static DateTime GetDateTime()
+        {
+            return DateTime.UtcNow;
+        }
     }
 }
