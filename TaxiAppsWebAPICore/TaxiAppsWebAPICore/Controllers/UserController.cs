@@ -66,7 +66,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult InActiveuser(long userid, bool status)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.DisableUser(_context, userid, status, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.DisableUser(_context, userid, status, User.ToAppUser()) == true ? (status == true ? "Active Successfully" : "InActive Successfully"):"Failed to Update");
         }
 
         //TODO:: check parent record is deleted

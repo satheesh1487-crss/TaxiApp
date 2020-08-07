@@ -214,10 +214,10 @@ namespace TaxiAppsWebAPICore
                 tabSos.Sosid = vehicleEmerInfo.Id;
                 tabSos.Sosname = vehicleEmerInfo.Name;
                 tabSos.ContactNumber = vehicleEmerInfo.Number;
-                tabSos.IsActive = 0;
+                tabSos.IsActive = 1;
                 tabSos.IsDeleted = 0;
                 tabSos.CreatedAt = tabSos.UpdatedAt = DateTime.UtcNow;
-                tabSos.CreatedBy = tabSos.UpdatedBy = "admin";
+                tabSos.CreatedBy = tabSos.UpdatedBy = loggedInUser.UserName;
                 context.TabSos.Add(tabSos);
                 context.SaveChanges();
                 return true;

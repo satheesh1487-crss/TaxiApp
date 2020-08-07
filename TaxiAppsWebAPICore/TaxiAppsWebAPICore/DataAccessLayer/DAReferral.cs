@@ -35,7 +35,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         }
 
-        public bool AddPromo(ManageReferral manageReferral, TaxiAppzDBContext content, LoggedInUser loggedIn)
+        public bool SaveReferral(ManageReferral manageReferral, TaxiAppzDBContext content, LoggedInUser loggedIn)
         {
             try
             {
