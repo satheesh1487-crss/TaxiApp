@@ -89,17 +89,16 @@ namespace TaxiAppsWebAPICore
             try
             {
                 TabRoles Insertdata = new TabRoles();
-                var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
+                var updatedate = context.TabRoles.Where(r => r.Roleid == id && r.IsDelete==1).FirstOrDefault();
                 if (updatedate != null)
                 {
                     updatedate.RoleName = roles.RoleName;
                     updatedate.DisplayName = roles.DisplayName;
                     updatedate.Description = roles.Description;
-                    updatedate.IsActive = roles.IsActive.ToUpper() == "INACTIVE" ? 0 : 1;
-                    updatedate.AllRights = 1;
-                    updatedate.Locked = 1;
+                    
+                    
                     updatedate.CreatedBy = loggedInUser.Email;
-                    updatedate.UpdatedAt = DateTime.Now;
+                    updatedate.UpdatedAt = Extention.GetDateTime();
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
