@@ -1,24 +1,18 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using TaxiAppsWebAPICore.Models;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.VisualBasic;
-using System.Reflection;
-using Microsoft.OpenApi.Models;
 using TaxiAppsWebAPICore.TaxiModels;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Cors;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
-   
+
 namespace TaxiAppsWebAPICore
 {
     public class Startup
