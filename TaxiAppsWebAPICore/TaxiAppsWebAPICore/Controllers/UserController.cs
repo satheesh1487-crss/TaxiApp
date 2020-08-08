@@ -76,7 +76,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Edit(UserInfoList userInfoList)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Edit(_context, userInfoList, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.Edit(_context, userInfoList, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
         }
 
         //TODO:: check parent record is deleted
@@ -86,7 +86,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Save(UserInfoList userInfoList)
         {
             DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Save(_context, userInfoList, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dAUsers.Save(_context, userInfoList, User.ToAppUser()) == true ? "Saved Successfully" : "Saved Failed");
         }
 
         [HttpGet]

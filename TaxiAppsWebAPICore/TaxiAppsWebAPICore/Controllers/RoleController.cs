@@ -79,7 +79,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DisableRole(long id)
         {
             DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.DisableRole(_context, id, User.ToAppUser()) ? "Disable Successfully" : "Disable Failed");
+            return this.OKResponse(dARoles.DisableRole(_context, id, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
         }
 
         //TODO:: check parent record is deleted

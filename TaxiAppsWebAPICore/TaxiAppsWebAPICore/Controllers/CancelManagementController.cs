@@ -64,7 +64,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusUser(long usercancelid, bool status)
         {
             DACancel dACancel = new DACancel();
-            return this.OKResponse(dACancel.StatusUser(_context, usercancelid, status, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dACancel.StatusUser(_context, usercancelid, status, User.ToAppUser()) == true ? "Active Successfully" : "InActive Successfully");
         }
 
         //TODO:: check parent record is deleted
@@ -123,7 +123,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusDriver(long driverCancelId, bool status)
         {
             DACancel dACancel = new DACancel();
-            return this.OKResponse(dACancel.StatusDriver(_context, driverCancelId, status, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dACancel.StatusDriver(_context, driverCancelId, status, User.ToAppUser()) == true ? "Active Successfully" : "InActive Successfully");
         }
 
         //TODO:: check parent record is deleted

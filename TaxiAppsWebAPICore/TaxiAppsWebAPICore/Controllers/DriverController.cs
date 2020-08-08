@@ -70,7 +70,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult InActivedriver(long driverid, bool status)
         {
             DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.DisableUser(_context, driverid, status, User.ToAppUser()) == true ? "Disabled Successfully" : "Disabled Failed");
+            return this.OKResponse(dADriver.DisableUser(_context, driverid, status, User.ToAppUser()) == true ? "Active Successfully" : "InActive Successfully");
         }
 
         //TODO:: check parent record is deleted
@@ -209,7 +209,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteFine(long Id)
         {
             DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.DeleteFine(_context, Id, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            return this.OKResponse(dADriver.DeleteFine(_context, Id, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
         }
 
         [HttpGet]
@@ -242,7 +242,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult DeleteBonus(long  id)
         {
             DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.DeleteBonus(_context, id, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dADriver.DeleteBonus(_context, id, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
         }
 
         [HttpGet]

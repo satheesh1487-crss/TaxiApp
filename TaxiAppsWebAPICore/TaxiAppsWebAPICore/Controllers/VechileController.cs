@@ -80,7 +80,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
+            return this.OKResponse(dATypes.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
         }
 
         [HttpGet]
@@ -156,7 +156,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusEmer(long id, bool isStatus)
         {
             DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
+            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
         }
 
 
