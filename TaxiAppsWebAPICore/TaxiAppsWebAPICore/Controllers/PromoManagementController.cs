@@ -57,7 +57,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditPromo(ManagePromo managePromo)
         {
             DAPromo dAPromo = new DAPromo();
-            return this.OK(dAPromo.EditPromo(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAPromo.EditPromo(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
         }
         [HttpPut]
         [Route("IsActivePromo")]
@@ -65,7 +65,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult IsActivePromo(long promoid,bool activestatus)
         {
             DAPromo dAPromo = new DAPromo();
-            return this.OK(dAPromo.IsActivePromo(promoid, activestatus,_content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAPromo.IsActivePromo(promoid, activestatus,_content) ? "Active Successfully" : "InActive Successfully");
         }
         [HttpDelete]
         [Route("IsDeletePromo")]
@@ -73,7 +73,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult IsDeletePromo(long promoid)
         {
             DAPromo dAPromo = new DAPromo();
-            return this.OK(dAPromo.IsDeletePromo(promoid,  _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAPromo.IsDeletePromo(promoid,  _content) ? "Recored Deleted Successfully" : "Failed to Delete");
         }
     }
 }

@@ -72,7 +72,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult ActiveZone(long zoneid,bool isStatus)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context, User.ToAppUser()) ? "Zone Active/Inactive" : "Failed");
+            return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
         }
         [HttpGet]
         [Route("ListZoneType")]
@@ -116,7 +116,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult ActiveZoneType(long zoneid,long typeid,bool isactivestatus,ZoneTypeRelation zoneTypeRelation)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZoneType(zoneid,typeid, isactivestatus, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
+            return this.OKResponse(dAZone.ActiveZoneType(zoneid,typeid, isactivestatus, _context, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
         }
         [HttpPut]
         [Route("DefaultZoneType")]

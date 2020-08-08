@@ -68,7 +68,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Status(long id,bool status)
         {
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Status(_context, id, status, User.ToAppUser()) ? "Status Changed Successfully" : "Status Changed Failed");
+            return this.OKResponse(dASuperAdmin.Status(_context, id, status, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
         }
 
         //TODO:: check parent record is deleted

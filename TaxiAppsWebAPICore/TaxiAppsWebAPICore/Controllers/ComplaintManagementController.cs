@@ -50,7 +50,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditUserComplainttemplate(ManageUserComplaint managePromo)
         {
             DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.EditUserComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAComplaint.EditUserComplainttemplate(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
         }
         [HttpPut]
         [Route("IsActiveUserComplaintTemplate")]
@@ -58,7 +58,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult IsActiveUserComplaintTemplate(long promoid, bool activestatus)
         {
             DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsActiveUserComplaintTemplate(promoid, activestatus, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAComplaint.IsActiveUserComplaintTemplate(promoid, activestatus, _content) ? "Active Successfully" : "InActive Successfully");
         }
         [HttpDelete]
         [Route("IsDeleteUserComplaintTemplate")]
@@ -66,7 +66,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult IsDeleteUserComplaintTemplate(long promoid)
         {
             DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsDeleteUserComplaintTemplate(promoid, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAComplaint.IsDeleteUserComplaintTemplate(promoid, _content) ? "Recored Deleted Successfully" : "Failed to Delete");
         }
         [HttpGet]
         [Route("ManageDriver")]
@@ -100,7 +100,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult EditDriverComplainttemplate(ManageDriverComplaint managePromo)
         {
             DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.EditDriverComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAComplaint.EditDriverComplainttemplate(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
         }
         [HttpPut]
         [Route("IsActiveDriverComplaintTemplate")]
@@ -108,7 +108,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult IsActiveDriverComplaintTemplate(long promoid, bool activestatus)
         {
             DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsActiveDriverComplaintTemplate(promoid, activestatus, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAComplaint.IsActiveDriverComplaintTemplate(promoid, activestatus, _content) ? "Active Successfully" : "InActive Successfully");
         }
         [HttpDelete]
         [Route("IsDeleteDriverComplaintTemplate")]
@@ -116,7 +116,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult IsDeleteDriverComplaintTemplate(long promoid)
         {
             DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsDeleteDriverComplaintTemplate(promoid, _content) ? "Recored Added Successfully" : "Failed to Add");
+            return this.OK(dAComplaint.IsDeleteDriverComplaintTemplate(promoid, _content) ? "Recored Deleted Successfully" : "Failed to Delete");
         }
     }
 }
