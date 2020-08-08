@@ -23,6 +23,9 @@ namespace TaxiAppsWebAPICore
                     {
                         Zoneid = zone.Zoneid,
                         ZoneName = zone.Zonename,
+                        Serviceslocid=zone.Servicelocid,
+                        Unit=zone.Unit,
+                        
                         IsActive = zone.IsActive == 0 ? false : true
 
                     });
