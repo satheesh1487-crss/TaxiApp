@@ -105,7 +105,8 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
-       internal  static bool insertlog(string description,string userid,string functionname,TaxiAppzDBContext context)
+       
+        internal  static bool insertlog(string description,string userid,string functionname,TaxiAppzDBContext context)
         {
             TblErrorlog tblErrorlog = new TblErrorlog();
             tblErrorlog.Description = description;
