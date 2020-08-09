@@ -84,12 +84,12 @@ namespace TaxiAppsWebAPICore.Controllers
 
         }
         [HttpGet]
-        [Route("ListZoneTypeDrop")]
+        [Route("ZoneRelationVechileType")]
         [Authorize]
-        public IActionResult ListZoneTypeDrop(long zoneid)
+        public IActionResult ListZoneTypeDrop(long zoneId)
         {
             DAZone dAZone = new DAZone();
-            return this.OK<List<ZoneTypeDrop>>(dAZone.ZoneType(zoneid, _context));
+            return this.OK<List<ZoneTypeDrop>>(dAZone.ZoneType(zoneId, _context));
         }
         //TODO:: check parent record is deleted
         [HttpPost]
