@@ -115,12 +115,12 @@ namespace TaxiAppsWebAPICore
                 TabAdminDetails tabAdminDetails = new TabAdminDetails();
 
                 tabAdminDetails.AdminId = tabAdmin.Id;
-                tabAdminDetails.City = "";
+             
                 tabAdminDetails.Address = adminDetails.Address;
                 tabAdminDetails.PostalCode = adminDetails.Postalcode;
               
                 tabAdminDetails.CountryId = adminDetails.Country;
-                tabAdminDetails.Timezone = adminDetails.TimeZone;
+              
 
                 context.TabAdminDetails.Add(tabAdminDetails);
                 context.SaveChanges();
@@ -182,11 +182,11 @@ namespace TaxiAppsWebAPICore
                 if (tabAdmindetails != null)
                 {
                     tabAdmindetails.AdminId = tabAdmin.Id;
-                    tabAdmindetails.City = "";
+                   
                     tabAdmindetails.Address = adminDetails.Address;
                     tabAdmindetails.PostalCode =adminDetails.Postalcode;
                     tabAdmindetails.CountryId = adminDetails.Country;
-                    tabAdmindetails.Timezone = adminDetails.TimeZone;
+                  
                     tabAdmindetails.UpdatedAt = DateTime.UtcNow;
                     tabAdmindetails.UpdatedBy = loggedInUser.Email;
                     context.TabAdminDetails.Update(tabAdmindetails);
@@ -195,11 +195,11 @@ namespace TaxiAppsWebAPICore
                 {
                     TabAdminDetails details = new TabAdminDetails();
                     details.AdminId = tabAdmin.Id;
-                    details.City = "";
+                   
                     details.Address = adminDetails.Address;
                     details.PostalCode = adminDetails.Postalcode;
                     details.CountryId = adminDetails.Country;
-                    details.Timezone = adminDetails.TimeZone;
+                    
                     details.UpdatedAt = DateTime.UtcNow;
                     details.UpdatedBy = loggedInUser.Email;
                     context.TabAdminDetails.Add(details);

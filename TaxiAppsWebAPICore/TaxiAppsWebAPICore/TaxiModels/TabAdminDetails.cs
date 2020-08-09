@@ -16,16 +16,10 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [Column("address")]
         [StringLength(300)]
         public string Address { get; set; }
-        [Column("city")]
-        [StringLength(200)]
-        public string City { get; set; }
         [Column("Country_id")]
         public long? CountryId { get; set; }
         [Column("postalCode")]
         public long? PostalCode { get; set; }
-        [Column("timezone")]
-        [StringLength(200)]
-        public string Timezone { get; set; }
         [Column("document_name")]
         [StringLength(100)]
         public string DocumentName { get; set; }
