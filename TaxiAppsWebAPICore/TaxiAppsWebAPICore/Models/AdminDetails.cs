@@ -14,42 +14,43 @@ namespace TaxiAppsWebAPICore
        
         [JsonProperty("lastname")]
         public string Lastname { get; set; }
-        
+        [JsonProperty("roleId")]
+        public long? RoleId { get; set; }
+
+        [JsonProperty("area")]
+        public long? Area { get; set; }
+
         [JsonProperty("email")]
         public string Email { get; set; }
         
         [JsonProperty("phonenumber")]
         public string Phonenumber { get; set; }
         
-        [JsonProperty("Emerphonenumber")]
+        [JsonProperty("emerphonenumber")]
         public string Emerphonenumber { get; set; }
        
-        [JsonProperty("Postalcode")]
-        public string Postalcode { get; set; }
+        [JsonProperty("postalcode")]
+        public long ?Postalcode { get; set; }
        
-        [JsonProperty("Country")]
-        public string Country { get; set; }
+        [JsonProperty("country")]
+        public long ?Country { get; set; }
         
-        [JsonProperty("Address")]
+        [JsonProperty("address")]
         public string Address { get; set; }
-        
+
+        [JsonProperty("timeZone")]
+        public string TimeZone { get; set; }
+
+
+        [JsonProperty("languagename")]
+        public int? Languagename { get; set; }
+
         [JsonProperty("userlogin")]
         public string Userlogin { get; set; }
        
         [JsonProperty("password")]
-        public string Password { get; set; }
-       
-        [JsonProperty("rolename")]
-        public long ?Rolename { get; set; }
+        public string Password { get; set; }  
         
-        [JsonProperty("TimeZone")]
-        public long ?TimeZone { get; set; }
-        
-        [JsonProperty("area")]
-        public long? Area { get; set; }
-        
-        [JsonProperty("languagename")]
-        public int ?Languagename { get; set; }
        
         [JsonProperty("profilePicture")]
         public string ProfilePicture { get; set; }
@@ -57,8 +58,7 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("documentName")]
         public string DocumentName { get; set; }
        
-        [JsonProperty("document")]
-        public string Document { get; set; }
+        
         
 
     }

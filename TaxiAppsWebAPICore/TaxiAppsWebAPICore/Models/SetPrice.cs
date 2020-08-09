@@ -42,7 +42,8 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("ridetype")]
         public string RideType { get; set; }
 
-
+        [JsonProperty("customerIdfee")]
+        public decimal ?CustomerIdfee { get; set; }
         //  public virtual List<AdminList> AdminLists { get; set; }
     }
 

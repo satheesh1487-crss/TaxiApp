@@ -430,6 +430,7 @@ namespace TaxiAppsWebAPICore
                         DropFee = getprice.Dropfee,
                         admincommtype = getprice.Admincommtype,
                         admincommission = getprice.Admincommission,
+                        CustomerIdfee = getprice.Customseldrifee,
                         Driversavingper = getprice.Driversavingper,
                         RideType = getprice.RideType
                     });
@@ -461,6 +462,7 @@ namespace TaxiAppsWebAPICore
                         tabSetpriceZonetype.Pricepertime = setprice.PricePerTime;
                         tabSetpriceZonetype.Basedistance = setprice.BaseDistance;
                         tabSetpriceZonetype.Priceperdistance = setprice.PricePerDistance;
+                        tabSetpriceZonetype.Customseldrifee = setprice.CustomerIdfee;
                         tabSetpriceZonetype.Freewaitingtime = setprice.Freewaitingtime;
                         tabSetpriceZonetype.Waitingcharges = setprice.WaitingCharges;
                         tabSetpriceZonetype.Cancellationfee = setprice.CancellationFee;
@@ -481,6 +483,7 @@ namespace TaxiAppsWebAPICore
                         tabSetprice.Priceperdistance = setprice.PricePerDistance;
                         tabSetprice.Freewaitingtime = setprice.Freewaitingtime;
                         tabSetprice.Waitingcharges = setprice.WaitingCharges;
+                        tabSetprice.Customseldrifee = setprice.CustomerIdfee==null?0: setprice.CustomerIdfee;
                         tabSetprice.Cancellationfee = setprice.CancellationFee;
                         tabSetprice.Dropfee = setprice.DropFee;
                         tabSetprice.Admincommtype = setprice.admincommtype;
