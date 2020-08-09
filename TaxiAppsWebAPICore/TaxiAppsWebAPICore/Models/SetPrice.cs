@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TaxiAppsWebAPICore 
+namespace TaxiAppsWebAPICore
 {
     public class SetPrice
     {
@@ -42,7 +42,19 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("ridetype")]
         public string RideType { get; set; }
 
-       
+
         //  public virtual List<AdminList> AdminLists { get; set; }
+    }
+
+    public class OperationZone
+    {
+        [JsonProperty("zoneName")]
+        public string zoneName { get; set; }
+
+        [JsonProperty("id")]
+        public long ?Id { get; set; }
+        [JsonProperty("vechileType")]
+        public string vechileType { get; set; }
+
     }
 }

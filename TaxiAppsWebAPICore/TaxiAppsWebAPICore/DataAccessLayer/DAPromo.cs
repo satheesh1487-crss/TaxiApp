@@ -28,7 +28,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                             EstimateAmount = promo.PromoEstimateAmount,
                             Value = promo.PromoValue,
                             Zoneid = promo.Zoneid,
-                            Type = promo.PromoType,
+                            
                             Uses = promo.PromoUses,
                             RepeatedlyUse = promo.PromoUsersRepeateduse,
                             StartDate = promo.StartDate,
@@ -121,7 +121,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     managepromo.EstimateAmount = promodetails.PromoEstimateAmount;
                     managepromo.Value = promodetails.PromoValue;
                     managepromo.Zoneid = promodetails.Zoneid;
-                    managepromo.Type = promodetails.PromoType;
+     
                     managepromo.Uses = promodetails.PromoUses;
                     managepromo.RepeatedlyUse = promodetails.PromoUsersRepeateduse;
                     managepromo.StartDate = promodetails.StartDate;

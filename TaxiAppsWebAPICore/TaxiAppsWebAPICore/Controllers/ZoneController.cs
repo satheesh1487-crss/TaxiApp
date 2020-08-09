@@ -81,8 +81,16 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAZone dAZone = new DAZone();
             return this.OK<List<ZoneTypeList>>(dAZone.ListZoneType(zoneid, _context));
-        }
 
+        }
+        [HttpGet]
+        [Route("ListZoneTypeDrop")]
+        [Authorize]
+        public IActionResult ListZoneTypeDrop(long zoneid)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<List<ZoneTypeDrop>>(dAZone.ZoneType(zoneid, _context));
+        }
         //TODO:: check parent record is deleted
         [HttpPost]
         [Route("AddZoneType")]
@@ -141,6 +149,15 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAZone dAZone = new DAZone();
             return this.OKResponse(dAZone.EditSetprice(setPrice, _context) ? "Update Successfully" : "Updation Failed");
+        }
+
+        [HttpGet]
+        [Route("manageOperation")]
+        [Authorize]
+        public IActionResult ManageOperation()
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<List<OperationZone>>(dAZone.ManageOperation(_context));
         }
     }
 }

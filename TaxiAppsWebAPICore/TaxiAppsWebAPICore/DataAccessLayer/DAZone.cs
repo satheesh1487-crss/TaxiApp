@@ -146,6 +146,25 @@ namespace TaxiAppsWebAPICore
 
         }
 
+        internal List<OperationZone> ManageOperation(TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<OperationZone> operationZones = new List<OperationZone>();
+                   var zoneRelation = context.TabZonetypeRelationship.Include(t=>t.Type).Include(t=>t.Zone).Where(t => t.IsDelete == 0).ToList();
+                foreach(var zoneType in zoneRelation)
+                {
+                    operationZones.Add( new OperationZone() {Id = zoneType.Zonetypeid,vechileType=zoneType.Type.Typename, zoneName= zoneType.Zone.Zonename });
+                }
+                return operationZones;
+            }
+            catch (Exception ex )
+            {
+
+                throw;
+            }
+        }
+
         public bool DeleteZone(long zoneid, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
@@ -222,6 +241,31 @@ namespace TaxiAppsWebAPICore
                         Name = zonetype.Type.Typename,
                         IsDefault = zonetype.IsDefault,
                         IsActive = zonetype.IsActive == 0 ? false : true
+
+                    });
+                }
+                return zoneTypeLists == null ? null : zoneTypeLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "ListZoneType", context);
+                return null;
+            }
+
+        }
+
+        public List<ZoneTypeDrop> ZoneType(long zoneId , TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<ZoneTypeDrop> zoneTypeLists = new List<ZoneTypeDrop>();
+                var zonetypelist = context.TabZonetypeRelationship.Include(t => t.Type).Where(z => z.Zoneid == zoneId && z.IsDelete == 0).ToList();
+                foreach (var zonetype in zonetypelist)
+                {
+                    zoneTypeLists.Add(new ZoneTypeDrop()
+                    {
+                        Id = zonetype.Zonetypeid,
+                        Name = zonetype.Type.Typename 
 
                     });
                 }
