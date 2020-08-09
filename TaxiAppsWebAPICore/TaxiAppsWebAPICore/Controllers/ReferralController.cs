@@ -67,14 +67,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAReferral dAReferral = new DAReferral();
             return this.OKResponse(dAReferral.SaveReferral(manageReferral, _context, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
-            List<UserReferral> userReferrals = new List<UserReferral>();
-            userReferrals.Add(new UserReferral() { Id = 1, ReferralCode = "REF_1234", AmountEarned = Convert.ToDecimal(0.00), UserName = "Praveen Kumar", AmountSpent = Convert.ToDecimal(0.00), AmountBalance = Convert.ToDecimal(0.00) });
-            userReferrals.Add(new UserReferral() { Id = 2, ReferralCode = "REF_1235", AmountEarned = Convert.ToDecimal(0.00), UserName = "Ramesh", AmountSpent = Convert.ToDecimal(0.00), AmountBalance = Convert.ToDecimal(0.00) });
-            userReferrals.Add(new UserReferral() { Id = 3, ReferralCode = "REF_1236", AmountEarned = Convert.ToDecimal(0.00), UserName = "Pavan", AmountSpent = Convert.ToDecimal(0.00), AmountBalance = Convert.ToDecimal(0.00) });
-            userReferrals.Add(new UserReferral() { Id = 4, ReferralCode = "REF_1237", AmountEarned = Convert.ToDecimal(0.00), UserName = "Moorthy", AmountSpent = Convert.ToDecimal(0.00), AmountBalance = Convert.ToDecimal(0.00) });
-            userReferrals.Add(new UserReferral() { Id = 5, ReferralCode = "REF_1238", AmountEarned = Convert.ToDecimal(0.00), UserName = "Venkat", AmountSpent = Convert.ToDecimal(0.00), AmountBalance = Convert.ToDecimal(0.00) });
-            userReferrals.Add(new UserReferral() { Id = 6, ReferralCode = "REF_1239", AmountEarned = Convert.ToDecimal(0.00), UserName = "Surya", AmountSpent = Convert.ToDecimal(0.00), AmountBalance = Convert.ToDecimal(0.00) });
-            return this.OK<List<UserReferral>>(userReferrals);
+            
         }
     }
 }

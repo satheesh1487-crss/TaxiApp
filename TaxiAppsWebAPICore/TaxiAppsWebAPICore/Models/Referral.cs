@@ -17,11 +17,11 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("referralGain_Amount_PerPerson")]
         public decimal ?ReferralGain_Amount_PerPerson { get; set; }
 
-        [JsonProperty("Trip_to_completed_torefer")]
+        [JsonProperty("trip_to_completed_torefer")]
         public decimal ?Trip_to_completed_torefer { get; set; }
 
-        [JsonProperty("Trip_to_completed_toearn_refferalAmount")]
-        public decimal ?Trip_to_completed_toearn_refferalAmount { get; set; }
+        [JsonProperty("trip_to_completed_toearn_refferalAmount")]
+        public int? Trip_to_completed_toearn_refferalAmount { get; set; }
 
     }
 
