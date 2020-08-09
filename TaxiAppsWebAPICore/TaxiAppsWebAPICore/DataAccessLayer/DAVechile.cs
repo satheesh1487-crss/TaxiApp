@@ -290,7 +290,7 @@ namespace TaxiAppsWebAPICore
                 if (listService != null)
                 {
                     vehicleEmerInfo.Id = listService.Sosid;
-                    vehicleEmerInfo.Number = listService.Sosname;
+                    vehicleEmerInfo.Number = listService.ContactNumber;
                     vehicleEmerInfo.Name = listService.Sosname;
 
                 }

@@ -48,7 +48,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult Save(AdminDetails adminDetails)
         {
             DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Save(_context, adminDetails, User.ToAppUser()));
+            return this.OKResponse(dASuperAdmin.Save(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
         //TODO:: check parent record is deleted

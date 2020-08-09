@@ -110,4 +110,14 @@ namespace TaxiAppsWebAPICore
         public string Name { set; get; } 
 
     }
+
+    public class ZoneTypeDrop
+    {
+        [JsonProperty("id")]
+        public long? Id { set; get; }
+        [JsonProperty("name")]
+        public string Name { set; get; }
+          
+
+    }
 }

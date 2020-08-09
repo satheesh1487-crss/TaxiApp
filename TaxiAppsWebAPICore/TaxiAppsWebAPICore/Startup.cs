@@ -100,32 +100,20 @@ namespace TaxiAppsWebAPICore
          .AddNewtonsoftJson(options =>
          options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
      );
-                //var cors = EnableCor(Configuration);
+                services.AddMvc(option => option.EnableEndpointRouting = false);
+                services.AddOptions();
+                services.AddMvc();
+                var cors = EnableCor(Configuration);
 
-                //services.AddCors(addcor => {
-                //    addcor.AddPolicy("AllowAll",
-                //        sample => sample.WithOrigins(cors).AllowAnyMethod().AllowAnyHeader().
-                //        AllowCredentials().WithExposedHeaders("Content-Disposition"));
-                //});
-                //services.AddCors(options =>
-                //{
-                //    options.AddPolicy("AllowAll", corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin()
-                //        // Apply CORS policy for any type of origin  
-                //        .AllowAnyMethod()
-                //        // Apply CORS policy for any type of http methods  
-                //        .AllowAnyHeader());
-                //        // Apply CORS policy for any headers  
-                //   //     .AllowCredentials()); 
-                //   // Apply CORS policy for all users  
-                //});
-                //services.AddMvc(option => option.EnableEndpointRouting = false);
-                //services.AddOptions();
-                //services.AddMvc();
-                //services.AddCors(options => options.AddPolicy("AllowAll", p => p.WithOrigins("http://localhost:4200")
-                //                                                // .AllowAnyMethod()
-                //                                                .WithMethods("GET", "PUT", "POST", "DELETE")
-                //                                                 // .AllowAnyHeader()));
-                //                                                 .WithHeaders("Accept", "Content-type", "Origin", "X-Custom-Header")));
+              
+                services.AddCors(options =>
+                {
+                    options.AddPolicy("AllowAll", builder =>
+                    {
+                        builder.AllowAnyOrigin();
+                    });
+                });
+               
             }
             catch (Exception ex)
             {
@@ -148,14 +136,14 @@ namespace TaxiAppsWebAPICore
 
             if (!string.IsNullOrEmpty(fqhn))
             {
-                //if (Convert.ToBoolean(appSettings["UseHttps"]))
-                //    corsPaths.Add($"https://{fqhn}:{appSettings["Port"]}");
+                if (Convert.ToBoolean(appSettings["UseHttps"]))
+                    corsPaths.Add($"https://{fqhn}:{appSettings["Port"]}");
 
-                //if (Convert.ToBoolean(appSettings["UseMutualTls"]))
-                //    corsPaths.Add($"https://{fqhn}:{appSettings["MutualTlsPort"]}");
+                if (Convert.ToBoolean(appSettings["UseMutualTls"]))
+                    corsPaths.Add($"https://{fqhn}:{appSettings["MutualTlsPort"]}");
 
-                //if (Convert.ToBoolean(appSettings["UseHttp"]))
-                //    corsPaths.Add($"http://{fqhn}:{appSettings["HttpPort"]}");
+                if (Convert.ToBoolean(appSettings["UseHttp"]))
+                    corsPaths.Add($"http://{fqhn}:{appSettings["HttpPort"]}");
 
                 for (int index = 0; index < corsPaths.Count; index++)
                 {
@@ -192,7 +180,7 @@ namespace TaxiAppsWebAPICore
                 {
                     endpoints.MapControllers();
                 });
-
+                app.UseCors("AllowAll");
                 //app.UseMvc();
                 //app.UseCors("AllowAll");
                 app.UseDeveloperExceptionPage();

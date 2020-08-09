@@ -18,8 +18,7 @@ namespace TaxiAppsWebAPICore
         public long? Value { get; set; }
         [JsonProperty("zoneid")]
         public long? Zoneid { get; set; }
-        [JsonProperty("type")]
-        public string Type { get; set; }
+       
         [JsonProperty("uses")]
         public long? Uses { get; set; }
         [JsonProperty("repeatedlyuse")]

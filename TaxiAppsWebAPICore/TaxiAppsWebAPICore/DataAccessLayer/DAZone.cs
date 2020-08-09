@@ -23,9 +23,9 @@ namespace TaxiAppsWebAPICore
                     {
                         Zoneid = zone.Zoneid,
                         ZoneName = zone.Zonename,
-                        Serviceslocid=zone.Servicelocid,
-                        Unit=zone.Unit,
-                        
+                        Serviceslocid = zone.Servicelocid,
+                        Unit = zone.Unit,
+
                         IsActive = zone.IsActive == 0 ? false : true
 
                     });
@@ -91,8 +91,8 @@ namespace TaxiAppsWebAPICore
                     tabZonepolygon.Longitudes = zonepolygon.Lng;
                     tabZonepolygon.Latitudes = zonepolygon.Lat;
                     tabZonepolygon.IsActive = 1;
-                    tabZonepolygon.CreatedBy = tabZonepolygon.UpdatedBy =loggedInUser.UserName;
-                    tabZonepolygon.CreatedAt = tabZonepolygon.UpdatedAt =Extention.GetDateTime();
+                    tabZonepolygon.CreatedBy = tabZonepolygon.UpdatedBy = loggedInUser.UserName;
+                    tabZonepolygon.CreatedAt = tabZonepolygon.UpdatedAt = Extention.GetDateTime();
                     tabZonepolygon.Zoneid = tabZone.Zoneid;
                     context.TabZonepolygon.Add(tabZonepolygon);
 
@@ -127,10 +127,10 @@ namespace TaxiAppsWebAPICore
                     tabZonepolygon.Latitudes = zonepoly.Lat;
                     tabZonepolygon.Longitudes = zonepoly.Lng;
                     tabZonepolygon.Zoneid = setzone.Zoneid;
-                    tabZonepolygon.CreatedBy = "Admin";
-                    tabZonepolygon.CreatedAt = DateTime.UtcNow;
-                    tabZonepolygon.UpdatedBy = "Admin";
-                    tabZonepolygon.UpdatedAt = DateTime.UtcNow;
+                    tabZonepolygon.UpdatedBy= tabZonepolygon.CreatedBy = loggedInUser.UserName;
+                    tabZonepolygon.UpdatedAt = tabZonepolygon.CreatedAt = DateTime.UtcNow;
+                     
+                    
                     context.TabZonepolygon.Add(tabZonepolygon);
 
                 }
@@ -146,6 +146,25 @@ namespace TaxiAppsWebAPICore
 
         }
 
+        internal List<OperationZone> ManageOperation(TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<OperationZone> operationZones = new List<OperationZone>();
+                var zoneRelation = context.TabZonetypeRelationship.Include(t => t.Type).Include(t => t.Zone).Where(t => t.IsDelete == 0).ToList();
+                foreach (var zoneType in zoneRelation)
+                {
+                    operationZones.Add(new OperationZone() { Id = zoneType.Zonetypeid, vechileType = zoneType.Type.Typename, zoneName = zoneType.Zone.Zonename });
+                }
+                return operationZones;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         public bool DeleteZone(long zoneid, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             try
@@ -155,13 +174,13 @@ namespace TaxiAppsWebAPICore
                 var tabpolygondtls = context.TabZonepolygon.Where(z => z.Zoneid == zoneid).ToList();
                 tabzone.IsDeleted = 1;
                 tabzone.DeletedAt = DateTime.UtcNow;
-                tabzone.DeletedBy = "Admin";
+                tabzone.DeletedBy = loggedInUser.UserName;
                 context.TabZone.Update(tabzone);
                 foreach (var tabpoly in tabpolygondtls)
                 {
                     tabpoly.IsDeleted = 1;
                     tabpoly.DeletedAt = DateTime.UtcNow;
-                    tabpoly.DeletedBy = "Admin";
+                    tabpoly.DeletedBy = loggedInUser.UserName;
                     context.TabZonepolygon.Update(tabpoly);
                 }
                 context.SaveChanges();
@@ -187,13 +206,13 @@ namespace TaxiAppsWebAPICore
                 {
                     tabzone.IsActive = isStatus == true ? 1 : 0;
                     tabzone.UpdatedAt = DateTime.UtcNow;
-                    tabzone.UpdatedBy = "Admin";
+                    tabzone.UpdatedBy = loggedInUser.UserName;
                     context.TabZone.Update(tabzone);
                     foreach (var tabpoly in tabpolygondtls)
                     {
                         tabpoly.IsActive = isStatus ? 1 : 0;
                         tabpoly.UpdatedAt = DateTime.UtcNow;
-                        tabpoly.UpdatedBy = "Admin";
+                        tabpoly.UpdatedBy = loggedInUser.UserName;
                         context.TabZonepolygon.Update(tabpoly);
                     }
                     context.SaveChanges();
@@ -225,6 +244,39 @@ namespace TaxiAppsWebAPICore
 
                     });
                 }
+                return zoneTypeLists == null ? null : zoneTypeLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "ListZoneType", context);
+                return null;
+            }
+
+        }
+
+        public List<ZoneTypeDrop> ZoneType(long zoneId, TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<ZoneTypeDrop> zoneTypeLists = new List<ZoneTypeDrop>();
+                var typeVechile = context.TabTypes.Where(t => t.IsDeleted == 0 && t.IsActive == 1).ToList();
+                var relationTypeZone = context.TabZonetypeRelationship.Where(t => t.IsDelete == 0 && t.IsActive == 1 && t.Zoneid == zoneId).Select(t => t.Typeid);
+                
+                foreach (var item in typeVechile)
+                {
+                    zoneTypeLists.Add(new ZoneTypeDrop()
+                    {
+                        Id = item.Typeid,
+                        Name = item.Typename
+
+                    });
+
+                }
+                foreach (var item in relationTypeZone)
+                {
+                    zoneTypeLists.Remove(zoneTypeLists.FirstOrDefault(t => t.Id == item));
+                }
+
                 return zoneTypeLists == null ? null : zoneTypeLists;
             }
             catch (Exception ex)
@@ -378,6 +430,7 @@ namespace TaxiAppsWebAPICore
                         DropFee = getprice.Dropfee,
                         admincommtype = getprice.Admincommtype,
                         admincommission = getprice.Admincommission,
+                        CustomerIdfee = getprice.Customseldrifee,
                         Driversavingper = getprice.Driversavingper,
                         RideType = getprice.RideType
                     });
@@ -409,6 +462,7 @@ namespace TaxiAppsWebAPICore
                         tabSetpriceZonetype.Pricepertime = setprice.PricePerTime;
                         tabSetpriceZonetype.Basedistance = setprice.BaseDistance;
                         tabSetpriceZonetype.Priceperdistance = setprice.PricePerDistance;
+                        tabSetpriceZonetype.Customseldrifee = setprice.CustomerIdfee;
                         tabSetpriceZonetype.Freewaitingtime = setprice.Freewaitingtime;
                         tabSetpriceZonetype.Waitingcharges = setprice.WaitingCharges;
                         tabSetpriceZonetype.Cancellationfee = setprice.CancellationFee;
@@ -429,6 +483,7 @@ namespace TaxiAppsWebAPICore
                         tabSetprice.Priceperdistance = setprice.PricePerDistance;
                         tabSetprice.Freewaitingtime = setprice.Freewaitingtime;
                         tabSetprice.Waitingcharges = setprice.WaitingCharges;
+                        tabSetprice.Customseldrifee = setprice.CustomerIdfee==null?0: setprice.CustomerIdfee;
                         tabSetprice.Cancellationfee = setprice.CancellationFee;
                         tabSetprice.Dropfee = setprice.DropFee;
                         tabSetprice.Admincommtype = setprice.admincommtype;
@@ -438,10 +493,10 @@ namespace TaxiAppsWebAPICore
                         context.TabSetpriceZonetype.Add(tabSetprice);
                     }
                     context.SaveChanges();
-                    
+
                 }
                 return true;
-                 
+
 
             }
             catch (Exception ex)
