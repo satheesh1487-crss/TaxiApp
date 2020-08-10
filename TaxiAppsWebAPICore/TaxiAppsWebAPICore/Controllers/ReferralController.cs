@@ -66,7 +66,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult SaveReferral(ManageReferral manageReferral)
         {
             DAReferral dAReferral = new DAReferral();
-            return this.OKResponse(dAReferral.SaveReferral(manageReferral, _context, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            return this.OKResponse(dAReferral.SaveReferral(manageReferral, _context, User.ToAppUser()) ? "Updated Successfully" : "Failed to Update");
             
         }
     }
