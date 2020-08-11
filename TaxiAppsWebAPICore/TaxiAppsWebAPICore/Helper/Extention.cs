@@ -92,10 +92,9 @@ namespace TaxiAppsWebAPICore
             {
                 insertlog("Update Token", userInfo.Email, "GenerateJWTToken",context);
                 var getuserinfo = context.TabAdmin.Where(a => a.Id == userid).FirstOrDefault();
-                TabAdmin updatedata = new TabAdmin();
                 getuserinfo.RememberToken = userInfo.RememberToken;
                 getuserinfo.UpdatedAt = DateTime.Now;
-                context.Update(getuserinfo);
+                context.TabAdmin.Update(getuserinfo);
                 context.SaveChanges();
                 return true;
             }

@@ -30,6 +30,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabDriverFine> TabDriverFine { get; set; }
         public virtual DbSet<TabDriverWallet> TabDriverWallet { get; set; }
         public virtual DbSet<TabDrivers> TabDrivers { get; set; }
+        public virtual DbSet<TabFaq> TabFaq { get; set; }
         public virtual DbSet<TabManageDocument> TabManageDocument { get; set; }
         public virtual DbSet<TabManageEmail> TabManageEmail { get; set; }
         public virtual DbSet<TabManageEmailHints> TabManageEmailHints { get; set; }
@@ -459,6 +460,31 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("FK__tab_Drive__typei__1A9EF37A");
             });
 
+            modelBuilder.Entity<TabFaq>(entity =>
+            {
+                entity.HasKey(e => e.Faqid)
+                    .HasName("PK__tab_FAQ__4B88DD9AA7117E63");
+
+                entity.Property(e => e.ComplaintType).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Serviceloc)
+                    .WithMany(p => p.TabFaq)
+                    .HasForeignKey(d => d.Servicelocid)
+                    .HasConstraintName("FK__tab_FAQ__service__3335971A");
+            });
+
             modelBuilder.Entity<TabManageDocument>(entity =>
             {
                 entity.HasKey(e => e.DocumentId)
@@ -821,8 +847,6 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.SocialUniqueId).IsUnicode(false);
 
                 entity.Property(e => e.State).IsUnicode(false);
-
-                entity.Property(e => e.Token).IsUnicode(false);
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.TabUser)
