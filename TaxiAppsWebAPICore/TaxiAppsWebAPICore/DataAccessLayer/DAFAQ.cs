@@ -44,7 +44,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
 
-                var updatedate = context.TabFaq.Where(r => r.Faqid == manageFAQList.Id && r.IsDelete == false).FirstOrDefault();
+                var updatedate = context.TabFaq.Where(r => r.Faqid == manageFAQList.Id && r.IsDelete == 0).FirstOrDefault();
                 if (updatedate != null)
                 {
                     updatedate.FaqQuestion = manageFAQList.FAQ_Question;
@@ -72,7 +72,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
                 ManageFAQList manageFAQList = new ManageFAQList();
-                var listFAQ = context.TabFaq.FirstOrDefault(t => t.Faqid == id && t.IsDelete == false);
+                var listFAQ = context.TabFaq.FirstOrDefault(t => t.Faqid == id && t.IsDelete == 0);
                 if (listFAQ != null)
                 {
                     manageFAQList.FAQ_Answer = listFAQ.FaqAnswer;
@@ -96,12 +96,12 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
 
-                var updatedate = context.TabFaq.Where(r => r.Faqid == id && r.IsDelete == false).FirstOrDefault();
+                var updatedate = context.TabFaq.Where(r => r.Faqid == id && r.IsDelete == 0).FirstOrDefault();
                 if (updatedate != null)
                 {
 
 
-                    updatedate.IsDelete = true;
+                    updatedate.IsDelete = 1;
                     updatedate.DeletedAt = DateTime.UtcNow;
                     updatedate.DeletedBy = loggedInUser.Email;
                     context.Update(updatedate);
@@ -125,7 +125,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var updatedate = context.TabFaq.Where(r => r.Faqid == id).FirstOrDefault();
                 if (updatedate != null)
                 {
-                    updatedate.IsActive = isStatus == true;
+                    updatedate.IsActive = 1;
                     updatedate.UpdatedAt = DateTime.UtcNow;
                     updatedate.UpdatedBy = loggedInUser.UserName;
                     context.Update(updatedate);
