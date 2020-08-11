@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -51,8 +52,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpPost("AddRole")]
         public IActionResult AddRole([FromBody] Roles roles)
         {
-            DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.AddRole(_context, roles, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DARoles dARoles = new DARoles();
+                return this.OKResponse(dARoles.AddRole(_context, roles, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+              return   this.KnowOperationError(ex.Message);
+            }
+          
         }
         /// <summary>
         /// Use to Edit Role

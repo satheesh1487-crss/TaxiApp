@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaxiAppsWebAPICore.DataAccessLayer;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -13,136 +14,84 @@ namespace TaxiAppsWebAPICore.Controllers
     [ApiController]
     public class ManageNotification : ControllerBase
     {
-        private readonly TaxiAppzDBContext _content;
-        public ManageNotification(TaxiAppzDBContext content)
+        private readonly TaxiAppzDBContext _context;
+        public ManageNotification(TaxiAppzDBContext context)
         {
-            _content = content;
-        }
-        [HttpGet]
-        [Route("ManagePush")]
-        [Authorize]
-        public IActionResult ManagePush()
-        {
-            List<ManagePushNotification> managepushnotification = new List<ManagePushNotification>();
-            managepushnotification.Add(new ManagePushNotification()
-            {
-                Sno = 1,
-                Title = "happy diwali",
-                Message = "hello..happy diwali",
-                Sendon = "2020-07-04 08:27 am"
-            });
-            managepushnotification.Add(new ManagePushNotification()
-            {
-                Sno = 1,
-                Title = "happy diwali",
-                Message = "hello..happy diwali",
-                Sendon = "2020-07-04 08:27 am"
-            });
-            managepushnotification.Add(new ManagePushNotification()
-            {
-                Sno = 2,
-                Title = "my offer",
-                Message = "please assemble our new brand showroom opening permanence",
-                Sendon = "2020-06-22 05:12 am"
-            });
-            managepushnotification.Add(new ManagePushNotification()
-            {
-                Sno = 1,
-                Title = "Announcement",
-                Message = "This is an announcement due to covid-19.....",
-                Sendon = "2020-06-04 09:22 am"
-            });
-            managepushnotification.Add(new ManagePushNotification()
-            {
-                Sno = 1,
-                Title = "Push test",
-                Message = "this is for testing purpose",
-                Sendon = "2020-06-04 12:49 pm"
-            });
-            return this.OK<List<ManagePushNotification>>(managepushnotification);
-        }
-        [HttpGet]
-        [Route("ManageSMSOption")]
-        [Authorize]
-        public IActionResult ManageSMSOption()
-        {
-            List<ManageSMSOption> manageSMSOptions = new List<ManageSMSOption>();
-            manageSMSOptions.Add(new ManageSMSOption()
-            {
-                Sno = 1,
-                SMSTitle  = "Sms otp",
-                IsActive=true
-            });
-            manageSMSOptions.Add(new ManageSMSOption()
-            {
-
-                Sno = 2,
-                SMSTitle = "Forgot password sms",
-                IsActive = true
-            });
-            manageSMSOptions.Add(new ManageSMSOption()
-            {
-
-                Sno = 3,
-                SMSTitle = "Request sms",
-                IsActive = true
-            });
-            manageSMSOptions.Add(new ManageSMSOption()
-            {
-
-                Sno = 4,
-                SMSTitle = "Request accept sms to user",
-                IsActive = true
-            });
-            manageSMSOptions.Add(new ManageSMSOption()
-            {
-                Sno = 5,
-                SMSTitle = "Request accept sms to Driver",
-                IsActive = false
-            });
-            return this.OK<List<ManageSMSOption>>(manageSMSOptions);
+            _context = context;
         }
 
         [HttpGet]
-        [Route("ManageEmailOption")]
+        [Route("listEmail")]
         [Authorize]
-        public IActionResult ManageEmailOption()
+        public IActionResult ListEmail()
         {
-            List<ManageEmailOption> manageEmailOptions = new List<ManageEmailOption>();
-            manageEmailOptions.Add(new ManageEmailOption()
-            {
-                Sno = 1,
-                EmailTitle = "Welcome email",
-                IsActive = false
-            });
-            manageEmailOptions.Add(new ManageEmailOption()
-            {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OK<List<ManageEmailOption>>(dAManangeNotify.ListEmail(_context));
+        }
 
-                Sno = 2,
-                EmailTitle = "Request email",
-                IsActive = true
-            });
-            manageEmailOptions.Add(new ManageEmailOption()
-            {
+        //TODO:: Duplicate record check
+        [HttpPut]
+        [Route("editEmail")]
+        [Authorize]
+        public IActionResult Edit([FromBody] ManageEmailOption manageEmailOption)
+        {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OKResponse(dAManangeNotify.EditEmail(_context, manageEmailOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+        }
 
-                Sno = 3,
-                EmailTitle = "Driver approved email",
-                IsActive = true
-            });
-            manageEmailOptions.Add(new ManageEmailOption()
-            {
+        [HttpGet]
+        [Route("getbyEmailId")]
+        [Authorize]
+        public IActionResult GetbyId(long id)
+        {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OK<ManageEmailOption>(dAManangeNotify.GetbyEmailId(_context, id));
+        }
 
-                Sno = 4,
-                EmailTitle = "Request accept email to user",
-                IsActive = true
-            });
-            manageEmailOptions.Add(new ManageEmailOption()
-            {
-                Sno = 5,
-                EmailTitle = "Request complete email to user",
-                IsActive = true
-            });
-            return this.OK<List<ManageEmailOption>>(manageEmailOptions);
+        [HttpPut]
+        [Route("statusEmail")]
+        [Authorize]
+        public IActionResult Status(long id, bool isStatus)
+        {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OKResponse(dAManangeNotify.StatusEmail(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+        }
+
+        [HttpGet]
+        [Route("listSms")]
+        [Authorize]
+        public IActionResult ListSms()
+        {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OK<List<ManageSMSOption>>(dAManangeNotify.ListSms(_context));
+        }
+
+        //TODO:: Duplicate record check
+        [HttpPut]
+        [Route("editSms")]
+        [Authorize]
+        public IActionResult EditSms([FromBody] ManageSMSOption manageSMSOption)
+        {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OKResponse(dAManangeNotify.EditSms(_context, manageSMSOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+        }
+
+        [HttpGet]
+        [Route("getbySmsId")]
+        [Authorize]
+        public IActionResult GetbySmsId(long id)
+        {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OK<ManageSMSOption>(dAManangeNotify.GetbySmsId(_context, id));
+        }
+
+        [HttpPut]
+        [Route("statusSms")]
+        [Authorize]
+        public IActionResult StatusSms(long id, bool isStatus)
+        {
+            DAManangeNotify dAManangeNotify = new DAManangeNotify();
+            return this.OKResponse(dAManangeNotify.StatusSms(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
         }
     }
 }

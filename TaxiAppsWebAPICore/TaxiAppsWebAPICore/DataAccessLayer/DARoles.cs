@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -63,8 +64,9 @@ namespace TaxiAppsWebAPICore
         }
         public bool AddRole(TaxiAppzDBContext context, Roles roles, LoggedInUser loggedInUser)
         {
-            try
-            {
+            var roleExist = context.TabRoles.FirstOrDefault(t => t.IsActive == 1 && t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower());
+                if (roleExist!=null)
+                    throw new DataValidationException($"Role with name '{roles.RoleName}' already exists.");
                 TabRoles Insertdata = new TabRoles();
                 Insertdata.RoleName = roles.RoleName;
                 Insertdata.DisplayName = roles.DisplayName;
@@ -77,17 +79,11 @@ namespace TaxiAppsWebAPICore
                 context.SaveChanges();
                 //need to add menu access while create the role
                 return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "AddRole", context);
-                return false;
-            }
+  
         }
         public bool EditRole(TaxiAppzDBContext context, long id, Roles roles, LoggedInUser loggedInUser)
         {
-            try
-            {
+            
                 TabRoles Insertdata = new TabRoles();
                 var updatedate = context.TabRoles.Where(r => r.Roleid == id && r.IsDelete==0).FirstOrDefault();
                 if (updatedate != null)
@@ -104,12 +100,7 @@ namespace TaxiAppsWebAPICore
                     return true;
                 }
                 return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "EditRole", context);
-                return false;
-            }
+            
         }
  
         

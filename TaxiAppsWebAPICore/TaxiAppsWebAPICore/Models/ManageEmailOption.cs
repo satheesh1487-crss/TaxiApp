@@ -8,12 +8,16 @@ namespace TaxiAppsWebAPICore
 {
     public class ManageEmailOption
     {
-        [JsonProperty("sno")]
-        public int Sno { get; set; }
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
         [JsonProperty("emailtitle")]
         public string EmailTitle { get; set; }
 
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         [JsonProperty("isActive")]
-        public bool IsActive { get; set; }
+        public bool ?IsActive { get; set; }
     }
 }
