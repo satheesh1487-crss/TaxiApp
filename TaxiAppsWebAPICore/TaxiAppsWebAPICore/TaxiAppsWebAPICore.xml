@@ -4,6 +4,18 @@
         <name>TaxiAppsWebAPICore</name>
     </assembly>
     <members>
+        <member name="M:TaxiAppsWebAPICore.Controllers.LoginController.Login(TaxiAppsWebAPICore.Models.LoginRequest)">
+            <summary>
+            Use to Generate Fresh JWT Token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaxiAppsWebAPICore.Controllers.LoginController.RegenerateToken(System.String,System.String)">
+            <summary>
+            Use to Re-Generate JWT Token once expried current expired time is 5 mins
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TaxiAppsWebAPICore.Controllers.RoleController.RoleList">
             <summary>
             Use to List Roles
