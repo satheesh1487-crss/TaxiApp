@@ -152,5 +152,15 @@ namespace TaxiAppsWebAPICore
         {
             return DateTime.UtcNow;
         }
+         /// <summary>
+        /// Send an Not ok result
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        internal static IActionResult KnowOperationError(this ControllerBase controller,string message)
+        {
+            return controller.BadRequest(new ApiResponse() { IsOk = false, Message = message });
+        }
     }
 }
