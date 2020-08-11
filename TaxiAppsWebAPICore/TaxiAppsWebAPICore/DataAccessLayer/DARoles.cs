@@ -64,8 +64,8 @@ namespace TaxiAppsWebAPICore
         }
         public bool AddRole(TaxiAppzDBContext context, Roles roles, LoggedInUser loggedInUser)
         {
-            
-                if (context.TabRoles.Any(t => t.RoleName.ToLowerInvariant() == roles.RoleName.ToLowerInvariant()))
+            var roleExist = context.TabRoles.FirstOrDefault(t => t.IsActive == 1 && t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower());
+                if (roleExist!=null)
                     throw new DataValidationException($"Artifact with name '{roles.RoleName}' already exists.");
                 TabRoles Insertdata = new TabRoles();
                 Insertdata.RoleName = roles.RoleName;

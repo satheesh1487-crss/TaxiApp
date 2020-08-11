@@ -160,7 +160,7 @@ namespace TaxiAppsWebAPICore
         /// <returns></returns>
         internal static IActionResult KnowOperationError(this ControllerBase controller,string message)
         {
-            return controller.BadRequest(new ApiResponse() { IsOk = false, Message = message });
+            return controller.BadRequest(new APIResponse() { IsOK = false, Message = message });
         }
     }
 }

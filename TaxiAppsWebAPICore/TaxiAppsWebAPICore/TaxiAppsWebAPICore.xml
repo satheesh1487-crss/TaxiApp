@@ -358,6 +358,14 @@
             <param name="claimsPrincipal"></param>
             <returns></returns>
         </member>
+        <member name="M:TaxiAppsWebAPICore.Extention.KnowOperationError(Microsoft.AspNetCore.Mvc.ControllerBase,System.String)">
+            <summary>
+            Send an Not ok result
+            </summary>
+            <param name="controller"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
         <member name="P:TaxiAppsWebAPICore.Models.StorageFileInfo.FormFile">
             <summary>
             Forom file 
