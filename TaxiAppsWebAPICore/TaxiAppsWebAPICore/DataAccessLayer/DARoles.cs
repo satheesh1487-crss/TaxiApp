@@ -64,7 +64,7 @@ namespace TaxiAppsWebAPICore
         }
         public bool AddRole(TaxiAppzDBContext context, Roles roles, LoggedInUser loggedInUser)
         {
-            var roleExist = context.TabRoles.FirstOrDefault(t => t.IsActive == 1 && t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower());
+            var roleExist = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower());
                 if (roleExist!=null)
                     throw new DataValidationException($"Role with name '{roles.RoleName}' already exists.");
                 TabRoles Insertdata = new TabRoles();
@@ -83,8 +83,11 @@ namespace TaxiAppsWebAPICore
         }
         public bool EditRole(TaxiAppzDBContext context, long id, Roles roles, LoggedInUser loggedInUser)
         {
-            
-                TabRoles Insertdata = new TabRoles();
+            var roleExist = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower() && t.Roleid!=id);
+            if (roleExist != null)
+                throw new DataValidationException($"Role with name '{roles.RoleName}' already exists.");
+
+            TabRoles Insertdata = new TabRoles();
                 var updatedate = context.TabRoles.Where(r => r.Roleid == id && r.IsDelete==0).FirstOrDefault();
                 if (updatedate != null)
                 {
@@ -102,34 +105,7 @@ namespace TaxiAppsWebAPICore
                 return false;
             
         }
- 
-        
-       
-        
-        public bool DeleteRole(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
-        {
-            try
-            {
-               
-                var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.DeletedBy = loggedInUser.Email;
-                    updatedate.IsDelete = 1;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "DeleteRole", context);
-                return false;
-            }
-        }
+         
 
         public bool DisableRole(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {

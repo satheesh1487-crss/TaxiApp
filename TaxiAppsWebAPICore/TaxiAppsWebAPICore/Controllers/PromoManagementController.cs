@@ -65,7 +65,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult IsActivePromo(long promoid,bool activestatus)
         {
             DAPromo dAPromo = new DAPromo();
-            return this.OK(dAPromo.IsActivePromo(promoid, activestatus,_content) ? "Active Successfully" : "InActive Successfully");
+            return this.OK((dAPromo.IsActivePromo(promoid, activestatus,_content) == true)? activestatus ? "Active Successfully" : "InActive Successfully":"Status Failed");
         }
         [HttpDelete]
         [Route("IsDeletePromo")]

@@ -47,9 +47,9 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpPut]
         [Route("UpdateReview")]
         [Authorize]
-        public IActionResult UpdateReview(long id)
+        public IActionResult UpdateReview(long id,bool activestatus)
         {
-            return this.OKResponse("Record Updated Successfully");
+            return this.OK((true) ? activestatus ? "Active Successfully" : "InActive Successfully" : "Status Failed");
         }
     }
 }
