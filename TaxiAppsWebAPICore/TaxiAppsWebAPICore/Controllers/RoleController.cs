@@ -75,14 +75,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dARoles.EditRole(_context,id, roles, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
         }
 
-        //TODO:: check parent record is deleted
-        [HttpPut("DeleteRole")]
-        public IActionResult DeleteRole(long id)
-        {
-            DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.DeleteRole(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
-        }
-
+        
         //TODO:: check parent record is deleted
         [HttpPut("DisableRole")]
         public IActionResult DisableRole(long id)
