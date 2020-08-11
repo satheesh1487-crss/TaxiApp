@@ -77,10 +77,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpGet]
         [Route("ListZoneType")]
         [Authorize]
-        public IActionResult ListZoneType(long zoneid)
+        public IActionResult ListZoneType(long zoneId)
         {
             DAZone dAZone = new DAZone();
-            return this.OK<List<ZoneTypeList>>(dAZone.ListZoneType(zoneid, _context));
+            return this.OK<List<ZoneTypeList>>(dAZone.ListZoneType(zoneId, _context));
         }
 
         //TODO:: check parent record is deleted
