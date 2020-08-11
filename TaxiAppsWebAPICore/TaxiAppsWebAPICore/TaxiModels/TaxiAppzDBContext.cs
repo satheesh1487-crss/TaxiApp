@@ -17,6 +17,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
 
         public virtual DbSet<TabAdmin> TabAdmin { get; set; }
         public virtual DbSet<TabAdminDetails> TabAdminDetails { get; set; }
+        public virtual DbSet<TabAdminDocument> TabAdminDocument { get; set; }
         public virtual DbSet<TabCommonCurrency> TabCommonCurrency { get; set; }
         public virtual DbSet<TabCommonLanguages> TabCommonLanguages { get; set; }
         public virtual DbSet<TabCountries> TabCountries { get; set; }
@@ -38,6 +39,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabMenu> TabMenu { get; set; }
         public virtual DbSet<TabMenuAccess> TabMenuAccess { get; set; }
         public virtual DbSet<TabMenucode> TabMenucode { get; set; }
+        public virtual DbSet<TabOtpUsers> TabOtpUsers { get; set; }
         public virtual DbSet<TabPromo> TabPromo { get; set; }
         public virtual DbSet<TabPushNotification> TabPushNotification { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
@@ -109,7 +111,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
             modelBuilder.Entity<TabAdminDetails>(entity =>
             {
                 entity.HasKey(e => e.Admindtlsid)
-                    .HasName("PK__tab_admi__052BF0DCF4AABBEF");
+                    .HasName("PK__tab_admi__052BF0DC62A41327");
 
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
 
@@ -126,12 +128,35 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.HasOne(d => d.Admin)
                     .WithMany(p => p.TabAdminDetails)
                     .HasForeignKey(d => d.AdminId)
-                    .HasConstraintName("FK__tab_admin__admin__6383C8BA");
+                    .HasConstraintName("FK__tab_admin__admin__26CFC035");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.TabAdminDetails)
                     .HasForeignKey(d => d.CountryId)
-                    .HasConstraintName("FK__tab_admin__Count__6477ECF3");
+                    .HasConstraintName("FK__tab_admin__Count__27C3E46E");
+            });
+
+            modelBuilder.Entity<TabAdminDocument>(entity =>
+            {
+                entity.HasKey(e => e.Admindocumentid)
+                    .HasName("PK__tab_Admi__8E005B2F539714CD");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Admin)
+                    .WithMany(p => p.TabAdminDocument)
+                    .HasForeignKey(d => d.Adminid)
+                    .HasConstraintName("FK__tab_Admin__admin__2D7CBDC4");
             });
 
             modelBuilder.Entity<TabCommonCurrency>(entity =>
@@ -562,6 +587,24 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasName("PK__tab_menu__3B5F7D5C2E9983C9");
 
                 entity.Property(e => e.Menuname).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabOtpUsers>(entity =>
+            {
+                entity.HasKey(e => e.Userotpid)
+                    .HasName("PK__tab_OTP___85A65242EDE0E049");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.Property(e => e.UserDeviceIpaddress).IsUnicode(false);
+
+                entity.Property(e => e.UserDeviceName).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabPromo>(entity =>

@@ -40,14 +40,7 @@ namespace TaxiAppsWebAPICore.Controllers
             DAUsers dAUsers = new DAUsers();
             return this.OK<List<UserList>>(dAUsers.BlockedList(_context));
         }
-        [HttpGet]
-        [Route("GetUserEdit")]
-        [Authorize]
-        public IActionResult GetUserEdit(long userid)
-        {
-            DAUsers dAUsers = new DAUsers();
-            return this.OK<UserListModel>(dAUsers.GetbyId(userid, _context));
-        }
+       
 
         //TODO:: check parent record is deleted
         [HttpDelete]
@@ -69,25 +62,7 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dAUsers.DisableUser(_context, userid, status, User.ToAppUser()) == true ? (status == true ? "Active Successfully" : "InActive Successfully"):"Failed to Update");
         }
 
-        //TODO:: check parent record is deleted
-        [HttpPut]
-        [Route("Edit")]
-        [Authorize]
-        public IActionResult Edit(UserInfoList userInfoList)
-        {
-            DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Edit(_context, userInfoList, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
-        }
-
-        //TODO:: check parent record is deleted
-        [HttpPost]
-        [Route("Save")]
-        [Authorize]
-        public IActionResult Save(UserInfoList userInfoList)
-        {
-            DAUsers dAUsers = new DAUsers();
-            return this.OKResponse(dAUsers.Save(_context, userInfoList, User.ToAppUser()) == true ? "Saved Successfully" : "Saved Failed");
-        }
+        
 
         [HttpGet]
         [Route("downloadUser")]

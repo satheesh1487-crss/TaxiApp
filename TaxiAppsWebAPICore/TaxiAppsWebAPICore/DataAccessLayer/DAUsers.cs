@@ -61,32 +61,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public UserListModel GetbyId(long userid, TaxiAppzDBContext context)
-        {
-            try
-            {
-                UserListModel userdtls = new UserListModel();
-                var users = context.TabUser.Where(u => u.Id == userid && u.IsDelete == 0).FirstOrDefault();
-
-                userdtls.Name = users.Firstname;
-                userdtls.LastName = users.Lastname;
-                userdtls.City = users.City;
-                userdtls.State = users.State;
-                userdtls.Gender = users.Gender;
-                userdtls.Address = users.Address;
-                userdtls.EMail = users.Email;
-                userdtls.PhoneNo = users.PhoneNumber;
-                userdtls.IsActive = users.IsActive == 1 ? true : false;
-
-                return userdtls == null ? null : userdtls;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "GetbyId", context);
-                return null;
-            }
-
-        }
+        
         public bool Delete(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
@@ -111,71 +86,7 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public bool Save(TaxiAppzDBContext context, UserInfoList userInfoList, LoggedInUser loggedInUser)
-        {
-            try
-            {
-               
-                TabUser tabUser = new TabUser();
-                tabUser.Address = userInfoList.Address;
-                tabUser.City = userInfoList.City;
-                tabUser.Countryid = userInfoList.Country;
-                tabUser.Email = userInfoList.Email;
-                tabUser.Firstname = userInfoList.Firstname;
-                tabUser.Lastname = userInfoList.Lastname;
-                tabUser.Password = userInfoList.Password;
-                tabUser.PhoneNumber = userInfoList.Phonenumber;
-                tabUser.ProfilePic = userInfoList.ProfilePicture;
-                tabUser.State = userInfoList.State;
-                tabUser.Timezoneid = userInfoList.TimeZone;
-                tabUser.CreatedAt = tabUser.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                tabUser.CreatedBy = tabUser.UpdatedBy = "Admin";
-                tabUser.IsDelete = 0;
-                tabUser.IsActive = 1;
-                context.Add(tabUser);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "Save", context);
-                return false;
-            }
-        }
-
-        public bool Edit(TaxiAppzDBContext context, UserInfoList userInfoList, LoggedInUser loggedInUser)
-        {
-            try
-            {
-                var tabUser = context.TabUser.Where(r => r.Id == userInfoList.Id && r.IsDelete == 0).FirstOrDefault();
-                if (tabUser != null)
-                {
-                    tabUser.Address = userInfoList.Address;
-                    tabUser.City = userInfoList.City;
-                    tabUser.Countryid = userInfoList.Country;
-                    tabUser.Email = userInfoList.Email;
-                    tabUser.Firstname = userInfoList.Firstname;
-                    tabUser.Lastname = userInfoList.Lastname;
-                   // tabUser.Password = userInfoList.Password;
-                    tabUser.PhoneNumber = userInfoList.Phonenumber;
-                    tabUser.ProfilePic = userInfoList.ProfilePicture;
-                    tabUser.State = userInfoList.State;
-                    tabUser.Timezoneid = userInfoList.TimeZone;
-                    tabUser.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    tabUser.UpdatedBy = "Admin";
-                    context.Update(tabUser);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "Delete", context);
-                return false;
-            }
-        }
-
+        
         public bool DisableUser(TaxiAppzDBContext context, long id, bool status, LoggedInUser loggedInUser)
         {
             try

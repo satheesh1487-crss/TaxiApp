@@ -20,7 +20,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     manageReferrals.Id = listManageRef.Managereferral;
                     manageReferrals.ReferralGain_Amount_PerPerson = listManageRef.ReferralGainAmountPerPerson;
                     manageReferrals.ReferralWorth_Amount = listManageRef.ReferralWorthAmount;
-                    manageReferrals.Trip_to_completed_toearn_refferalAmount = listManageRef.TripToCompletedToearnRefferalAmount;
+                    manageReferrals.Trip_to_completed_toearn_refferalAmount = listManageRef.TripToCompletedTorefer;
                     manageReferrals.Trip_to_completed_torefer = listManageRef.TripToCompletedToearnRefferalAmount;
 
                 }
@@ -45,7 +45,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
                 tabManageReferral.ReferralGainAmountPerPerson= manageReferral.ReferralGain_Amount_PerPerson;
                 tabManageReferral.ReferralWorthAmount = manageReferral.ReferralWorth_Amount;
-                tabManageReferral.TripToCompletedToearnRefferalAmount = manageReferral.Trip_to_completed_toearn_refferalAmount;
+                tabManageReferral.TripToCompletedTorefer = manageReferral.Trip_to_completed_toearn_refferalAmount;
                 tabManageReferral.TripToCompletedToearnRefferalAmount = manageReferral.Trip_to_completed_torefer;
                 tabManageReferral.IsActive = true;
                 tabManageReferral.UpdatedAt = tabManageReferral.CreatedAt = Extention.GetDateTime();

@@ -85,7 +85,7 @@ namespace TaxiAppsWebAPICore
         {
             
                 TabRoles Insertdata = new TabRoles();
-                var updatedate = context.TabRoles.Where(r => r.Roleid == id && r.IsDelete==1).FirstOrDefault();
+                var updatedate = context.TabRoles.Where(r => r.Roleid == id && r.IsDelete==0).FirstOrDefault();
                 if (updatedate != null)
                 {
                     updatedate.RoleName = roles.RoleName;

@@ -111,7 +111,7 @@ namespace TaxiAppsWebAPICore.Controllers
 
         }
 
-        //TODO:: Duplicate record check
+        //TODO:: Duplicate record checkGetSetprice
         [HttpPost]
         [Route("saveEmer")]
         [Authorize]

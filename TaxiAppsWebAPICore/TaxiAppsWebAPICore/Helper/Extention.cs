@@ -105,7 +105,8 @@ namespace TaxiAppsWebAPICore
                 return false;
             }
         }
-       internal  static bool insertlog(string description,string userid,string functionname,TaxiAppzDBContext context)
+       
+        internal  static bool insertlog(string description,string userid,string functionname,TaxiAppzDBContext context)
         {
             TblErrorlog tblErrorlog = new TblErrorlog();
             tblErrorlog.Description = description;
@@ -150,6 +151,16 @@ namespace TaxiAppsWebAPICore
         internal static DateTime GetDateTime()
         {
             return DateTime.UtcNow;
+        }
+         /// <summary>
+        /// Send an Not ok result
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        internal static IActionResult KnowOperationError(this ControllerBase controller,string message)
+        {
+            return controller.BadRequest(new ApiResponse() { IsOk = false, Message = message });
         }
     }
 }

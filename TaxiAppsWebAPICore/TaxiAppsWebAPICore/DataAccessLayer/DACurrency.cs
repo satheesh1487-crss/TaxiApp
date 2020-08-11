@@ -64,8 +64,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
-                if (context.TabCommonCurrency.Any(t => t.Currencyname.ToLowerInvariant() == currencyInfo.CurrencyName.ToLowerInvariant()))
-                    throw new DataValidationException($"Artifact with name '{currencyInfo.CurrencyName}' already exists.");
+                //if (context.TabCommonCurrency.Any(t => t.Currencyname.ToLowerInvariant() == currencyInfo.CurrencyName.ToLowerInvariant()))
+                    //throw new DataValidationException($"Artifact with name '{currencyInfo.CurrencyName}' already exists.");
                 TabCommonCurrency currency = new TabCommonCurrency();
                 currency.Currencyid = currencyInfo.CurrencyID;
                 currency.Currencyname = currencyInfo.CurrencyName;

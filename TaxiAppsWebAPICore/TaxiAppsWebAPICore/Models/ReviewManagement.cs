@@ -8,8 +8,8 @@ namespace TaxiAppsWebAPICore
 {
     public class UsertoDriver
     {
-        [JsonProperty("sNo")]
-        public int Sno { get; set; }
+        [JsonProperty("id")]
+        public int Id { get; set; }
         [JsonProperty("userName")]
         public string UserName { get; set; }
         [JsonProperty("rating")]
@@ -26,8 +26,8 @@ namespace TaxiAppsWebAPICore
 
     public class DrivertoUser
     {
-        [JsonProperty("sNo")]
-        public int Sno { get; set; }
+        [JsonProperty("id")]
+        public int Id { get; set; }
         [JsonProperty("userName")]
         public string UserName { get; set; }
         [JsonProperty("rating")]
