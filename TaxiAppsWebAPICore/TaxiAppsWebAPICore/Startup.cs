@@ -10,7 +10,9 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
+using TaxiAppsWebAPICore.Services;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore
@@ -113,7 +115,9 @@ namespace TaxiAppsWebAPICore
                         builder.AllowAnyOrigin();
                     });
                 });
-               
+                services.Configure<JWT>(Configuration.GetSection("Jwt"));
+                services.AddScoped<IToken, Token>();
+
             }
             catch (Exception ex)
             {
