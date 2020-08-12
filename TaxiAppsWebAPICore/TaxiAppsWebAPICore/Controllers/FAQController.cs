@@ -15,7 +15,6 @@ namespace TaxiAppsWebAPICore.Controllers
     [ApiController]
     public class FAQController : ControllerBase
     {
-        //jhfuyfryufhgyhtguy
         private readonly TaxiAppzDBContext _context;
         public FAQController(TaxiAppzDBContext context)
         {
@@ -48,6 +47,16 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAFAQ dAFAQ = new DAFAQ();
             return this.OK<ManageFAQList>(dAFAQ.GetbyFAQId(_context, id));
+        }
+
+        //TODO:: Duplicate record check
+        [HttpPost]
+        [Route("saveFAQ")]
+        [Authorize]
+        public IActionResult SaveFAQ([FromBody] ManageFAQList manageFAQList)
+        {
+            DAFAQ dAFAQ = new DAFAQ();
+            return this.OKResponse(dAFAQ.SaveFAQ(_context, manageFAQList, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
         }
 
         [HttpPut]
