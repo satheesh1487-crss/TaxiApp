@@ -22,7 +22,7 @@ namespace TaxiAppsWebAPICore.Controllers
             _token = token;
         }
         /// <summary>
-        /// Use to Generate Fresh JWT Token
+        /// Use to Generate Fresh JWT Access Token
         /// </summary>
         /// <returns></returns>
         [HttpPost("LoginUser"),AllowAnonymous]
