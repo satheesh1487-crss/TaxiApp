@@ -91,6 +91,31 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
+        public bool SaveFAQ(TaxiAppzDBContext context, ManageFAQList manageFAQList, LoggedInUser loggedInUser)
+        {
+            try
+            {
+                TabFaq tabFaq = new TabFaq();
+                tabFaq.ComplaintType = manageFAQList.Complaint_Type;
+                tabFaq.FaqAnswer = manageFAQList.FAQ_Answer;
+                tabFaq.FaqQuestion = manageFAQList.FAQ_Answer;
+                tabFaq.Faqid = manageFAQList.Id;
+                tabFaq.Servicelocid = manageFAQList.Servicelocid;
+                tabFaq.CreatedAt = DateTime.UtcNow;
+                tabFaq.UpdatedAt = DateTime.UtcNow;
+                tabFaq.UpdatedBy = tabFaq.CreatedBy = loggedInUser.Email;
+
+                context.TabFaq.Add(tabFaq);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "SaveFAQ", context);
+                return false;
+            }
+        }
+
         public bool DeleteFAQ(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
