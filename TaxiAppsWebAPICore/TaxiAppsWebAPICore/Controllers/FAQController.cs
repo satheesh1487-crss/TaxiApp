@@ -36,8 +36,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditFAQ([FromBody] ManageFAQList manageFAQList)
         {
-            DAFAQ dAFAQ = new DAFAQ();
-            return this.OKResponse(dAFAQ.EditFAQ(_context, manageFAQList, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DAFAQ dAFAQ = new DAFAQ();
+                return this.OKResponse(dAFAQ.EditFAQ(_context, manageFAQList, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (Exception ex)
+            {
+
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -46,7 +54,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetbyFAQId(long id)
         {
             DAFAQ dAFAQ = new DAFAQ();
-            return this.OK<ManageFAQList>(dAFAQ.GetbyFAQId(_context, id));
+            return this.OK<ManageFAQInfo>(dAFAQ.GetbyFAQId(_context, id));
         }
 
         //TODO:: Duplicate record check
@@ -55,8 +63,17 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult SaveFAQ([FromBody] ManageFAQList manageFAQList)
         {
-            DAFAQ dAFAQ = new DAFAQ();
-            return this.OKResponse(dAFAQ.SaveFAQ(_context, manageFAQList, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DAFAQ dAFAQ = new DAFAQ();
+                return this.OKResponse(dAFAQ.SaveFAQ(_context, manageFAQList, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (Exception ex)
+            {
+
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
 
         [HttpPut]
@@ -66,16 +83,6 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAFAQ dAFAQ = new DAFAQ();
             return this.OKResponse(dAFAQ.StatusFAQ(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
-        }
-
-        //TODO:: check parent record is deleted
-        [HttpDelete]
-        [Route("deleteFAQ")]
-        [Authorize]
-        public IActionResult DeleteFAQ(long id)
-        {
-            DAFAQ dAFAQ = new DAFAQ();
-            return this.OKResponse(dAFAQ.DeleteFAQ(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
         }
     }
 }
