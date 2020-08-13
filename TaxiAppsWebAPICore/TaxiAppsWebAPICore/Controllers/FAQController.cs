@@ -54,7 +54,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetbyFAQId(long id)
         {
             DAFAQ dAFAQ = new DAFAQ();
-            return this.OK<ManageFAQList>(dAFAQ.GetbyFAQId(_context, id));
+            return this.OK<ManageFAQInfo>(dAFAQ.GetbyFAQId(_context, id));
         }
 
         //TODO:: Duplicate record check
