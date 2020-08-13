@@ -90,13 +90,13 @@ namespace TaziappzMobileWebAPI.Controllers
         /// Use to Register User
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("RegisterUser")]
-        public IActionResult RegisterUser(SignUpmodel signUpmodel)
-        {
-            token = new Token(_context, jwt);
-            return this.OK<DetailsWithToken>(token.RegisterUser(refreshtoken, contactno));
-        }
+        //[HttpGet]
+        //[AllowAnonymous]
+        //[Route("RegisterUser")]
+        //public IActionResult RegisterUser(SignUpmodel signUpmodel)
+        //{
+        //    token = new Token(_context, jwt);
+        //    return this.OK<DetailsWithToken>(token.RegisterUser(refreshtoken, contactno));
+        //}
     }
 }
