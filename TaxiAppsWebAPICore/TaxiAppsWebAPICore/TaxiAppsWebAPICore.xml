@@ -6,7 +6,7 @@
     <members>
         <member name="M:TaxiAppsWebAPICore.Controllers.LoginController.Login(TaxiAppsWebAPICore.Models.LoginRequest)">
             <summary>
-            Use to Generate Fresh JWT Token
+            Use to Generate Fresh JWT Access Token
             </summary>
             <returns></returns>
         </member>
