@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -14,7 +15,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
                 List<ManageFAQList> manageFAQ = new List<ManageFAQList>();
-                var listFAQ = context.TabFaq.ToList().OrderByDescending(t => t.UpdatedAt);
+                var listFAQ = context.TabFaq.Where(t=>t.IsDelete==false).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var FAQ in listFAQ)
                 {
                     manageFAQ.Add(new ManageFAQList()
@@ -23,7 +24,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                         FAQ_Answer = FAQ.FaqAnswer,
                         FAQ_Question = FAQ.FaqQuestion,
                         Id = FAQ.Faqid,
-                        //IsActive = FAQ.IsActive,
+                        IsActive = FAQ.IsActive,
                         Servicelocid = FAQ.Servicelocid
 
                     });
@@ -41,16 +42,17 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool EditFAQ(TaxiAppzDBContext context, ManageFAQList manageFAQList, LoggedInUser loggedInUser)
         {
-            try
-            {
+          
+                var roleExist = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid == manageFAQList.Servicelocid);
+                if (roleExist != null)
+                    throw new DataValidationException($"Service location doest not '{roleExist.Name}' exists.");
 
-                var updatedate = context.TabFaq.Where(r => r.Faqid == manageFAQList.Id && r.IsDelete == 0).FirstOrDefault();
+                var updatedate = context.TabFaq.Where(r => r.Faqid == manageFAQList.Id && r.IsDelete == false).FirstOrDefault();
                 if (updatedate != null)
                 {
                     updatedate.FaqQuestion = manageFAQList.FAQ_Question;
                     updatedate.FaqAnswer = manageFAQList.FAQ_Answer;
-                    updatedate.ComplaintType = manageFAQList.Complaint_Type;
-                    updatedate.Faqid = manageFAQList.Id;
+                    updatedate.ComplaintType = manageFAQList.Complaint_Type;                 
                     updatedate.Servicelocid = manageFAQList.Servicelocid;
                     updatedate.UpdatedAt = DateTime.UtcNow;
                     updatedate.UpdatedBy = loggedInUser.Email;
@@ -59,20 +61,15 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     return true;
                 }
                 return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "EditFAQ", context);
-                return false;
-            }
+           
         }
 
         public ManageFAQList GetbyFAQId(TaxiAppzDBContext context, long id)
         {
             try
-            {
+            {               
                 ManageFAQList manageFAQList = new ManageFAQList();
-                var listFAQ = context.TabFaq.FirstOrDefault(t => t.Faqid == id && t.IsDelete == 0);
+                var listFAQ = context.TabFaq.FirstOrDefault(t => t.Faqid == id && t.IsDelete == false);
                 if (listFAQ != null)
                 {
                     manageFAQList.FAQ_Answer = listFAQ.FaqAnswer;
@@ -81,7 +78,6 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     manageFAQList.Id = listFAQ.Faqid;
                     manageFAQList.Servicelocid = listFAQ.Servicelocid;
                 }
-
                 return manageFAQList != null ? manageFAQList : null;
             }
             catch (Exception ex)
@@ -93,12 +89,15 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool SaveFAQ(TaxiAppzDBContext context, ManageFAQList manageFAQList, LoggedInUser loggedInUser)
         {
-            try
-            {
+             
+                var roleExist = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid == manageFAQList.Servicelocid);
+                if (roleExist != null)
+                    throw new DataValidationException($"Service location doest not '{roleExist.Name}' exists.");
+
                 TabFaq tabFaq = new TabFaq();
                 tabFaq.ComplaintType = manageFAQList.Complaint_Type;
                 tabFaq.FaqAnswer = manageFAQList.FAQ_Answer;
-                tabFaq.FaqQuestion = manageFAQList.FAQ_Answer;
+                tabFaq.FaqQuestion = manageFAQList.FAQ_Question;
                 tabFaq.Faqid = manageFAQList.Id;
                 tabFaq.Servicelocid = manageFAQList.Servicelocid;
                 tabFaq.CreatedAt = DateTime.UtcNow;
@@ -108,49 +107,20 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 context.TabFaq.Add(tabFaq);
                 context.SaveChanges();
                 return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "SaveFAQ", context);
-                return false;
-            }
-        }
-
-        public bool DeleteFAQ(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
-        {
-            try
-            {
-
-                var updatedate = context.TabFaq.Where(r => r.Faqid == id && r.IsDelete == 0).FirstOrDefault();
-                if (updatedate != null)
-                {
-
-
-                    updatedate.IsDelete = 1;
-                    updatedate.DeletedAt = DateTime.UtcNow;
-                    updatedate.DeletedBy = loggedInUser.Email;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "DeleteFAQ", context);
-                return false;
-            }
-        }
+            
+        }        
 
         public bool StatusFAQ(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
-            try
-            {
-
-                var updatedate = context.TabFaq.Where(r => r.Faqid == id).FirstOrDefault();
+            
+                var faq = context.TabFaq.FirstOrDefault(t => t.IsDelete == false && t.Faqid == id);
+                if (faq == null)
+                    throw new DataValidationException($"FAQ doest not exists.");
+                 
+                var updatedate = context.TabFaq.Where(t => t.Faqid == id && t.IsDelete==false).FirstOrDefault();
                 if (updatedate != null)
                 {
-                    updatedate.IsActive = 1;
+                    updatedate.IsActive = isStatus;
                     updatedate.UpdatedAt = DateTime.UtcNow;
                     updatedate.UpdatedBy = loggedInUser.UserName;
                     context.Update(updatedate);
@@ -158,12 +128,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     return true;
                 }
                 return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "StatusFAQ", context);
-                return false;
-            }
+            
         }
     }
 }

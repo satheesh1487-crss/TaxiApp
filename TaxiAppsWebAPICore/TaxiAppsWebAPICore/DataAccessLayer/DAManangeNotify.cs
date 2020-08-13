@@ -44,10 +44,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var updatedate = context.TabManageEmail.Where(r => r.ManageEmailid == manageEmailOption.Id).FirstOrDefault();
                 if (updatedate != null)
                 {
-
-                    updatedate.IsActive = manageEmailOption.IsActive;
-                    updatedate.ManageEmailid = manageEmailOption.Id;
-                    updatedate.Emailtitle = manageEmailOption.EmailTitle;
+                     
+                    updatedate.ManageEmailid = manageEmailOption.Id; 
                     updatedate.Description = manageEmailOption.Description;
                     updatedate.UpdatedAt = DateTime.UtcNow;
                     updatedate.UpdatedBy = loggedInUser.Email;
@@ -146,10 +144,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var updatedate = context.TabManageSms.Where(r => r.ManageSmsid == manageSMSOption.Id).FirstOrDefault();
                 if (updatedate != null)
                 {
-
-                    updatedate.IsActive = manageSMSOption.IsActive;
+                                   
                     updatedate.ManageSmsid = manageSMSOption.Id;
-                    updatedate.Smstitle = manageSMSOption.SMSTitle;
                     updatedate.Description = manageSMSOption.Description;
                     updatedate.UpdatedAt = DateTime.UtcNow;
                     updatedate.UpdatedBy = loggedInUser.Email;

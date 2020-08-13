@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace TaxiAppsWebAPICore.Models
 {
-    public class ManageFAQList
+    public class ManageFAQList : ManageFAQInfo
     {
+        [JsonProperty("isActive")]
+        public bool? IsActive { get; set; }
+              
+    
+    }
+    public class ManageFAQInfo
+{
         [JsonProperty("id")]
         public long Id { get; set; }
 
         [JsonProperty("servicelocid")]
-        public long ?Servicelocid { get; set; }
+        public long? Servicelocid { get; set; }
 
         [JsonProperty("FAQ_Question")]
         public string FAQ_Question { get; set; }
@@ -22,8 +29,5 @@ namespace TaxiAppsWebAPICore.Models
 
         [JsonProperty("complaint_Type")]
         public string Complaint_Type { get; set; }
-
-        [JsonProperty("isActive")]
-        public bool ?IsActive { get; set; }
     }
 }

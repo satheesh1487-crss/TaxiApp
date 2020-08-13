@@ -25,9 +25,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [StringLength(200)]
         public string ComplaintType { get; set; }
         [Column("isActive")]
-        public long? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         [Column("isDelete")]
-        public long? IsDelete { get; set; }
+        public bool? IsDelete { get; set; }
         [Column("Created_by")]
         [StringLength(300)]
         public string CreatedBy { get; set; }
