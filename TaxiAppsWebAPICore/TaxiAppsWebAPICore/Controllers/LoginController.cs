@@ -36,12 +36,12 @@ namespace TaxiAppsWebAPICore.Controllers
         /// Use to Re-Generate JWT Token once expried current expired time is 5 mins
         /// </summary>
         /// <returns></returns>
-        [HttpPost("RegenerateToken"), AllowAnonymous]
-        public IActionResult RegenerateToken(string refreshtoken,string emailid)
-        {
-            return this.OK<UserInfo>(_token.ReGenerateJWTTokenDtls(refreshtoken,emailid));
+        //[HttpPost("RegenerateToken"), AllowAnonymous]
+        //public IActionResult RegenerateToken(string refreshtoken,string emailid)
+        //{
+        //    return this.OK<UserInfo>(_token.ReGenerateJWTTokenDtls(refreshtoken,emailid));
          
-        }
+        //}
     }
 }
 
