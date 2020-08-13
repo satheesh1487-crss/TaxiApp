@@ -43,17 +43,14 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool EditFAQ(TaxiAppzDBContext context, ManageFAQList manageFAQList, LoggedInUser loggedInUser)
         {
 
-            var faq = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid == manageFAQList.Servicelocid);
-            if (faq == null)
-                throw new DataValidationException($"Service location doest not '{faq.Name}' exists.");
+            
 
             var updatedate = context.TabFaq.Where(r => r.Faqid == manageFAQList.Id && r.IsDelete == false).FirstOrDefault();
             if (updatedate != null)
             {
                 updatedate.FaqQuestion = manageFAQList.FAQ_Question;
                 updatedate.FaqAnswer = manageFAQList.FAQ_Answer;
-                updatedate.ComplaintType = manageFAQList.Complaint_Type;
-                updatedate.Servicelocid = manageFAQList.Servicelocid;
+                updatedate.ComplaintType = manageFAQList.Complaint_Type; 
                 updatedate.UpdatedAt = DateTime.UtcNow;
                 updatedate.UpdatedBy = loggedInUser.Email;
                 context.Update(updatedate);
@@ -72,7 +69,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var listFAQ = context.TabFaq.FirstOrDefault(t => t.Faqid == id && t.IsDelete == false);
                 if (listFAQ != null)
                 {
-                    manageFAQInfo.Servicelocid = listFAQ.Servicelocid;
+                    manageFAQInfo.Id = listFAQ.Faqid;
                     manageFAQInfo.FAQ_Answer = listFAQ.FaqAnswer;
                     manageFAQInfo.FAQ_Question = listFAQ.FaqQuestion;
                     manageFAQInfo.Complaint_Type = listFAQ.ComplaintType;
@@ -91,7 +88,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
             var faq = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid == manageFAQInfo.Servicelocid);
             if (faq == null)
-                throw new DataValidationException($"Service location doest not '{faq.Name}' exists.");
+                throw new DataValidationException($"Service location doest not  exists.");
 
             TabFaq tabFaq = new TabFaq();
             tabFaq.ComplaintType = manageFAQInfo.Complaint_Type;

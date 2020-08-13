@@ -18,8 +18,6 @@ namespace TaxiAppsWebAPICore.Models
         [JsonProperty("id")]
         public long Id { get; set; }
 
-
-
         [JsonProperty("servicelocid")]
         public long? Servicelocid { get; set; }
 
