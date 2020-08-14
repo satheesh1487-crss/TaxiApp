@@ -8,10 +8,10 @@ namespace TaziappzMobileWebAPI.Models
 {
     public class ServiceLocationModel
     {
-        [JsonProperty("countryId")]
-        public long ?CountryId { get; set; }
+        [JsonProperty("serviceId")]
+        public long ?ServiceId { get; set; }
 
-        [JsonProperty("countryName")]
-        public string CountryName { get; set; }
+        [JsonProperty("serviceName")]
+        public string ServiceName { get; set; }
     }
 }

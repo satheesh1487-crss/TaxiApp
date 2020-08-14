@@ -133,13 +133,13 @@ namespace TaziappzMobileWebAPI.DALayer
             try
             {
                 List<ServiceLocationModel> serviceList = new List<ServiceLocationModel>();
-                var listService = context.TabServicelocation.Include(t => t.Country).Where(t => t.Countryid == id && t.IsDeleted==0 && t.IsActive== 1).ToList();
+                var listService = context.TabServicelocation.Where(t => t.Countryid == id && t.IsDeleted==0).ToList();
                 foreach (var service in listService)
                 {
                     serviceList.Add(new ServiceLocationModel()
                     {
-                        CountryId = service.Countryid,
-                        CountryName=service.Name
+                        ServiceId = service.Servicelocid,
+                        ServiceName=service.Name
                     });
                 }
                 return serviceList != null ? serviceList : null;
