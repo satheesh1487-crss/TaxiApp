@@ -10,6 +10,7 @@ using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Services;
 using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Interface;
+using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
 
 namespace TaziappzMobileWebAPI.Controllers
@@ -98,5 +99,25 @@ namespace TaziappzMobileWebAPI.Controllers
         //    token = new Token(_context, jwt);
         //    return this.OK<DetailsWithToken>(token.RegisterUser(refreshtoken, contactno));
         //}
+
+
+        [HttpGet]
+        [Route("getCountry")]
+        [Authorize]
+        public IActionResult GetCountry()
+        {
+            DAOTP dAOTP = new DAOTP();
+            return this.OK<List<CountryModel>>(dAOTP.GetCountryList(_context));
+        }
+
+        [HttpGet]
+        [Route("list")]
+        [Authorize]
+        public IActionResult List()
+        {
+            DAOTP dAOTP = new DAOTP();
+            return this.OK<List<ServiceLocationModel>>(dAOTP.ListService(_context));
+        }
+
     }
 }

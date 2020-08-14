@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
 
 namespace TaziappzMobileWebAPI.DALayer
@@ -109,7 +111,46 @@ namespace TaziappzMobileWebAPI.DALayer
                 return user;
             }
         }
-    }
 
-    
+        public List<CountryModel> GetCountryList(TaxiAppzDBContext context)
+        {
+            List<CountryModel> countryModel = new List<CountryModel>();
+            var countryData = context.TabCountry.ToList();
+            foreach (var country in countryData)
+            {
+                countryModel.Add(new CountryModel()
+                {
+                    CountryId = country.CountryId,
+                    CountryName = country.Name,
+
+                });
+            }
+            return countryModel == null ? null : countryModel;
+        }
+
+        public List<ServiceLocationModel> ListService(long id,TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<ServiceLocationModel> serviceList = new List<ServiceLocationModel>();
+                var listService = context.TabServicelocation.Include(t => t.Country).Where(t => t.Countryid == id && t.IsDeleted==0 && t.IsActive== 1).ToList();
+                foreach (var service in listService)
+                {
+                    serviceList.Add(new ServiceLocationModel()
+                    {
+                        CountryId = service.Countryid,
+                        CountryName=service.Name
+                    });
+                }
+                return serviceList != null ? serviceList : null;
+
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListService", context);
+                return null;
+            }
+
+        }
+    }
 }
