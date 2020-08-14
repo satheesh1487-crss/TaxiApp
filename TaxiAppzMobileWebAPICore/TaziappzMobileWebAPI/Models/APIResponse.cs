@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 namespace TaziappzMobileWebAPI
 {
     public class APIResponse
-    {
-        [JsonProperty("isOK")]
-        public bool IsOK { get; set; }
-
-        [JsonProperty("message")]
+    { 
+        [JsonProperty("success_message")]
         public string Message { get; set; }
 
-        [JsonProperty("status")]
-        public bool status { get; set; }
+        [JsonProperty("success")]
+        public bool success => isExist == 1;
+
+        [JsonProperty("isExist")]
+        public int isExist { get; set; }
+
+       
     }
 }

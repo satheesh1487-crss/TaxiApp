@@ -38,10 +38,15 @@ namespace TaziappzMobileWebAPI.DALayer
                     MailID = tokenString.MailID,
                     AccessToken = tokenString.AccessToken,
                     RefreshToken = tokenString.RefreshToken,
-                    Status = "User Data Found"
+                    Status = "User Data Found",
+                    Success=true,
+                    IsExist =1
+
                 };
                 return user;
             }
+            user.Success = false;
+            user.IsExist = 0;
             user.Status = "Details Not Found";
             return user;
         }

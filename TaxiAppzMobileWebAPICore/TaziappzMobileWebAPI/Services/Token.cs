@@ -40,6 +40,7 @@ namespace TaxiAppsWebAPICore.Services
                     RefreshToken = refreshtoken.RefeshToken,
                    Status = "User_Logged",
                    IsActive= IQUser.IsActive
+                  
                     //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
                     //   InsertedDate = IQAdmin.CreatedAt
                 };
@@ -47,6 +48,7 @@ namespace TaxiAppsWebAPICore.Services
 
                 return user;
             }
+         
             user.Status = "Invalid Credentials";
             return user;
         }
@@ -54,7 +56,7 @@ namespace TaxiAppsWebAPICore.Services
         {
             var user = new DetailsWithToken();
             var IQUser = _context.TabUser.Where(t => t.PhoneNumber == contactno &&  t.Token == refreshtoken).FirstOrDefault();
-            if(IQUser != null)
+            if (IQUser != null)
             {
                 var tokenString = GenerateJWTToken(IQUser, _context);
                 var regenfreshtoken = CreateRefreshToken();
@@ -68,13 +70,17 @@ namespace TaxiAppsWebAPICore.Services
                     AccessToken = tokenString,
                     RefreshToken = regenfreshtoken.RefeshToken,
                     Status = "User_Logged",
-                    IsActive = IQUser.IsActive
+                    IsActive = IQUser.IsActive,
+                    Success = true,
+                    IsExist = 1
                     //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
                     //   InsertedDate = IQAdmin.CreatedAt
                 };
                 bool updatetoken = UpdateToken(IQUser.Id, user, _context);
                 return user;
-             }
+            }
+            user.IsExist = 0;
+            user.Success = false;
             user.Status = "Token did not match any users.";
             return user;
         }

@@ -61,7 +61,8 @@ namespace TaziappzMobileWebAPI.Controllers
             SignInmodel signinmodel = new SignInmodel();
             signinmodel.Contactno = contactno;
             validate = new DAUserValidate(_context);
-            return this.OKStatus(validate.MobileValidation(signinmodel));
+            bool status = validate.MobileValidation(signinmodel);
+            return this.OKStatus(status ? "phoneValidated" : "phoneInValidated", status ? 1 : 0);
         }
         /// <summary>
         /// Use to Get Existing user records
@@ -113,10 +114,10 @@ namespace TaziappzMobileWebAPI.Controllers
         [HttpGet]
         [Route("list")]
         [Authorize]
-        public IActionResult List()
+        public IActionResult List(long id)
         {
             DAOTP dAOTP = new DAOTP();
-            return this.OK<List<ServiceLocationModel>>(dAOTP.ListService(_context));
+            return this.OK<List<ServiceLocationModel>>(dAOTP.ListService(id,_context));
         }
 
     }

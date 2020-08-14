@@ -26,30 +26,28 @@ namespace TaziappzMobileWebAPI
         {
             return controller.Ok(new APIResponse()
             {
-                IsOK = true,
-                 Message = msg
+                Message = msg
             });
         }
         internal static IActionResult OKFailed(this ControllerBase controller, string msg)
         {
             return controller.Ok(new APIResponse()
             {
-                IsOK = false,
-                Message = msg
+               Message = msg
             });
         }
-        internal static IActionResult OKStatus(this ControllerBase controller, bool msg)
+        internal static IActionResult OKStatus(this ControllerBase controller, string msg,int IsExist)
         {
             return controller.Ok(new APIResponse()
             {
-                status = msg
+                Message = msg,
+                isExist = IsExist,
             });
         }
         internal static IActionResult OK<T>(this ControllerBase controller, T content)
         {
             return controller.Ok(new APIContentResponse<T>()
             {
-                IsOK = true,
                 Content = content
             });
         }
@@ -57,8 +55,7 @@ namespace TaziappzMobileWebAPI
         {
             return controller.Ok(new APIContentResponse<T>()
             {
-                IsOK = true,
-                ContentList = content
+               ContentList = content
             });
         }
         internal static string GenerateJWTToken(TabUser userinfo,TaxiAppzDBContext context)
