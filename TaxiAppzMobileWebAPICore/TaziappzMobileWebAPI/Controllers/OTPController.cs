@@ -47,7 +47,8 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult ValidateOTP(long OTP)
         {
             DAOTP otp = new DAOTP();
-            return this.OK<UserInfo>(otp.ValidateOTP(OTP, _context));
+            return null;
+           // return this.OK<UserInfo>(otp.ValidateOTP(OTP, _context));
         }
         /// <summary>
         /// Use to Validate User Contact No
@@ -74,7 +75,9 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult UserSignIndetails([FromBody] SignInmodel signInmodel)
         {
             sign = new DASign(_context, token);
-            return this.OK<DetailsWithToken>(sign.SignIn(signInmodel));
+            DetailsWithToken detailsWithToken = new DetailsWithToken();
+            detailsWithToken = sign.SignIn(signInmodel);
+            return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken.IsExist == 1 ? "User Data Found" : "Details Not Found", detailsWithToken.IsExist);
         }
         /// <summary>
         /// Use to Regenerate AccessToken once Session Exipred
@@ -86,7 +89,9 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult RegenerateAccessToken(string refreshtoken, string contactno)
         {
             token = new Token(_context, jwt);
-            return this.OK<DetailsWithToken>(token.ReGenerateJWTTokenDtls(refreshtoken,contactno));
+            DetailsWithToken detailsWithToken = new DetailsWithToken();
+            detailsWithToken = token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
+            return this.OK<DetailsWithToken>(detailsWithToken,detailsWithToken.IsExist == 1 ? "Access token Generated Successfully" : "Access token Generation Failed", detailsWithToken.IsExist);
         }
         /// <summary>
         /// Use to Register User
@@ -101,23 +106,33 @@ namespace TaziappzMobileWebAPI.Controllers
         //    return this.OK<DetailsWithToken>(token.RegisterUser(refreshtoken, contactno));
         //}
 
-
+        /// <summary>
+        /// Use to List Country
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("getCountry")]
         [Authorize]
         public IActionResult GetCountry()
         {
             DAOTP dAOTP = new DAOTP();
-            return this.OK<List<CountryModel>>(dAOTP.GetCountryList(_context));
+            List<CountryModel> countryModel = new List<CountryModel>();
+            countryModel = dAOTP.GetCountryList(_context);
+            return this.OK<List<CountryModel>>(countryModel,countryModel.Count == 0 ? "No Data Found" : "Data Found", countryModel.Count == 0 ? 0 : 1);
         }
-
+        /// <summary>
+        /// Use to List Service Opertaion
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        [Route("list")]
+        [Route("ServiceOperation")]
         [Authorize]
         public IActionResult List(long id)
         {
             DAOTP dAOTP = new DAOTP();
-            return this.OK<List<ServiceLocationModel>>(dAOTP.ListService(id,_context));
+            List<ServiceLocationModel> serviceLocationModels = new List<ServiceLocationModel>();
+            serviceLocationModels = dAOTP.ListService(id, _context);
+            return this.OK<List<ServiceLocationModel>>(serviceLocationModels, serviceLocationModels.Count == 0 ? "No Data Found" : "Data Found", serviceLocationModels.Count == 0 ? 0 : 1);
         }
 
     }

@@ -23,7 +23,9 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult GetPolygon([FromBody] LatLong latLong, long servicelocationid)
         {
             DAZone daZone = new DAZone();
-            return this.OK<List<LatLong>>(daZone.GetPolygon(latLong,servicelocationid,context));
+            List<LatLong> latLongs = new List<LatLong>();
+            latLongs = daZone.GetPolygon(latLong, servicelocationid, context);
+            return this.OK<List<LatLong>>(latLongs, latLongs.Count == 0 ? "Data Found" : "No Data Found" , latLongs.Count == 0 ? 0: 1);
         }
     }
 }

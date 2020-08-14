@@ -30,12 +30,12 @@ namespace TaziappzMobileWebAPI
         public string RefreshToken { get; set; }
         [JsonProperty("isActive")]
         public int? IsActive { get; set; }
-        [JsonProperty("success_message")]
-        public string Status { get; set; }
-        [JsonProperty("success")]
-        public bool Success { get; set; }
+        //[JsonProperty("success_message")]
+        //public string Status { get; set; }
+        //[JsonProperty("success")]
+        //public bool Success { get; set; }
         [JsonProperty("isExist")]
-        public long IsExist { get; set; }
+        public int IsExist { get; set; }
 
     }
     public class SignInmodel
