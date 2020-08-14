@@ -128,12 +128,12 @@ namespace TaziappzMobileWebAPI.DALayer
             return countryModel == null ? null : countryModel;
         }
 
-        public List<ServiceLocationModel> ListService(TaxiAppzDBContext context)
+        public List<ServiceLocationModel> ListService(long id,TaxiAppzDBContext context)
         {
             try
             {
                 List<ServiceLocationModel> serviceList = new List<ServiceLocationModel>();
-                var listService = context.TabServicelocation.Include(t => t.Country).Where(t => t.Countryid == serviceList.).ToList().OrderByDescending(t => t.UpdatedAt);
+                var listService = context.TabServicelocation.Include(t => t.Country).Where(t => t.Countryid == id && t.IsDeleted==0 && t.IsActive== 1).ToList();
                 foreach (var service in listService)
                 {
                     serviceList.Add(new ServiceLocationModel()
