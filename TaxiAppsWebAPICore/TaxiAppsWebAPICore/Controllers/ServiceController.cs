@@ -87,5 +87,14 @@ namespace TaxiAppsWebAPICore.Controllers
             DAService dAService = new DAService();
             return this.OK<ServiceInfo>(dAService.GetbyServiceId(_context, id));
         }
+
+        [HttpGet]
+        [Route("getCountrybyId")]
+        [Authorize]
+        public IActionResult GetCountrybyId(long id)
+        {
+            DAService dAService = new DAService();
+            return this.OK<List<ServiceListModel>>(dAService.GetCountrybyId(_context, id));
+        }
     }
 }

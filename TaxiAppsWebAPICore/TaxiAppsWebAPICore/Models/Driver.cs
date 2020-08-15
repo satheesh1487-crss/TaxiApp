@@ -67,7 +67,7 @@ namespace TaxiAppsWebAPICore
         public string CarManu { get; set; }
 
         [JsonProperty("carYear")]
-        public int CarYear { get; set; }
+        public int ?CarYear { get; set; }
 
 
     }

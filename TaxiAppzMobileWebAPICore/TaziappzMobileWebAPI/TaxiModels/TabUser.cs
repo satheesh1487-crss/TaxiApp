@@ -48,7 +48,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [StringLength(191)]
         public string ProfilePic { get; set; }
         [Column("token")]
-        [StringLength(191)]
+        [StringLength(500)]
         public string Token { get; set; }
         [Column("token_expiry", TypeName = "datetime")]
         public DateTime? TokenExpiry { get; set; }

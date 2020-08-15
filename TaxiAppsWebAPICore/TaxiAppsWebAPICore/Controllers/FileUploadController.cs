@@ -31,7 +31,7 @@ namespace TaxiAppsWebAPICore.Controllers
                 var storagefile = uploadedFile.GetStorageFile();
                 var hash = storage.Save(storagefile);
 
-                return null;
+                return Ok();
             }
             catch (DataValidationException vx)
             {

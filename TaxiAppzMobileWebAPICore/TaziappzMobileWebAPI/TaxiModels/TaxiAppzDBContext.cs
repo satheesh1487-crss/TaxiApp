@@ -17,6 +17,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
         public virtual DbSet<TabAdmin> TabAdmin { get; set; }
         public virtual DbSet<TabAdminDetails> TabAdminDetails { get; set; }
+        public virtual DbSet<TabAdminDocument> TabAdminDocument { get; set; }
         public virtual DbSet<TabCommonCurrency> TabCommonCurrency { get; set; }
         public virtual DbSet<TabCommonLanguages> TabCommonLanguages { get; set; }
         public virtual DbSet<TabCountries> TabCountries { get; set; }
@@ -29,6 +30,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabDriverFine> TabDriverFine { get; set; }
         public virtual DbSet<TabDriverWallet> TabDriverWallet { get; set; }
         public virtual DbSet<TabDrivers> TabDrivers { get; set; }
+        public virtual DbSet<TabFaq> TabFaq { get; set; }
         public virtual DbSet<TabManageDocument> TabManageDocument { get; set; }
         public virtual DbSet<TabManageEmail> TabManageEmail { get; set; }
         public virtual DbSet<TabManageEmailHints> TabManageEmailHints { get; set; }
@@ -42,10 +44,12 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabPromo> TabPromo { get; set; }
         public virtual DbSet<TabPushNotification> TabPushNotification { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
+        public virtual DbSet<TabRequestPlace> TabRequestPlace { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
         public virtual DbSet<TabSetpriceZonetype> TabSetpriceZonetype { get; set; }
         public virtual DbSet<TabSos> TabSos { get; set; }
+        public virtual DbSet<TabSurgeprice> TabSurgeprice { get; set; }
         public virtual DbSet<TabTimezone> TabTimezone { get; set; }
         public virtual DbSet<TabTypes> TabTypes { get; set; }
         public virtual DbSet<TabUploadfiledetails> TabUploadfiledetails { get; set; }
@@ -110,7 +114,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
             modelBuilder.Entity<TabAdminDetails>(entity =>
             {
                 entity.HasKey(e => e.Admindtlsid)
-                    .HasName("PK__tab_admi__052BF0DCF4AABBEF");
+                    .HasName("PK__tab_admi__052BF0DC62A41327");
 
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
 
@@ -127,12 +131,35 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.HasOne(d => d.Admin)
                     .WithMany(p => p.TabAdminDetails)
                     .HasForeignKey(d => d.AdminId)
-                    .HasConstraintName("FK__tab_admin__admin__6383C8BA");
+                    .HasConstraintName("FK__tab_admin__admin__26CFC035");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.TabAdminDetails)
                     .HasForeignKey(d => d.CountryId)
-                    .HasConstraintName("FK__tab_admin__Count__6477ECF3");
+                    .HasConstraintName("FK__tab_admin__Count__27C3E46E");
+            });
+
+            modelBuilder.Entity<TabAdminDocument>(entity =>
+            {
+                entity.HasKey(e => e.Admindocumentid)
+                    .HasName("PK__tab_Admi__8E005B2F539714CD");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Admin)
+                    .WithMany(p => p.TabAdminDocument)
+                    .HasForeignKey(d => d.Adminid)
+                    .HasConstraintName("FK__tab_Admin__admin__2D7CBDC4");
             });
 
             modelBuilder.Entity<TabCommonCurrency>(entity =>
@@ -435,6 +462,31 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .HasConstraintName("FK__tab_Drive__typei__1A9EF37A");
             });
 
+            modelBuilder.Entity<TabFaq>(entity =>
+            {
+                entity.HasKey(e => e.Faqid)
+                    .HasName("PK__tab_FAQ__4B88DD9AA7117E63");
+
+                entity.Property(e => e.ComplaintType).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Serviceloc)
+                    .WithMany(p => p.TabFaq)
+                    .HasForeignKey(d => d.Servicelocid)
+                    .HasConstraintName("FK__tab_FAQ__service__3335971A");
+            });
+
             modelBuilder.Entity<TabManageDocument>(entity =>
             {
                 entity.HasKey(e => e.DocumentId)
@@ -637,6 +689,28 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .HasConstraintName("fk_userrefreshtoken");
             });
 
+            modelBuilder.Entity<TabRequestPlace>(entity =>
+            {
+                entity.HasKey(e => e.RequestPlaceId)
+                    .HasName("PK__tab_requ__A8B4FE3AA877DE91");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.DropLocation).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PickLocation).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
             modelBuilder.Entity<TabRoles>(entity =>
             {
                 entity.HasKey(e => e.Roleid)
@@ -721,6 +795,37 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
             });
 
+            modelBuilder.Entity<TabSurgeprice>(entity =>
+            {
+                entity.HasKey(e => e.SurgepriceId)
+                    .HasName("PK__tab_surg__88B7F9CF011E45F5");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.EndTime).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PeakType).IsUnicode(false);
+
+                entity.Property(e => e.StartTime).IsUnicode(false);
+
+                entity.Property(e => e.SurgepriceType).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabSurgeprice)
+                    .HasForeignKey(d => d.ZoneId)
+                    .HasConstraintName("FK__tab_surge__zone___3AD6B8E2");
+            });
+
             modelBuilder.Entity<TabTimezone>(entity =>
             {
                 entity.HasKey(e => e.Timezoneid)
@@ -797,8 +902,6 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.Property(e => e.SocialUniqueId).IsUnicode(false);
 
                 entity.Property(e => e.State).IsUnicode(false);
-
-                entity.Property(e => e.Token).IsUnicode(false);
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.TabUser)

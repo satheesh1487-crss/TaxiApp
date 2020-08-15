@@ -50,7 +50,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetDriverEdit(long driverid)
         {
             DADriver dADriver = new DADriver();
-            return this.OK<DriverList>(dADriver.GetbyId(driverid, _context));
+            return this.OK<DriverInfo>(dADriver.GetbyId(driverid, _context));
         }
 
         //TODO:: check parent record is deleted
