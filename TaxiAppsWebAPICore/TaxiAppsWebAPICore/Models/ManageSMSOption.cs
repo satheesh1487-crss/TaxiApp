@@ -19,5 +19,19 @@ namespace TaxiAppsWebAPICore
 
         [JsonProperty("isActive")]
         public bool ?IsActive { get; set; }
+        [JsonProperty("manageSMSHint")]
+        public List<ManageSMSHint> ManageSMSHint { get; set; }
+    }
+    public class ManageSMSHint
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+
+        [JsonProperty("hintMsg")]
+        public string HintMsg { get; set; }
+
+        [JsonProperty("keyword")]
+        public string Keyword { get; set; }
+
     }
 }

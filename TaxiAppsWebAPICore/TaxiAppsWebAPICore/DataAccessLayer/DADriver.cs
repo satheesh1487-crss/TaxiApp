@@ -193,12 +193,11 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     tabDrivers.City = editDriver.City;
                     tabDrivers.State = editDriver.State;
                     tabDrivers.Countryid = editDriver.Country;
+                    
                     tabDrivers.Company = "";
-                    tabDrivers.Servicelocid = editDriver.DriverArea;
-                    tabDrivers.Password = editDriver.Password;
+                    tabDrivers.Servicelocid = editDriver.DriverArea;                    
                     tabDrivers.Typeid = editDriver.DriverType;
-                    tabDrivers.NationalId = editDriver.NationalId;
-                    //tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
+                    tabDrivers.NationalId = editDriver.NationalId; 
                     tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                     tabDrivers.UpdatedBy = loggedInUser.Email;
                     context.Update(tabDrivers);
