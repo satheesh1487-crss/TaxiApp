@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.OpenApi.Expressions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,6 @@ namespace TaziappzMobileWebAPI
         [JsonProperty("peaktype")]
         public string Peaktype { get; set; }
         [JsonProperty("surgepricevalue")]
-        public string Surgepricevalue { get; set; }
+        public double? Surgepricevalue { get; set; }
     }
 }
