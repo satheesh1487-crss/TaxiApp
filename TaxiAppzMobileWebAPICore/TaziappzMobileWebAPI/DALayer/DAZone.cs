@@ -22,8 +22,9 @@ namespace TaziappzMobileWebAPI.DALayer
                     {
                         listlatlong.Add(new LatLong()
                         {
-                            Latitude = zonepoly.Latitudes,
-                            Longtitude = zonepoly.Longitudes
+                            Picklatitude = zonepoly.Latitudes,
+                            Picklongtitude = zonepoly.Longitudes,
+                            Zoneid = zonepoly.Zoneid
                         });
                     }
                     if (listlatlong.Count > 0)
@@ -33,8 +34,8 @@ namespace TaziappzMobileWebAPI.DALayer
                         bool result = false;
                         for (i = 0, k = nvert - 1; i < nvert; k = i++)
                         {
-                            if (((listlatlong[i].Longtitude > latLong.Longtitude) != (listlatlong[k].Longtitude > latLong.Longtitude)) &&
-                             (latLong.Latitude < (listlatlong[k].Latitude - listlatlong[i].Latitude) * (latLong.Longtitude - listlatlong[i].Longtitude) / (listlatlong[k].Longtitude - listlatlong[i].Longtitude) + listlatlong[i].Latitude))
+                            if (((listlatlong[i].Picklongtitude > latLong.Picklongtitude) != (listlatlong[k].Picklongtitude > latLong.Picklongtitude)) &&
+                             (latLong.Picklatitude < (listlatlong[k].Picklatitude - listlatlong[i].Picklatitude) * (latLong.Picklongtitude - listlatlong[i].Picklongtitude) / (listlatlong[k].Picklongtitude - listlatlong[i].Picklongtitude) + listlatlong[i].Picklatitude))
                                 result = !result;
                         }
                         if (result)
@@ -44,6 +45,7 @@ namespace TaziappzMobileWebAPI.DALayer
             }
             return null;
         }
-       
+
+      
     }
 }

@@ -11,6 +11,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public TabAdmin()
         {
             TabAdminDetails = new HashSet<TabAdminDetails>();
+            TabAdminDocument = new HashSet<TabAdminDocument>();
             TabRefreshtoken = new HashSet<TabRefreshtoken>();
         }
 
@@ -93,6 +94,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual TabCountry ZoneAccessNavigation { get; set; }
         [InverseProperty("Admin")]
         public virtual ICollection<TabAdminDetails> TabAdminDetails { get; set; }
+        [InverseProperty("Admin")]
+        public virtual ICollection<TabAdminDocument> TabAdminDocument { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<TabRefreshtoken> TabRefreshtoken { get; set; }
     }
