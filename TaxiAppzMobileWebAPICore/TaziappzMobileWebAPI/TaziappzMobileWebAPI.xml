@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaziappzMobileWebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:TaziappzMobileWebAPI.Controllers.OTPController.ValidateMobileno(System.String)">
+            <summary>
+            Use to Validate User Contact No
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Controllers.OTPController.UserSignIndetails(TaziappzMobileWebAPI.SignInmodel)">
+            <summary>
+            Use to Get Existing user records
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Controllers.OTPController.RegenerateAccessToken(System.String,System.String)">
+            <summary>
+            Use to Regenerate AccessToken once Session Exipred
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:TaziappzMobileWebAPI.Helper.FileSystemStorage.DataPath">
+            <summary>
+            Data base path
+            </summary>
+        </member>
+        <member name="P:TaziappzMobileWebAPI.Helper.FileSystemStorage.TenantId">
+            <summary>
+            Tenant id
+            </summary>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.#ctor(System.String,System.String)">
+            <summary>
+            Save file to disk 
+            </summary>
+            <param name="file"></param>
+            <returns>MDF5 Hash</returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.GetBaseRelativeDir(System.String)">
+            <summary>
+            Get base data folder
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.GetBaseRelativeFile(System.String)">
+            <summary>
+            Get file relative to base
+            </summary>
+            <param name="relativePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.Save(TaziappzMobileWebAPI.StorageFileInfo)">
+            <summary>
+            Save the file to locations
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.GetMD5HashFromFile(System.String)">
+            <summary>
+            Compute md5 hash
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.MoveToPersistant(System.String,System.String)">
+            <summary>
+            move file from temporary location to final location
+            </summary>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.MoveToPersistantConfiguration(System.IO.FileInfo,System.String,System.String,System.String)">
+            <summary>
+            Convert the file to deployable zip and move
+            </summary>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.RevertPeristantConfiguration(System.String,System.String,System.String)">
+            <summary>
+            Revert a configuration which was persisted
+            </summary>
+            <param name="path"></param>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.DeleteUpload(System.String)">
+            <summary>
+            Move file to deleted location
+            </summary>
+            <param name="uniqueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.UndoDeletion(System.String)">
+            <summary>
+            Restore the deleted artifact folder to uploads folder
+            </summary>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.MoveFolder(System.String,System.String)">
+            <summary>
+            Move directory between relative paths
+            </summary>
+            <param name="sourcePathRelative"></param>
+            <param name="detinationPathRelative"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.GetDownloadFile(System.String,System.String)">
+            <summary>
+            Read the file content
+            </summary>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.GetTempFile(System.String)">
+            <summary>
+            Get temp file
+            </summary>
+            <param name="metaData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.MoveToTemp(System.String,System.String)">
+            <summary>
+            Move file from upload folder to temp folder
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.MoveRootRelative(System.String,System.String)">
+            <summary>
+            Move files from entry assembly relative folder
+            </summary>
+            <param name="relativeSourceFile"></param>
+            <param name="relativeDestinationFile"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.FileSystemStorage.Move(System.IO.FileInfo,System.IO.FileInfo)">
+            <summary>
+            Move file to destination
+            </summary>
+            <param name="sourceFile"></param>
+            <param name="destinationFile"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.Save(TaziappzMobileWebAPI.StorageFileInfo)">
+            <summary>
+            Save form file to disk / blob etc
+            </summary>
+            <param name="file"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.GetDownloadFile(System.String,System.String)">
+            <summary>
+            Download file given location
+            </summary>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.MoveToPersistant(System.String,System.String)">
+            <summary>
+            Move File one  location to another location
+            </summary>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.DeleteUpload(System.String)">
+            <summary>
+            Move File from upload folder to delete folder
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.UndoDeletion(System.String)">
+            <summary>
+            Revert an artifact deletion
+            </summary>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.MoveToTemp(System.String,System.String)">
+            <summary>
+            Move file fro persistent to temp location
+            </summary>
+            <param name="uniqueId"></param>
+            <param name="artifactId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.MoveToPersistantConfiguration(System.IO.FileInfo,System.String,System.String,System.String)">
+            <summary>
+            Make necessary configuration zip and make persistent
+            </summary>
+            <param name="path"></param>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.RevertPeristantConfiguration(System.String,System.String,System.String)">
+            <summary>
+            Revert persistent configuration to local
+            </summary>
+            <param name="path"></param>
+            <param name="fileName"></param>
+            <param name="uniqueId"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.IFileStorage.GetTempFile(System.String)">
+            <summary>
+            Get the temporary file
+            </summary>
+            <param name="metaData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TaziappzMobileWebAPI.Helper.InterFace.Reflections">
+            <summary>
+            Helper functions that make reflection handling easier
+            </summary>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetEntryAssemblyLocation">
+            <summary>
+            Get location of the entry assembly
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetCurrentAssemblyLocation">
+            <summary>
+            Get location of the entry assembly
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetApplicationCommentFile">
+            <summary>
+            Gets the entry assemblies comment xml file name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetAppVersion">
+            <summary>
+            Get application version string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetRootRelativeFile(System.String[])">
+            <summary>
+            Get the file info with root relative path arguments
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetFullPath(System.String[])">
+            <summary>
+            Get combined full path
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetAssemblyRelativeFile(System.String[])">
+            <summary>
+            Get the file info with root relative path arguments
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetRootRelativeDir(System.String[])">
+            <summary>
+            Get root relative dir
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetAssemblyRelativeDir(System.String[])">
+            <summary>
+            Get assembly relative directory
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.GetImplementation``1(System.Reflection.Assembly)">
+            <summary>
+            Get public concreate implementations of the specified type defined in the assembly
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="assembly"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.LoadPhysicalFile(System.String)">
+            <summary>
+            Load assembly file from physical location
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.CreateInstance``1(System.Reflection.Assembly,System.String,System.Object[])">
+            <summary>
+            Create type from specified assembly
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="assembly"></param>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.InterFace.Reflections.CreateInstanceFromFile``1(System.String,System.String)">
+            <summary>
+            Create type from assembly file
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="assemblyPath"></param>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Helper.StorageFactory.GetStorage">
+            <summary>
+            get storage 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TaziappzMobileWebAPI.Helper.StorageFactory.StoragAppSettings">
+            <summary>
+            Storgae settings
+            </summary>
+        </member>
+        <member name="P:TaziappzMobileWebAPI.Helper.StorageFactory.StoragAppSettings.DataPath">
+            <summary>
+            Path where data will be stored
+            </summary>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Extention.GetStorageFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Get IFormFile object from StorageFileInfo object
+            </summary>
+            <param name="formFile"></param>
+        </member>
+        <member name="M:TaziappzMobileWebAPI.Extention.ToAppUser(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Claims principal
+            </summary>
+            <param name="claimsPrincipal"></param>
+            <returns></returns>
+        </member>
+        <member name="P:TaziappzMobileWebAPI.StorageFileInfo.FormFile">
+            <summary>
+            Forom file 
+            </summary>
+        </member>
+        <member name="P:TaziappzMobileWebAPI.StorageFileInfo.UploadId">
+            <summary>
+            File upload id
+            </summary>
+        </member>
+        <member name="P:TaziappzMobileWebAPI.StorageFileInfo.Extension">
+            <summary>
+            File extension
+            </summary>
+        </member>
+    </members>
+</doc>

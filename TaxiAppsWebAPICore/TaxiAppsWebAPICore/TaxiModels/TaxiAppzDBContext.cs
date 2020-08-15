@@ -44,10 +44,12 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabPromo> TabPromo { get; set; }
         public virtual DbSet<TabPushNotification> TabPushNotification { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
+        public virtual DbSet<TabRequestPlace> TabRequestPlace { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
         public virtual DbSet<TabSetpriceZonetype> TabSetpriceZonetype { get; set; }
         public virtual DbSet<TabSos> TabSos { get; set; }
+        public virtual DbSet<TabSurgeprice> TabSurgeprice { get; set; }
         public virtual DbSet<TabTimezone> TabTimezone { get; set; }
         public virtual DbSet<TabTypes> TabTypes { get; set; }
         public virtual DbSet<TabUploadfiledetails> TabUploadfiledetails { get; set; }
@@ -687,6 +689,28 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("fk_userrefreshtoken");
             });
 
+            modelBuilder.Entity<TabRequestPlace>(entity =>
+            {
+                entity.HasKey(e => e.RequestPlaceId)
+                    .HasName("PK__tab_requ__A8B4FE3AA877DE91");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.DropLocation).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PickLocation).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
             modelBuilder.Entity<TabRoles>(entity =>
             {
                 entity.HasKey(e => e.Roleid)
@@ -769,6 +793,37 @@ namespace TaxiAppsWebAPICore.TaxiModels
                 entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+            });
+
+            modelBuilder.Entity<TabSurgeprice>(entity =>
+            {
+                entity.HasKey(e => e.SurgepriceId)
+                    .HasName("PK__tab_surg__88B7F9CF011E45F5");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.EndTime).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PeakType).IsUnicode(false);
+
+                entity.Property(e => e.StartTime).IsUnicode(false);
+
+                entity.Property(e => e.SurgepriceType).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabSurgeprice)
+                    .HasForeignKey(d => d.ZoneId)
+                    .HasConstraintName("FK__tab_surge__zone___3AD6B8E2");
             });
 
             modelBuilder.Entity<TabTimezone>(entity =>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -47,8 +48,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Save(AdminDetails adminDetails)
         {
-            DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Save(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DASuperAdmin dASuperAdmin = new DASuperAdmin();
+                return this.OKResponse(dASuperAdmin.Save(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         //TODO:: check parent record is deleted
@@ -57,8 +65,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Edit(AdminDetails adminDetails)
         {
-            DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.Edit(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DASuperAdmin dASuperAdmin = new DASuperAdmin();
+                return this.OKResponse(dASuperAdmin.Edit(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         //TODO:: check parent record is deleted

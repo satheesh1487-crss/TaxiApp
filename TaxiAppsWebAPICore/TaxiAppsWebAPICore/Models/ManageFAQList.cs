@@ -27,7 +27,7 @@ namespace TaxiAppsWebAPICore.Models
         [JsonProperty("FAQ_Answer")]
         public string FAQ_Answer { get; set; }
 
-        [JsonProperty("complaint_Type")]
+        [JsonProperty("Complaint_Type")]
         public string Complaint_Type { get; set; }
     }
 }
