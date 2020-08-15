@@ -130,7 +130,11 @@ namespace TaxiAppsWebAPICore
                 if (emailid != null)
                     throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
 
-                var tabAdmin = context.TabAdmin.Include(t => t.TabAdminDetails).Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
+            var service = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid == adminDetails.Area);
+            if (emailid != null)
+                throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
+
+            var tabAdmin = context.TabAdmin.Include(t => t.TabAdminDetails).Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
                 {
                     tabAdmin.AreaName = adminDetails.Area;
