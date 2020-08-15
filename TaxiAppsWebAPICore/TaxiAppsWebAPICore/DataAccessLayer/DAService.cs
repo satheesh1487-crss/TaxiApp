@@ -135,5 +135,28 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 return null;
             }
         }
+
+        public List<ServiceListModel> GetCountrybyId(TaxiAppzDBContext context, long id)
+        {
+            try
+            {
+                List<ServiceListModel> serviceInfo = new List<ServiceListModel>();
+                var listService = context.TabServicelocation.Where(t => t.Countryid == id && t.IsDeleted == 0);
+                foreach (var service in listService)
+                {
+                    serviceInfo.Add(new ServiceListModel()
+                    {
+                        ServiceId = service.Servicelocid,
+                        ServiceName = service.Name, 
+                    });
+                }
+                return serviceInfo != null ? serviceInfo : null;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "GetbyServiceId", context);
+                return null;
+            }
+        }
     }
 }

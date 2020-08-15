@@ -16,7 +16,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 List<ManageZone> manageZones = new List<ManageZone>();
-                var zonelist = context.TabZone.Where(t => t.IsDeleted == 0).ToList();
+                var zonelist = context.TabZone.Include(t=>t.Serviceloc).Where(t => t.IsDeleted == 0).ToList();
                 foreach (var zone in zonelist)
                 {
                     manageZones.Add(new ManageZone()
@@ -25,7 +25,7 @@ namespace TaxiAppsWebAPICore
                         ZoneName = zone.Zonename,
                         Serviceslocid = zone.Servicelocid,
                         Unit = zone.Unit,
-
+                        ServiceName = zone.Serviceloc.Name,
                         IsActive = zone.IsActive == 0 ? false : true
 
                     });
@@ -520,6 +520,30 @@ namespace TaxiAppsWebAPICore
                     {
                         Id = type.Typeid,
                         Name = type.Typename
+                    });
+                }
+                return typeLists == null ? null : typeLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message.ToString(), "Admin", "ListZoneType", context);
+                return null;
+            }
+
+        }
+
+        public List<ManageZone> ListServiceBasedZone(long zoneid, TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<ManageZone> typeLists = new List<ManageZone>();
+                var typelist = context.TabZone.Where(t => t.Servicelocid == zoneid && t.IsDeleted ==0 ).ToList();               
+                foreach (var type in typelist)
+                {
+                    typeLists.Add(new ManageZone()
+                    {
+                        Zoneid = type.Zoneid,
+                        ZoneName = type.Zonename
                     });
                 }
                 return typeLists == null ? null : typeLists;

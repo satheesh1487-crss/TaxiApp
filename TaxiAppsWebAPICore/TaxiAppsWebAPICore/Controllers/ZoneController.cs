@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -158,6 +159,15 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAZone dAZone = new DAZone();
             return this.OK<List<OperationZone>>(dAZone.ManageOperation(_context));
+        }
+
+        [HttpGet]
+        [Route("serviceBasedZone")]
+        [Authorize]
+        public IActionResult ServiceBasedZone(long zoneId)
+        {
+            DAZone dAZone = new DAZone();
+            return this.OK<List<ManageZone>>(dAZone.ListServiceBasedZone(zoneId,_context));
         }
     }
 }
