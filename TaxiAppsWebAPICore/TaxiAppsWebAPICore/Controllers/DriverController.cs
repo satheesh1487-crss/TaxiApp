@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -79,8 +80,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Edit(EditDriver editDriver)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.Edit(_context, editDriver, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.Edit(_context, editDriver, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         //TODO:: check parent record is deleted
@@ -89,8 +97,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Save(DriverInfo driverInfo)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.Save(_context, driverInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.Save(_context, driverInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         [HttpGet]

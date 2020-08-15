@@ -71,8 +71,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpPut("EditRole")]
         public IActionResult EditRole(long id,[FromBody] Roles roles)
         {
-            DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.EditRole(_context,id, roles, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DARoles dARoles = new DARoles();
+                return this.OKResponse(dARoles.EditRole(_context, id, roles, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         

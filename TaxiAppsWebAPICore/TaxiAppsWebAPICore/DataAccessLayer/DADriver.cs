@@ -137,92 +137,82 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool Save(TaxiAppzDBContext context, DriverInfo driverInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                // if (context.TabDrivers.Any(t => t.Email.ToLowerInvariant() == driverInfo.Email.ToLowerInvariant()))
-                //    throw new DataValidationException($"Artifact with name '{driverInfo.Email}' already exists.");
-                TabDrivers tabDrivers = new TabDrivers();
-                tabDrivers.FirstName = driverInfo.FirstName;
-                tabDrivers.LastName = driverInfo.LastName;
-                tabDrivers.Email = driverInfo.Email;
-                tabDrivers.ContactNo = driverInfo.ContactNo;
-                tabDrivers.Gender = driverInfo.Gender;
-                tabDrivers.Address = driverInfo.Address;
-                tabDrivers.City = driverInfo.City;
-                tabDrivers.State = driverInfo.State;
-                tabDrivers.Countryid = driverInfo.Country;
-                tabDrivers.Company = "";
-                tabDrivers.Servicelocid = driverInfo.DriverArea;
-                tabDrivers.Password = driverInfo.Password;
-                tabDrivers.Typeid = driverInfo.DriverType;
-                tabDrivers.Carmodel = driverInfo.CarModel;
-                tabDrivers.Carcolor = driverInfo.CarColour;
-                tabDrivers.Carnumber = driverInfo.CarNumber;
-                tabDrivers.Carmanufacturer = driverInfo.CarManu;
-                tabDrivers.Caryear = driverInfo.CarYear;
-                tabDrivers.NationalId = driverInfo.NationalId;
-                tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
-                tabDrivers.CreatedAt = tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                tabDrivers.CreatedBy = tabDrivers.UpdatedBy = loggedInUser.Email;
-                tabDrivers.IsDelete = false;
-                tabDrivers.IsActive = true;
-                context.Add(tabDrivers);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Save", context);
-                return false;
-            }
+            var emailid = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.Email.ToLower() == driverInfo.Email.ToLower() && t.Driverid != driverInfo.DriverId);
+            if (emailid != null)
+                throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
+
+            TabDrivers tabDrivers = new TabDrivers();
+            tabDrivers.FirstName = driverInfo.FirstName;
+            tabDrivers.LastName = driverInfo.LastName;
+            tabDrivers.Email = driverInfo.Email;
+            tabDrivers.ContactNo = driverInfo.ContactNo;
+            tabDrivers.Gender = driverInfo.Gender;
+            tabDrivers.Address = driverInfo.Address;
+            tabDrivers.City = driverInfo.City;
+            tabDrivers.State = driverInfo.State;
+            tabDrivers.Countryid = driverInfo.Country;
+            tabDrivers.Company = "";
+            tabDrivers.Servicelocid = driverInfo.DriverArea;
+            tabDrivers.Password = driverInfo.Password;
+            tabDrivers.Typeid = driverInfo.DriverType;
+            tabDrivers.Carmodel = driverInfo.CarModel;
+            tabDrivers.Carcolor = driverInfo.CarColour;
+            tabDrivers.Carnumber = driverInfo.CarNumber;
+            tabDrivers.Carmanufacturer = driverInfo.CarManu;
+            tabDrivers.Caryear = driverInfo.CarYear;
+            tabDrivers.NationalId = driverInfo.NationalId;
+            tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
+            tabDrivers.CreatedAt = tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+            tabDrivers.CreatedBy = tabDrivers.UpdatedBy = loggedInUser.Email;
+            tabDrivers.IsDelete = false;
+            tabDrivers.IsActive = true;
+            context.Add(tabDrivers);
+            context.SaveChanges();
+            return true;
         }
 
         public bool Edit(TaxiAppzDBContext context, EditDriver editDriver, LoggedInUser loggedInUser)
         {
-            try
+            var emailid = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.Email.ToLower() == editDriver.Email.ToLower() && t.Driverid != editDriver.DriverId);
+            if (emailid != null)
+                throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
+
+            var tabDrivers = context.TabDrivers.Where(r => r.Driverid == editDriver.DriverId && r.IsDelete == false).FirstOrDefault();
+            if (tabDrivers != null)
             {
-                var tabDrivers = context.TabDrivers.Where(r => r.Driverid == editDriver.DriverId && r.IsDelete == false).FirstOrDefault();
-                if (tabDrivers != null)
-                {
-                    tabDrivers.FirstName = editDriver.FirstName;
-                    tabDrivers.LastName = editDriver.LastName;
-                    tabDrivers.Email = editDriver.Email;
-                    tabDrivers.ContactNo = editDriver.ContactNo;
-                    tabDrivers.Gender = editDriver.Gender;
-                    tabDrivers.Address = editDriver.Address;
-                    tabDrivers.City = editDriver.City;
-                    tabDrivers.State = editDriver.State;
-                    tabDrivers.Countryid = editDriver.Country;
-                    tabDrivers.Company = "";
-                    tabDrivers.Servicelocid = editDriver.DriverArea;
-                    tabDrivers.Password = editDriver.Password;
-                    tabDrivers.Typeid = editDriver.DriverType;
-                    tabDrivers.NationalId = editDriver.NationalId;
-                    //tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
-                    tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    tabDrivers.UpdatedBy = loggedInUser.Email;
-                    context.Update(tabDrivers);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                tabDrivers.FirstName = editDriver.FirstName;
+                tabDrivers.LastName = editDriver.LastName;
+                tabDrivers.Email = editDriver.Email;
+                tabDrivers.ContactNo = editDriver.ContactNo;
+                tabDrivers.Gender = editDriver.Gender;
+                tabDrivers.Address = editDriver.Address;
+                tabDrivers.City = editDriver.City;
+                tabDrivers.State = editDriver.State;
+                tabDrivers.Countryid = editDriver.Country;
+                tabDrivers.Company = "";
+                tabDrivers.Servicelocid = editDriver.DriverArea;
+                tabDrivers.Password = editDriver.Password;
+                tabDrivers.Typeid = editDriver.DriverType;
+                tabDrivers.NationalId = editDriver.NationalId;
+                //tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
+                tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDrivers.UpdatedBy = loggedInUser.Email;
+                context.Update(tabDrivers);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Edit", context);
-                return false;
-            }
+            return false;
         }
 
         internal bool AddBonus(TaxiAppzDBContext context, DriverBonusInfo driverBonusInfo, LoggedInUser loggedInUser)
         {
             try
-            { 
+            {
                 TabDriverBonus tabDriverBonus = new TabDriverBonus();
                 tabDriverBonus.Driverid = driverBonusInfo.Driverid;
                 tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
                 tabDriverBonus.BonusReason = driverBonusInfo.Reason;
-               
+
                 tabDriverBonus.Createdat = tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 tabDriverBonus.Createdby = tabDriverBonus.Updatedby = loggedInUser.Email;
                 tabDriverBonus.IsDelete = false;
@@ -245,7 +235,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverid == driverBonusInfo.Driverid && r.IsDelete == false).FirstOrDefault();
                 if (tabDriverBonus != null)
                 {
-                    
+
                     tabDriverBonus.Driverid = driverBonusInfo.Driverid;
                     tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
                     tabDriverBonus.BonusReason = driverBonusInfo.Reason;
@@ -272,13 +262,13 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
                 var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverid == driverId && r.IsDelete == false).FirstOrDefault();
                 if (tabDriverBonus != null)
-                {                  
-                    
+                {
+
 
                     tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                     tabDriverBonus.Updatedby = loggedInUser.Email;
                     tabDriverBonus.IsDelete = false;
-                     
+
                     context.Update(tabDriverBonus);
                     context.SaveChanges();
                 }
@@ -297,14 +287,14 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             {
 
                 List<DriverBonusList> driverfine = new List<DriverBonusList>();
-                var fineList = context.TabDriverBonus.Include(t=>t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+                var fineList = context.TabDriverBonus.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var fine in fineList)
                 {
                     driverfine.Add(new DriverBonusList()
                     {
                         DriverFineId = fine.Driverbonusid,
                         Driverid = fine.Driverid,
-                        Amount = fine.Bonusamount,                        
+                        Amount = fine.Bonusamount,
                         Reason = fine.BonusReason,
                         DriverName = fine.Driver.FirstName + ' ' + fine.Driver.LastName,
                         PhoneNumber = fine.Driver.ContactNo,
@@ -406,7 +396,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public List<DriverFineInfo> ListFine(TaxiAppzDBContext context)
         {
             try
-            {              
+            {
                 List<DriverFineInfo> driverfine = new List<DriverFineInfo>();
                 var fineList = context.TabDriverFine.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
                 foreach (var fine in fineList)
@@ -438,7 +428,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
                 TabDriverFine tabDriverFine = new TabDriverFine();
-             
+
                 tabDriverFine.Fineamount = driverFineInfo.Fineamount;
                 tabDriverFine.FineReason = driverFineInfo.Fine_reason;
                 //tabDriverFine.Currencyid = driverFineInfo.Currencyid;
