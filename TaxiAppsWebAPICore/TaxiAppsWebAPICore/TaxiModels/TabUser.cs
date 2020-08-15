@@ -8,6 +8,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
     [Table("tab_user")]
     public partial class TabUser
     {
+        public TabUser()
+        {
+            TabRequest = new HashSet<TabRequest>();
+        }
+
         [Key]
         [Column("id")]
         public long Id { get; set; }
@@ -113,5 +118,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(Timezoneid))]
         [InverseProperty(nameof(TabTimezone.TabUser))]
         public virtual TabTimezone Timezone { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<TabRequest> TabRequest { get; set; }
     }
 }

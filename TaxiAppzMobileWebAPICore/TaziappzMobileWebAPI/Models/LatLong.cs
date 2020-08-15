@@ -25,6 +25,12 @@ namespace TaziappzMobileWebAPI
         [JsonProperty("droplocation")]
         public string  Droplocation { get; set; }
 
+        [JsonProperty("paymentoption")]
+        public string paymentoption { get; set; }
+        [JsonProperty("type")]
+        public int Type { get; set; }
+        [JsonProperty("isShare")]
+        public int IsShare { get; set; }
 
     }
 }

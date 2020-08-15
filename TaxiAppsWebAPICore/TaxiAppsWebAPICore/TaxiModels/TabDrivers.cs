@@ -14,6 +14,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
             TabDriverDocuments = new HashSet<TabDriverDocuments>();
             TabDriverFine = new HashSet<TabDriverFine>();
             TabDriverWallet = new HashSet<TabDriverWallet>();
+            TabRequest = new HashSet<TabRequest>();
         }
 
         [Key]
@@ -89,6 +90,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public DateTime? DeletedAt { get; set; }
         [Column("Reward_point")]
         public long? RewardPoint { get; set; }
+        [Column("zoneid")]
+        public long? Zoneid { get; set; }
 
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabDrivers))]
@@ -99,6 +102,9 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [ForeignKey(nameof(Typeid))]
         [InverseProperty(nameof(TabTypes.TabDrivers))]
         public virtual TabTypes Type { get; set; }
+        [ForeignKey(nameof(Zoneid))]
+        [InverseProperty(nameof(TabZone.TabDrivers))]
+        public virtual TabZone Zone { get; set; }
         [InverseProperty("Driver")]
         public virtual ICollection<TabDriverBonus> TabDriverBonus { get; set; }
         [InverseProperty("Driver")]
@@ -107,5 +113,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual ICollection<TabDriverFine> TabDriverFine { get; set; }
         [InverseProperty("Driver")]
         public virtual ICollection<TabDriverWallet> TabDriverWallet { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabRequest> TabRequest { get; set; }
     }
 }

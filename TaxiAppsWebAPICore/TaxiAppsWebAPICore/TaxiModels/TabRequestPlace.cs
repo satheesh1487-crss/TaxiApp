@@ -8,6 +8,11 @@ namespace TaxiAppsWebAPICore.TaxiModels
     [Table("tab_request_place")]
     public partial class TabRequestPlace
     {
+        public TabRequestPlace()
+        {
+            TabRequest = new HashSet<TabRequest>();
+        }
+
         [Key]
         [Column("request_place_id")]
         public long RequestPlaceId { get; set; }
@@ -44,5 +49,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public string DeletedBy { get; set; }
         [Column("deleted_at", TypeName = "datetime")]
         public DateTime? DeletedAt { get; set; }
+
+        [InverseProperty("RequestPlace")]
+        public virtual ICollection<TabRequest> TabRequest { get; set; }
     }
 }
