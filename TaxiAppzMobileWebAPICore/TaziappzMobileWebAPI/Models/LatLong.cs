@@ -12,10 +12,17 @@ namespace TaziappzMobileWebAPI
     //}
     public class LatLong
     {
-        [JsonProperty("latitude")]
-        public decimal? Latitude { get; set; }
-        [JsonProperty("longtitude")]
-        public decimal? Longtitude { get; set; }
+        [JsonProperty("picklatitude")]
+        public decimal? Picklatitude { get; set; }
+        [JsonProperty("picklongtitude")]
+        public decimal? Picklongtitude { get; set; }
+        [JsonProperty("droplatitude")]
+        public decimal? Droplatitude { get; set; }
+        [JsonProperty("droplongtitude")]
+        public decimal? droplongtitude { get; set; }
+        [JsonIgnore]
+        public long? Zoneid { get; set; }
+
 
     }
 }

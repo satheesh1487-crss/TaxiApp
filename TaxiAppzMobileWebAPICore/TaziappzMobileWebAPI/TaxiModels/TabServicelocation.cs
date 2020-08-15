@@ -12,6 +12,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         {
             TabAdmin = new HashSet<TabAdmin>();
             TabDrivers = new HashSet<TabDrivers>();
+            TabFaq = new HashSet<TabFaq>();
             TabZone = new HashSet<TabZone>();
         }
 
@@ -59,6 +60,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }
         [InverseProperty("Serviceloc")]
         public virtual ICollection<TabDrivers> TabDrivers { get; set; }
+        [InverseProperty("Serviceloc")]
+        public virtual ICollection<TabFaq> TabFaq { get; set; }
         [InverseProperty("Serviceloc")]
         public virtual ICollection<TabZone> TabZone { get; set; }
     }
