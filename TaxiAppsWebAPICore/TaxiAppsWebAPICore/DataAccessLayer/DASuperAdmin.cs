@@ -45,10 +45,10 @@ namespace TaxiAppsWebAPICore
             try
             {
                 AdminDetails adminInfo = new AdminDetails();
-                var data = context.TabAdmin.Include(t=>t.TabAdminDetails).Where(t => t.Id == id && t.IsDeleted == 0).FirstOrDefault();
+                var data = context.TabAdmin.Include(t => t.TabAdminDetails).Where(t => t.Id == id && t.IsDeleted == 0).FirstOrDefault();
                 if (data != null)
                 {
-                    adminInfo.Country = 0;             
+                    adminInfo.Country = 0;
                     adminInfo.Email = data.Email;
                     adminInfo.Emerphonenumber = data.EmergencyNumber;
                     adminInfo.Firstname = data.Firstname;
@@ -56,8 +56,8 @@ namespace TaxiAppsWebAPICore
                     adminInfo.Lastname = data.Lastname;
                     adminInfo.Password = data.Password;
                     adminInfo.Phonenumber = data.PhoneNumber;
-                    adminInfo.RoleId = data.Role;              
-                    
+                    adminInfo.RoleId = data.Role;
+
                 }
 
                 var tabAdmin = context.TabAdminDetails.Where(t => t.AdminId == id && t.IsDeleted == 0).FirstOrDefault();
@@ -68,10 +68,10 @@ namespace TaxiAppsWebAPICore
                     adminInfo.Country = tabAdmin.CountryId;
                     adminInfo.Postalcode = tabAdmin.PostalCode;
                     adminInfo.DocumentName = tabAdmin.DocumentName;
-                    
+
                 }
 
-                    return adminInfo != null ? adminInfo : null;
+                return adminInfo != null ? adminInfo : null;
             }
             catch (Exception ex)
             {
@@ -81,74 +81,64 @@ namespace TaxiAppsWebAPICore
         }
         public bool Save(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
-            try
-            {
+            var emailid = context.TabAdmin.FirstOrDefault(t => t.IsDeleted == 0 && t.Email.ToLower() == adminDetails.Email.ToLower() && t.Id != adminDetails.Id);
+            if (emailid != null)
+                throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
 
-                var emailid = context.TabAdmin.Where(t => t.Email.Contains(adminDetails.Email.ToLower()) && t.IsDeleted == 0).FirstOrDefault();
-                if (emailid != null)
-                    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
-                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0))
-                //    throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+            TabAdmin tabAdmin = new TabAdmin();
+            tabAdmin.AdminKey = "";
+            tabAdmin.AdminReference = 0;
+            tabAdmin.AreaName = adminDetails.Area;
+            tabAdmin.Email = adminDetails.Email.ToLower();
+            tabAdmin.EmergencyNumber = adminDetails.Emerphonenumber;
+            tabAdmin.Firstname = adminDetails.Firstname;
+            tabAdmin.Language = adminDetails.Languagename;
+            tabAdmin.Lastname = adminDetails.Lastname;
+            tabAdmin.Password = adminDetails.Password;
+            tabAdmin.PhoneNumber = adminDetails.Phonenumber;
+            tabAdmin.ProfilePic = adminDetails.ProfilePicture;
+            tabAdmin.RegistrationCode = (context.TabAdmin.Count() + 1).ToString();
+            tabAdmin.Role = adminDetails.RoleId;
+            tabAdmin.IsActive = 1;
+            tabAdmin.IsDeleted = 0;
+            tabAdmin.CreatedAt = DateTime.UtcNow;
+            tabAdmin.UpdatedAt = DateTime.UtcNow;
+            tabAdmin.UpdatedBy = tabAdmin.CreatedBy = loggedInUser.Email;
+            context.TabAdmin.Add(tabAdmin);
+            context.SaveChanges();
 
-                TabAdmin tabAdmin = new TabAdmin();
-                tabAdmin.AdminKey = "";
-                tabAdmin.AdminReference = 0;
-                tabAdmin.AreaName = adminDetails.Area;
-                tabAdmin.Email = adminDetails.Email.ToLower();
-                tabAdmin.EmergencyNumber = adminDetails.Emerphonenumber;
-                tabAdmin.Firstname = adminDetails.Firstname;
-                tabAdmin.Language = adminDetails.Languagename;
-                tabAdmin.Lastname = adminDetails.Lastname;
-                tabAdmin.Password = adminDetails.Password;
-                tabAdmin.PhoneNumber = adminDetails.Phonenumber;
-                tabAdmin.ProfilePic = adminDetails.ProfilePicture;
-                tabAdmin.RegistrationCode = (context.TabAdmin.Count() + 1).ToString();
-                tabAdmin.Role = adminDetails.RoleId;
-                tabAdmin.IsActive = 1;
-                tabAdmin.IsDeleted = 0;
-                tabAdmin.CreatedAt = DateTime.UtcNow;
-                tabAdmin.UpdatedAt = DateTime.UtcNow;
-                tabAdmin.UpdatedBy = tabAdmin.CreatedBy = loggedInUser.Email;
-                context.TabAdmin.Add(tabAdmin);
-                context.SaveChanges();
+            TabAdminDetails tabAdminDetails = new TabAdminDetails();
 
-                TabAdminDetails tabAdminDetails = new TabAdminDetails();
+            tabAdminDetails.AdminId = tabAdmin.Id;
 
-                tabAdminDetails.AdminId = tabAdmin.Id;
-             
-                tabAdminDetails.Address = adminDetails.Address;
-                tabAdminDetails.PostalCode = adminDetails.Postalcode;
-              
-                tabAdminDetails.CountryId = adminDetails.Country;
-              
+            tabAdminDetails.Address = adminDetails.Address;
+            tabAdminDetails.PostalCode = adminDetails.Postalcode;
 
-                context.TabAdminDetails.Add(tabAdminDetails);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "Save", context);
-                return false;
-            }
+            tabAdminDetails.CountryId = adminDetails.Country;
+
+
+            context.TabAdminDetails.Add(tabAdminDetails);
+            context.SaveChanges();
+            return true;
+
         }
 
         public bool Edit(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
-            try
-            {
-                //if (context.TabAdmin.Any(t => t.Email.ToLowerInvariant() == adminDetails.Email.ToLowerInvariant() && t.IsDeleted == 0 && t.Id != adminDetails.Id))
-                //  throw new DataValidationException($"user name with name '{adminDetails.Email}' already exists.");
+            
+                var emailid = context.TabAdmin.FirstOrDefault(t => t.IsDeleted == 0 && t.Email.ToLower() == adminDetails.Email.ToLower() && t.Id != adminDetails.Id);
+                if (emailid != null)
+                    throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
 
-                var tabAdmin = context.TabAdmin.Include(t=>t.TabAdminDetails).Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
+                var tabAdmin = context.TabAdmin.Include(t => t.TabAdminDetails).Where(r => r.Id == adminDetails.Id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
-                {                   
+                {
                     tabAdmin.AreaName = adminDetails.Area;
                     tabAdmin.Email = adminDetails.Email;
                     tabAdmin.EmergencyNumber = adminDetails.Emerphonenumber;
                     tabAdmin.Firstname = adminDetails.Firstname;
                     tabAdmin.Language = adminDetails.Languagename;
-                    tabAdmin.Lastname = adminDetails.Lastname;                  
+                    tabAdmin.Lastname = adminDetails.Lastname;
                     tabAdmin.PhoneNumber = adminDetails.Phonenumber;
                     tabAdmin.ProfilePic = adminDetails.ProfilePicture;
                     tabAdmin.Role = adminDetails.RoleId;
@@ -158,7 +148,8 @@ namespace TaxiAppsWebAPICore
                     context.TabAdmin.Update(tabAdmin);
                     context.SaveChanges();
 
-                }else
+                }
+                else
                 {
                     TabAdmin tab = new TabAdmin();
 
@@ -182,37 +173,33 @@ namespace TaxiAppsWebAPICore
                 if (tabAdmindetails != null)
                 {
                     tabAdmindetails.AdminId = tabAdmin.Id;
-                   
+
                     tabAdmindetails.Address = adminDetails.Address;
-                    tabAdmindetails.PostalCode =adminDetails.Postalcode;
+                    tabAdmindetails.PostalCode = adminDetails.Postalcode;
                     tabAdmindetails.CountryId = adminDetails.Country;
-                  
+
                     tabAdmindetails.UpdatedAt = DateTime.UtcNow;
                     tabAdmindetails.UpdatedBy = loggedInUser.Email;
                     context.TabAdminDetails.Update(tabAdmindetails);
-                    context.SaveChanges();                   
-                }else
+                    context.SaveChanges();
+                }
+                else
                 {
                     TabAdminDetails details = new TabAdminDetails();
                     details.AdminId = tabAdmin.Id;
-                   
+
                     details.Address = adminDetails.Address;
                     details.PostalCode = adminDetails.Postalcode;
                     details.CountryId = adminDetails.Country;
-                    
+
                     details.UpdatedAt = DateTime.UtcNow;
                     details.UpdatedBy = loggedInUser.Email;
                     context.TabAdminDetails.Add(details);
                     context.SaveChanges();
                 }
-             
+
                 return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "Edit", context);
-                return false;
-            }
+           
         }
         public bool Delete(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {

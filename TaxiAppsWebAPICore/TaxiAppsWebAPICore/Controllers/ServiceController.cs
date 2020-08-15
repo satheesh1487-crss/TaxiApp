@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -38,8 +39,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Save([FromBody] ServiceInfo serviceInfo)
         {
-            DAService dAService = new DAService();
-            return this.OKResponse(dAService.AddService(_context, serviceInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DAService dAService = new DAService();
+                return this.OKResponse(dAService.AddService(_context, serviceInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         //TODO:: Duplicate record check
@@ -48,8 +56,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Edit([FromBody] ServiceInfo serviceInfo)
         {
-            DAService dAService = new DAService();
-            return this.OKResponse(dAService.EditService(_context, serviceInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DAService dAService = new DAService();
+                return this.OKResponse(dAService.EditService(_context, serviceInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex )
+            {
+                return this.KnowOperationError(ex.Message);               
+            }
+           
         }
 
         //TODO:: check parent record is deleted
