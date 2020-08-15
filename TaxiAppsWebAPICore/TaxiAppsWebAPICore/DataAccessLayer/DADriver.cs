@@ -72,24 +72,35 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public DriverList GetbyId(long driverId, TaxiAppzDBContext context)
+        public DriverInfo GetbyId(long driverId, TaxiAppzDBContext context)
         {
             try
             {
-                DriverList driverList = new DriverList();
-                var drivers = context.TabDrivers.Where(u => u.Driverid == driverId && u.IsDelete == false).FirstOrDefault();
-
-                driverList.Email = drivers.Email;
-                driverList.AcceptanceRatio = "";
-                driverList.Document = "";
-                driverList.DriverName = drivers.FirstName + " " + drivers.LastName;
-                driverList.Email = drivers.Email;
-                driverList.RegistrationCode = drivers.Driverregno;
-                driverList.Rating = "";
-                driverList.IsActive = drivers.IsActive;
-                driverList.PhoneNumber = drivers.ContactNo;
-
-                return driverList == null ? null : driverList;
+                DriverInfo tabDrivers = new DriverInfo();
+                var driverInfo = context.TabDrivers.Where(u => u.Driverid == driverId && u.IsDelete == false).FirstOrDefault();
+                if (driverInfo != null)
+                {
+                    tabDrivers.FirstName = driverInfo.FirstName;
+                    tabDrivers.LastName = driverInfo.LastName;
+                    tabDrivers.Email = driverInfo.Email;
+                    tabDrivers.ContactNo = driverInfo.ContactNo;
+                    tabDrivers.Gender = driverInfo.Gender;
+                    tabDrivers.Address = driverInfo.Address;
+                    tabDrivers.City = driverInfo.City;
+                    tabDrivers.State = driverInfo.State;
+                    tabDrivers.Country = driverInfo.Countryid;
+                    tabDrivers.Company = "";
+                    tabDrivers.DriverArea = driverInfo.Servicelocid;
+                    tabDrivers.Password = driverInfo.Password;
+                    tabDrivers.DriverType = driverInfo.Typeid = 1;
+                    tabDrivers.CarModel = driverInfo.Carmodel;
+                    tabDrivers.CarColour = driverInfo.Carcolor;
+                    tabDrivers.CarNumber = driverInfo.Carnumber;
+                    tabDrivers.CarManu = driverInfo.Carmanufacturer;
+                    tabDrivers.CarYear = driverInfo.Caryear;
+                    tabDrivers.NationalId = driverInfo.NationalId;
+                }
+                return tabDrivers == null ? null : tabDrivers;
 
             }
             catch (Exception ex)

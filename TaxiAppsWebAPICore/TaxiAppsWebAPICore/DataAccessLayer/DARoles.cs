@@ -67,6 +67,7 @@ namespace TaxiAppsWebAPICore
             var roleExist = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower());
                 if (roleExist!=null)
                     throw new DataValidationException($"Role with name '{roles.RoleName}' already exists.");
+
                 TabRoles Insertdata = new TabRoles();
                 Insertdata.RoleName = roles.RoleName;
                 Insertdata.DisplayName = roles.DisplayName;

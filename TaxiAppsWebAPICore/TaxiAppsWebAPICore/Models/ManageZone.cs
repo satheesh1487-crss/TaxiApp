@@ -16,6 +16,9 @@ namespace TaxiAppsWebAPICore
         public string ZoneName { get; set; }
         [JsonProperty("unit")]
         public string Unit { get; set; }
+
+        [JsonProperty("serviceName")]
+        public string ServiceName { get; set; }
         [JsonProperty("isActive")]
         public bool IsActive { get; set; }
         [JsonProperty("serviceslocid")]
