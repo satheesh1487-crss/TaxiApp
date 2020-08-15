@@ -88,6 +88,7 @@ namespace TaxiAppsWebAPICore.Services
                 new Claim(JwtRegisteredClaimNames.Sub, userinfo.Firstname),
                 new Claim("lastName", userinfo.Lastname),
                 new Claim("role", userinfo.RoleNavigation.RoleName),
+                   new Claim("MailID", userinfo.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 

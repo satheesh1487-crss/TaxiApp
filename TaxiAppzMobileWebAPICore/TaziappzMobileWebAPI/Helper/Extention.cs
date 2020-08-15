@@ -151,16 +151,14 @@ namespace TaziappzMobileWebAPI
         {
             return new LoggedInUser()
             {
-                FullName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("FullName")?.Value,
-                UserName = claimsPrincipal.Identity.Name,
-                RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value,
-                Email="admin"
+                FistName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.NameIdentifier)?.Value,
+                LastName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("lastName")?.Value,
+                Country = Convert.ToInt32(((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("country")?.Value),
+                Contactno = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("Contactno")?.Value,
+                Email = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("mailID")?.Value
             };
         }
 
-        internal static DateTime GetDateTime()
-        {
-            return DateTime.UtcNow;
-        }
+       
     }
 }

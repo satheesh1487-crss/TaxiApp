@@ -28,7 +28,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [Column("trip_start_time", TypeName = "datetime")]
         public DateTime? TripStartTime { get; set; }
         [Column("is_driver_started")]
-        public int IsDriverStarted { get; set; }
+        [StringLength(10)]
+        public string IsDriverStarted { get; set; }
         [Column("is_driver_arrived")]
         public int IsDriverArrived { get; set; }
         [Column("is_trip_start")]

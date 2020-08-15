@@ -713,11 +713,23 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .IsUnicode(false)
                     .HasDefaultValueSql("('Normal Trip')");
 
+                entity.Property(e => e.IsCancelled).HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.IsCompleted).HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.IsDriverArrived).HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.IsDriverStarted)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('False')");
+
                 entity.Property(e => e.IsPaid)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('UNPAID')");
 
                 entity.Property(e => e.IsShare).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsTripStart).HasDefaultValueSql("('False')");
 
                 entity.Property(e => e.Isreschedule)
                     .IsUnicode(false)
