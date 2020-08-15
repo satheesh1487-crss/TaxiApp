@@ -23,8 +23,8 @@ namespace TaziappzMobileWebAPI.DALayer
                         listlatlong.Add(new LatLong()
                         {
                             Picklatitude = zonepoly.Latitudes,
-                            Picklongtitude = zonepoly.Longitudes,
-                            Zoneid = zonepoly.Zoneid
+                            Picklongtitude = zonepoly.Longitudes
+                         //   Zoneid = zonepoly.Zoneid
                         });
                     }
                     if (listlatlong.Count > 0)

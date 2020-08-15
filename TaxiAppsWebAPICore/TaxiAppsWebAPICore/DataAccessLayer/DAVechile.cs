@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
+using TaziappzMobileWebAPI.Models;
 
 namespace TaxiAppsWebAPICore
 {
@@ -350,6 +351,35 @@ namespace TaxiAppsWebAPICore
             catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "ListType", context);
+                return null;
+            }
+        }
+
+        public List<SurgePrice> ListSurgePrice(TaxiAppzDBContext context)
+        {
+            try
+            {
+
+                List<SurgePrice> surgeprice = new List<SurgePrice>();
+                var surgeType = context.TabSurgeprice.Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.UpdatedAt);
+                foreach (var surge in surgeType)
+                {
+                    surgeprice.Add(new SurgePrice()
+                    {
+                        Id = surge.SurgepriceId,
+                        Starttime=surge.StartTime,
+                        Endtime=surge.EndTime,
+                        Peaktype=surge.PeakType,
+                        Surgepricetype=surge.SurgepriceType,
+                        Surgepricevalue=surge.SurgepriceValue,
+                        Zoneid=surge.ZoneId                        
+                    });
+                }
+                return surgeprice;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListSurgePrice", context);
                 return null;
             }
         }

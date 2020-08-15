@@ -46,5 +46,7 @@ namespace TaziappzMobileWebAPI
 
         [JsonProperty("customerIdfee")]
         public decimal? CustomerIdfee { get; set; }
+        [JsonProperty("modeofpayment")]
+        public string Modeofpayment { get; set; }
     }
 }

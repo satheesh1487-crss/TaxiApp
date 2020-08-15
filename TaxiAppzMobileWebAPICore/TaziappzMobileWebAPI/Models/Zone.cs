@@ -10,7 +10,7 @@ namespace TaziappzMobileWebAPI
     public class Zone
     {
         [JsonProperty("zoneid")]
-        public long Zoneid { get; set; }
+        public long? Zoneid { get; set; }
         [JsonProperty("zoneName")]
         public string ZoneName { get; set; }
         [JsonProperty("unit")]

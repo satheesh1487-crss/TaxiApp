@@ -20,8 +20,10 @@ namespace TaziappzMobileWebAPI
         public decimal? Droplatitude { get; set; }
         [JsonProperty("droplongtitude")]
         public decimal? droplongtitude { get; set; }
-        [JsonIgnore]
-        public long? Zoneid { get; set; }
+        [JsonProperty("pickuplocation")]
+        public string Pickuplocation { get; set; }
+        [JsonProperty("droplocation")]
+        public string  Droplocation { get; set; }
 
 
     }
