@@ -40,64 +40,56 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         }
 
-        public bool AddService(TaxiAppzDBContext context, ServiceInfo serviceInfo,LoggedInUser loggedInUser)
+        public bool AddService(TaxiAppzDBContext context, ServiceInfo serviceInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                TabServicelocation tabServicelocation = new TabServicelocation();
-                tabServicelocation.Countryid = serviceInfo.CountryId;
-                tabServicelocation.Timezoneid = serviceInfo.TimezoneId;
-                tabServicelocation.Currencyid = serviceInfo.CurrencyId;
-                tabServicelocation.Name = serviceInfo.ServiceName;
-                
-                tabServicelocation.CreatedAt = DateTime.UtcNow;
-                tabServicelocation.UpdatedAt = DateTime.UtcNow;
-                tabServicelocation.UpdatedBy = tabServicelocation.CreatedBy = loggedInUser.Email;
-           
-                context.TabServicelocation.Add(tabServicelocation);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "AddService", context);
-                return false;
-            }
+            var serviceExists = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Name.ToLower() == serviceInfo.ServiceName.ToLower() && t.Servicelocid != serviceInfo.ServiceId);
+            if (serviceExists != null)
+                throw new DataValidationException($"Service with name '{serviceExists.Name}' already exists.");
+
+            TabServicelocation tabServicelocation = new TabServicelocation();
+            tabServicelocation.Countryid = serviceInfo.CountryId;
+            tabServicelocation.Timezoneid = serviceInfo.TimezoneId;
+            tabServicelocation.Currencyid = serviceInfo.CurrencyId;
+            tabServicelocation.Name = serviceInfo.ServiceName;
+
+            tabServicelocation.CreatedAt = DateTime.UtcNow;
+            tabServicelocation.UpdatedAt = DateTime.UtcNow;
+            tabServicelocation.UpdatedBy = tabServicelocation.CreatedBy = loggedInUser.Email;
+
+            context.TabServicelocation.Add(tabServicelocation);
+            context.SaveChanges();
+            return true;
         }
 
         public bool EditService(TaxiAppzDBContext context, ServiceInfo serviceInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                 
-                var updatedate = context.TabServicelocation.Where(r => r.Servicelocid == serviceInfo.ServiceId && r.IsDeleted==0).FirstOrDefault();
-                if (updatedate != null)
-                {
+            var serviceExists = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Name.ToLower() == serviceInfo.ServiceName.ToLower() && t.Servicelocid != serviceInfo.ServiceId);
+            if (serviceExists != null)
+                throw new DataValidationException($"Service with name '{serviceExists.Name}' already exists.");
 
-                    updatedate.Countryid = serviceInfo.CountryId;
-                    updatedate.Timezoneid = serviceInfo.TimezoneId;
-                    updatedate.Currencyid = serviceInfo.CurrencyId;
-                    updatedate.Name = serviceInfo.ServiceName;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = loggedInUser.Email;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var updatedate = context.TabServicelocation.Where(r => r.Servicelocid == serviceInfo.ServiceId && r.IsDeleted == 0).FirstOrDefault();
+            if (updatedate != null)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditService", context);
-                return false;
+
+                updatedate.Countryid = serviceInfo.CountryId;
+                updatedate.Timezoneid = serviceInfo.TimezoneId;
+                updatedate.Currencyid = serviceInfo.CurrencyId;
+                updatedate.Name = serviceInfo.ServiceName;
+                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
+            return false;
+
         }
 
         public bool DeleteService(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             try
             {
-                 
+
                 var updatedate = context.TabServicelocation.Where(r => r.Servicelocid == id && r.IsDeleted == 0).FirstOrDefault();
                 if (updatedate != null)
                 {
@@ -119,7 +111,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
-        public ServiceInfo GetbyServiceId(TaxiAppzDBContext context,long id)
+        public ServiceInfo GetbyServiceId(TaxiAppzDBContext context, long id)
         {
             try
             {
@@ -134,7 +126,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     serviceInfo.ServiceId = listService.Servicelocid;
                     serviceInfo.ServiceName = listService.Name;
                 }
-                
+
                 return serviceInfo != null ? serviceInfo : null;
             }
             catch (Exception ex)
