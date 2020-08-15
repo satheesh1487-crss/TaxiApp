@@ -25,7 +25,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Route("PostRequest")]
+        [Route("CreateRequest")]
         public IActionResult PostRequest([FromBody] LatLong latLong)
         {
             DARequest dARequest = new DARequest();
