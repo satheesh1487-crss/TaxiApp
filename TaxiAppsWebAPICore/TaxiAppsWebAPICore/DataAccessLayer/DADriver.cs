@@ -193,6 +193,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     tabDrivers.City = editDriver.City;
                     tabDrivers.State = editDriver.State;
                     tabDrivers.Countryid = editDriver.Country;
+                    
                     tabDrivers.Company = "";
                     tabDrivers.Servicelocid = editDriver.DriverArea;                    
                     tabDrivers.Typeid = editDriver.DriverType;
