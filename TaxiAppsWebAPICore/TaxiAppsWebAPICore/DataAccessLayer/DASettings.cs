@@ -9,7 +9,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 {
     public class DASettings
     {
-        public TripSettings GetTripSettings(TaxiAppzDBContext context)
+        public TripSettings GetTripSettings(TaxiAppzDBContext context,long id)
         {
             try
             {
