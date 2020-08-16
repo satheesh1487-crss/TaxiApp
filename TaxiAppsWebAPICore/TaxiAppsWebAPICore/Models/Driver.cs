@@ -221,4 +221,29 @@ namespace TaxiAppsWebAPICore
 
     }
 
+    public class PaymentList
+    {
+        [JsonProperty("id")]
+        public long DriverId { get; set; }
+
+        [JsonProperty("registrationCode")]
+        public string RegistrationCode { get; set; }
+
+        [JsonProperty("driverName")]
+        public string DriverName { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("phoneNumber")]
+        public string PhoneNumber { get; set; }
+
+        [JsonProperty("rating")]
+        public string Rating { get; set; }
+
+        [JsonProperty("isActive")]
+        public bool? IsActive { get; set; }
+
+    }
+
 }

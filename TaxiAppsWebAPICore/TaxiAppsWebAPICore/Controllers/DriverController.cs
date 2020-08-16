@@ -217,5 +217,47 @@ namespace TaxiAppsWebAPICore.Controllers
             DADriver dADriver = new DADriver();
             return this.OK<DriverBonusInfo>(dADriver.GetByBonusId(id,_context));
         }
+
+        [HttpGet]
+        [Route("WalletPaymentList")]
+        [Authorize]
+        public IActionResult WalletPaymentList()
+        {
+            List<PaymentList> paymentLists = new List<PaymentList>();
+            paymentLists.Add(new PaymentList() { DriverId = 1, RegistrationCode = "5555", DriverName = "rajesh", Email = "rajesh@gmail.com", PhoneNumber = "9876787676", Rating = "5*", IsActive = true });
+            paymentLists.Add(new PaymentList() { DriverId = 2, RegistrationCode = "8888", DriverName = "kumar", Email = "kumar@gmail.com", PhoneNumber = "9653842154", Rating = "3*", IsActive = false });
+            paymentLists.Add(new PaymentList() { DriverId = 3, RegistrationCode = "4444", DriverName = "saron", Email = "saron@gmail.com", PhoneNumber = "9635626584", Rating = "2*", IsActive = true });
+            paymentLists.Add(new PaymentList() { DriverId = 4, RegistrationCode = "2222", DriverName = "poobesh", Email = "poobesh@gmail.com", PhoneNumber = "9658436254", Rating = "4*", IsActive = false });
+
+            return this.OK<List<PaymentList>>(paymentLists);
+        }
+
+        [HttpGet]
+        [Route("AccountPaymentList")]
+        [Authorize]
+        public IActionResult AccountPaymentList()
+        {
+            List<PaymentList> paymentLists = new List<PaymentList>();
+            paymentLists.Add(new PaymentList() { DriverId = 1, RegistrationCode = "5555", DriverName = "rajesh", Email = "rajesh@gmail.com", PhoneNumber = "9876787676", Rating = "5*", IsActive = true });
+            paymentLists.Add(new PaymentList() { DriverId = 2, RegistrationCode = "8888", DriverName = "kumar", Email = "kumar@gmail.com", PhoneNumber = "9653842154", Rating = "3*", IsActive = false });
+            paymentLists.Add(new PaymentList() { DriverId = 3, RegistrationCode = "4444", DriverName = "saron", Email = "saron@gmail.com", PhoneNumber = "9635626584", Rating = "2*", IsActive = true });
+            paymentLists.Add(new PaymentList() { DriverId = 4, RegistrationCode = "2222", DriverName = "poobesh", Email = "poobesh@gmail.com", PhoneNumber = "9658436254", Rating = "4*", IsActive = false });
+
+            return this.OK<List<PaymentList>>(paymentLists);
+        }
+
+        [HttpGet]
+        [Route("EarningsPaymentList")]
+        [Authorize]
+        public IActionResult EarningsPaymentList()
+        {
+            List<PaymentList> paymentLists = new List<PaymentList>();
+            paymentLists.Add(new PaymentList() { DriverId = 1, RegistrationCode = "5555", DriverName = "rajesh", Email = "rajesh@gmail.com", PhoneNumber = "9876787676", Rating = "5*", IsActive = true });
+            paymentLists.Add(new PaymentList() { DriverId = 2, RegistrationCode = "8888", DriverName = "kumar", Email = "kumar@gmail.com", PhoneNumber = "9653842154", Rating = "3*", IsActive = false });
+            paymentLists.Add(new PaymentList() { DriverId = 3, RegistrationCode = "4444", DriverName = "saron", Email = "saron@gmail.com", PhoneNumber = "9635626584", Rating = "2*", IsActive = true });
+            paymentLists.Add(new PaymentList() { DriverId = 4, RegistrationCode = "2222", DriverName = "poobesh", Email = "poobesh@gmail.com", PhoneNumber = "9658436254", Rating = "4*", IsActive = false });
+
+            return this.OK<List<PaymentList>>(paymentLists);
+        }
     }
 }
