@@ -17,9 +17,9 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [Column("request_place_id")]
         public long RequestPlaceId { get; set; }
         [Column("pick_latitude", TypeName = "decimal(8, 6)")]
-        public decimal? PickLatitude { get; set; }
+        public decimal PickLatitude { get; set; }
         [Column("pick_longitude", TypeName = "decimal(9, 6)")]
-        public decimal? PickLongitude { get; set; }
+        public decimal PickLongitude { get; set; }
         [Column("drop_latitude", TypeName = "decimal(8, 6)")]
         public decimal? DropLatitude { get; set; }
         [Column("drop_longitude", TypeName = "decimal(9, 6)")]

@@ -55,11 +55,11 @@ namespace TaziappzMobileWebAPI.DALayer
             return 0;
         }
 
-        public Zone GetRequest(LatLong latLong,long countryid, TaxiAppzDBContext context)
+        public Zone GetRequest(LatLong latLong,LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             List<LatLong> latlonglist = new List<LatLong>();
            Zone zone = new Zone();
-            long? zoneid = this.GetPolygon(latLong, countryid, context);
+            long? zoneid = this.GetPolygon(latLong, loggedInUser.Country, context);
             if (zoneid == 0)
             {
                 zone.IsExist = 0;
@@ -145,18 +145,18 @@ namespace TaziappzMobileWebAPI.DALayer
                 }
                 zone.Currency = context.TabCommonCurrency.Where(t => t.Currencyid == iszoneexist.Serviceloc.Currencyid).Select(t => t.Currencyname).FirstOrDefault();
                 zone.IsExist = 1;
-                TabRequestPlace tabRequestPlace = new TabRequestPlace();
-                tabRequestPlace.PickLatitude = latLong.Picklatitude;
-                tabRequestPlace.PickLongitude = latLong.Picklongtitude;
-                tabRequestPlace.DropLatitude = latLong.Droplatitude;
-                tabRequestPlace.DropLongitude = latLong.droplongtitude;
-                tabRequestPlace.PickLocation = latLong.Pickuplocation;
-                tabRequestPlace.DropLocation = latLong.Droplocation;
-                tabRequestPlace.IsActive = true;
-                tabRequestPlace.CreatedBy = "Admin";
-                tabRequestPlace.CreatedAt = DateTime.UtcNow;
-                context.TabRequestPlace.Add(tabRequestPlace);
-                context.SaveChanges();
+                //TabRequestPlace tabRequestPlace = new TabRequestPlace();
+                //tabRequestPlace.PickLatitude = latLong.Picklatitude;
+                //tabRequestPlace.PickLongitude = latLong.Picklongtitude;
+                //tabRequestPlace.DropLatitude = latLong.Droplatitude;
+                //tabRequestPlace.DropLongitude = latLong.droplongtitude;
+                //tabRequestPlace.PickLocation = latLong.Pickuplocation;
+                //tabRequestPlace.DropLocation = latLong.Droplocation;
+                //tabRequestPlace.IsActive = true;
+                //tabRequestPlace.CreatedBy = "Admin";
+                //tabRequestPlace.CreatedAt = DateTime.UtcNow;
+                //context.TabRequestPlace.Add(tabRequestPlace);
+                //context.SaveChanges();
                 return zone;
 
             }
@@ -164,7 +164,7 @@ namespace TaziappzMobileWebAPI.DALayer
 
         }
 
-        public bool Requestprogress(LatLong latLong, TaxiAppzDBContext context)
+        public bool Requestprogress(RequestVehicleType requestVehicleType, TaxiAppzDBContext context)
         {
             return true;
         }

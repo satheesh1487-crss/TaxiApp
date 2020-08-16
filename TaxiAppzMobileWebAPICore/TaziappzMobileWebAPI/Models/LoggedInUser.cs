@@ -6,11 +6,12 @@ namespace TaziappzMobileWebAPI
 {
     public class LoggedInUser
     {
-        public string UserName { get; set; }
+        public string FistName { get; set; }
+        public string Contactno { get; set; }
 
-        public string FullName { get; set; }
+        public string LastName { get; set; }
 
-        public string RoleName { get; set; }
+        public long Country { get; set; }
 
         public string Email { get; set; }
 
