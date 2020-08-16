@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
+using TaziappzMobileWebAPI.Models;
 
 namespace TaxiAppsWebAPICore.Controllers
 {
@@ -30,7 +31,6 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DAVechile dATypes = new DAVechile();
             return this.OK<List<VehicleTypeList>>(dATypes.ListType(_context));
-
         }
 
 
@@ -170,5 +170,31 @@ namespace TaxiAppsWebAPICore.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetSurgePrice")]
+        [Authorize]
+        public IActionResult GetSurgePrice(long id)
+        {
+            DAVechile dATypes = new DAVechile();
+            return this.OK<SurgePrice>(dATypes.GetSurgePrice(_context,id));
+        }
+
+        [HttpPost]
+        [Route("saveSurgePrice")]
+        [Authorize]
+        public IActionResult SaveSurgePrice(SurgePrice surgePrice)
+        {
+            try
+            {
+                DAVechile dATypes = new DAVechile();
+                return this.OKResponse(dATypes.SaveSurgePrice(surgePrice, _context, User.ToAppUser()) ? "Updated Successfully" : "Failed to Update");
+            }
+            catch (TaxiAppsWebAPICore.Helper.DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+        
+
+        }
     }
 }

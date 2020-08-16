@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
+using TaziappzMobileWebAPI.Models;
 
 namespace TaxiAppsWebAPICore
 {
@@ -31,7 +33,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "ListType", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return null;
             }
         }
@@ -43,19 +45,19 @@ namespace TaxiAppsWebAPICore
                 tabTypes.Typeid = vehicleTypeInfo.Id;
                 tabTypes.Imagename = vehicleTypeInfo.Image;
                 tabTypes.Typename = vehicleTypeInfo.Name;
-                tabTypes.IsActive = 0;
+                tabTypes.IsActive = 1;
                 tabTypes.IsDeleted = 0;
                 tabTypes.CreatedAt = DateTime.UtcNow;
                 tabTypes.UpdatedAt = DateTime.UtcNow;
-                tabTypes.CreatedBy = "admin";
-                tabTypes.UpdatedBy = "admin";
+                tabTypes.UpdatedBy = tabTypes.CreatedBy = loggedInUser.UserName;
+                
                 context.TabTypes.Add(tabTypes);
                 context.SaveChanges();
                 return true;
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "AddType", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -70,11 +72,11 @@ namespace TaxiAppsWebAPICore
                 {
 
                     updatedate.Imagename = vehicleTypeInfo.Image;
-                    updatedate.Typename = vehicleTypeInfo.Name;        
+                    updatedate.Typename = vehicleTypeInfo.Name;
 
                     updatedate.UpdatedAt = DateTime.UtcNow;
 
-                    updatedate.UpdatedBy = "admin";
+                    updatedate.UpdatedBy = loggedInUser.UserName;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
@@ -84,7 +86,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditType", context);
+                Extention.insertlog(ex.Message, loggedInUser.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -101,7 +103,7 @@ namespace TaxiAppsWebAPICore
 
                     updatedate.IsDeleted = 1;
                     updatedate.DeletedAt = DateTime.UtcNow;
-                    updatedate.DeletedBy = "admin";
+                    updatedate.DeletedBy = loggedInUser.UserName;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
@@ -110,7 +112,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "DeleteType", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -133,7 +135,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetbyTypeId", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return null;
             }
         }
@@ -150,7 +152,7 @@ namespace TaxiAppsWebAPICore
 
                     updatedate.IsActive = isStatus == true ? 1 : 0;
                     updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
+                    updatedate.UpdatedBy = loggedInUser.UserName;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
@@ -159,7 +161,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "StatusType", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -201,7 +203,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "ListEmer", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return null;
             }
         }
@@ -224,7 +226,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "SaveEmer", context);
+                Extention.insertlog(ex.Message, loggedInUser.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -237,11 +239,11 @@ namespace TaxiAppsWebAPICore
                 if (tabSos != null)
                 {
 
-                    tabSos.Sosname= vehicleEmerInfo.Name;
+                    tabSos.Sosname = vehicleEmerInfo.Name;
                     tabSos.ContactNumber = vehicleEmerInfo.Number;
-                  
+
                     tabSos.UpdatedAt = DateTime.UtcNow;
-                    tabSos.UpdatedBy = "admin";
+                    tabSos.UpdatedBy = loggedInUser.UserName;
                     context.Update(tabSos);
                     context.SaveChanges();
                     return true;
@@ -250,7 +252,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditEmer", context);
+                Extention.insertlog(ex.Message, loggedInUser.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -267,7 +269,7 @@ namespace TaxiAppsWebAPICore
 
                     tabSos.IsDeleted = 1;
                     tabSos.DeletedAt = DateTime.UtcNow;
-                    tabSos.DeletedBy = "admin";
+                    tabSos.DeletedBy = loggedInUser.UserName;
                     context.Update(tabSos);
                     context.SaveChanges();
                     return true;
@@ -276,7 +278,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "DeleteEmer", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -299,7 +301,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "GetbyEmerId", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return null;
             }
         }
@@ -307,8 +309,7 @@ namespace TaxiAppsWebAPICore
         public bool StatusEmer(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
             try
-            {
-
+            { 
                 var tabSos = context.TabSos.Where(r => r.Sosid == id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabSos != null)
                 {
@@ -316,7 +317,7 @@ namespace TaxiAppsWebAPICore
 
                     tabSos.IsActive = isStatus == true ? 1 : 0;
                     tabSos.UpdatedAt = DateTime.UtcNow;
-                    tabSos.UpdatedBy = "admin";
+                    tabSos.UpdatedBy = loggedInUser.UserName;
                     context.Update(tabSos);
                     context.SaveChanges();
                     return true;
@@ -325,7 +326,7 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "StatusEmer", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
         }
@@ -336,7 +337,7 @@ namespace TaxiAppsWebAPICore
             {
 
                 List<VehicleTypeZoneList> vehicleTypeLists = new List<VehicleTypeZoneList>();
-                var vechilesTupe = context.TabZonetypeRelationship.Include(t=>t.Zone).Include(t => t.Type).Where(t => t.IsDelete == 0&& t.Zone!=null).ToList().OrderByDescending(t => t.UpdatedAt);
+                var vechilesTupe = context.TabZonetypeRelationship.Include(t => t.Zone).Include(t => t.Type).Where(t => t.IsDelete == 0 && t.Zone != null).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var vechiles in vechilesTupe)
                 {
                     vehicleTypeLists.Add(new VehicleTypeZoneList()
@@ -349,9 +350,74 @@ namespace TaxiAppsWebAPICore
             }
             catch (Exception ex)
             {
-                Extention.insertlog(ex.Message, "Admin", "ListType", context);
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return null;
             }
+        }
+
+        public SurgePrice GetSurgePrice(TaxiAppzDBContext context,long zoneId)
+        {
+            try
+            {
+                SurgePrice surgePrice = new SurgePrice();
+                var listSurgePrice = context.TabSurgeprice.FirstOrDefault(t => t.ZoneId==zoneId);
+                if (listSurgePrice != null)
+                {
+                    surgePrice.Id = listSurgePrice.SurgepriceId;                    
+                    surgePrice.Starttime = listSurgePrice.StartTime;
+                    surgePrice.Endtime = listSurgePrice.EndTime;
+                    surgePrice.Peaktype = listSurgePrice.PeakType;
+                    surgePrice.Surgepricetype = listSurgePrice.SurgepriceType;
+                    surgePrice.Surgepricevalue = listSurgePrice.SurgepriceValue;
+                }
+                return surgePrice != null ? surgePrice : null;
+
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
+                return null;
+            }
+        }
+
+        public bool SaveSurgePrice(SurgePrice surgePrice, TaxiAppzDBContext content, LoggedInUser loggedIn)
+        {
+            var existZone = content.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == surgePrice.Zoneid);
+            if (existZone == null)
+                throw new DataValidationException("Zone name does not exist");
+
+                var exist = content.TabSurgeprice.FirstOrDefault(t => t.IsDelete == false && t.ZoneId == surgePrice.Zoneid);
+            if (exist == null)
+            {
+                TabSurgeprice tabSurgeprice = new TabSurgeprice();
+                tabSurgeprice.PeakType = surgePrice.Peaktype;
+                tabSurgeprice.StartTime = surgePrice.Starttime;
+                tabSurgeprice.ZoneId = surgePrice.Zoneid;
+                tabSurgeprice.EndTime = surgePrice.Endtime;
+                tabSurgeprice.SurgepriceType = surgePrice.Surgepricetype;
+                tabSurgeprice.SurgepriceValue = surgePrice.Surgepricevalue;
+                tabSurgeprice.IsActive = true;
+                tabSurgeprice.UpdatedAt = tabSurgeprice.CreatedAt = Extention.GetDateTime();
+                tabSurgeprice.UpdatedBy = tabSurgeprice.CreatedBy = loggedIn.UserName;
+                content.TabSurgeprice.Add(tabSurgeprice);              
+                content.SaveChanges();
+                return true;
+            }
+            else
+            {
+                exist.PeakType = surgePrice.Peaktype;
+                exist.StartTime = surgePrice.Starttime;
+                exist.EndTime = surgePrice.Endtime;
+                exist.SurgepriceType = surgePrice.Surgepricetype;
+                exist.SurgepriceValue = surgePrice.Surgepricevalue;
+               
+                exist.UpdatedAt = Extention.GetDateTime();
+                exist.UpdatedBy =  loggedIn.UserName;
+                content.TabSurgeprice.Update(exist);               
+                content.SaveChanges();
+                return true;
+            }
+           
         }
     }
 }

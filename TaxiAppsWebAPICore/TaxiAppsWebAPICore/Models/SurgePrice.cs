@@ -8,19 +8,25 @@ namespace TaziappzMobileWebAPI.Models
 {
     public class SurgePrice
     {
-        [JsonProperty("surgepriceid")]
-        public long? Surgepriceid { get; set; }
+        [JsonProperty("id")]
+        public long? Id { get; set; }
+
         [JsonProperty("zoneid")]
         public long? Zoneid { get; set; }
+
         [JsonProperty("surgepricetype")]
         public string Surgepricetype { get; set; }
+
         [JsonProperty("starttime")]
         public string Starttime { get; set; }
+
         [JsonProperty("endtime")]
         public string Endtime { get; set; }
+
         [JsonProperty("peaktype")]
         public string Peaktype { get; set; }
+
         [JsonProperty("surgepricevalue")]
-        public string Surgepricevalue { get; set; }
+        public double ?Surgepricevalue { get; set; }
     }
 }

@@ -117,7 +117,5 @@ namespace TaxiAppsWebAPICore
         public long? Id { set; get; }
         [JsonProperty("name")]
         public string Name { set; get; }
-          
-
     }
 }
