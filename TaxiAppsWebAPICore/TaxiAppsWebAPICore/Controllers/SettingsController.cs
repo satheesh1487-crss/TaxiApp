@@ -24,16 +24,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [HttpGet]
         [Route("GetTripSettings")]
         [Authorize]
-        public IActionResult GetTripSettings(long id)
+        public IActionResult GetTripSettings()
         {
             DASettings dASettings = new DASettings();
-            return this.OK<TripSettings>(dASettings.GetTripSettings(_context, id));
+            return this.OK<TripSettings>(dASettings.GetTripSettings(_context));
         }
 
         [HttpPost]
         [Route("saveSurgePrice")]
         [Authorize]
-        public IActionResult SaveSurgePrice(TripSettings tripSettings)
+        public IActionResult SaveTripSettings(TripSettings tripSettings)
         {
             try
             {

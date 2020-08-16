@@ -16,5 +16,9 @@ namespace TaxiAppsWebAPICore.Models
 
         [JsonProperty("TripSettingAnswer")]
         public string TripSettingAnswer { get; set; }
+
+        [JsonProperty("assignMethod")]
+        public string AssignMethod { get; set; }
+        
     }
 }

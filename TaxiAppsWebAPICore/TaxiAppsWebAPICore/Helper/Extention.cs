@@ -16,18 +16,18 @@ using System.Threading.Tasks;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
-namespace TaxiAppsWebAPICore 
+namespace TaxiAppsWebAPICore
 {
-    public  static  class Extention
+    public static class Extention
     {
         public static IConfiguration configuration;
-        
+
         internal static IActionResult OKResponse(this ControllerBase controller, string msg)
         {
             return controller.Ok(new APIResponse()
             {
                 IsOK = true,
-                 Message = msg
+                Message = msg
             });
         }
         internal static IActionResult OKFailed(this ControllerBase controller, string msg)
@@ -54,21 +54,21 @@ namespace TaxiAppsWebAPICore
                 ContentList = content
             });
         }
-      
-       
-        internal  static bool insertlog(string description,string userid,string functionname,TaxiAppzDBContext context)
+
+
+        internal static bool insertlog(string description, string userid, string functionname, TaxiAppzDBContext context)
         {
             TblErrorlog tblErrorlog = new TblErrorlog();
             tblErrorlog.Description = description;
             tblErrorlog.CreatedBy = userid;
             tblErrorlog.FunctionName = functionname;
             TaxiAppzDBContext _context = new TaxiAppzDBContext();
-           context.TblErrorlog.Add(tblErrorlog);
-           // context.SaveChanges();
+            context.TblErrorlog.Add(tblErrorlog);
+            // context.SaveChanges();
             return true;
         }
-        
-           /// <summary>
+
+        /// <summary>
         /// Get IFormFile object from StorageFileInfo object
         /// </summary>
         /// <param name="formFile"></param>
@@ -81,8 +81,8 @@ namespace TaxiAppsWebAPICore
                 UploadId = Guid.NewGuid()
             };
         }
-        
-          /// <summary>
+
+        /// <summary>
         /// Claims principal
         /// </summary>
         /// <param name="claimsPrincipal"></param>
@@ -94,7 +94,7 @@ namespace TaxiAppsWebAPICore
                 FullName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("FullName")?.Value,
                 UserName = claimsPrincipal.Identity.Name,
                 RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value,
-                Email="admin"
+                Email = "admin"
             };
         }
 
@@ -102,15 +102,19 @@ namespace TaxiAppsWebAPICore
         {
             return DateTime.UtcNow;
         }
-         /// <summary>
+        /// <summary>
         /// Send an Not ok result
         /// </summary>
         /// <param name="controller"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        internal static IActionResult KnowOperationError(this ControllerBase controller,string message)
+        internal static IActionResult KnowOperationError(this ControllerBase controller, string message)
         {
-            return controller.BadRequest(new APIResponse() { IsOK = false, Message = message });
+            return controller.Ok(new APIResponse()
+            {
+                IsOK = false,
+                Message = message
+            });            
         }
     }
 }
