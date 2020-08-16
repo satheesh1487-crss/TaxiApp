@@ -47,7 +47,7 @@ namespace TaxiAppsWebAPICore.Controllers
             catch (DataValidationException ex)
             {
                 return this.KnowOperationError(ex.Message);
-            }            
+            }
         }
 
         //TODO:: Duplicate record check
@@ -61,11 +61,11 @@ namespace TaxiAppsWebAPICore.Controllers
                 DAService dAService = new DAService();
                 return this.OKResponse(dAService.EditService(_context, serviceInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
-            catch (DataValidationException ex )
+            catch (DataValidationException ex)
             {
-                return this.KnowOperationError(ex.Message);               
+                return this.KnowOperationError(ex.Message);
             }
-           
+
         }
 
         //TODO:: check parent record is deleted
@@ -74,8 +74,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Delete(long id)
         {
-            DAService dAService = new DAService();
-            return this.OKResponse(dAService.DeleteService(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
+            try
+            {
+                DAService dAService = new DAService();
+                return this.OKResponse(dAService.DeleteService(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
 

@@ -87,28 +87,23 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool DeleteService(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            try
+            var serviceExists = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid == id);
+            if (serviceExists != null)
+                throw new DataValidationException($"Service with name '{serviceExists.Name}' already exists.");
+
+            var updatedate = context.TabServicelocation.Where(r => r.Servicelocid == id && r.IsDeleted == 0).FirstOrDefault();
+            if (updatedate != null)
             {
 
-                var updatedate = context.TabServicelocation.Where(r => r.Servicelocid == id && r.IsDeleted == 0).FirstOrDefault();
-                if (updatedate != null)
-                {
-
-
-                    updatedate.IsDeleted = 1;
-                    updatedate.DeletedAt = DateTime.UtcNow;
-                    updatedate.DeletedBy = loggedInUser.Email;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                updatedate.IsDeleted = 1;
+                updatedate.DeletedAt = DateTime.UtcNow;
+                updatedate.DeletedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "DeleteService", context);
-                return false;
-            }
+            return false;
+
         }
 
         public ServiceInfo GetbyServiceId(TaxiAppzDBContext context, long id)
@@ -147,7 +142,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     serviceInfo.Add(new ServiceListModel()
                     {
                         ServiceId = service.Servicelocid,
-                        ServiceName = service.Name, 
+                        ServiceName = service.Name,
                     });
                 }
                 return serviceInfo != null ? serviceInfo : null;
