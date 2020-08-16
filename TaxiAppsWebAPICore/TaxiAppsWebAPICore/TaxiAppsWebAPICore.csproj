@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>F:\Project\TaxiApp\C#\TaxiApp\TaxiAppsWebAPICore\TaxiAppsWebAPICore\TaxiAppsWebAPICore.xml</DocumentationFile>
+    <DocumentationFile>TaxiAppsWebAPICore.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>F:\Project\TaxiApp\C#\TaxiApp\TaxiAppsWebAPICore\TaxiAppsWebAPICoreTaxiAppsWebAPICore.xml</DocumentationFile>
+    <DocumentationFile>TaxiAppsWebAPICore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
