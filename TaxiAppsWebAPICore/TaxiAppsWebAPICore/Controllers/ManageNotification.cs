@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -35,8 +37,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Edit([FromBody] ManageEmailOption manageEmailOption)
         {
-            DAManangeNotify dAManangeNotify = new DAManangeNotify();
-            return this.OKResponse(dAManangeNotify.EditEmail(_context, manageEmailOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DAManangeNotify dAManangeNotify = new DAManangeNotify();
+                return this.OKResponse(dAManangeNotify.EditEmail(_context, manageEmailOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
 
         [HttpGet]
@@ -53,8 +63,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Status(long id, bool isStatus)
         {
-            DAManangeNotify dAManangeNotify = new DAManangeNotify();
-            return this.OKResponse(dAManangeNotify.StatusEmail(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DAManangeNotify dAManangeNotify = new DAManangeNotify();
+                return this.OKResponse(dAManangeNotify.StatusEmail(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
 
         [HttpGet]
@@ -72,8 +90,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditSms([FromBody] ManageSMSOption manageSMSOption)
         {
-            DAManangeNotify dAManangeNotify = new DAManangeNotify();
-            return this.OKResponse(dAManangeNotify.EditSms(_context, manageSMSOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DAManangeNotify dAManangeNotify = new DAManangeNotify();
+                return this.OKResponse(dAManangeNotify.EditSms(_context, manageSMSOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -90,8 +115,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult StatusSms(long id, bool isStatus)
         {
-            DAManangeNotify dAManangeNotify = new DAManangeNotify();
-            return this.OKResponse(dAManangeNotify.StatusSms(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DAManangeNotify dAManangeNotify = new DAManangeNotify();
+                return this.OKResponse(dAManangeNotify.StatusSms(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
     }
 }
