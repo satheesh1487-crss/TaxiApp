@@ -171,12 +171,30 @@ namespace TaxiAppsWebAPICore.Controllers
         }
 
         [HttpGet]
-        [Route("listSurgePrice")]
+        [Route("GetSurgePrice")]
         [Authorize]
-        public IActionResult ListSurgePrice()
+        public IActionResult GetSurgePrice(long id)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OK<List<SurgePrice>>(dATypes.ListSurgePrice(_context));
+            return this.OK<SurgePrice>(dATypes.GetSurgePrice(_context,id));
+        }
+
+        [HttpPost]
+        [Route("saveSurgePrice")]
+        [Authorize]
+        public IActionResult SaveSurgePrice(SurgePrice surgePrice)
+        {
+            try
+            {
+                DAVechile dATypes = new DAVechile();
+                return this.OKResponse(dATypes.SaveSurgePrice(surgePrice, _context, User.ToAppUser()) ? "Updated Successfully" : "Failed to Update");
+            }
+            catch (TaxiAppsWebAPICore.Helper.DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+        
+
         }
     }
 }
