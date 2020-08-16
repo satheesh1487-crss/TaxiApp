@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -21,12 +22,12 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 {
                     cancelUsers.Add(new CancelUser()
                     {
-                        Id=users.UserCancelId,
-                        ArrivalStatus=users.Arrivalstatus,
-                        CancellationList=users.CancellationReasonEnglish,
-                        PayingStatus=users.Paymentstatus,
-                        Type="user", 
-                        IsActive=users.IsActive
+                        Id = users.UserCancelId,
+                        ArrivalStatus = users.Arrivalstatus,
+                        CancellationList = users.CancellationReasonEnglish,
+                        PayingStatus = users.Paymentstatus,
+                        Type = "user",
+                        IsActive = users.IsActive
                     });
                 }
                 return cancelUsers;
@@ -42,6 +43,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
+
+
                 CancelUserInfo cancelUserInfo = new CancelUserInfo();
                 var users = context.TabUserCancellation.Where(u => u.UserCancelId == userCancelId && u.IsDelete == false).FirstOrDefault();
                 if (users != null)
@@ -67,105 +70,91 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool SaveCancelUser(TaxiAppzDBContext context, CancelUserInfo cancelUserInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                // if (context.TabDrivers.Any(t => t.Email.ToLowerInvariant() == driverInfo.Email.ToLowerInvariant()))
-                //    throw new DataValidationException($"Artifact with name '{driverInfo.Email}' already exists.");
-                TabUserCancellation tabUserCancellation = new TabUserCancellation();
-                tabUserCancellation.Arrivalstatus = cancelUserInfo.ArrivalStatus;
-                tabUserCancellation.CancellationReasonArabic = cancelUserInfo.CancelReasonArabic;
-                tabUserCancellation.CancellationReasonEnglish = cancelUserInfo.CancelReasonEnglish;
-                tabUserCancellation.CancellationReasonSpanish = cancelUserInfo.CancelReasonSpanish;
-                tabUserCancellation.Paymentstatus = cancelUserInfo.PaymentStatus;                
-                tabUserCancellation.Zonetypeid = cancelUserInfo.Zonetypeid;
 
-                tabUserCancellation.CreatedAt = tabUserCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                tabUserCancellation.CreatedBy = tabUserCancellation.UpdatedBy = loggedInUser.Email;
-                tabUserCancellation.IsDelete = false;
-                tabUserCancellation.IsActive = true;
-                context.Add(tabUserCancellation);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "SaveCancelUser", context);
-                return false;
-            }
+            var roleExist = context.TabZonetypeRelationship.FirstOrDefault(t => t.IsDelete == 0 && t.Zonetypeid == cancelUserInfo.Zonetypeid);
+            if (roleExist != null)
+                throw new DataValidationException($"Zone type does not exists");
+            TabUserCancellation tabUserCancellation = new TabUserCancellation();
+            tabUserCancellation.Arrivalstatus = cancelUserInfo.ArrivalStatus;
+            tabUserCancellation.CancellationReasonArabic = cancelUserInfo.CancelReasonArabic;
+            tabUserCancellation.CancellationReasonEnglish = cancelUserInfo.CancelReasonEnglish;
+            tabUserCancellation.CancellationReasonSpanish = cancelUserInfo.CancelReasonSpanish;
+            tabUserCancellation.Paymentstatus = cancelUserInfo.PaymentStatus;
+            tabUserCancellation.Zonetypeid = cancelUserInfo.Zonetypeid;
+
+            tabUserCancellation.CreatedAt = tabUserCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+            tabUserCancellation.CreatedBy = tabUserCancellation.UpdatedBy = loggedInUser.Email;
+            tabUserCancellation.IsDelete = false;
+            tabUserCancellation.IsActive = true;
+            context.Add(tabUserCancellation);
+            context.SaveChanges();
+            return true;
+
         }
 
         public bool EditUser(TaxiAppzDBContext context, CancelUserInfo cancelUserInfo, LoggedInUser loggedInUser)
         {
-            try
+            var roleExist = context.TabZonetypeRelationship.FirstOrDefault(t => t.IsDelete == 0 && t.Zonetypeid == cancelUserInfo.Zonetypeid);
+            if (roleExist != null)
+                throw new DataValidationException($"Zone type does not exists");
+
+            var tabUserCancellation = context.TabUserCancellation.Where(r => r.UserCancelId == cancelUserInfo.Id && r.IsDelete == false).FirstOrDefault();
+            if (tabUserCancellation != null)
             {
-                var tabUserCancellation = context.TabUserCancellation.Where(r => r.UserCancelId == cancelUserInfo.Id && r.IsDelete == false).FirstOrDefault();
-                if (tabUserCancellation != null)
-                {
-                    tabUserCancellation.Arrivalstatus = cancelUserInfo.ArrivalStatus;
-                    tabUserCancellation.CancellationReasonArabic = cancelUserInfo.CancelReasonArabic;
-                    tabUserCancellation.CancellationReasonEnglish = cancelUserInfo.CancelReasonEnglish;
-                    tabUserCancellation.CancellationReasonSpanish = cancelUserInfo.CancelReasonSpanish;
-                    tabUserCancellation.Paymentstatus = cancelUserInfo.PaymentStatus;                
-                    tabUserCancellation.Zonetypeid = cancelUserInfo.Zonetypeid;
-                    tabUserCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    tabUserCancellation.UpdatedBy = loggedInUser.Email;
-                    context.Update(tabUserCancellation);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                tabUserCancellation.Arrivalstatus = cancelUserInfo.ArrivalStatus;
+                tabUserCancellation.CancellationReasonArabic = cancelUserInfo.CancelReasonArabic;
+                tabUserCancellation.CancellationReasonEnglish = cancelUserInfo.CancelReasonEnglish;
+                tabUserCancellation.CancellationReasonSpanish = cancelUserInfo.CancelReasonSpanish;
+                tabUserCancellation.Paymentstatus = cancelUserInfo.PaymentStatus;
+                tabUserCancellation.Zonetypeid = cancelUserInfo.Zonetypeid;
+                tabUserCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabUserCancellation.UpdatedBy = loggedInUser.Email;
+                context.Update(tabUserCancellation);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Edit", context);
-                return false;
-            }
+            return false;
+
         }
 
         public bool DeleteUser(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            try
+            var roleExist = context.TabUserCancellation.FirstOrDefault(t => t.IsDelete == false && t.UserCancelId == id);
+            if (roleExist != null)
+                throw new DataValidationException($"Tab user cancellation does not exists");
+
+            var updatedate = context.TabUserCancellation.Where(u => u.UserCancelId == id && u.IsDelete == false).FirstOrDefault();
+            if (updatedate != null)
             {
-                var updatedate = context.TabUserCancellation.Where(u => u.UserCancelId == id && u.IsDelete == false).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.DeletedBy = loggedInUser.Email;
-                    updatedate.IsDelete = true;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.DeletedBy = loggedInUser.Email;
+                updatedate.IsDelete = true;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Delete", context);
-                return false;
-            }
+            return false;
+
         }
 
         public bool StatusUser(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
-            try
+            var roleExist = context.TabUserCancellation.FirstOrDefault(t => t.IsDelete == false && t.UserCancelId == id);
+            if (roleExist != null)
+                throw new DataValidationException($"Tab user cancellation does not exists");
+
+            var updatedate = context.TabUserCancellation.Where(r => r.UserCancelId == id && r.IsDelete == false).FirstOrDefault();
+            if (updatedate != null)
             {
-                var updatedate = context.TabUserCancellation.Where(r => r.UserCancelId == id && r.IsDelete == false).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.IsActive = isStatus == true;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                updatedate.IsActive = isStatus == true;
+                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedBy = loggedInUser.UserName;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "StatusType", context);
-                return false;
-            }
+            return false;
+
         }
 
         public List<CancelDriver> DriverList(TaxiAppzDBContext context)
@@ -211,120 +200,90 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     cancelDriverInfo.CancelReasonSpanish = drivers.CancellationReasonSpanish;
                     cancelDriverInfo.ArrivalStatus = drivers.Arrivalstatus;
                 }
-                return cancelDriverInfo == null ? null : cancelDriverInfo;           
-
+                return cancelDriverInfo == null ? null : cancelDriverInfo;
             }
             catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "GetbyDriverCancelId", context);
                 return null;
             }
-
         }
 
         public bool SaveCancelDriver(TaxiAppzDBContext context, CancelDriverInfo cancelDriverInfo, LoggedInUser loggedInUser)
         {
-            try
+            var roleExist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.Zonetypeid == cancelDriverInfo.Zonetypeid);
+            if (roleExist != null)
+                throw new DataValidationException($"Tab driver cancellation does not exists");
+
+            TabDriverCancellation tabDriverCancellation = new TabDriverCancellation();
+            tabDriverCancellation.Arrivalstatus = cancelDriverInfo.ArrivalStatus;
+            tabDriverCancellation.CancellationReasonArabic = cancelDriverInfo.CancelReasonArabic;
+            tabDriverCancellation.CancellationReasonEnglish = cancelDriverInfo.CancelReasonEnglish;
+            tabDriverCancellation.CancellationReasonSpanish = cancelDriverInfo.CancelReasonSpanish;
+            tabDriverCancellation.Paymentstatus = cancelDriverInfo.PaymentStatus;
+            tabDriverCancellation.Zonetypeid = cancelDriverInfo.Zonetypeid;
+
+            tabDriverCancellation.CreatedAt = tabDriverCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+            tabDriverCancellation.CreatedBy = tabDriverCancellation.UpdatedBy = loggedInUser.Email;
+            tabDriverCancellation.IsDelete = false;
+            tabDriverCancellation.IsActive = true;
+            context.Add(tabDriverCancellation);
+            context.SaveChanges();
+            return true;
+        }
+
+        public bool EditDriver(TaxiAppzDBContext context, CancelDriverInfo cancelDriverInfo, LoggedInUser loggedInUser)
+        {
+            var roleExist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.Zonetypeid == cancelDriverInfo.Zonetypeid);
+            if (roleExist != null)
+                throw new DataValidationException($"Tab driver cancellation does not exists");
+
+            var tabDriverCancellation = context.TabDriverCancellation.Where(r => r.DriverCancelId == cancelDriverInfo.Id && r.IsDelete == false).FirstOrDefault();
+            if (tabDriverCancellation != null)
             {
-                // if (context.TabDrivers.Any(t => t.Email.ToLowerInvariant() == driverInfo.Email.ToLowerInvariant()))
-                //    throw new DataValidationException($"Artifact with name '{driverInfo.Email}' already exists.");
-                TabDriverCancellation tabDriverCancellation = new TabDriverCancellation();
                 tabDriverCancellation.Arrivalstatus = cancelDriverInfo.ArrivalStatus;
                 tabDriverCancellation.CancellationReasonArabic = cancelDriverInfo.CancelReasonArabic;
                 tabDriverCancellation.CancellationReasonEnglish = cancelDriverInfo.CancelReasonEnglish;
                 tabDriverCancellation.CancellationReasonSpanish = cancelDriverInfo.CancelReasonSpanish;
                 tabDriverCancellation.Paymentstatus = cancelDriverInfo.PaymentStatus;
                 tabDriverCancellation.Zonetypeid = cancelDriverInfo.Zonetypeid;
-
-                tabDriverCancellation.CreatedAt = tabDriverCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                tabDriverCancellation.CreatedBy = tabDriverCancellation.UpdatedBy = loggedInUser.Email;
-                tabDriverCancellation.IsDelete = false;
-                tabDriverCancellation.IsActive = true;
-                context.Add(tabDriverCancellation);
+                tabDriverCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDriverCancellation.UpdatedBy = loggedInUser.Email;
+                context.Update(tabDriverCancellation);
                 context.SaveChanges();
                 return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "SaveCancelDriver", context);
-                return false;
-            }
-        }
-
-        public bool EditDriver(TaxiAppzDBContext context, CancelDriverInfo cancelDriverInfo, LoggedInUser loggedInUser)
-        {
-            try
-            {
-                var tabDriverCancellation = context.TabDriverCancellation.Where(r => r.DriverCancelId == cancelDriverInfo.Id && r.IsDelete == false).FirstOrDefault();
-                if (tabDriverCancellation != null)
-                {
-                    tabDriverCancellation.Arrivalstatus = cancelDriverInfo.ArrivalStatus;
-                    tabDriverCancellation.CancellationReasonArabic = cancelDriverInfo.CancelReasonArabic;
-                    tabDriverCancellation.CancellationReasonEnglish = cancelDriverInfo.CancelReasonEnglish;
-                    tabDriverCancellation.CancellationReasonSpanish = cancelDriverInfo.CancelReasonSpanish;
-                    tabDriverCancellation.Paymentstatus = cancelDriverInfo.PaymentStatus;
-                    tabDriverCancellation.Zonetypeid = cancelDriverInfo.Zonetypeid;
-                    tabDriverCancellation.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    tabDriverCancellation.UpdatedBy = loggedInUser.Email;
-                    context.Update(tabDriverCancellation);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "EditDriver", context);
-                return false;
-            }
+            return false;
         }
 
         public bool DeleteDriver(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            try
+            var updatedate = context.TabDriverCancellation.Where(u => u.DriverCancelId == id && u.IsDelete == false).FirstOrDefault();
+            if (updatedate != null)
             {
-                var updatedate = context.TabDriverCancellation.Where(u => u.DriverCancelId == id && u.IsDelete == false).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.DeletedBy = loggedInUser.Email;
-                    updatedate.IsDelete = true;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-
-                }
-                return false;
+                updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.DeletedBy = loggedInUser.Email;
+                updatedate.IsDelete = true;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "DeleteDriver", context);
-                return false;
-            }
+            return false;
         }
 
         public bool StatusDriver(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
-            try
+            var updatedate = context.TabDriverCancellation.Where(r => r.DriverCancelId == id && r.IsDelete == false).FirstOrDefault();
+            if (updatedate != null)
             {
-
-                var updatedate = context.TabDriverCancellation.Where(r => r.DriverCancelId == id && r.IsDelete == false).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.IsActive = isStatus == true;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                updatedate.IsActive = isStatus == true;
+                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedBy = loggedInUser.UserName;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "StatusDriver", context);
-                return false;
-            }
+            return false;
         }
     }
 }
