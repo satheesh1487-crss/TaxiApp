@@ -9,7 +9,7 @@ using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
-namespace TaxiAppsWebAPICore 
+namespace TaxiAppsWebAPICore
 {
     public class DARoles
     {
@@ -18,7 +18,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 List<Roles> rolelist = new List<Roles>();
-                var listroles = context.TabRoles.Where(t=>t.IsDelete==0).ToList();
+                var listroles = context.TabRoles.Where(t => t.IsDelete == 0).ToList();
                 foreach (var role in listroles)
                 {
                     rolelist.Add(new Roles()
@@ -65,139 +65,131 @@ namespace TaxiAppsWebAPICore
         public bool AddRole(TaxiAppzDBContext context, Roles roles, LoggedInUser loggedInUser)
         {
             var roleExist = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower());
-                if (roleExist!=null)
-                    throw new DataValidationException($"Role with name '{roles.RoleName}' already exists.");
-
-                TabRoles Insertdata = new TabRoles();
-                Insertdata.RoleName = roles.RoleName;
-                Insertdata.DisplayName = roles.DisplayName;
-                Insertdata.Description = roles.Description;
-                Insertdata.IsActive = 1;
-                Insertdata.AllRights = 1;
-                Insertdata.Locked = 1;
-                Insertdata.CreatedBy = loggedInUser.Email;
-                context.TabRoles.Add(Insertdata);
-                context.SaveChanges();
-                //need to add menu access while create the role
-                return true;
-  
-        }
-        public bool EditRole(TaxiAppzDBContext context, long id, Roles roles, LoggedInUser loggedInUser)
-        {
-            var roleExist = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower() && t.Roleid!=id);
             if (roleExist != null)
                 throw new DataValidationException($"Role with name '{roles.RoleName}' already exists.");
 
             TabRoles Insertdata = new TabRoles();
-                var updatedate = context.TabRoles.Where(r => r.Roleid == id && r.IsDelete==0).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.RoleName = roles.RoleName;
-                    updatedate.DisplayName = roles.DisplayName;
-                    updatedate.Description = roles.Description;
-                    
-                    
-                    updatedate.CreatedBy = loggedInUser.Email;
-                    updatedate.UpdatedAt = Extention.GetDateTime();
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            
+            Insertdata.RoleName = roles.RoleName;
+            Insertdata.DisplayName = roles.DisplayName;
+            Insertdata.Description = roles.Description;
+            Insertdata.IsActive = 1;
+            Insertdata.AllRights = 1;
+            Insertdata.Locked = 1;
+            Insertdata.CreatedBy = loggedInUser.Email;
+            context.TabRoles.Add(Insertdata);
+            context.SaveChanges();
+            //need to add menu access while create the role
+            return true;
+
         }
-         
+        public bool EditRole(TaxiAppzDBContext context, long id, Roles roles, LoggedInUser loggedInUser)
+        {
+            var roleExist = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.RoleName.ToLower() == roles.RoleName.ToLower() && t.Roleid != id);
+            if (roleExist != null)
+                throw new DataValidationException($"Role with name '{roles.RoleName}' already exists.");
+
+            TabRoles Insertdata = new TabRoles();
+            var updatedate = context.TabRoles.Where(r => r.Roleid == id && r.IsDelete == 0).FirstOrDefault();
+            if (updatedate != null)
+            {
+                updatedate.RoleName = roles.RoleName;
+                updatedate.DisplayName = roles.DisplayName;
+                updatedate.Description = roles.Description;
+
+
+                updatedate.CreatedBy = loggedInUser.Email;
+                updatedate.UpdatedAt = Extention.GetDateTime();
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
+
+        }
+
 
         public bool DisableRole(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            try
-            {
-                
-                var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.UpdatedBy = loggedInUser.Email;
-                    updatedate.IsActive = 1;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
+            var roleExist = context.TabRoles.FirstOrDefault(r => r.Roleid == id);
+            if (roleExist == null)
+                throw new DataValidationException($"Role not exists.");
 
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var updatedate = context.TabRoles.Where(r => r.Roleid == id).FirstOrDefault();
+            if (updatedate != null)
             {
-                Extention.insertlog(ex.Message, "Admin", "DisableRole", context);
-                return false;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.UpdatedBy = loggedInUser.Email;
+                updatedate.IsActive = 1;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
+
             }
+            return false;
+
         }
-        public bool AddMenuAccess(long fromroleid,long toroleid,TaxiAppzDBContext context)
+        public bool AddMenuAccess(long fromroleid, long toroleid, TaxiAppzDBContext context)
         {
-            try
-            {
-                var menulist = context.TabMenuAccess.Include(t => t.Role).Where(r => r.Roleid == fromroleid &&  r.Viewstatus == true).ToList();
-             //   var menulist = context.TabMenu.ToList();
-                if (menulist.Count > 0)
+            var roleExist = context.TabRoles.FirstOrDefault(r => r.Roleid == fromroleid);
+            if (roleExist == null)
+                throw new DataValidationException($"Role not exists.");
 
-                {
-                    var menuaccesslist = context.TabMenuAccess.Where(t => t.Roleid == toroleid).ToList();
-                    if (menuaccesslist.Count > 0)
-                    {
-                        context.TabMenuAccess.RemoveRange(menuaccesslist);
-                        context.SaveChanges();
-                       
-                        foreach (var menu in menulist)
-                        {
-                            TabMenuAccess tabMenuAccess = new TabMenuAccess();
-                            tabMenuAccess.Menuid = menu.Menuid;
-                            tabMenuAccess.Roleid = toroleid;
-                            tabMenuAccess.Viewstatus = false;
-                            tabMenuAccess.Createdby = DateTime.UtcNow;
-                            context.TabMenuAccess.Add(tabMenuAccess);
-                            context.SaveChanges();
-                        }
-                        return true;
-                    }
-                    else
-                    {
-                        
-                        foreach (var menu in menulist)
-                        {
-                            TabMenuAccess tabMenuAccess = new TabMenuAccess();
-                            tabMenuAccess.Menuid = menu.Menuid;
-                            tabMenuAccess.Roleid = toroleid;
-                            tabMenuAccess.Viewstatus = false;
-                            tabMenuAccess.Createdby = DateTime.UtcNow;
-                            context.TabMenuAccess.Add(tabMenuAccess);
-                            context.SaveChanges();
-                        }
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch(Exception ex)
+            var tabMenu = context.TabMenuAccess.FirstOrDefault(r => r.Roleid == fromroleid);
+            if (tabMenu == null)
+                throw new DataValidationException($"Menu not exists.");
+
+            var menulist = context.TabMenuAccess.Include(t => t.Role).Where(r => r.Roleid == fromroleid && r.Viewstatus == true).ToList(); 
+            if (menulist.Count > 0)
+
             {
-                Extention.insertlog(ex.Message, "Admin", "AddMenuAccess", context);
-                return false;
+                var menuaccesslist = context.TabMenuAccess.Where(t => t.Roleid == toroleid).ToList();
+                if (menuaccesslist.Count > 0)
+                {
+                    context.TabMenuAccess.RemoveRange(menuaccesslist);
+                    context.SaveChanges(); 
+                    foreach (var menu in menulist)
+                    {
+                        TabMenuAccess tabMenuAccess = new TabMenuAccess();
+                        tabMenuAccess.Menuid = menu.Menuid;
+                        tabMenuAccess.Roleid = toroleid;
+                        tabMenuAccess.Viewstatus = false;
+                        tabMenuAccess.Createdby = DateTime.UtcNow;
+                        context.TabMenuAccess.Add(tabMenuAccess);
+                        context.SaveChanges();
+                    }
+                    return true;
+                }
+                else
+                { 
+                    foreach (var menu in menulist)
+                    {
+                        TabMenuAccess tabMenuAccess = new TabMenuAccess();
+                        tabMenuAccess.Menuid = menu.Menuid;
+                        tabMenuAccess.Roleid = toroleid;
+                        tabMenuAccess.Viewstatus = false;
+                        tabMenuAccess.Createdby = DateTime.UtcNow;
+                        context.TabMenuAccess.Add(tabMenuAccess);
+                        context.SaveChanges();
+                    }
+                    return true;
+                }
             }
-          
+            return false; 
         }
-       
-        public string GetMenukey(string rolename,TaxiAppzDBContext context)
+
+        public string GetMenukey(string rolename, TaxiAppzDBContext context)
         {
             string menuname = null;
             try
             {
-                var menulist = context.TabMenuAccess.Include( r => r.Menu).Include(t => t.Role).Where(s => s.Role.RoleName == rolename && s.Viewstatus == true).ToList();
+                var menulist = context.TabMenuAccess.Include(r => r.Menu).Include(t => t.Role).Where(s => s.Role.RoleName == rolename && s.Viewstatus == true).ToList();
                 if (menulist.Count > 0)
                 {
-                    return menuname = string.Join(",", menulist.Select( x => x.Menu.Menukey));
+                    return menuname = string.Join(",", menulist.Select(x => x.Menu.Menukey));
                 }
                 return menuname;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Extention.insertlog(ex.Message, "Admin", "Menukey", context);
                 return null;
