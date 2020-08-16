@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -44,8 +45,17 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddZone([FromBody] ManageZoneAdd manageZone)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.AddZone(manageZone, _context, User.ToAppUser()) ? "Zone Created" : "Zone Creation Failed");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.AddZone(manageZone, _context, User.ToAppUser()) ? "Zone Created" : "Zone Creation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+          
+            
         }
 
         //TODO:: check parent record is deleted
@@ -54,8 +64,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditZone([FromBody] ManageZoneAdd manageZone)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.EditZone(manageZone, _context, User.ToAppUser()) ? "Zone Updated" : "Zone Updation Failed");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.EditZone(manageZone, _context, User.ToAppUser()) ? "Zone Updated" : "Zone Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+              return  this.KnowOperationError(ex.Message);                
+            }            
         }
 
         //TODO:: check parent record is deleted
@@ -64,8 +81,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult DeleteZone(long zoneid)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.DeleteZone(zoneid, _context, User.ToAppUser()) ? "Zone Deleted" : "Zone Deletion Failed");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.DeleteZone(zoneid, _context, User.ToAppUser()) ? "Zone Deleted" : "Zone Deletion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }  
         }
         [HttpPut]
         [Route("ActiveZone")]
@@ -98,8 +122,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddZoneType(long zoneid,ZoneTypeRelation zoneTypeRelation)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.AddZoneType(zoneid, zoneTypeRelation, _context, User.ToAppUser()) ? "Saved Successfully" : "Saved Failed");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.AddZoneType(zoneid, zoneTypeRelation, _context, User.ToAppUser()) ? "Saved Successfully" : "Saved Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
         [HttpGet]
         [Route("GetZoneTypebyid")]
@@ -116,16 +147,31 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditZoneType(ZoneTypeRelation zoneTypeRelation)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+           
         }
         [HttpPut]
         [Route("ActiveZoneType")]
         [Authorize]
         public IActionResult ActiveZoneType(long zoneid,long typeid,bool isactivestatus,ZoneTypeRelation zoneTypeRelation)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZoneType(zoneid,typeid, isactivestatus, _context, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.ActiveZoneType(zoneid, typeid, isactivestatus, _context, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }           
         }
         [HttpPut]
         [Route("DefaultZoneType")]
