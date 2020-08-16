@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaxiAppsWebAPICore.DataAccessLayer;
 using TaxiAppsWebAPICore.Models;
+using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
 {
@@ -13,24 +15,30 @@ namespace TaxiAppsWebAPICore.Controllers
     [ApiController]
     public class SettingsController : ControllerBase
     {
+        private readonly TaxiAppzDBContext _context;
+        public SettingsController(TaxiAppzDBContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         [Route("GetTripSettings")]
         [Authorize]
         public IActionResult GetTripSettings(long id)
         {
-            DAVechile dATypes = new DAVechile();
-            return this.OK<TripSettings>(dATypes.GetTripSettings(_context, id));
+            DASettings dASettings = new DASettings();
+            return this.OK<TripSettings>(dASettings.GetTripSettings(_context, id));
         }
 
         [HttpPost]
         [Route("saveSurgePrice")]
         [Authorize]
-        public IActionResult SaveSurgePrice(SurgePrice surgePrice)
+        public IActionResult SaveSurgePrice(TripSettings tripSettings)
         {
             try
             {
-                DAVechile dATypes = new DAVechile();
-                return this.OKResponse(dATypes.SaveSurgePrice(surgePrice, _context, User.ToAppUser()) ? "Updated Successfully" : "Failed to Update");
+                DASettings dASettings = new DASettings();
+                return this.OKResponse(dASettings.SaveTripSettings(tripSettings, _context, User.ToAppUser()) ? "Updated Successfully" : "Failed to Update");
             }
             catch (TaxiAppsWebAPICore.Helper.DataValidationException ex)
             {
