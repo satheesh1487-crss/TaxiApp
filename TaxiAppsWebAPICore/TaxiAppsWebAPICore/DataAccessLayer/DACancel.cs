@@ -135,7 +135,6 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;
-
                 }
                 return false;
             }
@@ -150,7 +149,6 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
-
                 var updatedate = context.TabUserCancellation.Where(r => r.UserCancelId == id && r.IsDelete == false).FirstOrDefault();
                 if (updatedate != null)
                 {
@@ -174,7 +172,6 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
             try
             {
-
                 List<CancelDriver> cancelDrivers = new List<CancelDriver>();
                 var driverlist = context.TabDriverCancellation.Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var drivers in driverlist)
