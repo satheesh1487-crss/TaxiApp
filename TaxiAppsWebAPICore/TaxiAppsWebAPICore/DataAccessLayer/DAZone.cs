@@ -397,7 +397,7 @@ namespace TaxiAppsWebAPICore
             {
                 List<SetPrice> setPrices = new List<SetPrice>();
 
-                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid && t.IsDelete ==0).ToList();
+                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid && t.IsDelete ==  false).ToList();
 
                 foreach (var getprice in getsetpricelist)
                 {
