@@ -84,12 +84,9 @@ namespace TaziappzMobileWebAPI.DALayer
                 foreach (var _zone in zonelist)
                 {
                     var zonetypes = context.TabZonetypeRelationship.Where(t => t.Typeid == _zone.Typeid &&   t.Zoneid == _zone.Zoneid && t.IsActive == 1 && t.IsDelete == 0).ToList();
-                
-                    foreach (var zonetype in zonetypes)
-                    
-                    {
-                    
-                        List<SetPrice> setPrices = new List<SetPrice>();
+                  foreach (var zonetype in zonetypes)
+                  {
+                      List<SetPrice> setPrices = new List<SetPrice>();
                         var pricelist = context.TabSetpriceZonetype.Where(x => x.Zonetypeid == zonetype.Zonetypeid).ToList();
                         foreach (var price in pricelist)
                         {
@@ -165,6 +162,11 @@ namespace TaziappzMobileWebAPI.DALayer
             }
         
 
+        }
+
+        public bool Requestprogress(LatLong latLong, TaxiAppzDBContext context)
+        {
+            return true;
         }
     }
 }

@@ -74,6 +74,17 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                     manageEmailOption.EmailTitle = listEmail.Emailtitle;
                     manageEmailOption.IsActive = listEmail.IsActive;
                     manageEmailOption.Description = listEmail.Description;
+
+                    List<ManageSMSHint> manageSMSHints = new List<ManageSMSHint>();
+                    var listHintSms = context.TabManageEmailHints.Where(t => t.ManageEmailid == listEmail.ManageEmailid).ToList();
+                    foreach (var item in listHintSms)
+                    {
+                        ManageSMSHint sMSHint = new ManageSMSHint();
+                        sMSHint.Id = item.ManageEmailHint;
+                        sMSHint.Keyword = item.HintKeyword;
+                        sMSHint.HintMsg = item.HintDescription;
+                        manageSMSHints.Add(sMSHint);
+                    }
                 }
 
                 return manageEmailOption != null ? manageEmailOption : null;
@@ -167,13 +178,23 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
                 ManageSMSOption manageSMSOption= new ManageSMSOption();
-                var listSms = context.TabManageSms.FirstOrDefault(t => t.ManageSmsid == id);
+                var listSms = context.TabManageSms.FirstOrDefault(t => t.ManageSmsid == id );
                 if (listSms != null)
                 {
                     manageSMSOption.Id = listSms.ManageSmsid;
                     manageSMSOption.SMSTitle = listSms.Smstitle;
                     manageSMSOption.IsActive = listSms.IsActive;
                     manageSMSOption.Description = listSms.Description;
+                    List<ManageSMSHint> manageSMSHints = new List<ManageSMSHint>();
+                    var listHintSms = context.TabManageSmsHints.Where(t => t.ManageSmsid == listSms.ManageSmsid).ToList();
+                    foreach (var item in listHintSms)
+                    {
+                        ManageSMSHint sMSHint = new ManageSMSHint();
+                        sMSHint.Id = item.ManageSmshint;
+                        sMSHint.Keyword = item.HintKeyword;
+                        sMSHint.HintMsg = item.HintDescription;
+                        manageSMSHints.Add(sMSHint);
+                    }
                 }
 
                 return manageSMSOption != null ? manageSMSOption : null;

@@ -200,6 +200,10 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 context.Update(tabDrivers);
                 context.SaveChanges();
                 return true;
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             return false;
         }

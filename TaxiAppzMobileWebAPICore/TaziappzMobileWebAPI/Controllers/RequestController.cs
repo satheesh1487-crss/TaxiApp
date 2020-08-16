@@ -25,7 +25,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Route("PostRequest")]
+        [Route("CreateRequest")]
         public IActionResult PostRequest([FromBody] LatLong latLong)
         {
             DARequest dARequest = new DARequest();
@@ -39,6 +39,19 @@ namespace TaziappzMobileWebAPI.Controllers
 
             zone = dARequest.GetRequest(latLong, Convert.ToInt64(countryid), context);
             return this.OK<Zone>(zone, zone.IsExist == 0 ? "No Data Found" : "Data Found", zone == null ? 0 : 1);
+        }
+        /// <summary>
+        /// Use to Sent Push notification to Drivers based on User request
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        [Route("Requestprogress")]
+        public IActionResult Requestprogress([FromBody] LatLong latLong)
+        {
+            DARequest dARequest = new DARequest();
+            bool result = dARequest.Requestprogress(latLong, context);
+            return this.OKStatus(result ? "Data Found" : "No Data Found", result ? 1 : 0);
         }
     }
 }

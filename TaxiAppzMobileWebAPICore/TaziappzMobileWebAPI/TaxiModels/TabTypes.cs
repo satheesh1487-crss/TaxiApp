@@ -11,6 +11,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public TabTypes()
         {
             TabDrivers = new HashSet<TabDrivers>();
+            TabRequest = new HashSet<TabRequest>();
             TabZonetypeRelationship = new HashSet<TabZonetypeRelationship>();
         }
 
@@ -47,6 +48,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
         [InverseProperty("Type")]
         public virtual ICollection<TabDrivers> TabDrivers { get; set; }
+        [InverseProperty("Type")]
+        public virtual ICollection<TabRequest> TabRequest { get; set; }
         [InverseProperty("Type")]
         public virtual ICollection<TabZonetypeRelationship> TabZonetypeRelationship { get; set; }
     }

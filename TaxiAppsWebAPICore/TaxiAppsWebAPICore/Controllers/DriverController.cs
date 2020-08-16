@@ -108,58 +108,7 @@ namespace TaxiAppsWebAPICore.Controllers
             }            
         }
 
-        [HttpGet]
-        [Route("downloadDriver")]
-        [Authorize]
-        public IActionResult DownloadDriver()
-        {
-            DADriver dADriver = new DADriver();
-            var drivers = dADriver.List(_context);
-            var driverlist = dADriver.List(_context);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < driverlist.Count; i++)
-            {
-                DriverList customer = driverlist[i];
-                sb.Append(driverlist[i].Email + ',');
-                sb.Append(driverlist[i].AcceptanceRatio + ',');
-                sb.Append(driverlist[i].Document + ',');
-                sb.Append(driverlist[i].DriverId + ',');
-                sb.Append(driverlist[i].DriverName + ',');
-                sb.Append(driverlist[i].PhoneNumber + ',');
-                sb.Append(driverlist[i].Rating + ',');
-                sb.Append(driverlist[i].RegistrationCode + ',');
-                sb.Append("\r\n");
-
-            }
-            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "Grid.csv");
-        }
-
-        [HttpPost]
-        [Route("downloadBlocked")]
-        [Authorize]
-        public IActionResult DownloadBlocked()
-        {
-            DADriver dADriver = new DADriver();
-            var drivers = dADriver.BlockedList(_context);
-            var driverlist = dADriver.List(_context);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < driverlist.Count; i++)
-            {
-                DriverList customer = driverlist[i];
-                sb.Append(driverlist[i].Email + ',');
-                sb.Append(driverlist[i].AcceptanceRatio + ',');
-                sb.Append(driverlist[i].Document + ',');
-                sb.Append(driverlist[i].DriverId + ',');
-                sb.Append(driverlist[i].DriverName + ',');
-                sb.Append(driverlist[i].PhoneNumber + ',');
-                sb.Append(driverlist[i].Rating + ',');
-                sb.Append(driverlist[i].RegistrationCode + ',');
-                sb.Append("\r\n");
-
-            }
-
-            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "Grid.csv");
-        }
+         
 
         [HttpPost]
         [Route("AddWallet")]
@@ -186,10 +135,10 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DADriver dADriver = new DADriver();
             return this.OK<List<DriverFineInfo>>(dADriver.ListFine(_context));
-        }
+        } 
 
-        //TODO:: check parent record is deleted
-        [HttpPost]
+       //TODO:: check parent record is deleted
+       [HttpPost]
         [Route("addFine")]
         [Authorize]
         public IActionResult AddFine(DriverFineInfo driverFineInfo)
