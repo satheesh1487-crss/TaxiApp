@@ -54,7 +54,6 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OK<DriverInfo>(dADriver.GetbyId(driverid, _context));
         }
 
-        //TODO:: check parent record is deleted
         [HttpDelete]
         [Route("DeleteDriver")]
         [Authorize]
@@ -64,7 +63,6 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dADriver.Delete(_context, driverid, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
         }
 
-        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("InActivedriver")]
         [Authorize]
@@ -74,7 +72,6 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OKResponse(dADriver.DisableUser(_context, driverid, status, User.ToAppUser()) == true ? "Active Successfully" : "InActive Successfully");
         }
 
-        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("Edit")]
         [Authorize]
@@ -88,7 +85,7 @@ namespace TaxiAppsWebAPICore.Controllers
             catch (DataValidationException ex)
             {
                 return this.KnowOperationError(ex.Message);
-            }            
+            }
         }
 
         //TODO:: check parent record is deleted
@@ -105,18 +102,27 @@ namespace TaxiAppsWebAPICore.Controllers
             catch (DataValidationException ex)
             {
                 return this.KnowOperationError(ex.Message);
-            }            
+            }
         }
 
-         
+        //<summary>
+        //Add wallet transcation Id not exists
+        //</summary>
 
         [HttpPost]
         [Route("AddWallet")]
         [Authorize]
         public IActionResult AddWallet(DriverAddWallet driverAddWallet)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.AddWallet(_context, driverAddWallet, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.AddWallet(_context, driverAddWallet, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -135,10 +141,9 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DADriver dADriver = new DADriver();
             return this.OK<List<DriverFineInfo>>(dADriver.ListFine(_context));
-        } 
+        }
 
-       //TODO:: check parent record is deleted
-       [HttpPost]
+        [HttpPost]
         [Route("addFine")]
         [Authorize]
         public IActionResult AddFine(DriverFineInfo driverFineInfo)
@@ -156,24 +161,38 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OK<DriverFineInfo>(dADriver.GetbyFineId(driverid, _context));
         }
 
-        //TODO:: check parent record is deleted
         [HttpPut]
         [Route("EditFine")]
         [Authorize]
         public IActionResult EditFine(DriverFineInfo driverFineInfo)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.EditFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.EditFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
 
-        //TODO:: check parent record is deleted
         [HttpDelete]
         [Route("DeleteFine")]
         [Authorize]
         public IActionResult DeleteFine(long Id)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.DeleteFine(_context, Id, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.DeleteFine(_context, Id, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
 
         [HttpGet]
@@ -189,24 +208,45 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddBonus(DriverBonusInfo driverBonusInfo)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.AddBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.AddBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
         [HttpPut]
         [Route("editBonus")]
         [Authorize]
         public IActionResult EditBonus(DriverBonusInfo driverBonusInfo)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.EditBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.EditBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
         [HttpDelete]
         [Route("deleteBonus")]
         [Authorize]
-        public IActionResult DeleteBonus(long  id)
+        public IActionResult DeleteBonus(long id)
         {
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.DeleteBonus(_context, id, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.DeleteBonus(_context, id, User.ToAppUser()) == true ? "Deleted Successfully" : "Deletion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -215,7 +255,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult GetByBonusId(long id)
         {
             DADriver dADriver = new DADriver();
-            return this.OK<DriverBonusInfo>(dADriver.GetByBonusId(id,_context));
+            return this.OK<DriverBonusInfo>(dADriver.GetByBonusId(id, _context));
         }
 
         [HttpGet]

@@ -106,6 +106,9 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("driverArea")]
         public long? DriverArea { get; set; }
 
+        [JsonProperty("zoneId")]
+        public long? ZoneId { get; set; }
+
         [JsonProperty("company")]
         public string Company { get; set; }
 
