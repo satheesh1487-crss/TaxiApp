@@ -31,6 +31,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabDriverWallet> TabDriverWallet { get; set; }
         public virtual DbSet<TabDrivers> TabDrivers { get; set; }
         public virtual DbSet<TabFaq> TabFaq { get; set; }
+        public virtual DbSet<TabGeneralSettings> TabGeneralSettings { get; set; }
+        public virtual DbSet<TabInstallationSettings> TabInstallationSettings { get; set; }
         public virtual DbSet<TabManageDocument> TabManageDocument { get; set; }
         public virtual DbSet<TabManageEmail> TabManageEmail { get; set; }
         public virtual DbSet<TabManageEmailHints> TabManageEmailHints { get; set; }
@@ -49,14 +51,17 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
         public virtual DbSet<TabSetpriceZonetype> TabSetpriceZonetype { get; set; }
+        public virtual DbSet<TabSettings> TabSettings { get; set; }
         public virtual DbSet<TabSos> TabSos { get; set; }
         public virtual DbSet<TabSurgeprice> TabSurgeprice { get; set; }
         public virtual DbSet<TabTimezone> TabTimezone { get; set; }
+        public virtual DbSet<TabTripSettings> TabTripSettings { get; set; }
         public virtual DbSet<TabTypes> TabTypes { get; set; }
         public virtual DbSet<TabUploadfiledetails> TabUploadfiledetails { get; set; }
         public virtual DbSet<TabUser> TabUser { get; set; }
         public virtual DbSet<TabUserCancellation> TabUserCancellation { get; set; }
         public virtual DbSet<TabUserComplaint> TabUserComplaint { get; set; }
+        public virtual DbSet<TabWalletSettings> TabWalletSettings { get; set; }
         public virtual DbSet<TabZone> TabZone { get; set; }
         public virtual DbSet<TabZonepolygon> TabZonepolygon { get; set; }
         public virtual DbSet<TabZonetypeRelationship> TabZonetypeRelationship { get; set; }
@@ -493,6 +498,42 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("FK__tab_FAQ__service__3335971A");
             });
 
+            modelBuilder.Entity<TabGeneralSettings>(entity =>
+            {
+                entity.HasKey(e => e.TripGeneralId)
+                    .HasName("PK__tab_Gene__F301C569EBFF3461");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.TripGeneralAnswer).IsUnicode(false);
+
+                entity.Property(e => e.TripGeneralQuestion).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TabInstallationSettings>(entity =>
+            {
+                entity.HasKey(e => e.TripInstallationId)
+                    .HasName("PK__tab_inst__466056281545B20D");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.TripInstallationAnswer).IsUnicode(false);
+
+                entity.Property(e => e.TripInstallationQuestion).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
             modelBuilder.Entity<TabManageDocument>(entity =>
             {
                 entity.HasKey(e => e.DocumentId)
@@ -874,6 +915,22 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .HasConstraintName("FK__tab_setpr__zonet__2057CCD0");
             });
 
+            modelBuilder.Entity<TabSettings>(entity =>
+            {
+                entity.HasKey(e => e.SettingsId)
+                    .HasName("PK__tab_sett__DCEDDA8DA108B40F");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.SettingsName).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+            });
+
             modelBuilder.Entity<TabSos>(entity =>
             {
                 entity.HasKey(e => e.Sosid)
@@ -932,6 +989,24 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabTimezone)
                     .HasForeignKey(d => d.Countryid)
                     .HasConstraintName("FK__tab_timez__count__07C12930");
+            });
+
+            modelBuilder.Entity<TabTripSettings>(entity =>
+            {
+                entity.HasKey(e => e.TripSettingsId)
+                    .HasName("PK__tab_trip__12935248603A5874");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.TripSettingsAnswer).IsUnicode(false);
+
+                entity.Property(e => e.TripSettingsQuestion).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabTypes>(entity =>
@@ -1058,6 +1133,24 @@ namespace TaxiAppsWebAPICore.TaxiModels
                     .WithMany(p => p.TabUserComplaint)
                     .HasForeignKey(d => d.Zoneid)
                     .HasConstraintName("FK__tab_User___zonei__61316BF4");
+            });
+
+            modelBuilder.Entity<TabWalletSettings>(entity =>
+            {
+                entity.HasKey(e => e.TripWalletId)
+                    .HasName("PK__tab_wall__C5BB59366ED0D7A0");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.TripWalletAnswer).IsUnicode(false);
+
+                entity.Property(e => e.TripWalletQuestion).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabZone>(entity =>
