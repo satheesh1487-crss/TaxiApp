@@ -9,6 +9,7 @@ using System.Linq;
 using TaxiAppsWebAPICore.TaxiModels;
 using System.Collections.Generic;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Helper;
 
 namespace TaxiAppsWebAPICore.Controllers
 {
@@ -52,8 +53,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult SaveCurrency(CurrencyInfo currencyInfo)
         {
-            DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                DACurrency dACurrency = new DACurrency();
+                return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
 
 
@@ -63,8 +72,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditCurrency(CurrencyInfo currencyInfo)
         {
-            DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DACurrency dACurrency = new DACurrency();
+                return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
 
         //TODO:: check parent record is deleted
@@ -73,8 +90,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult DeleteCurrency(long id)
         {
-            DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.DeleteCurrency(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
+            try
+            {
+                DACurrency dACurrency = new DACurrency();
+                return this.OKResponse(dACurrency.DeleteCurrency(_context, id, User.ToAppUser()) ? "Deleted Successfully" : "Deletion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -91,8 +115,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult StatusType(long id, bool isStatus)
         {
-            DACurrency dACurrency = new DACurrency();
-            return this.OKResponse(dACurrency.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DACurrency dACurrency = new DACurrency();
+                return this.OKResponse(dACurrency.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+            
         }
 
     }

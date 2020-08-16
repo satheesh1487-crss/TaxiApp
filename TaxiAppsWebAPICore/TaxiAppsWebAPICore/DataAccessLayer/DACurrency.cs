@@ -62,87 +62,70 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool AddCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                //if (context.TabCommonCurrency.Any(t => t.Currencyname.ToLowerInvariant() == currencyInfo.CurrencyName.ToLowerInvariant()))
-                    //throw new DataValidationException($"Artifact with name '{currencyInfo.CurrencyName}' already exists.");
-                TabCommonCurrency currency = new TabCommonCurrency();
-                currency.Currencyid = currencyInfo.CurrencyID;
-                currency.Currencyname = currencyInfo.CurrencyName;
-                currency.CurrencySymbol = currencyInfo.CurrencySymbol;
-                currency.Currenciesid = currencyInfo.StandardId;
-                currency.IsActive = 1;
-                currency.IsDeleted = 0;
-                currency.CreatedAt = DateTime.UtcNow;
-                currency.UpdatedAt = DateTime.UtcNow;
-                currency.UpdatedBy = currency.CreatedBy = loggedInUser.Email;
-                context.TabCommonCurrency.Add(currency);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "AddCurrency", context);
-                return false;
-            }
+
+            var zoneexist = context.TabCurrencies.FirstOrDefault(t => t.IsDelete == 0 && t.Currenciesid == currencyInfo.StandardId);
+            if (zoneexist != null)
+                throw new DataValidationException($"Currency standard does not exists");
+
+            TabCommonCurrency currency = new TabCommonCurrency();
+            currency.Currencyid = currencyInfo.CurrencyID;
+            currency.Currencyname = currencyInfo.CurrencyName;
+            currency.CurrencySymbol = currencyInfo.CurrencySymbol;
+            currency.Currenciesid = currencyInfo.StandardId;
+            currency.IsActive = 1;
+            currency.IsDeleted = 0;
+            currency.CreatedAt = DateTime.UtcNow;
+            currency.UpdatedAt = DateTime.UtcNow;
+            currency.UpdatedBy = currency.CreatedBy = loggedInUser.Email;
+            context.TabCommonCurrency.Add(currency);
+            context.SaveChanges();
+            return true;
+
         }
 
         public bool EditCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo, LoggedInUser loggedInUser)
         {
-            try
+            var zoneexist = context.TabCurrencies.FirstOrDefault(t => t.IsDelete == 0 && t.Currenciesid == currencyInfo.StandardId);
+            if (zoneexist != null)
+                throw new DataValidationException($"Currency standard does not exists");
+
+            var updatedate = context.TabCommonCurrency.Where(r => r.Currencyid == currencyInfo.CurrencyID && r.IsDeleted == 0).FirstOrDefault();
+            if (updatedate == null)
+                throw new DataValidationException($"Currency does not exists");
+
+            if (updatedate != null)
             {
+                updatedate.Currencyname = currencyInfo.CurrencyName;
+                updatedate.CurrencySymbol = currencyInfo.CurrencySymbol;
+                updatedate.Currenciesid = currencyInfo.StandardId;
+                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
 
-                var updatedate = context.TabCommonCurrency.Where(r => r.Currencyid == currencyInfo.CurrencyID && r.IsDeleted == 0).FirstOrDefault();
-                if (updatedate != null)
-                {
-
-                    updatedate.Currencyname = currencyInfo.CurrencyName;
-                    updatedate.CurrencySymbol = currencyInfo.CurrencySymbol;
-                    updatedate.Currenciesid = currencyInfo.StandardId;
-                    updatedate.IsActive = 1;
-                    updatedate.IsDeleted = 0;
-
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-
-                    updatedate.UpdatedBy = loggedInUser.Email;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-
-                }
-                return false;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "EditCurrency", context);
-                return false;
-            }
+            return false;
+
         }
 
         public bool DeleteCurrency(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            try
+            var commonCurrency = context.TabCommonCurrency.Where(r => r.Currencyid == id && r.IsDeleted == 0).FirstOrDefault();
+            if (commonCurrency == null)
+                throw new DataValidationException($"Currency does not exists");
+
+            var updatedate = context.TabCommonCurrency.Where(r => r.Currencyid == id && r.IsDeleted == 0).FirstOrDefault();
+            if (updatedate != null)
             {
-
-                var updatedate = context.TabCommonCurrency.Where(r => r.Currencyid == id && r.IsDeleted == 0).FirstOrDefault();
-                if (updatedate != null)
-                {
-
-
-                    updatedate.IsDeleted = 1;
-                    updatedate.DeletedAt = DateTime.UtcNow;
-                    updatedate.DeletedBy = loggedInUser.Email;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                updatedate.IsDeleted = 1;
+                updatedate.DeletedAt = DateTime.UtcNow;
+                updatedate.DeletedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "DeleteCurrency", context);
-                return false;
-            }
+            return false;
         }
 
         public CurrencyInfo GetbyCurrencyId(TaxiAppzDBContext context, long id)
@@ -170,28 +153,22 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool StatusType(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
-            try
+            var commonCurrency = context.TabCommonCurrency.Where(r => r.Currencyid == id && r.IsDeleted == 0).FirstOrDefault();
+            if (commonCurrency == null)
+                throw new DataValidationException($"Currency does not exists");
+
+            var updatedate = context.TabCommonCurrency.Where(r => r.Currencyid == id && r.IsDeleted == 0).FirstOrDefault();
+            if (updatedate != null)
             {
-
-                var updatedate = context.TabCommonCurrency.Where(r => r.Currencyid == id && r.IsDeleted == 0).FirstOrDefault();
-                if (updatedate != null)
-                {
-
-
-                    updatedate.IsActive = isStatus == true ? 1 : 0;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                updatedate.IsActive = isStatus == true ? 1 : 0;
+                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedBy = "admin";
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "StatusType", context);
-                return false;
-            }
+            return false;
+
         }
 
     }
