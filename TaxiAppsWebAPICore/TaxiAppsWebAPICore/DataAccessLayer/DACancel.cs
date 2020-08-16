@@ -74,6 +74,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             var roleExist = context.TabZonetypeRelationship.FirstOrDefault(t => t.IsDelete == 0 && t.Zonetypeid == cancelUserInfo.Zonetypeid);
             if (roleExist != null)
                 throw new DataValidationException($"Zone type does not exists");
+
             TabUserCancellation tabUserCancellation = new TabUserCancellation();
             tabUserCancellation.Arrivalstatus = cancelUserInfo.ArrivalStatus;
             tabUserCancellation.CancellationReasonArabic = cancelUserInfo.CancelReasonArabic;
