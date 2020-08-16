@@ -147,16 +147,31 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditZoneType(ZoneTypeRelation zoneTypeRelation)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+           
         }
         [HttpPut]
         [Route("ActiveZoneType")]
         [Authorize]
         public IActionResult ActiveZoneType(long zoneid,long typeid,bool isactivestatus,ZoneTypeRelation zoneTypeRelation)
         {
-            DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZoneType(zoneid,typeid, isactivestatus, _context, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OKResponse(dAZone.ActiveZoneType(zoneid, typeid, isactivestatus, _context, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }           
         }
         [HttpPut]
         [Route("DefaultZoneType")]

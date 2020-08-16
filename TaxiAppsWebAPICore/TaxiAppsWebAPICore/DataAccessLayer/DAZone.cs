@@ -269,28 +269,28 @@ namespace TaxiAppsWebAPICore
         }
         public bool AddZoneType(long zoneid, ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
-             
 
-                var serviceExist = context.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == zoneTypeRelation.Zoneid);
-                if (serviceExist == null)
-                    throw new DataValidationException($"Zone does not already exists.");
 
-                var typeExist = context.TabTypes.FirstOrDefault(t => t.IsDeleted == 0 && t.Typeid == zoneTypeRelation.Typeid);
-                if (typeExist == null)
-                    throw new DataValidationException($"Vechile type does not already exists.");
+            var serviceExist = context.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == zoneTypeRelation.Zoneid);
+            if (serviceExist == null)
+                throw new DataValidationException($"Zone does not already exists.");
 
-                var isrelationshipexist = context.TabZonetypeRelationship.Any(z => z.Zoneid == zoneid && z.IsDelete ==0);
-                TabZonetypeRelationship tabZonetypeRelationship = new TabZonetypeRelationship();
-                tabZonetypeRelationship.Zoneid = zoneTypeRelation.Zoneid;
-                tabZonetypeRelationship.Typeid = zoneTypeRelation.Typeid;
-                tabZonetypeRelationship.Paymentmode = zoneTypeRelation.Paymentmode;
-                tabZonetypeRelationship.Showbill = zoneTypeRelation.Showbill.ToUpper() == "YES" ? true : false;
-                tabZonetypeRelationship.IsActive = 1;
-                tabZonetypeRelationship.IsDefault = isrelationshipexist ? 0 : 1;
-                context.TabZonetypeRelationship.Add(tabZonetypeRelationship);
-                context.SaveChanges();
-                return true;
-             
+            var typeExist = context.TabTypes.FirstOrDefault(t => t.IsDeleted == 0 && t.Typeid == zoneTypeRelation.Typeid);
+            if (typeExist == null)
+                throw new DataValidationException($"Vechile type does not already exists.");
+
+            var isrelationshipexist = context.TabZonetypeRelationship.Any(z => z.Zoneid == zoneid && z.IsDelete == 0);
+            TabZonetypeRelationship tabZonetypeRelationship = new TabZonetypeRelationship();
+            tabZonetypeRelationship.Zoneid = zoneTypeRelation.Zoneid;
+            tabZonetypeRelationship.Typeid = zoneTypeRelation.Typeid;
+            tabZonetypeRelationship.Paymentmode = zoneTypeRelation.Paymentmode;
+            tabZonetypeRelationship.Showbill = zoneTypeRelation.Showbill.ToUpper() == "YES" ? true : false;
+            tabZonetypeRelationship.IsActive = 1;
+            tabZonetypeRelationship.IsDefault = isrelationshipexist ? 0 : 1;
+            context.TabZonetypeRelationship.Add(tabZonetypeRelationship);
+            context.SaveChanges();
+            return true;
+
 
         }
         public ZoneTypeRelation GetZoneTypebyid(long zoneid, long zonetypeid, TaxiAppzDBContext context)
@@ -316,48 +316,49 @@ namespace TaxiAppsWebAPICore
         }
         public bool EditZoneType(ZoneTypeRelation zoneTypeRelation, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
-            try
+
+            var serviceExist = context.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == zoneTypeRelation.Zoneid);
+            if (serviceExist == null)
+                throw new DataValidationException($"Zone does not already exists.");
+
+            var typeExist = context.TabTypes.FirstOrDefault(t => t.IsDeleted == 0 && t.Typeid == zoneTypeRelation.Typeid);
+            if (typeExist == null)
+                throw new DataValidationException($"Vechile type does not already exists.");
+
+            var zonetypeedit = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneTypeRelation.Zoneid && z.Typeid == zoneTypeRelation.Typeid).FirstOrDefault();
+            if (zonetypeedit != null)
             {
-                var zonetypeedit = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneTypeRelation.Zoneid && z.Typeid == zoneTypeRelation.Typeid).FirstOrDefault();
-                if (zonetypeedit != null)
-                {
-                    zonetypeedit.Zoneid = zoneTypeRelation.Zoneid;
-                    zonetypeedit.Typeid = zoneTypeRelation.Typeid;
-                    zonetypeedit.Paymentmode = zoneTypeRelation.Paymentmode;
-                    zonetypeedit.Showbill = zoneTypeRelation.Showbill.ToUpper() == "YES" ? true : false;
-                    zonetypeedit.IsActive = 1;
-                    context.TabZonetypeRelationship.Update(zonetypeedit);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message.ToString(), "Admin", "EditZoneType", context);
-                return false;
+                zonetypeedit.Zoneid = zoneTypeRelation.Zoneid;
+                zonetypeedit.Typeid = zoneTypeRelation.Typeid;
+                zonetypeedit.Paymentmode = zoneTypeRelation.Paymentmode;
+                zonetypeedit.Showbill = zoneTypeRelation.Showbill.ToUpper() == "YES" ? true : false;
+                zonetypeedit.IsActive = 1;
+                context.TabZonetypeRelationship.Update(zonetypeedit);
+                context.SaveChanges();
+                return true;
             }
 
+            return false;
         }
         public bool ActiveZoneType(long zoneid, long typeid, bool isactivestatus, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
-            try
+            var serviceExist = context.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == zoneid);
+            if (serviceExist == null)
+                throw new DataValidationException($"Zone does not already exists.");
+
+            var typeExist = context.TabTypes.FirstOrDefault(t => t.IsDeleted == 0 && t.Typeid == typeid);
+            if (typeExist == null)
+                throw new DataValidationException($"Vechile type does not already exists.");
+            var zonetypeedit = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneid && z.Typeid == typeid).FirstOrDefault();
+            if (zonetypeedit != null)
             {
-                var zonetypeedit = context.TabZonetypeRelationship.Where(z => z.Zoneid == zoneid && z.Typeid == typeid).FirstOrDefault();
-                if (zonetypeedit != null)
-                {
-                    zonetypeedit.IsActive = isactivestatus ? 1 : 0;
-                    context.TabZonetypeRelationship.Update(zonetypeedit);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+                zonetypeedit.IsActive = isactivestatus ? 1 : 0;
+                context.TabZonetypeRelationship.Update(zonetypeedit);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message.ToString(), "Admin", "EditZoneType", context);
-                return false;
-            }
+            return false;
+
         }
         public bool IsDefaultZoneType(long zoneid, long typeid, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
@@ -396,7 +397,7 @@ namespace TaxiAppsWebAPICore
             {
                 List<SetPrice> setPrices = new List<SetPrice>();
 
-                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid).ToList();
+                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid && t.IsDelete ==0).ToList();
 
                 foreach (var getprice in getsetpricelist)
                 {
