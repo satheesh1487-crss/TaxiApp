@@ -91,10 +91,10 @@ namespace TaxiAppsWebAPICore
         {
             return new LoggedInUser()
             {
-                FullName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("FullName")?.Value,
+                FullName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.NameIdentifier)?.Value,
                 UserName = claimsPrincipal.Identity.Name,
                 RoleName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst(ClaimTypes.Role)?.Value,
-                Email="admin"
+                Email= ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("MailID")?.Value
             };
         }
 

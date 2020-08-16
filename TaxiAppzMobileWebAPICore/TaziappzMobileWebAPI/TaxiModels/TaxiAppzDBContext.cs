@@ -44,6 +44,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabPromo> TabPromo { get; set; }
         public virtual DbSet<TabPushNotification> TabPushNotification { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
+        public virtual DbSet<TabRequest> TabRequest { get; set; }
         public virtual DbSet<TabRequestPlace> TabRequestPlace { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
@@ -460,6 +461,11 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .WithMany(p => p.TabDrivers)
                     .HasForeignKey(d => d.Typeid)
                     .HasConstraintName("FK__tab_Drive__typei__1A9EF37A");
+
+                entity.HasOne(d => d.Zone)
+                    .WithMany(p => p.TabDrivers)
+                    .HasForeignKey(d => d.Zoneid)
+                    .HasConstraintName("FK__tab_Drive__zonei__473C8FC7");
             });
 
             modelBuilder.Entity<TabFaq>(entity =>
@@ -687,6 +693,91 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .WithMany(p => p.TabRefreshtoken)
                     .HasForeignKey(d => d.Userid)
                     .HasConstraintName("fk_userrefreshtoken");
+            });
+
+            modelBuilder.Entity<TabRequest>(entity =>
+            {
+                entity.Property(e => e.CancelMethod).IsUnicode(false);
+
+                entity.Property(e => e.CancelOtherReason).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Distance).HasDefaultValueSql("((0.00))");
+
+                entity.Property(e => e.DriverRated).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IfDispatch).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.InstantTrip)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('Normal Trip')");
+
+                entity.Property(e => e.IsCancelled).HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.IsCompleted).HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.IsDriverArrived).HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.IsDriverStarted)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.IsPaid)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('UNPAID')");
+
+                entity.Property(e => e.IsShare).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsTripStart).HasDefaultValueSql("('False')");
+
+                entity.Property(e => e.Isreschedule)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('No')");
+
+                entity.Property(e => e.NoOfSeats).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PaymentId).IsUnicode(false);
+
+                entity.Property(e => e.PaymentOpt)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('CASH')");
+
+                entity.Property(e => e.PromoId).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Reason).IsUnicode(false);
+
+                entity.Property(e => e.RideLaterCustomDriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Time).HasDefaultValueSql("((0.00))");
+
+                entity.Property(e => e.Timezone).IsUnicode(false);
+
+                entity.Property(e => e.Total).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserRated).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.WaitingTime).HasDefaultValueSql("((0.00))");
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabRequest)
+                    .HasForeignKey(d => d.DriverId)
+                    .HasConstraintName("FK__tab_reque__drive__4DE98D56");
+
+                entity.HasOne(d => d.RequestPlace)
+                    .WithMany(p => p.TabRequest)
+                    .HasForeignKey(d => d.RequestPlaceId)
+                    .HasConstraintName("FK__tab_reque__reque__4A18FC72");
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.TabRequest)
+                    .HasForeignKey(d => d.Typeid)
+                    .HasConstraintName("FK__tab_reque__typei__5D2BD0E6");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TabRequest)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__tab_reque__user___4CF5691D");
             });
 
             modelBuilder.Entity<TabRequestPlace>(entity =>

@@ -16,6 +16,11 @@ namespace TaziappzMobileWebAPI
         public decimal? Picklatitude { get; set; }
         [JsonProperty("picklongtitude")]
         public decimal? Picklongtitude { get; set; }
+       
+
+    }
+    public class RequestVehicleType : LatLong
+    {
         [JsonProperty("droplatitude")]
         public decimal? Droplatitude { get; set; }
         [JsonProperty("droplongtitude")]
@@ -23,8 +28,13 @@ namespace TaziappzMobileWebAPI
         [JsonProperty("pickuplocation")]
         public string Pickuplocation { get; set; }
         [JsonProperty("droplocation")]
-        public string  Droplocation { get; set; }
+        public string Droplocation { get; set; }
 
-
+        [JsonProperty("paymentoption")]
+        public string paymentoption { get; set; }
+        [JsonProperty("type")]
+        public int Type { get; set; }
+        [JsonProperty("isShare")]
+        public int IsShare { get; set; }
     }
 }
