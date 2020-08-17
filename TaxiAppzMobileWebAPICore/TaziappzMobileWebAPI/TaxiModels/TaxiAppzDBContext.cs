@@ -228,6 +228,14 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.Property(e => e.Currency).IsUnicode(false);
 
                 entity.Property(e => e.DCode).IsUnicode(false);
+
+                entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabCurrencies>(entity =>

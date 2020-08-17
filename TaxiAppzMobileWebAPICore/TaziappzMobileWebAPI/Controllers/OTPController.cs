@@ -32,24 +32,24 @@ namespace TaziappzMobileWebAPI.Controllers
             token = _token;
             jwt = _jwt;
         }
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("GenerateOTP")]
-        public IActionResult GenerateOTP([FromBody] OTPModel otpmodel)
-        {
-            DAOTP otp = new DAOTP();
-            return this.OKResponse(otp.GenerateOTP(otpmodel,_context));
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[Route("GenerateOTP")]
+        //public IActionResult GenerateOTP([FromBody] OTPModel otpmodel)
+        //{
+        //    DAOTP otp = new DAOTP();
+        //    return this.OKResponse(otp.GenerateOTP(otpmodel,_context));
 
-        }
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("ValidateOTP")]
-        public IActionResult ValidateOTP(long OTP)
-        {
-            DAOTP otp = new DAOTP();
-            return null;
-           // return this.OK<UserInfo>(otp.ValidateOTP(OTP, _context));
-        }
+        //}
+        //[HttpGet]
+        //[AllowAnonymous]
+        //[Route("ValidateOTP")]
+        //public IActionResult ValidateOTP(long OTP)
+        //{
+        //    DAOTP otp = new DAOTP();
+        //    return null;
+        //   // return this.OK<UserInfo>(otp.ValidateOTP(OTP, _context));
+        //}
         /// <summary>
         /// Use to Validate User Contact No
         /// </summary>
@@ -97,14 +97,15 @@ namespace TaziappzMobileWebAPI.Controllers
         /// Use to Register User
         /// </summary>
         /// <returns></returns>
-        //[HttpGet]
-        //[AllowAnonymous]
-        //[Route("RegisterUser")]
-        //public IActionResult RegisterUser(SignUpmodel signUpmodel)
-        //{
-        //    token = new Token(_context, jwt);
-        //    return this.OK<DetailsWithToken>(token.RegisterUser(refreshtoken, contactno));
-        //}
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RegisterUser")]
+        public IActionResult RegisterUser([FromBody]SignUpmodel signUpmodel)
+        {
+            sign = new DASign(_context,token);
+            bool result = sign.SignUp(signUpmodel);
+            return this.OKStatus(result ? "User Creation Success" : "User Creation Failed", result ? 1 : 0);
+        }
 
         /// <summary>
         /// Use to List Country
