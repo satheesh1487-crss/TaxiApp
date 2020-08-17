@@ -37,6 +37,18 @@ namespace TaxiAppsWebAPICore
 
     }
 
+    public class DocumentList
+    {
+        [JsonProperty("id")]
+        public long ?Id { get; set; }
+
+        [JsonProperty("documentName")]
+        public string ?DocumentName { get; set; }
+
+        [JsonProperty("isActive")]
+        public bool? IsActive { get; set; }
+    }
+
     public class Driver
     {
         [JsonProperty("operatorName")]
@@ -70,6 +82,16 @@ namespace TaxiAppsWebAPICore
         public int ?CarYear { get; set; }
 
 
+    }
+
+    public class EditReward
+    {
+        [JsonProperty("driverid")]
+        public long DriverId { get; set; }
+
+        [JsonProperty("rewardPoint")]
+        public long ?RewardPoint { get; set; }
+        
     }
     public class EditDriver
     {

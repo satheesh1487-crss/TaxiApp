@@ -19,6 +19,41 @@ namespace TaxiAppsWebAPICore.Models
 
         [JsonProperty("assignMethod")]
         public string AssignMethod { get; set; }
-        
+
+        [JsonProperty("requestWaitSecond")]
+        public string RequestWaitSecond { get; set; }
+
+        [JsonProperty("requestInKm")]
+        public string RequestInKm { get; set; }
+
+        [JsonProperty("transferTripAmount")]
+        public string TransferTripAmount { get; set; }
+
+        [JsonProperty("pickupLocationUnits")]
+        public string PickupLocationUnits { get; set; }
+
+        [JsonProperty("captainGetTrips")]
+        public string CaptainGetTrips { get; set; }
+
+        [JsonProperty("locationChangeLimit")]
+        public string LocationChangeLimit { get; set; }
+
+        [JsonProperty("captainsRatingLimit")]
+        public string CaptainsRatingLimit { get; set; }
+
+        [JsonProperty("tripGraceTime")]
+        public string TripGraceTime { get; set; }
+
+        [JsonProperty("scheduleTripsTime")]
+        public string ScheduleTripsTime { get; set; }
+
+        [JsonProperty("dispatchRequest")]
+        public string DispatchRequest { get; set; }
+
+        [JsonProperty("CertainMinutes")]
+        public string CertainMinutes { get; set; }
+
+        [JsonProperty("rewardPoints")]
+        public string RewardPoints { get; set; }
     }
 }
