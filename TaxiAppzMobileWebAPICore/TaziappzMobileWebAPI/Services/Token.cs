@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -21,15 +22,15 @@ namespace TaxiAppsWebAPICore.Services
             _context = context;
             _jwt = jwt.Value; 
         }
-        public DetailsWithToken GenerateJWTTokenDtls(SignInmodel signInmodel)
+        public List<DetailsWithToken> GenerateJWTTokenDtls(SignInmodel signInmodel)
         {
-         var user = new DetailsWithToken();
+            List<DetailsWithToken> user = new List<DetailsWithToken>();
             var IQUser = _context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno).FirstOrDefault();
             if (IQUser != null)
             {
                 var tokenString = GenerateJWTToken(IQUser, _context);
                 var refreshtoken = CreateRefreshToken();
-                user = new DetailsWithToken()
+                user.Add(new DetailsWithToken()
                 {
                     Id=IQUser.Id,
                     FirstName = IQUser.Firstname,
@@ -43,24 +44,23 @@ namespace TaxiAppsWebAPICore.Services
                   
                     //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
                     //   InsertedDate = IQAdmin.CreatedAt
-                };
-                  bool updatetoken = UpdateToken(IQUser.Id, user, _context);
+                });
+                  bool updatetoken = UpdateToken(IQUser.Id, user[0], _context);
 
                 return user;
             }
 
-            user.IsExist = 0;
             return user;
         }
-        public DetailsWithToken ReGenerateJWTTokenDtls(string refreshtoken, string contactno)
+        public List<DetailsWithToken> ReGenerateJWTTokenDtls(string refreshtoken, string contactno)
         {
-            var user = new DetailsWithToken();
+            List<DetailsWithToken> user = new List<DetailsWithToken>();
             var IQUser = _context.TabUser.Where(t => t.PhoneNumber == contactno &&  t.Token == refreshtoken).FirstOrDefault();
             if (IQUser != null)
             {
                 var tokenString = GenerateJWTToken(IQUser, _context);
                 var regenfreshtoken = CreateRefreshToken();
-                user = new DetailsWithToken()
+                user.Add(new DetailsWithToken()
                 {
                     Id = IQUser.Id,
                     FirstName = IQUser.Firstname,
@@ -73,12 +73,11 @@ namespace TaxiAppsWebAPICore.Services
                     IsExist = 1
                     //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
                     //   InsertedDate = IQAdmin.CreatedAt
-                };
-                bool updatetoken = UpdateToken(IQUser.Id, user, _context);
+                });
+                bool updatetoken = UpdateToken(IQUser.Id, user[0] , _context);
                 return user;
             }
-            user.IsExist = 0;
-            return user;
+              return user;
         }
         private  string GenerateJWTToken(TabUser userinfo, TaxiAppzDBContext context)
         {

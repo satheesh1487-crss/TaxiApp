@@ -17,10 +17,10 @@ namespace TaziappzMobileWebAPI.DALayer
             context = _context;
             _token = token;
         }
-        public DetailsWithToken SignIn(SignInmodel signInmodel)
+        public List<DetailsWithToken> SignIn(SignInmodel signInmodel)
         {
             //TabUser tabUser = new TabUser();
-            DetailsWithToken user = new DetailsWithToken();
+            List<DetailsWithToken> user = new List<DetailsWithToken>();
             var tabusers = context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
             if (tabusers != null)
             {
@@ -30,21 +30,21 @@ namespace TaziappzMobileWebAPI.DALayer
                 context.TabUser.Update(tabusers);
                 context.SaveChanges();
                 var tokenString = _token.GenerateJWTTokenDtls(signInmodel);
-                user = new DetailsWithToken()
+                user.Add(new DetailsWithToken()
                 {
-                    FirstName = tokenString.FirstName,
-                    LastName = tokenString.LastName,
-                    Mobileno = tokenString.Mobileno,
-                    Emailid = tokenString.Emailid,
-                    AccessToken = tokenString.AccessToken,
-                    RefreshToken = tokenString.RefreshToken,
-                    IsExist = tokenString.IsExist,
-                    IsActive = tokenString.IsActive
+                    FirstName = tokenString[0].FirstName,
+                    LastName = tokenString[0].LastName,
+                    Mobileno = tokenString[0].Mobileno,
+                    Emailid = tokenString[0].Emailid,
+                    AccessToken = tokenString[0].AccessToken,
+                    RefreshToken = tokenString[0].RefreshToken,
+                    IsExist = tokenString[0].IsExist,
+                    IsActive = tokenString[0].IsActive
 
-                };
+                });
                 return user;
             }
-            user.IsExist = 0;
+          
             return user;
         }
         public bool SignUp(SignUpmodel signUpmodel)

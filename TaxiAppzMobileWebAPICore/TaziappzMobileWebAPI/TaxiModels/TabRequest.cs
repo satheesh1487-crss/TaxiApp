@@ -38,13 +38,17 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [StringLength(10)]
         public string IsDriverStarted { get; set; }
         [Column("is_driver_arrived")]
-        public int IsDriverArrived { get; set; }
+        [StringLength(100)]
+        public string IsDriverArrived { get; set; }
         [Column("is_trip_start")]
-        public int IsTripStart { get; set; }
+        [StringLength(100)]
+        public string IsTripStart { get; set; }
         [Column("is_completed")]
-        public int IsCompleted { get; set; }
+        [StringLength(100)]
+        public string IsCompleted { get; set; }
         [Column("is_cancelled")]
-        public int IsCancelled { get; set; }
+        [StringLength(100)]
+        public string IsCancelled { get; set; }
         [Column("reason")]
         [StringLength(200)]
         public string Reason { get; set; }

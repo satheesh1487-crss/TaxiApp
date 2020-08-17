@@ -7,7 +7,7 @@ namespace TaziappzMobileWebAPI.Interface
 {
    public interface ISign
     {
-        public DetailsWithToken SignIn(SignInmodel signInmodel);
+        public List<DetailsWithToken> SignIn(SignInmodel signInmodel);
         public bool SignUp(SignUpmodel signUpmodel);
         //  public DetailsWithToken RegisterUser(SignUpmodel signUpmodel);
     }

@@ -26,40 +26,42 @@ namespace TaziappzMobileWebAPI
         {
             return controller.Ok(new APIResponse()
             {
-                Message = msg
+                Message = msg,
+                success = true
             });
         }
         internal static IActionResult OKFailed(this ControllerBase controller, string msg)
         {
             return controller.Ok(new APIResponse()
             {
-               Message = msg
+               Message = msg,
+                success = true
             });
         }
-        internal static IActionResult OKStatus(this ControllerBase controller, string msg,int IsExist)
+        internal static IActionResult OKStatus(this ControllerBase controller, string msg)
         {
             return controller.Ok(new APIResponse()
             {
-                Message = msg,
-                isExist = IsExist,
+                Message = msg ,
+                success = true
             });
         }
-        internal static IActionResult OK<T>(this ControllerBase controller, T content, string msg, int IsExist)
+        internal static IActionResult OK<T>(this ControllerBase controller, List<T> content, string msg)
         {
             return controller.Ok(new APIContentResponse<T>()
             {
-                Content = content,
+                ContentList = content,
                 Message = msg,
-                isExist = IsExist,
+                success=true
             });
         }
-        internal static IActionResult OK<T>(this ControllerBase controller, List<T> content)
-        {
-            return controller.Ok(new APIContentResponse<T>()
-            {
-               ContentList = content
-            });
-        }
+        //internal static IActionResult OK<T>(this ControllerBase controller,T content, string msg)
+        //{
+        //    return controller.Ok(new APIContentResponse<T>()
+        //    {
+        //        ContentList = content
+        //    });
+        //}
         internal static string GenerateJWTToken(TabUser userinfo,TaxiAppzDBContext context)
         {
             try
