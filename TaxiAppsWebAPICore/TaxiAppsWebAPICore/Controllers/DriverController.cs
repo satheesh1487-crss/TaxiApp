@@ -54,6 +54,31 @@ namespace TaxiAppsWebAPICore.Controllers
             return this.OK<DriverInfo>(dADriver.GetbyId(driverid, _context));
         }
 
+        [HttpGet]
+        [Route("GetRewardEdit")]
+        [Authorize]
+        public IActionResult GetRewardEdit(long driverid)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<EditReward>(dADriver.GetbyRewardPoint(driverid, _context));
+        }
+
+        [HttpPut]
+        [Route("EditRewardPoint")]
+        [Authorize]
+        public IActionResult EditRewardPoint(EditReward editReward)
+        {
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.EditRewardPoint(_context, editReward, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+        }
+
         [HttpDelete]
         [Route("DeleteDriver")]
         [Authorize]

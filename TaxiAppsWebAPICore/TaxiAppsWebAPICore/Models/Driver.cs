@@ -71,6 +71,16 @@ namespace TaxiAppsWebAPICore
 
 
     }
+
+    public class EditReward
+    {
+        [JsonProperty("driverid")]
+        public long DriverId { get; set; }
+
+        [JsonProperty("rewardPoint")]
+        public long ?RewardPoint { get; set; }
+        
+    }
     public class EditDriver
     {
         [JsonProperty("driverid")]

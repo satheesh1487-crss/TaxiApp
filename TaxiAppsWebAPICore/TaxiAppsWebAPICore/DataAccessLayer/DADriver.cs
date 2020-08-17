@@ -111,6 +111,42 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         }
 
+        public EditReward GetbyRewardPoint(long driverId, TaxiAppzDBContext context)
+        {
+            try
+            {
+                EditReward editReward = new EditReward();
+                var rewardInfo = context.TabDrivers.Where(u => u.Driverid == driverId && u.IsDelete == false).FirstOrDefault();
+                if (rewardInfo != null)
+                {
+                    editReward.RewardPoint = rewardInfo.RewardPoint;
+                }
+                return editReward == null ? null : editReward;
+
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "GetbyRewardPoint", context);
+                return null;
+            }
+        }
+
+        public bool EditRewardPoint(TaxiAppzDBContext context, EditReward editReward, LoggedInUser loggedInUser)
+        {
+            var updatedate = context.TabDrivers.Where(t => t.Driverid == editReward.DriverId).FirstOrDefault();
+            if (updatedate != null)
+            {
+                updatedate.RewardPoint = editReward.RewardPoint;               
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now); ;
+                updatedate.UpdatedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+
         public bool Delete(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             var emailid = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.Driverid == id);
@@ -356,7 +392,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             var currencyExist = context.TabCommonCurrency.FirstOrDefault(t => t.Currencyid == driverAddWallet.Currencyid && t.IsDeleted == 0);
             if (currencyExist == null)
                 throw new DataValidationException($"Currency does not already exists.");
-            
+
 
 
             TabDriverWallet tabDriverWallet = new TabDriverWallet();
@@ -449,7 +485,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             TabDriverFine tabDriverFine = new TabDriverFine();
 
             tabDriverFine.Fineamount = driverFineInfo.Fineamount;
-            tabDriverFine.FineReason = driverFineInfo.Fine_reason; 
+            tabDriverFine.FineReason = driverFineInfo.Fine_reason;
             tabDriverFine.Driverid = driverFineInfo.Driverid;
             tabDriverFine.FinepaidStatus = false;
             tabDriverFine.Createdat = tabDriverFine.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
