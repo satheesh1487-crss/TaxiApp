@@ -31,13 +31,15 @@ namespace TaxiAppsWebAPICore.Controllers
                 Payment_Withdraw=235,
                 Total_Active_Users=550,
                 Total_Admin_Earnings=3000,
-                Total_Approval_Drivers=250,
+                Total_Active_Drivers=1200,
+                Total_Approval_Drivers =250,
                 Total_Blocked_Drivers=150,
                 Total_Drivers=213,
                 Total_Driver_Earnings=125,
                 Total_Earnings=2000,
                 Total_InActive_Users=150,
-                Total_Trips=2500,
+                Total_Deleted_Users=125,
+                Total_Trips =2500,
                 Total_Turnover=550,
                 Total_Users=1500                
             });
