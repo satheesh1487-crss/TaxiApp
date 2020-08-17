@@ -18,9 +18,19 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
 
                 trips.AssignMethod = listTripSetting.FirstOrDefault(t=>t.TripSettingsId==1).TripSettingsAnswer;
-                trips.AssignMethod = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 2).TripSettingsAnswer;
-
-
+                trips.RequestWaitSecond = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 2).TripSettingsAnswer;
+                trips.CaptainGetTrips = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 3).TripSettingsAnswer;
+                trips.CaptainsRatingLimit = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 4).TripSettingsAnswer;
+                trips.CertainMinutes = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 5).TripSettingsAnswer;
+                trips.DispatchRequest = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 6).TripSettingsAnswer;
+                trips.LocationChangeLimit = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 7).TripSettingsAnswer;
+                trips.PickupLocationUnits = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 8).TripSettingsAnswer;
+                trips.RequestInKm = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 9).TripSettingsAnswer;
+                trips.ScheduleTripsTime = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 10).TripSettingsAnswer;
+                trips.RewardPoints = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 11).TripSettingsAnswer;
+                trips.TransferTripAmount = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 12).TripSettingsAnswer;
+                trips.TripGraceTime = listTripSetting.FirstOrDefault(t => t.TripSettingsId == 13).TripSettingsAnswer;
+                
                 return trips != null ? trips : null;
 
             }
