@@ -39,6 +39,16 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public DateTime? UpdatedAt { get; set; }
         [Column("Deleted_At", TypeName = "datetime")]
         public DateTime? DeletedAt { get; set; }
+        [Column("isActive")]
+        public bool? IsActive { get; set; }
+        [Column("isDelete")]
+        public bool? IsDelete { get; set; }
+        [Column("updated_by")]
+        [StringLength(500)]
+        public string UpdatedBy { get; set; }
+        [Column("deleted_by")]
+        [StringLength(500)]
+        public string DeletedBy { get; set; }
 
         [InverseProperty("ZoneAccessNavigation")]
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }

@@ -36,5 +36,16 @@ namespace TaziappzMobileWebAPI
         public int Type { get; set; }
         [JsonProperty("isShare")]
         public int IsShare { get; set; }
+        [JsonProperty("driverslist")]
+       public List<DriversList> driversLists { get; set; }
+    }
+    public class DriversList
+    {
+        [JsonProperty("driverlatitude")]
+        public decimal? Driverlatitude { get; set; }
+        [JsonProperty("driverlongtitude")]
+        public decimal? Driverlongtitude { get; set; }
+        [JsonProperty("driverid")]
+        public decimal? Driverid { get; set; }
     }
 }

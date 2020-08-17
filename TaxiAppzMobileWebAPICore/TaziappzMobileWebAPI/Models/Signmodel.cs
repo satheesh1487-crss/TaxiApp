@@ -14,11 +14,15 @@ namespace TaziappzMobileWebAPI
         public string FirstName { get; set; }
         [JsonProperty("lastname")]
         public string LastName { get; set; }
-        [JsonProperty("phone")]
-        public string mobileno { get; set; }
-        [JsonProperty("email")]
-        public string MailID { get; set; }
-       
+        [JsonProperty("mobileno")]
+        public string Mobileno { get; set; }
+        [JsonProperty("emailid")]
+        public string Emailid { get; set; }
+        [JsonProperty("countryid")]
+        public long countryid { get; set; }
+        [JsonProperty("timezone")]
+        public long Timezone { get; set; }
+
     }
     public class DetailsWithToken : SignUpmodel
     {

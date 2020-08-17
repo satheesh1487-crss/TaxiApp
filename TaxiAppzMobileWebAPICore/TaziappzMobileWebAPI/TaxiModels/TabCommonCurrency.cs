@@ -12,6 +12,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         {
             TabDriverWallet = new HashSet<TabDriverWallet>();
             TabServicelocation = new HashSet<TabServicelocation>();
+            TabUser = new HashSet<TabUser>();
         }
 
         [Key]
@@ -54,5 +55,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual ICollection<TabDriverWallet> TabDriverWallet { get; set; }
         [InverseProperty("Currency")]
         public virtual ICollection<TabServicelocation> TabServicelocation { get; set; }
+        [InverseProperty("Currency")]
+        public virtual ICollection<TabUser> TabUser { get; set; }
     }
 }

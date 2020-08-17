@@ -68,7 +68,7 @@ namespace TaziappzMobileWebAPI.DALayer
             else
             {
                 var iszoneexist = context.TabZone.Include(x => x.Serviceloc).Where(t => t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
-                if(iszoneexist == null)
+                if (iszoneexist == null)
                 {
                     zone.IsExist = 0;
                     return zone;
@@ -83,10 +83,10 @@ namespace TaziappzMobileWebAPI.DALayer
                 List<VehicleType> vehicleTypes = new List<VehicleType>();
                 foreach (var _zone in zonelist)
                 {
-                    var zonetypes = context.TabZonetypeRelationship.Where(t => t.Typeid == _zone.Typeid &&   t.Zoneid == _zone.Zoneid && t.IsActive == 1 && t.IsDelete == 0).ToList();
-                  foreach (var zonetype in zonetypes)
-                  {
-                      List<SetPrice> setPrices = new List<SetPrice>();
+                    var zonetypes = context.TabZonetypeRelationship.Where(t => t.Typeid == _zone.Typeid && t.Zoneid == _zone.Zoneid && t.IsActive == 1 && t.IsDelete == 0).ToList();
+                    foreach (var zonetype in zonetypes)
+                    {
+                        List<SetPrice> setPrices = new List<SetPrice>();
                         var pricelist = context.TabSetpriceZonetype.Where(x => x.Zonetypeid == zonetype.Zonetypeid).ToList();
                         foreach (var price in pricelist)
                         {
@@ -96,17 +96,17 @@ namespace TaziappzMobileWebAPI.DALayer
                                 BasePrice = price.Baseprice,
                                 PricePerTime = price.Pricepertime,
                                 BaseDistance = price.Basedistance,
-                                PricePerDistance= price.Priceperdistance,
+                                PricePerDistance = price.Priceperdistance,
                                 Freewaitingtime = price.Freewaitingtime,
-                                WaitingCharges= price.Waitingcharges,
-                                CancellationFee= price.Cancellationfee,
-                                DropFee= price.Dropfee,
-                                admincommtype=price.Admincommtype,
-                                admincommission=price.Admincommission,
-                                Driversavingper=price.Driversavingper,
-                                CustomerIdfee=price.Customseldrifee,
-                                Modeofpayment=zonetype.Paymentmode
-                           });
+                                WaitingCharges = price.Waitingcharges,
+                                CancellationFee = price.Cancellationfee,
+                                DropFee = price.Dropfee,
+                                admincommtype = price.Admincommtype,
+                                admincommission = price.Admincommission,
+                                Driversavingper = price.Driversavingper,
+                                CustomerIdfee = price.Customseldrifee,
+                                Modeofpayment = zonetype.Paymentmode
+                            });
                         }
                         var vehicletype = context.TabTypes.Where(t => t.Typeid == zonetype.Typeid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
                         if (vehicletype != null)
@@ -120,52 +120,50 @@ namespace TaziappzMobileWebAPI.DALayer
 
                         }
                     }
-              }
+                }
                 zone.Zoneid = iszoneexist.Zoneid;
                 zone.ZoneName = iszoneexist.Zonename;
                 zone.Unit = iszoneexist.Unit;
                 zone.ServiceLocName = iszoneexist.Serviceloc.Name;
                 zone.Vehicletypelist = vehicleTypes;
                 var surgepricelist = context.TabSurgeprice.Where(t => t.ZoneId == zoneid).ToList();
-                if(surgepricelist.Count  != 0)
+                if (surgepricelist.Count != 0)
                 {
                     List<SurgePrice> surgePrices = new List<SurgePrice>();
-                    foreach(var surgeprice in surgepricelist)
+                    foreach (var surgeprice in surgepricelist)
                     {
                         surgePrices.Add(new SurgePrice()
                         {
                             Surgepricetype = surgeprice.SurgepriceType,
-                            Starttime=surgeprice.StartTime,
-                            Endtime=surgeprice.EndTime,
-                            Peaktype=surgeprice.PeakType,
-                            Surgepricevalue=surgeprice.SurgepriceValue
+                            Starttime = surgeprice.StartTime,
+                            Endtime = surgeprice.EndTime,
+                            Peaktype = surgeprice.PeakType,
+                            Surgepricevalue = surgeprice.SurgepriceValue
                         });
                     }
                     zone.Surgepricelist = surgePrices;
                 }
                 zone.Currency = context.TabCommonCurrency.Where(t => t.Currencyid == iszoneexist.Serviceloc.Currencyid).Select(t => t.Currencyname).FirstOrDefault();
                 zone.IsExist = 1;
-                //TabRequestPlace tabRequestPlace = new TabRequestPlace();
-                //tabRequestPlace.PickLatitude = latLong.Picklatitude;
-                //tabRequestPlace.PickLongitude = latLong.Picklongtitude;
-                //tabRequestPlace.DropLatitude = latLong.Droplatitude;
-                //tabRequestPlace.DropLongitude = latLong.droplongtitude;
-                //tabRequestPlace.PickLocation = latLong.Pickuplocation;
-                //tabRequestPlace.DropLocation = latLong.Droplocation;
-                //tabRequestPlace.IsActive = true;
-                //tabRequestPlace.CreatedBy = "Admin";
-                //tabRequestPlace.CreatedAt = DateTime.UtcNow;
-                //context.TabRequestPlace.Add(tabRequestPlace);
-                //context.SaveChanges();
                 return zone;
-
             }
-        
-
-        }
+       }
 
         public bool Requestprogress(RequestVehicleType requestVehicleType, TaxiAppzDBContext context)
         {
+
+            TabRequestPlace tabRequestPlace = new TabRequestPlace();
+            tabRequestPlace.PickLatitude = requestVehicleType.Picklatitude;
+            tabRequestPlace.PickLongitude = requestVehicleType.Picklongtitude;
+            tabRequestPlace.DropLatitude = requestVehicleType.Droplatitude;
+            tabRequestPlace.DropLongitude = requestVehicleType.droplongtitude;
+            tabRequestPlace.PickLocation = requestVehicleType.Pickuplocation;
+            tabRequestPlace.DropLocation = requestVehicleType.Droplocation;
+            tabRequestPlace.IsActive = true;
+            tabRequestPlace.CreatedBy = "Admin";
+            tabRequestPlace.CreatedAt = DateTime.UtcNow;
+            context.TabRequestPlace.Add(tabRequestPlace);
+            context.SaveChanges();
             return true;
         }
     }

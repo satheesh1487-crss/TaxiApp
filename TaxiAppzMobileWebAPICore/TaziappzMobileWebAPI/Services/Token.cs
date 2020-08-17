@@ -34,8 +34,8 @@ namespace TaxiAppsWebAPICore.Services
                     Id=IQUser.Id,
                     FirstName = IQUser.Firstname,
                     LastName = IQUser.Lastname,
-                    mobileno= IQUser.PhoneNumber,
-                    MailID = IQUser.Email,
+                    Mobileno= IQUser.PhoneNumber,
+                    Emailid = IQUser.Email,
                     AccessToken = tokenString,
                     RefreshToken = refreshtoken.RefeshToken,
                    IsExist = 1,
@@ -65,8 +65,8 @@ namespace TaxiAppsWebAPICore.Services
                     Id = IQUser.Id,
                     FirstName = IQUser.Firstname,
                     LastName = IQUser.Lastname,
-                    mobileno = IQUser.PhoneNumber,
-                    MailID = IQUser.Email,
+                    Mobileno = IQUser.PhoneNumber,
+                    Emailid = IQUser.Email,
                     AccessToken = tokenString,
                     RefreshToken = regenfreshtoken.RefeshToken,
                     IsActive = IQUser.IsActive,
@@ -134,7 +134,7 @@ namespace TaxiAppsWebAPICore.Services
         {
             try
             {
-                insertlog("Update Token", userInfo.MailID, "GenerateJWTToken", context);
+                insertlog("Update Token", userInfo.Emailid, "GenerateJWTToken", context);
                 var getuserinfo = context.TabUser.Where(a => a.Id == userid).FirstOrDefault();
                 getuserinfo.Token = userInfo.RefreshToken;
                 getuserinfo.UpdatedAt = DateTime.Now;
@@ -144,7 +144,7 @@ namespace TaxiAppsWebAPICore.Services
             }
             catch (Exception ex)
             {
-                insertlog(ex.Message, userInfo.MailID, "UpdateToken", context);
+                insertlog(ex.Message, userInfo.Emailid, "UpdateToken", context);
                 return false;
             }
         }

@@ -11,6 +11,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public TabUser()
         {
             TabRequest = new HashSet<TabRequest>();
+            TabRequestMeta = new HashSet<TabRequestMeta>();
         }
 
         [Key]
@@ -113,12 +114,14 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [InverseProperty(nameof(TabCountry.TabUser))]
         public virtual TabCountry Country { get; set; }
         [ForeignKey(nameof(Currencyid))]
-        [InverseProperty(nameof(TabCurrencies.TabUser))]
-        public virtual TabCurrencies Currency { get; set; }
+        [InverseProperty(nameof(TabCommonCurrency.TabUser))]
+        public virtual TabCommonCurrency Currency { get; set; }
         [ForeignKey(nameof(Timezoneid))]
         [InverseProperty(nameof(TabTimezone.TabUser))]
         public virtual TabTimezone Timezone { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<TabRequest> TabRequest { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<TabRequestMeta> TabRequestMeta { get; set; }
     }
 }
