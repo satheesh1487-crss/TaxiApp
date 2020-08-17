@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -41,7 +42,7 @@ namespace TaxiAppsWebAPICore.Controllers
                 DAFAQ dAFAQ = new DAFAQ();
                 return this.OKResponse(dAFAQ.EditFAQ(_context, manageFAQList, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
-            catch (Exception ex)
+            catch (DataValidationException ex)
             {
 
                 return this.KnowOperationError(ex.Message);
@@ -68,7 +69,7 @@ namespace TaxiAppsWebAPICore.Controllers
                 DAFAQ dAFAQ = new DAFAQ();
                 return this.OKResponse(dAFAQ.SaveFAQ(_context, manageFAQList, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
             }
-            catch (Exception ex)
+            catch (DataValidationException ex)
             {
 
                 return this.KnowOperationError(ex.Message);
@@ -81,8 +82,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult StatusFAQ(long id, bool isStatus)
         {
-            DAFAQ dAFAQ = new DAFAQ();
-            return this.OKResponse(dAFAQ.StatusFAQ(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DAFAQ dAFAQ = new DAFAQ();
+                return this.OKResponse(dAFAQ.StatusFAQ(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+
+                return this.KnowOperationError(ex.Message);
+            }
         }
     }
 }

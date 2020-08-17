@@ -56,8 +56,14 @@ namespace TaxiAppsWebAPICore.Models
         [JsonProperty("total_InActive_Users")]
         public long Total_InActive_Users { set; get; }
 
+        [JsonProperty("total_Deleted_Users")]
+        public long Total_Deleted_Users { set; get; }
+
         [JsonProperty("total_Drivers")]
         public long Total_Drivers { set; get; }
+
+        [JsonProperty("total_Active_Drivers")]
+        public long Total_Active_Drivers { set; get; }
 
         [JsonProperty("total_Approval_Drivers")]
         public long Total_Approval_Drivers { set; get; }

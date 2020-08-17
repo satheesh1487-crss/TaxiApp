@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -25,7 +26,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult Manageuser()
         {
-           DAComplaint dAComplaint = new DAComplaint();
+            DAComplaint dAComplaint = new DAComplaint();
             return this.OK<List<ManageUserComplaint>>(dAComplaint.ListUserComplaintTemplate(_content));
         }
         [HttpGet]
@@ -41,32 +42,62 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddUserComplainttemplate(ManageUserComplaint managePromo)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.AddUserComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.AddUserComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
         [HttpPut]
         [Route("EditUserComplainttemplate")]
         [Authorize]
         public IActionResult EditUserComplainttemplate(ManageUserComplaint managePromo)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.EditUserComplainttemplate(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.EditUserComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Edited Successfully" : "Failed to Edit");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
         [HttpPut]
         [Route("IsActiveUserComplaintTemplate")]
         [Authorize]
         public IActionResult IsActiveUserComplaintTemplate(long promoid, bool activestatus)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsActiveUserComplaintTemplate(promoid, activestatus, _content) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.IsActiveUserComplaintTemplate(promoid, activestatus, _content, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
         [HttpDelete]
         [Route("IsDeleteUserComplaintTemplate")]
         [Authorize]
         public IActionResult IsDeleteUserComplaintTemplate(long promoid)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsDeleteUserComplaintTemplate(promoid, _content) ? "Recored Deleted Successfully" : "Failed to Delete");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.IsDeleteUserComplaintTemplate(promoid, _content, User.ToAppUser()) ? "Recored Deleted Successfully" : "Failed to Delete");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
         [HttpGet]
         [Route("ManageDriver")]
@@ -91,32 +122,62 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddDriverComplainttemplate(ManageDriverComplaint managePromo)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.AddDriverComplainttemplate(managePromo, _content) ? "Recored Added Successfully" : "Failed to Add");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.AddDriverComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
         [HttpPut]
         [Route("EditDriverComplainttemplate")]
         [Authorize]
         public IActionResult EditDriverComplainttemplate(ManageDriverComplaint managePromo)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.EditDriverComplainttemplate(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.EditDriverComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Edited Successfully" : "Failed to Edit");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
         [HttpPut]
         [Route("IsActiveDriverComplaintTemplate")]
         [Authorize]
         public IActionResult IsActiveDriverComplaintTemplate(long promoid, bool activestatus)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsActiveDriverComplaintTemplate(promoid, activestatus, _content) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.IsActiveDriverComplaintTemplate(promoid, activestatus, _content, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
         [HttpDelete]
         [Route("IsDeleteDriverComplaintTemplate")]
         [Authorize]
         public IActionResult IsDeleteDriverComplaintTemplate(long promoid)
         {
-            DAComplaint dAComplaint = new DAComplaint();
-            return this.OK(dAComplaint.IsDeleteDriverComplaintTemplate(promoid, _content) ? "Recored Deleted Successfully" : "Failed to Delete");
+            try
+            {
+                DAComplaint dAComplaint = new DAComplaint();
+                return this.OK(dAComplaint.IsDeleteDriverComplaintTemplate(promoid, _content, User.ToAppUser()) ? "Recored Deleted Successfully" : "Failed to Delete");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
     }
 }

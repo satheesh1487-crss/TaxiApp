@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 
@@ -38,28 +39,24 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool EditEmail(TaxiAppzDBContext context, ManageEmailOption manageEmailOption, LoggedInUser loggedInUser)
         {
-            try
-            {
 
-                var updatedate = context.TabManageEmail.Where(r => r.ManageEmailid == manageEmailOption.Id).FirstOrDefault();
-                if (updatedate != null)
-                {
-                     
-                    updatedate.ManageEmailid = manageEmailOption.Id; 
-                    updatedate.Description = manageEmailOption.Description;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = loggedInUser.Email;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
+            var emailid = context.TabManageEmail.FirstOrDefault(t => t.ManageEmailid == manageEmailOption.Id);
+            if (emailid == null)
+                throw new DataValidationException($"Email does not already exists.");
+
+            var updatedate = context.TabManageEmail.Where(r => r.ManageEmailid == manageEmailOption.Id).FirstOrDefault();
+            if (updatedate != null)
+            { 
+                updatedate.ManageEmailid = manageEmailOption.Id;
+                updatedate.Description = manageEmailOption.Description;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now); ;
+                updatedate.UpdatedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "EditEmail", context);
-                return false;
-            }
+            return false;
+
         }
 
         public ManageEmailOption GetbyEmailId(TaxiAppzDBContext context, long id)
@@ -98,26 +95,22 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool StatusEmail(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
-            try
-            {
+            var emailid = context.TabManageEmail.FirstOrDefault(t => t.ManageEmailid == id);
+            if (emailid == null)
+                throw new DataValidationException($"Email does not already exists.");
 
-                var updatedate = context.TabManageEmail.Where(r => r.ManageEmailid == id).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.IsActive = isStatus == true;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var updatedate = context.TabManageEmail.Where(r => r.ManageEmailid == id).FirstOrDefault();
+            if (updatedate != null)
             {
-                Extention.insertlog(ex.Message, "Admin", "StatusEmail", context);
-                return false;
+                updatedate.IsActive = isStatus == true;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now); ;
+                updatedate.UpdatedBy = loggedInUser.UserName;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
+            return false;
+
         }
 
         public List<ManageSMSOption> ListSms(TaxiAppzDBContext context)
@@ -130,10 +123,10 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 {
                     manageSms.Add(new ManageSMSOption()
                     {
-                        SMSTitle=sms.Smstitle,         
-                        Id=sms.ManageSmsid,
-                       Description=sms.Description,
-                       IsActive=sms.IsActive
+                        SMSTitle = sms.Smstitle,
+                        Id = sms.ManageSmsid,
+                        Description = sms.Description,
+                        IsActive = sms.IsActive
                     });
                 }
                 return manageSms != null ? manageSms : null;
@@ -149,36 +142,31 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool EditSms(TaxiAppzDBContext context, ManageSMSOption manageSMSOption, LoggedInUser loggedInUser)
         {
-            try
-            {
+            var emailid = context.TabManageSms.FirstOrDefault(t =>t.ManageSmsid == manageSMSOption.Id);
+            if (emailid == null)
+                throw new DataValidationException($"Sms does not already exists.");
 
-                var updatedate = context.TabManageSms.Where(r => r.ManageSmsid == manageSMSOption.Id).FirstOrDefault();
-                if (updatedate != null)
-                {
-                                   
-                    updatedate.ManageSmsid = manageSMSOption.Id;
-                    updatedate.Description = manageSMSOption.Description;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = loggedInUser.Email;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var updatedate = context.TabManageSms.Where(r => r.ManageSmsid == manageSMSOption.Id).FirstOrDefault();
+            if (updatedate != null)
             {
-                Extention.insertlog(ex.Message, "Admin", "EditSms", context);
-                return false;
+                updatedate.ManageSmsid = manageSMSOption.Id;
+                updatedate.Description = manageSMSOption.Description;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.UpdatedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
+            return false;
+
         }
 
         public ManageSMSOption GetbySmsId(TaxiAppzDBContext context, long id)
         {
             try
             {
-                ManageSMSOption manageSMSOption= new ManageSMSOption();
-                var listSms = context.TabManageSms.FirstOrDefault(t => t.ManageSmsid == id );
+                ManageSMSOption manageSMSOption = new ManageSMSOption();
+                var listSms = context.TabManageSms.FirstOrDefault(t => t.ManageSmsid == id);
                 if (listSms != null)
                 {
                     manageSMSOption.Id = listSms.ManageSmsid;
@@ -208,26 +196,23 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool StatusSms(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
-            try
-            {
 
-                var updatedate = context.TabManageSms.Where(r => r.ManageSmsid == id).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.IsActive = isStatus == true;
-                    updatedate.UpdatedAt = DateTime.UtcNow;
-                    updatedate.UpdatedBy = "admin";
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var emailid = context.TabManageSms.FirstOrDefault(t => t.ManageSmsid == id);
+            if (emailid == null)
+                throw new DataValidationException($"Sms does not already exists.");
+
+            var updatedate = context.TabManageSms.Where(r => r.ManageSmsid == id).FirstOrDefault();
+            if (updatedate != null)
             {
-                Extention.insertlog(ex.Message, "Admin", "StatusSms", context);
-                return false;
+                updatedate.IsActive = isStatus == true;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.UpdatedBy = loggedInUser.UserName;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
+            return false;
+
         }
     }
 }

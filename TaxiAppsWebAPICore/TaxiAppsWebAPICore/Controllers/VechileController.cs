@@ -193,8 +193,6 @@ namespace TaxiAppsWebAPICore.Controllers
             {
                 return this.KnowOperationError(ex.Message);
             }
-        
-
         }
     }
 }

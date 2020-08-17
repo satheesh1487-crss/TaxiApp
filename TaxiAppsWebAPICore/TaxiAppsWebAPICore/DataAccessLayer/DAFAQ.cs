@@ -41,24 +41,20 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         }
 
         public bool EditFAQ(TaxiAppzDBContext context, ManageFAQList manageFAQList, LoggedInUser loggedInUser)
-        {
-
-            
-
+        {     
             var updatedate = context.TabFaq.Where(r => r.Faqid == manageFAQList.Id && r.IsDelete == false).FirstOrDefault();
             if (updatedate != null)
             {
                 updatedate.FaqQuestion = manageFAQList.FAQ_Question;
                 updatedate.FaqAnswer = manageFAQList.FAQ_Answer;
                 updatedate.ComplaintType = manageFAQList.Complaint_Type; 
-                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 updatedate.UpdatedBy = loggedInUser.Email;
                 context.Update(updatedate);
                 context.SaveChanges();
                 return true;
             }
             return false;
-
         }
 
         public ManageFAQInfo GetbyFAQId(TaxiAppzDBContext context, long id)
@@ -96,8 +92,8 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             tabFaq.FaqQuestion = manageFAQInfo.FAQ_Question;
            
             tabFaq.Servicelocid = manageFAQInfo.Servicelocid;
-            tabFaq.CreatedAt = DateTime.UtcNow;
-            tabFaq.UpdatedAt = DateTime.UtcNow;
+           
+            tabFaq.CreatedAt = tabFaq.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
             tabFaq.UpdatedBy = tabFaq.CreatedBy = loggedInUser.Email;
 
             context.TabFaq.Add(tabFaq);
@@ -117,7 +113,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             if (updatedate != null)
             {
                 updatedate.IsActive = isStatus;
-                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now); 
                 updatedate.UpdatedBy = loggedInUser.UserName;
                 context.Update(updatedate);
                 context.SaveChanges();

@@ -20,7 +20,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             _context = context;
         }
- 
+
         /// <summary>
         /// Use to List Roles
         /// </summary>
@@ -31,7 +31,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult RoleList()
         {
             DARoles dARoles = new DARoles();
-           return this.OK<List<Roles>>(dARoles.GetRoleList(_context));
+            return this.OK<List<Roles>>(dARoles.GetRoleList(_context));
         }
         /// <summary>
         /// Use to Get Role Details based on ID
@@ -42,7 +42,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult RoleDetails(long Roleid)
         {
             DARoles dARoles = new DARoles();
-           return this.OK<Roles>(dARoles.GetRoleDtls(_context,Roleid));
+            return this.OK<Roles>(dARoles.GetRoleDtls(_context, Roleid));
         }
         /// <summary>
         /// Use to Add Roles
@@ -59,9 +59,9 @@ namespace TaxiAppsWebAPICore.Controllers
             }
             catch (DataValidationException ex)
             {
-              return   this.KnowOperationError(ex.Message);
+                return this.KnowOperationError(ex.Message);
             }
-          
+
         }
         /// <summary>
         /// Use to Edit Role
@@ -69,7 +69,7 @@ namespace TaxiAppsWebAPICore.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("EditRole")]
-        public IActionResult EditRole(long id,[FromBody] Roles roles)
+        public IActionResult EditRole(long id, [FromBody] Roles roles)
         {
             try
             {
@@ -79,25 +79,39 @@ namespace TaxiAppsWebAPICore.Controllers
             catch (DataValidationException ex)
             {
                 return this.KnowOperationError(ex.Message);
-            }            
+            }
         }
 
-        
+
         //TODO:: check parent record is deleted
         [HttpPut("DisableRole")]
         public IActionResult DisableRole(long id)
         {
-            DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.DisableRole(_context, id, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            try
+            {
+                DARoles dARoles = new DARoles();
+                return this.OKResponse(dARoles.DisableRole(_context, id, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
         //TODO:: check parent record is deleted
         [HttpPost]
         [Route("AddMenuAccess")]
-        public IActionResult AddMenuAccess(long fromroleid,long toroleid)
+        public IActionResult AddMenuAccess(long fromroleid, long toroleid)
         {
-            DARoles dARoles = new DARoles();
-            return this.OKResponse(dARoles.AddMenuAccess(fromroleid, toroleid,_context) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                DARoles dARoles = new DARoles();
+                return this.OKResponse(dARoles.AddMenuAccess(fromroleid, toroleid, _context) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
     }
 }

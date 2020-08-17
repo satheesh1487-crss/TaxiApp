@@ -113,26 +113,22 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool Delete(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            try
-            {
-                var updatedate = context.TabDrivers.Where(u => u.Driverid == id && u.IsDelete == false).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.DeletedBy = loggedInUser.Email;
-                    updatedate.IsDelete = true;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
+            var emailid = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.Driverid == id);
+            if (emailid != null)
+                throw new DataValidationException($"Driver does not already exists.");
 
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var updatedate = context.TabDrivers.Where(u => u.Driverid == id && u.IsDelete == false).FirstOrDefault();
+            if (updatedate != null)
             {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Delete", context);
-                return false;
+                updatedate.DeletedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.DeletedBy = loggedInUser.Email;
+                updatedate.IsDelete = true;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
             }
+            return false;
+
         }
 
         public bool Save(TaxiAppzDBContext context, DriverInfo driverInfo, LoggedInUser loggedInUser)
@@ -140,6 +136,22 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             var emailid = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.Email.ToLower() == driverInfo.Email.ToLower() && t.Driverid != driverInfo.DriverId);
             if (emailid != null)
                 throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
+
+            var country = context.TabCountry.FirstOrDefault(t => t.CountryId == driverInfo.Country);
+            if (country == null)
+                throw new DataValidationException($"Country does not already exists.");
+
+            var driverService = context.TabServicelocation.FirstOrDefault(t => t.Servicelocid == driverInfo.DriverArea && t.IsDeleted == 0);
+            if (driverService == null)
+                throw new DataValidationException($"Service location does not already exists.");
+
+            var ZoneExist = context.TabZone.FirstOrDefault(t => t.Zoneid == driverInfo.ZoneId);
+            if (ZoneExist == null)
+                throw new DataValidationException($"Zone does not already exists.");
+
+            var typeExist = context.TabTypes.FirstOrDefault(t => t.Typeid == driverInfo.DriverType && t.IsDeleted == 0);
+            if (typeExist == null)
+                throw new DataValidationException($"Type does not already exists.");
 
             TabDrivers tabDrivers = new TabDrivers();
             tabDrivers.FirstName = driverInfo.FirstName;
@@ -153,6 +165,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             tabDrivers.Countryid = driverInfo.Country;
             tabDrivers.Company = "";
             tabDrivers.Servicelocid = driverInfo.DriverArea;
+            tabDrivers.Zoneid = driverInfo.ZoneId;
             tabDrivers.Password = driverInfo.Password;
             tabDrivers.Typeid = driverInfo.DriverType;
             tabDrivers.Carmodel = driverInfo.CarModel;
@@ -177,6 +190,27 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             if (emailid != null)
                 throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
 
+            var driverExist = context.TabDrivers.FirstOrDefault(t => t.Driverid == editDriver.DriverId && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver does not already exists.");
+
+            var country = context.TabCountry.FirstOrDefault(t => t.CountryId == editDriver.Country);
+            if (country == null)
+                throw new DataValidationException($"Country does not already exists.");
+
+            var driverService = context.TabServicelocation.FirstOrDefault(t => t.Servicelocid == editDriver.DriverArea && t.IsDeleted == 0);
+            if (driverService == null)
+                throw new DataValidationException($"Service location does not already exists.");
+
+            var ZoneExist = context.TabZone.FirstOrDefault(t => t.Zoneid == editDriver.ZoneId);
+            if (ZoneExist == null)
+                throw new DataValidationException($"Zone does not already exists.");
+
+            var typeExist = context.TabTypes.FirstOrDefault(t => t.Typeid == editDriver.DriverType && t.IsDeleted == 0);
+            if (typeExist == null)
+                throw new DataValidationException($"Type does not already exists.");
+
+
             var tabDrivers = context.TabDrivers.Where(r => r.Driverid == editDriver.DriverId && r.IsDelete == false).FirstOrDefault();
             if (tabDrivers != null)
             {
@@ -191,176 +225,154 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 tabDrivers.Countryid = editDriver.Country;
                 tabDrivers.Company = "";
                 tabDrivers.Servicelocid = editDriver.DriverArea;
+                tabDrivers.Zoneid = editDriver.ZoneId;
                 tabDrivers.Password = editDriver.Password;
                 tabDrivers.Typeid = editDriver.DriverType;
                 tabDrivers.NationalId = editDriver.NationalId;
-                //tabDrivers.Driverregno = (context.TabDrivers.Count() + 1).ToString();
                 tabDrivers.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                 tabDrivers.UpdatedBy = loggedInUser.Email;
                 context.Update(tabDrivers);
                 context.SaveChanges();
                 return true;
-                   
+
             }
             return false;
         }
 
         internal bool AddBonus(TaxiAppzDBContext context, DriverBonusInfo driverBonusInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                TabDriverBonus tabDriverBonus = new TabDriverBonus();
-                tabDriverBonus.Driverid = driverBonusInfo.Driverid;
-                tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
-                tabDriverBonus.BonusReason = driverBonusInfo.Reason;
+            var driverExist = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverBonusInfo.Driverid && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver does not already exists.");
 
-                tabDriverBonus.Createdat = tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                tabDriverBonus.Createdby = tabDriverBonus.Updatedby = loggedInUser.Email;
-                tabDriverBonus.IsDelete = false;
-                tabDriverBonus.IsActive = true;
-                context.Add(tabDriverBonus);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Save", context);
-                return false;
-            }
+            TabDriverBonus tabDriverBonus = new TabDriverBonus();
+            tabDriverBonus.Driverid = driverBonusInfo.Driverid;
+            tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
+            tabDriverBonus.BonusReason = driverBonusInfo.Reason;
+
+            tabDriverBonus.Createdat = tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+            tabDriverBonus.Createdby = tabDriverBonus.Updatedby = loggedInUser.Email;
+            tabDriverBonus.IsDelete = false;
+            tabDriverBonus.IsActive = true;
+            context.Add(tabDriverBonus);
+            context.SaveChanges();
+            return true;
+
         }
 
         internal bool EditBonus(TaxiAppzDBContext context, DriverBonusInfo driverBonusInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverid == driverBonusInfo.Driverid && r.IsDelete == false).FirstOrDefault();
-                if (tabDriverBonus != null)
-                {
+            var driverExist = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverBonusInfo.Driverid && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver does not already exists.");
 
-                    tabDriverBonus.Driverid = driverBonusInfo.Driverid;
-                    tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
-                    tabDriverBonus.BonusReason = driverBonusInfo.Reason;
-
-                    tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    tabDriverBonus.Updatedby = loggedInUser.Email;
-                    tabDriverBonus.IsDelete = false;
-                    tabDriverBonus.IsActive = true;
-                    context.Update(tabDriverBonus);
-                    context.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception ex)
+            var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverid == driverBonusInfo.Driverid && r.IsDelete == false).FirstOrDefault();
+            if (tabDriverBonus != null)
             {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Save", context);
-                return false;
+
+                tabDriverBonus.Driverid = driverBonusInfo.Driverid;
+                tabDriverBonus.Bonusamount = driverBonusInfo.Amount;
+                tabDriverBonus.BonusReason = driverBonusInfo.Reason;
+
+                tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDriverBonus.Updatedby = loggedInUser.Email;
+                tabDriverBonus.IsDelete = false;
+                tabDriverBonus.IsActive = true;
+                context.Update(tabDriverBonus);
+                context.SaveChanges();
             }
+            return true;
+
         }
 
-        internal bool DeleteBonus(TaxiAppzDBContext context, long driverId, LoggedInUser loggedInUser)
+        internal bool DeleteBonus(TaxiAppzDBContext context, long driverBounsId, LoggedInUser loggedInUser)
         {
-            try
+            var driverExist = context.TabDriverBonus.FirstOrDefault(t => t.Driverbonusid == driverBounsId && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver bouns does not already exists.");
+
+            var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverbonusid == driverBounsId && r.IsDelete == false).FirstOrDefault();
+            if (tabDriverBonus != null)
             {
-                var tabDriverBonus = context.TabDriverBonus.Where(r => r.Driverid == driverId && r.IsDelete == false).FirstOrDefault();
-                if (tabDriverBonus != null)
-                {
-
-
-                    tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    tabDriverBonus.Updatedby = loggedInUser.Email;
-                    tabDriverBonus.IsDelete = false;
-
-                    context.Update(tabDriverBonus);
-                    context.SaveChanges();
-                }
-                return true;
+                tabDriverBonus.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDriverBonus.Updatedby = loggedInUser.Email;
+                tabDriverBonus.IsDelete = true;
+                context.Update(tabDriverBonus);
+                context.SaveChanges();
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "Save", context);
-                return false;
-            }
+            return true;
+
         }
 
         internal List<DriverBonusList> ListBonus(TaxiAppzDBContext context)
         {
-            try
+            List<DriverBonusList> driverfine = new List<DriverBonusList>();
+            var fineList = context.TabDriverBonus.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
+            foreach (var fine in fineList)
             {
-
-                List<DriverBonusList> driverfine = new List<DriverBonusList>();
-                var fineList = context.TabDriverBonus.Include(t => t.Driver).Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.Updatedat);
-                foreach (var fine in fineList)
+                driverfine.Add(new DriverBonusList()
                 {
-                    driverfine.Add(new DriverBonusList()
-                    {
-                        DriverFineId = fine.Driverbonusid,
-                        Driverid = fine.Driverid,
-                        Amount = fine.Bonusamount,
-                        Reason = fine.BonusReason,
-                        DriverName = fine.Driver.FirstName + ' ' + fine.Driver.LastName,
-                        PhoneNumber = fine.Driver.ContactNo,
-                        RegistrationCode = fine.Driver.Driverregno
+                    DriverFineId = fine.Driverbonusid,
+                    Driverid = fine.Driverid,
+                    Amount = fine.Bonusamount,
+                    Reason = fine.BonusReason,
+                    DriverName = fine.Driver.FirstName + ' ' + fine.Driver.LastName,
+                    PhoneNumber = fine.Driver.ContactNo,
+                    RegistrationCode = fine.Driver.Driverregno
 
-                    });
-                }
-                return driverfine;
+                });
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "ListFine", context);
-                return null;
-            }
+            return driverfine;
         }
 
         public bool DisableUser(TaxiAppzDBContext context, long id, bool status, LoggedInUser loggedInUser)
         {
-            try
-            {
-                var updatedate = context.TabDrivers.Where(u => u.Driverid == id && u.IsDelete == false).FirstOrDefault();
-                if (updatedate != null)
-                {
-                    updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    updatedate.UpdatedBy = loggedInUser.Email;
-                    updatedate.IsActive = status;
-                    context.Update(updatedate);
-                    context.SaveChanges();
-                    return true;
+            var driverExist = context.TabDrivers.FirstOrDefault(t => t.Driverid == id && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver bouns does not already exists.");
 
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var updatedate = context.TabDrivers.Where(u => u.Driverid == id && u.IsDelete == false).FirstOrDefault();
+            if (updatedate != null)
             {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "DisableUser", context);
-                return false;
+                updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                updatedate.UpdatedBy = loggedInUser.Email;
+                updatedate.IsActive = status;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return true;
+
             }
+            return false;
+
         }
 
         public bool AddWallet(TaxiAppzDBContext context, DriverAddWallet driverAddWallet, LoggedInUser loggedInUser)
         {
-            try
-            {
-                // if (context.TabDrivers.Any(t => t.Email.ToLowerInvariant() == driverInfo.Email.ToLowerInvariant()))
-                //    throw new DataValidationException($"Artifact with name '{driverInfo.Email}' already exists.");
-                TabDriverWallet tabDriverWallet = new TabDriverWallet();
-                tabDriverWallet.Driverid = driverAddWallet.DriverId;
-                tabDriverWallet.Currencyid = driverAddWallet.Currencyid;
-                tabDriverWallet.Transactionid = driverAddWallet.Transactionid;
-                tabDriverWallet.Walletamount = driverAddWallet.Walletamount;
 
-                tabDriverWallet.Createdat = tabDriverWallet.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                tabDriverWallet.Createdby = tabDriverWallet.Updatedby = loggedInUser.Email;
-                tabDriverWallet.IsDelete = false;
-                tabDriverWallet.IsActive = true;
-                context.Add(tabDriverWallet);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "AddWallet", context);
-                return false;
-            }
+            var driverExist = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverAddWallet.DriverId && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver bouns does not already exists.");
+
+            var currencyExist = context.TabCommonCurrency.FirstOrDefault(t => t.Currencyid == driverAddWallet.Currencyid && t.IsDeleted == 0);
+            if (currencyExist == null)
+                throw new DataValidationException($"Currency does not already exists.");
+            
+
+
+            TabDriverWallet tabDriverWallet = new TabDriverWallet();
+            tabDriverWallet.Driverid = driverAddWallet.DriverId;
+            tabDriverWallet.Currencyid = driverAddWallet.Currencyid;
+            tabDriverWallet.Transactionid = driverAddWallet.Transactionid;
+            tabDriverWallet.Walletamount = driverAddWallet.Walletamount;
+
+            tabDriverWallet.Createdat = tabDriverWallet.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+            tabDriverWallet.Createdby = tabDriverWallet.Updatedby = loggedInUser.Email;
+            tabDriverWallet.IsDelete = false;
+            tabDriverWallet.IsActive = true;
+            context.TabDriverWallet.Add(tabDriverWallet);
+            context.SaveChanges();
+            return true;
+
         }
 
         public DriverListWallet ListWallet(TaxiAppzDBContext context, long driverid)
@@ -426,28 +438,28 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool AddFine(TaxiAppzDBContext context, DriverFineInfo driverFineInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                TabDriverFine tabDriverFine = new TabDriverFine();
+            var driverExist = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverFineInfo.Driverid && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver bouns does not already exists.");
 
-                tabDriverFine.Fineamount = driverFineInfo.Fineamount;
-                tabDriverFine.FineReason = driverFineInfo.Fine_reason;
-                //tabDriverFine.Currencyid = driverFineInfo.Currencyid;
-                tabDriverFine.Driverid = driverFineInfo.Driverid;
-                tabDriverFine.FinepaidStatus = false;
-                tabDriverFine.Createdat = tabDriverFine.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                tabDriverFine.Createdby = tabDriverFine.Updatedby = loggedInUser.Email;
-                tabDriverFine.IsDelete = false;
-                tabDriverFine.IsActive = true;
-                context.Add(tabDriverFine);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "AddFine", context);
-                return false;
-            }
+            var currencyExist = context.TabCommonCurrency.FirstOrDefault(t => t.Currencyid == driverFineInfo.Currencyid && t.IsDeleted == 0);
+            if (currencyExist == null)
+                throw new DataValidationException($"Currency does not already exists.");
+
+            TabDriverFine tabDriverFine = new TabDriverFine();
+
+            tabDriverFine.Fineamount = driverFineInfo.Fineamount;
+            tabDriverFine.FineReason = driverFineInfo.Fine_reason; 
+            tabDriverFine.Driverid = driverFineInfo.Driverid;
+            tabDriverFine.FinepaidStatus = false;
+            tabDriverFine.Createdat = tabDriverFine.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+            tabDriverFine.Createdby = tabDriverFine.Updatedby = loggedInUser.Email;
+            tabDriverFine.IsDelete = false;
+            tabDriverFine.IsActive = true;
+            context.TabDriverFine.Add(tabDriverFine);
+            context.SaveChanges();
+            return true;
+
         }
 
         public DriverFineInfo GetbyFineId(long driverId, TaxiAppzDBContext context)
@@ -478,33 +490,39 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
 
         public bool EditFine(TaxiAppzDBContext context, DriverFineInfo driverFineInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                var tabDriverFine = context.TabDriverFine.Where(r => r.Driverid == driverFineInfo.DriverFineId && r.IsDelete == false).FirstOrDefault();
-                if (tabDriverFine != null)
-                {
-                    tabDriverFine.Fineamount = driverFineInfo.Fineamount;
-                    tabDriverFine.FinepaidStatus = driverFineInfo.Finepaid_status;
-                    tabDriverFine.FineReason = driverFineInfo.Fine_reason;
+            var driverExist = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverFineInfo.Driverid && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver  does not already exists.");
 
-                    tabDriverFine.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-                    tabDriverFine.Updatedby = loggedInUser.Email;
-                    context.Update(tabDriverFine);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var currencyExist = context.TabDriverFine.FirstOrDefault(t => t.Driverfineid == driverFineInfo.DriverFineId && t.IsDelete == false);
+            if (currencyExist == null)
+                throw new DataValidationException($"Driver fine does not already exists.");
+
+            var tabDriverFine = context.TabDriverFine.Where(r => r.Driverid == driverFineInfo.DriverFineId && r.IsDelete == false).FirstOrDefault();
+            if (tabDriverFine != null)
             {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "EditFine", context);
-                return false;
+                tabDriverFine.Fineamount = driverFineInfo.Fineamount;
+                tabDriverFine.FinepaidStatus = driverFineInfo.Finepaid_status;
+                tabDriverFine.FineReason = driverFineInfo.Fine_reason;
+
+                tabDriverFine.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
+                tabDriverFine.Updatedby = loggedInUser.Email;
+                context.Update(tabDriverFine);
+                context.SaveChanges();
+                return true;
             }
+            return false;
+
         }
 
         internal bool DeleteFine(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            var updatedate = context.TabDriverFine.Where(u => u.Driverid == id && u.IsDelete == false).FirstOrDefault();
+            var driverExist = context.TabDriverFine.FirstOrDefault(t => t.Driverfineid == id && t.IsDelete == false);
+            if (driverExist == null)
+                throw new DataValidationException($"Driver fine does not already exists.");
+
+
+            var updatedate = context.TabDriverFine.Where(u => u.Driverfineid == id && u.IsDelete == false).FirstOrDefault();
             if (updatedate != null)
             {
                 updatedate.Updatedat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
