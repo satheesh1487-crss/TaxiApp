@@ -8,11 +8,18 @@ namespace TaziappzMobileWebAPI.TaxiModels
     [Table("tab_request")]
     public partial class TabRequest
     {
+        public TabRequest()
+        {
+            TabRequestMeta = new HashSet<TabRequestMeta>();
+            TabRequestPlace = new HashSet<TabRequestPlace>();
+        }
+
         [Key]
         [Column("id")]
         public long Id { get; set; }
-        [Column("request_place_id")]
-        public long? RequestPlaceId { get; set; }
+        [Column("Request_id")]
+        [StringLength(300)]
+        public string RequestId { get; set; }
         [Column("request_otp")]
         public int? RequestOtp { get; set; }
         [Column("later")]
@@ -121,14 +128,15 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [ForeignKey(nameof(DriverId))]
         [InverseProperty(nameof(TabDrivers.TabRequest))]
         public virtual TabDrivers Driver { get; set; }
-        [ForeignKey(nameof(RequestPlaceId))]
-        [InverseProperty(nameof(TabRequestPlace.TabRequest))]
-        public virtual TabRequestPlace RequestPlace { get; set; }
         [ForeignKey(nameof(Typeid))]
         [InverseProperty(nameof(TabTypes.TabRequest))]
         public virtual TabTypes Type { get; set; }
         [ForeignKey(nameof(UserId))]
         [InverseProperty(nameof(TabUser.TabRequest))]
         public virtual TabUser User { get; set; }
+        [InverseProperty("Request")]
+        public virtual ICollection<TabRequestMeta> TabRequestMeta { get; set; }
+        [InverseProperty("Request")]
+        public virtual ICollection<TabRequestPlace> TabRequestPlace { get; set; }
     }
 }

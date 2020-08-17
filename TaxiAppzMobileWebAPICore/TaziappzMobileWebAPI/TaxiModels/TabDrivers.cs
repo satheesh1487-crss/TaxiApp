@@ -15,6 +15,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
             TabDriverFine = new HashSet<TabDriverFine>();
             TabDriverWallet = new HashSet<TabDriverWallet>();
             TabRequest = new HashSet<TabRequest>();
+            TabRequestMeta = new HashSet<TabRequestMeta>();
         }
 
         [Key]
@@ -115,5 +116,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual ICollection<TabDriverWallet> TabDriverWallet { get; set; }
         [InverseProperty("Driver")]
         public virtual ICollection<TabRequest> TabRequest { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabRequestMeta> TabRequestMeta { get; set; }
     }
 }

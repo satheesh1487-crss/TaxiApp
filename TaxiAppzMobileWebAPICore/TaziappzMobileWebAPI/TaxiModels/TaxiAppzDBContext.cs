@@ -47,6 +47,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabPushNotification> TabPushNotification { get; set; }
         public virtual DbSet<TabRefreshtoken> TabRefreshtoken { get; set; }
         public virtual DbSet<TabRequest> TabRequest { get; set; }
+        public virtual DbSet<TabRequestMeta> TabRequestMeta { get; set; }
         public virtual DbSet<TabRequestPlace> TabRequestPlace { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
@@ -796,6 +797,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
                 entity.Property(e => e.Reason).IsUnicode(false);
 
+                entity.Property(e => e.RequestId).IsUnicode(false);
+
                 entity.Property(e => e.RideLaterCustomDriver).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Time).HasDefaultValueSql("((0.00))");
@@ -813,11 +816,6 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .HasForeignKey(d => d.DriverId)
                     .HasConstraintName("FK__tab_reque__drive__4DE98D56");
 
-                entity.HasOne(d => d.RequestPlace)
-                    .WithMany(p => p.TabRequest)
-                    .HasForeignKey(d => d.RequestPlaceId)
-                    .HasConstraintName("FK__tab_reque__reque__4A18FC72");
-
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.TabRequest)
                     .HasForeignKey(d => d.Typeid)
@@ -827,6 +825,33 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .WithMany(p => p.TabRequest)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__tab_reque__user___4CF5691D");
+            });
+
+            modelBuilder.Entity<TabRequestMeta>(entity =>
+            {
+                entity.HasKey(e => e.MetaId)
+                    .HasName("PK__tab_requ__1F8299A026B8D6D6");
+
+                entity.Property(e => e.AssignMethod).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Notification).IsUnicode(false);
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabRequestMeta)
+                    .HasForeignKey(d => d.DriverId)
+                    .HasConstraintName("FK__tab_reque__drive__04459E07");
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.TabRequestMeta)
+                    .HasForeignKey(d => d.RequestId)
+                    .HasConstraintName("FK__tab_reque__Reque__025D5595");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TabRequestMeta)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__tab_reque__user___035179CE");
             });
 
             modelBuilder.Entity<TabRequestPlace>(entity =>
@@ -849,6 +874,11 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.Property(e => e.PickLocation).IsUnicode(false);
 
                 entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.TabRequestPlace)
+                    .HasForeignKey(d => d.RequestId)
+                    .HasConstraintName("FK__tab_reque__Reque__7F80E8EA");
             });
 
             modelBuilder.Entity<TabRoles>(entity =>
@@ -1085,7 +1115,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.TabUser)
                     .HasForeignKey(d => d.Currencyid)
-                    .HasConstraintName("FK__tab_user__curren__160F4887");
+                    .HasConstraintName("TAB_USERS_COMM_CURRENCY_ID");
 
                 entity.HasOne(d => d.Timezone)
                     .WithMany(p => p.TabUser)
