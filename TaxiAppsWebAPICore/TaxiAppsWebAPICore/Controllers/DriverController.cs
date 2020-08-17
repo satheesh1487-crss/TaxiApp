@@ -25,8 +25,6 @@ namespace TaxiAppsWebAPICore.Controllers
             _context = context;
         }
 
-
-
         [HttpGet]
         [Route("driverList")]
         [Authorize]
@@ -34,6 +32,15 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DADriver dADriver = new DADriver();
             return this.OK<List<DriverList>>(dADriver.List(_context));
+        }
+
+        [HttpGet]
+        [Route("listDocument")]
+        [Authorize]
+        public IActionResult ListDocument()
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<List<DocumentList>>(dADriver.ListDocument(_context));
         }
 
         [HttpGet]

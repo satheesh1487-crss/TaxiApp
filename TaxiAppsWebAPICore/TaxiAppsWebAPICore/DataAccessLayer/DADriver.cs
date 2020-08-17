@@ -42,6 +42,30 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             }
         }
 
+        public List<DocumentList> ListDocument(TaxiAppzDBContext context)
+        {
+            try
+            {
+                List<DocumentList> documentLists = new List<DocumentList>();
+                var doclist = context.TabManageDocument.Where(t => t.IsDelete == false).ToList().OrderByDescending(t => t.UpdatedAt);
+                foreach (var doc in doclist)
+                {
+                    documentLists.Add(new DocumentList()
+                    {
+                        Id = doc.DocumentId,
+                        DocumentName = doc.DocumentName,
+                        IsActive = doc.IsActive
+                    });
+                }
+                return documentLists;
+            }
+            catch (Exception ex)
+            {
+                Extention.insertlog(ex.Message, "Admin", "ListDocument", context);
+                return null;
+            }
+        }
+
         public List<DriverList> BlockedList(TaxiAppzDBContext context)
         {
             try
@@ -137,7 +161,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             var updatedate = context.TabDrivers.Where(t => t.Driverid == editReward.DriverId).FirstOrDefault();
             if (updatedate != null)
             {
-                updatedate.RewardPoint = editReward.RewardPoint;               
+                updatedate.RewardPoint = editReward.RewardPoint;
                 updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now); ;
                 updatedate.UpdatedBy = loggedInUser.Email;
                 context.Update(updatedate);
