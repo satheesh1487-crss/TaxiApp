@@ -116,9 +116,10 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             try
             {
                 EditReward editReward = new EditReward();
-                var rewardInfo = context.TabDrivers.Where(u => u.Driverid == driverId && u.IsDelete == false).FirstOrDefault();
+                var rewardInfo = context.TabDrivers.Where(t => t.Driverid == driverId && t.IsDelete == false).FirstOrDefault();
                 if (rewardInfo != null)
                 {
+                    editReward.DriverId = rewardInfo.Driverid;
                     editReward.RewardPoint = rewardInfo.RewardPoint;
                 }
                 return editReward == null ? null : editReward;
