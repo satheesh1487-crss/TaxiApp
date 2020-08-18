@@ -146,7 +146,7 @@ namespace TaziappzMobileWebAPI.DALayer
         public bool Requestprogress(RequestVehicleType requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
-            var userid = context.TabUser.Where(t => t.PhoneNumber.Contains(loggedInUser.Contactno) && t.IsActive == 1 && t.IsDelete == 0).Select(t => t.Id).FirstOrDefault();
+            var userid = context.TabUser.Where(t => t.PhoneNumber.Contains(loggedInUser.Contactno) && t.IsActive == true && t.IsDelete == 0).Select(t => t.Id).FirstOrDefault();
             if (userid == null)
                 return false;
             Random random = new Random();

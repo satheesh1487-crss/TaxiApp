@@ -37,7 +37,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             sign = new DASign(_context, token);
            List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
-            detailsWithToken =sign.SignIn(signInmodel,"USER");
+            detailsWithToken =sign.SignIn(signInmodel);
             return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken.Count == 1 ? "User_Signdetails_Found" : "User_SignDetails_Not_Found");
         }
         /// <summary>

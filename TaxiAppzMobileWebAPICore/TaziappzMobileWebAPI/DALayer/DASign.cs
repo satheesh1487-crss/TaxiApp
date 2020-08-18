@@ -17,67 +17,65 @@ namespace TaziappzMobileWebAPI.DALayer
             context = _context;
             _token = token;
         }
-        public List<DetailsWithToken> SignIn(SignInmodel signInmodel,string Access)
+        public List<DetailsWithToken> SignIn(SignInmodel signInmodel)
         {
             //TabUser tabUser = new TabUser();
             List<DetailsWithToken> user = new List<DetailsWithToken>();
-            if (Access == "USER")
+           var tabusers = context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno && t.IsActive == true && t.IsDelete == 0).FirstOrDefault();
+            if (tabusers != null)
             {
-                var tabusers = context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
-                if (tabusers != null)
+                tabusers.LoginBy = signInmodel.LoginBy;
+                tabusers.LoginMethod = signInmodel.LoginMethod;
+                tabusers.DeviceToken = signInmodel.Devicetoken;
+                context.TabUser.Update(tabusers);
+                context.SaveChanges();
+                var tokenString = _token.GenerateJWTTokenDtls(signInmodel);
+                user.Add(new DetailsWithToken()
                 {
-                    tabusers.LoginBy = signInmodel.LoginBy;
-                    tabusers.LoginMethod = signInmodel.LoginMethod;
-                    tabusers.DeviceToken = signInmodel.Devicetoken;
-                    context.TabUser.Update(tabusers);
-                    context.SaveChanges();
-                    var tokenString = _token.GenerateJWTTokenDtls(signInmodel,Access);
-                    user.Add(new DetailsWithToken()
-                    {
-                        FirstName = tokenString[0].FirstName,
-                        LastName = tokenString[0].LastName,
-                        Mobileno = tokenString[0].Mobileno,
-                        Emailid = tokenString[0].Emailid,
-                        AccessToken = tokenString[0].AccessToken,
-                        RefreshToken = tokenString[0].RefreshToken,
-                        IsExist = tokenString[0].IsExist,
-                        IsActive = tokenString[0].IsActive
+                    FirstName = tokenString[0].FirstName,
+                    LastName = tokenString[0].LastName,
+                    Mobileno = tokenString[0].Mobileno,
+                    Emailid = tokenString[0].Emailid,
+                    AccessToken = tokenString[0].AccessToken,
+                    RefreshToken = tokenString[0].RefreshToken,
+                    IsExist = tokenString[0].IsExist,
+                    IsActive = tokenString[0].IsActive
 
-                    });
-                    return user;
-                }
+                });
+                return user;
             }
-            else
-            {
-                var tabDrivers = context.TabDrivers.Where(t => t.ContactNo == signInmodel.Contactno && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
-                if (tabDrivers != null)
-                {
-                    //tabDrivers.Lo = signInmodel.LoginBy;
-                    //tabDrivers.LoginMethod = signInmodel.LoginMethod;
-                    //tabDrivers.DeviceToken = signInmodel.Devicetoken;
-                    //context.TabUser.Update(tabusers);
-                    //context.SaveChanges();
-                    var tokenString = _token.GenerateJWTTokenDtls(signInmodel, Access);
-                    user.Add(new DetailsWithToken()
-                    {
-                        FirstName = tokenString[0].FirstName,
-                        LastName = tokenString[0].LastName,
-                        Mobileno = tokenString[0].Mobileno,
-                        Emailid = tokenString[0].Emailid,
-                        AccessToken = tokenString[0].AccessToken,
-                        RefreshToken = tokenString[0].RefreshToken,
-                        IsExist = tokenString[0].IsExist,
-                        IsActive = tokenString[0].IsActive
-
-                    });
-                    return user;
-                }
-            }
-
-          
-            return user;
+               return user;
         }
-        public bool SignUp(SignUpmodel signUpmodel)
+
+        public List<DetailsWithDriverToken> SignInDriver(SignInmodel signInmodel)
+        {
+            List<DetailsWithDriverToken> driver = new List<DetailsWithDriverToken>();
+            var tabDrivers = context.TabDrivers.Where(t => t.ContactNo == signInmodel.Contactno && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
+            if (tabDrivers != null)
+            {
+                //tabDrivers.Lo = signInmodel.LoginBy;
+                //tabDrivers.LoginMethod = signInmodel.LoginMethod;
+                //tabDrivers.DeviceToken = signInmodel.Devicetoken;
+                //context.TabUser.Update(tabusers);
+                //context.SaveChanges();
+                var tokenString = _token.GenerateJWTDriverTokenDtls(signInmodel);
+                driver.Add(new DetailsWithDriverToken()
+                {
+                    FirstName = tokenString[0].FirstName,
+                    LastName = tokenString[0].LastName,
+                    Mobileno = tokenString[0].Mobileno,
+                    Emailid = tokenString[0].Emailid,
+                    AccessToken = tokenString[0].AccessToken,
+                    RefreshToken = tokenString[0].RefreshToken,
+                    IsExist = tokenString[0].IsExist,
+                    IsActive = tokenString[0].IsActive
+
+                });
+                return driver;
+            }
+            return driver;
+        }
+            public bool SignUp(SignUpmodel signUpmodel)
         {
             TabUser tabUser = new TabUser();
             DetailsWithToken detailsWithToken = new DetailsWithToken();

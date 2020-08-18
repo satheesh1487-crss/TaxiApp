@@ -10,7 +10,8 @@ namespace TaxiAppsWebAPICore.Services
 {
    public interface IToken
     {
-        List<DetailsWithToken> GenerateJWTTokenDtls(SignInmodel signInmodel,string Access);
+        List<DetailsWithToken> GenerateJWTTokenDtls(SignInmodel signInmodel);
+        List<DetailsWithDriverToken> GenerateJWTDriverTokenDtls(SignInmodel signInmodel);
         List<DetailsWithToken> ReGenerateJWTTokenDtls(string refreshtoken,string contactno);
     }
 }

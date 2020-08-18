@@ -44,7 +44,7 @@ namespace TaziappzMobileWebAPI.Controllers
         #endregion
 
         /// <summary>
-        /// Use to Get Existing user records
+        /// Use to Get Existing Driver records
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -53,9 +53,10 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult DriverSignIndetails([FromBody] SignInmodel signInmodel)
         {
             sign = new DASign(_context, token);
-            List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
-            detailsWithToken = sign.SignIn(signInmodel,"DRIVER");
-            return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken.Count == 1 ? "User_Signdetails_Found" : "User_SignDetails_Not_Found");
+            List<DetailsWithDriverToken> detailsWithToken = new List<DetailsWithDriverToken>();
+            detailsWithToken = sign.SignInDriver(signInmodel);
+            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 1 ? "User_Signdetails_Found" : "User_SignDetails_Not_Found");
         }
+         
     }
 }
