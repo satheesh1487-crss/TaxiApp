@@ -8,8 +8,8 @@ namespace TaziappzMobileWebAPI
 {
     public class APIContentResponse<T> : APIResponse
     {
-        //[JsonProperty("content")]
-        //public List<T> Content { get; set; }
+        [JsonProperty("content")]
+        public T Content { get; set; }
         [JsonProperty("contentList")]
         public List<T> ContentList { get; set; }
     }
