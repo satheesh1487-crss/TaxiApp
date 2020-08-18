@@ -22,33 +22,64 @@ namespace TaxiAppsWebAPICore.Services
             _context = context;
             _jwt = jwt.Value; 
         }
-        public List<DetailsWithToken> GenerateJWTTokenDtls(SignInmodel signInmodel)
+        public List<DetailsWithToken> GenerateJWTTokenDtls(SignInmodel signInmodel,string Access)
         {
             List<DetailsWithToken> user = new List<DetailsWithToken>();
-            var IQUser = _context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno).FirstOrDefault();
-            if (IQUser != null)
-            {
-                var tokenString = GenerateJWTToken(IQUser, _context);
-                var refreshtoken = CreateRefreshToken();
-                user.Add(new DetailsWithToken()
+           // if(Access == "USER")
+          //  {
+                var IQUser = _context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno).FirstOrDefault();
+                if (IQUser != null)
                 {
-                    Id=IQUser.Id,
-                    FirstName = IQUser.Firstname,
-                    LastName = IQUser.Lastname,
-                    Mobileno= IQUser.PhoneNumber,
-                    Emailid = IQUser.Email,
-                    AccessToken = tokenString,
-                    RefreshToken = refreshtoken.RefeshToken,
-                   IsExist = 1,
-                   IsActive= IQUser.IsActive
-                  
-                    //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
-                    //   InsertedDate = IQAdmin.CreatedAt
-                });
-                  bool updatetoken = UpdateToken(IQUser.Id, user[0], _context);
+                    var tokenString = GenerateJWTToken(IQUser, _context);
+                    var refreshtoken = CreateRefreshToken();
+                    user.Add(new DetailsWithToken()
+                    {
+                        Id = IQUser.Id,
+                        FirstName = IQUser.Firstname,
+                        LastName = IQUser.Lastname,
+                        Mobileno = IQUser.PhoneNumber,
+                        Emailid = IQUser.Email,
+                        AccessToken = tokenString,
+                        RefreshToken = refreshtoken.RefeshToken,
+                        IsExist = 1,
+                        IsActive = IQUser.IsActive
 
-                return user;
-            }
+                        //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
+                        //   InsertedDate = IQAdmin.CreatedAt
+                    });
+                    bool updatetoken = UpdateToken(IQUser.Id, user[0], _context);
+
+                    return user;
+                }
+          //  }
+            //else
+            //{
+            //    var IQDriver = _context.TabDrivers.Where(t => t.ContactNo == signInmodel.Contactno).FirstOrDefault();
+            //    if (IQDriver != null)
+            //    {
+            //        var tokenString = GenerateJWTToken(IQDriver, _context);
+            //        var refreshtoken = CreateRefreshToken();
+            //        user.Add(new DetailsWithToken()
+            //        {
+            //            Id = IQDriver.Driverid,
+            //            FirstName = IQDriver.FirstName,
+            //            LastName = IQDriver.LastName,
+            //            Mobileno = IQDriver.ContactNo,
+            //            Emailid = IQDriver.Email,
+            //            AccessToken = tokenString,
+            //            RefreshToken = refreshtoken.RefeshToken,
+            //            IsExist = 1,
+            //            IsActive = IQDriver.IsActive
+
+            //            //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
+            //            //   InsertedDate = IQAdmin.CreatedAt
+            //        });
+            //        bool updatetoken = UpdateToken(IQUser.Id, user[0], _context);
+
+            //        return user;
+            //    }
+            //}
+          
 
             return user;
         }
