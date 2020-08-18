@@ -47,7 +47,7 @@ namespace TaziappzMobileWebAPI.Controllers
             cardListModel.Payment.Card_Id = 1;
             cardListModel.Payment.Last_Number = "555";
             cardListModel.Payment.Card_Type = "VISA";
-            cardListModel.Payment.Is_Default = true;            
+            cardListModel.Payment.Is_Default = true;
             return this.OKRESPONSE<CardListModel>(cardListModel, cardListModel == null ? "CardList_Not_Found" : "CardList_Found");
         }
 
@@ -107,7 +107,7 @@ namespace TaziappzMobileWebAPI.Controllers
         [Route("historyList")]
         public IActionResult HistoryList(GeneralModel generalModel)
         {
-            List<DriverHistoryListModel> driverHistoryListModels =new List<DriverHistoryListModel> ();
+            List<DriverHistoryListModel> driverHistoryListModels = new List<DriverHistoryListModel>();
             DriverHistoryListModel driverHistoryListModel = new DriverHistoryListModel();
             driverHistoryListModel.History = new History();
             driverHistoryListModel.History.Request_Id = "RES_61863";
@@ -170,6 +170,258 @@ namespace TaziappzMobileWebAPI.Controllers
             return this.OKRESPONSE<List<DriverHistoryListModel>>(driverHistoryListModels, driverHistoryListModel == null ? "History_List_Not_Found" : "History_List_found");
         }
 
+        [HttpPost]
+        [Route("cancel")]
+        public IActionResult Cancel(GeneralModel generalModel)
+        {
+            TripCancelModel tripCancelModel = new TripCancelModel();
+            return this.OKRESPONSE<TripCancelModel>(tripCancelModel, tripCancelModel == null ? "Trip_Cancel_Not_Found" : "Trip_Cancel_found");
+        }
+
+        [HttpPost]
+        [Route("start")]
+        public IActionResult Start(GeneralModel generalModel)
+        {
+            TripStartModel tripStartModel = new TripStartModel();
+            return this.OKRESPONSE<TripStartModel>(tripStartModel, tripStartModel == null ? "Trip_Start_Not_Found" : "Trip_Start_found");
+        }
+
+
+        [HttpPost]
+        [Route("historySingle")]
+        public IActionResult HistorySingle(GeneralModel generalModel)
+        {
+            HistoryDetailModel historyDetailModel = new HistoryDetailModel();
+            historyDetailModel.Request = new Request();
+            historyDetailModel.Request.User = new User();
+            historyDetailModel.Request.Bill = new Bill();
+            historyDetailModel.Request.Id = 525;
+            historyDetailModel.Request.Is_Share = 0;
+            historyDetailModel.Request.Later = 0;
+            historyDetailModel.Request.Ride_Later_Custom_Driver = 0;
+            historyDetailModel.Request.Show_Driver_Start_Btn = 0;
+            historyDetailModel.Request.Request_Id = "RES_36904";
+            historyDetailModel.Request.Pick_Latitude = 11.0150595;
+            historyDetailModel.Request.Pick_Longitude = 76.9825105;
+            historyDetailModel.Request.Drop_Latitude = 11.0150595;
+            historyDetailModel.Request.Drop_Longitude = 76.9825105;
+            historyDetailModel.Request.Pick_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
+            historyDetailModel.Request.Drop_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
+            historyDetailModel.Request.Trip_Start_Time = DateTime.Now;
+            historyDetailModel.Request.Is_Completed = 1;
+            historyDetailModel.Request.Is_Cancelled = 0;
+            historyDetailModel.Request.Payment_Opt = 1;
+            historyDetailModel.Request.Driver_Id = 1;
+            historyDetailModel.Request.Enable_Dispute_Button = true;
+            historyDetailModel.Request.User.Id = 25;
+            historyDetailModel.Request.User.FirstName = "rajesh";
+            historyDetailModel.Request.User.LastName = "kannan";
+            historyDetailModel.Request.User.Profile_Pic = " ";
+            historyDetailModel.Request.User.Review = 0.35;
+            historyDetailModel.Request.User.Phone_Number = "+919865896532";
+            historyDetailModel.Request.User.Email = "raj@gmail.com";
+            historyDetailModel.Request.Car_Model = "hhhh";
+            historyDetailModel.Request.Car_Number = "AD23";
+            historyDetailModel.Request.Driver_Type = 1;
+            historyDetailModel.Request.Type_Icon = "http://192.168.1.32/captaincar/public/assets/img/uploads/89987.jpg";
+            historyDetailModel.Request.Distance = 0.20366141442004368;
+            historyDetailModel.Request.Time = 3;
+            historyDetailModel.Request.Bill.Base_Price = 10;
+            historyDetailModel.Request.Bill.Ride_Fare = 0;
+            historyDetailModel.Request.Bill.Base_Distance = 1;
+            historyDetailModel.Request.Bill.Price_Per_Distance = 2;
+            historyDetailModel.Request.Bill.Price_Per_Time = 5;
+            historyDetailModel.Request.Bill.Distance_Price = 0;
+            historyDetailModel.Request.Bill.Time_Price = 15;
+            historyDetailModel.Request.Bill.Waiting_Price = 0;
+            historyDetailModel.Request.Bill.Tollgate_Price = 0;
+            historyDetailModel.Request.Bill.Tollgate_List = null;
+            historyDetailModel.Request.Bill.Service_Tax = 2.5;
+            historyDetailModel.Request.Bill.Service_Tax_Percentage = 10;
+            historyDetailModel.Request.Bill.Promo_Amount = 0;
+            historyDetailModel.Request.Bill.Referral_Amount = 0;
+            historyDetailModel.Request.Bill.Service_Fee = 5;
+            historyDetailModel.Request.Bill.Driver_Amount = 25;
+            historyDetailModel.Request.Bill.Total = 27.5;
+            historyDetailModel.Request.Bill.Currency = "JFJF";
+            historyDetailModel.Request.Bill.Show_Bill = 1;
+            historyDetailModel.Request.Bill.Unit = 0;
+            historyDetailModel.Request.Bill.Unit_In_Words_Without_Lang = "mile";
+            historyDetailModel.Request.Bill.Unit_In_Words= "mile";
+            historyDetailModel.Request.Bill.TotalAdditionalCharge = 0;
+            historyDetailModel.Request.Bill.AdditionalCharge = null;
+
+            return this.OKRESPONSE<HistoryDetailModel>(historyDetailModel, historyDetailModel == null ? "History_Detail_Not_Found" : "History_Detail_found");
+        }
+
+
+        [HttpPost]
+        [Route("requestAccept")]
+        public IActionResult RequestAccept(GeneralModel generalModel)
+        {
+            RequestAcceptedModel requestAcceptedModel = new RequestAcceptedModel();
+            requestAcceptedModel.Request = new RequestAccept();
+            requestAcceptedModel.Request.User = new UserAccept();
+
+            requestAcceptedModel.Request.Id = 525;
+            requestAcceptedModel.Request.Is_Share = 0;
+            requestAcceptedModel.Request.Later = 0;
+            requestAcceptedModel.Request.Ride_Later_Custom_Driver = 0;
+            requestAcceptedModel.Request.Trip_Start_Time = DateTime.Now;
+            requestAcceptedModel.Request.Is_Driver_Started = 0;
+            requestAcceptedModel.Request.Is_Driver_Arrived = 0;
+            requestAcceptedModel.Request.Is_Trip_Start = 0;
+            requestAcceptedModel.Request.Is_Completed = 1;
+            requestAcceptedModel.Request.Payment_Opt = 1;
+            requestAcceptedModel.Request.Type = 1;
+            requestAcceptedModel.Request.Pick_Latitude = 11.0150595;
+            requestAcceptedModel.Request.Pick_Longitude = 76.9825105;
+            requestAcceptedModel.Request.Drop_Latitude = 11.0150595;
+            requestAcceptedModel.Request.Drop_Longitude = 76.9825105;
+            requestAcceptedModel.Request.Pick_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
+            requestAcceptedModel.Request.Drop_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
+            requestAcceptedModel.Request.User.Id = 25;
+            requestAcceptedModel.Request.User.FirstName = "rajesh";
+            requestAcceptedModel.Request.User.LastName = "kannan";
+            requestAcceptedModel.Request.User.Profile_Pic = " ";
+            requestAcceptedModel.Request.User.Review = 0.35;
+            requestAcceptedModel.Request.User.Phone_Number = "+919865896532";
+            requestAcceptedModel.Request.User.Email = "raj@gmail.com";
+
+            return this.OKRESPONSE<RequestAcceptedModel>(requestAcceptedModel, requestAcceptedModel == null ? "History_Detail_Not_Found" : "History_Detail_found");
+        }
+
+        [HttpPost]
+        [Route("requestBill")]
+        public IActionResult RequestBill(GeneralModel generalModel)
+        {
+            RequestBillModel requestBillModel = new RequestBillModel();
+            requestBillModel.Request = new RequestBill();
+            requestBillModel.Request.Bill = new BillReq();
+
+            requestBillModel.Request.Id = 525;
+            requestBillModel.Request.Request_Id = "RES_29898";
+            requestBillModel.Request.Distance = 7.4564520000000005;
+            requestBillModel.Request.Payment_Opt = 1;
+            requestBillModel.Request.Time = 1;
+            requestBillModel.Request.Bill.Base_Price = 10;           
+            requestBillModel.Request.Bill.Base_Distance = 1;
+            requestBillModel.Request.Bill.Price_Per_Distance = 2;
+            requestBillModel.Request.Bill.Price_Per_Time = 5;
+            requestBillModel.Request.Bill.Distance_Price = 0;
+            requestBillModel.Request.Bill.Time_Price = 15;
+            requestBillModel.Request.Bill.Waiting_Price = 0;
+            requestBillModel.Request.Bill.Tollgate_Price = 0;
+            requestBillModel.Request.Bill.Tollgate_Lists = null;
+            requestBillModel.Request.Bill.Service_Tax = 2.5;
+            requestBillModel.Request.Bill.Service_Tax_Percentage = 10;
+            requestBillModel.Request.Bill.Promo_Amount = 0;
+            requestBillModel.Request.Bill.Referral_Amount = 0;
+            requestBillModel.Request.Bill.Service_Fee = 5;
+            requestBillModel.Request.Bill.Cancellation_Fee = 25;
+            requestBillModel.Request.Bill.Driver_Amount = 25;
+            requestBillModel.Request.Bill.Total = 27.5;
+            requestBillModel.Request.Bill.Currency = "JFJF";
+            requestBillModel.Request.Bill.Conversion = "-";
+            requestBillModel.Request.Bill.Show_Bill = 1;
+            requestBillModel.Request.Bill.Unit = 0;
+            requestBillModel.Request.Bill.Unit_In_Words_Without_Lang = "mile";
+            requestBillModel.Request.Bill.Unit_In_Words= "mile";
+            requestBillModel.Request.Bill.Trip_Start_Time = " 15:15PM";
+            requestBillModel.Request.Bill.Distance = 7.4564520000000005;
+            requestBillModel.Request.Bill.TotalAdditionalCharge = 0;
+            requestBillModel.Request.Bill.AdditionalCharge = null;
+
+            return this.OKRESPONSE<RequestBillModel>(requestBillModel, requestBillModel == null ? "History_Detail_Not_Found" : "History_Detail_found");
+        }
+
+        [HttpPost]
+        [Route("arrived")]
+        public IActionResult Arrived(GeneralModel generalModel)
+        {
+            TripArrivedModel tripArrivedModel = new TripArrivedModel();
+            return this.OKRESPONSE<TripArrivedModel>(tripArrivedModel, tripArrivedModel == null ? "Trip_Arrived_Not_Found" : "Trip_Arrived_found");
+        }
+
+        [HttpPost]
+        [Route("requestReject")]
+        public IActionResult RequestReject(GeneralModel generalModel)
+        {
+            RequestRejectModel requestRejectModel = new RequestRejectModel();
+            return this.OKRESPONSE<RequestRejectModel>(requestRejectModel, requestRejectModel == null ? "Trip_Reject_Not_Found" : "Trip_Reject_found");
+        }
+
+        [HttpPost]
+        [Route("fromrequest")]
+        public IActionResult FromRequest(GeneralModel generalModel)
+        {
+            RequestRejectModel requestRejectModel = new RequestRejectModel();
+            return this.OKRESPONSE<RequestRejectModel>(requestRejectModel, requestRejectModel == null ? "From_Request_Not_Found" : "From_Request_found");
+        }
+        #endregion
+
+        #region Referral_Apis
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("code")]
+        public IActionResult Code(GeneralModel generalModel)
+        {
+            GetCodeModel getCodeModel = new GetCodeModel();           
+            return this.OKRESPONSE<GetCodeModel>(getCodeModel, getCodeModel == null ? "Get_Code_not_found" : "Get_Code_found");
+        }
+
+        [HttpPost]
+        [Route("apply")]
+        public IActionResult Apply(GeneralModel generalModel)
+        {
+            ApplyCodeModel applyCodeModel = new ApplyCodeModel();
+            return this.OKRESPONSE<ApplyCodeModel>(applyCodeModel, applyCodeModel == null ? "Apply_Code_not_found" : "Apply_Code_found");
+        }
+        #endregion
+
+        #region Common_Apis
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("review")]
+        public IActionResult Review(GeneralModel generalModel)
+        {
+            RequestReviewModel requestReviewModel = new RequestReviewModel();
+            return this.OKRESPONSE<RequestReviewModel>(requestReviewModel, requestReviewModel == null ? "Request_Review_not_found" : "Request_Review_found");
+        }
+
+        [HttpPost]
+        [Route("retrieve")]
+        public IActionResult Retrieve(GeneralModel generalModel)
+        {
+            GetProfileModel getProfileModel = new GetProfileModel();
+            getProfileModel.Driver = new Driver();
+            getProfileModel.Driver.Id = 15;
+            getProfileModel.Driver.FirstName = "rajesh";
+            getProfileModel.Driver.LastName = "kannan";
+            getProfileModel.Driver.Email = "raj@gmail.com";
+            getProfileModel.Driver.Phone = "918888888888";
+            getProfileModel.Driver.Login_By = "android";
+            getProfileModel.Driver.Login_Method = "manual";
+            getProfileModel.Driver.Token = "$2y$10$sMv.qYgeNoiaJ4r1GqgEWO59BMGRi0EEN17t/hmFS0S92YUqd70QS";
+            getProfileModel.Driver.Profile_Pic = "";
+            getProfileModel.Driver.Is_Active = 1;
+            getProfileModel.Driver.Is_Approve = 1;
+            getProfileModel.Driver.Is_Available = 1;
+            getProfileModel.Driver.Car_Model = "FFDJ";
+            getProfileModel.Driver.Car_Number = "8888";
+            getProfileModel.Driver.Total_Reward_Point = 0.5;
+            getProfileModel.Driver.Type_Name = "FKLF";
+            getProfileModel.Driver.Type_Icon = "http://192.168.1.25/production/captain_care/public/assets/img/uploads/54738.jpg";
+            return this.OKRESPONSE<GetProfileModel>(getProfileModel, getProfileModel == null ? "Get_Profile_not_found" : "Get_Profile_found");
+        }
+
+        
         #endregion
     }
 }
