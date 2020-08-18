@@ -14,6 +14,7 @@ namespace TaziappzMobileWebAPI.DALayer
 {
     public class DARequest
     {
+        //TO find polygon
         public long? GetPolygon(LatLong latLong, long countryid, TaxiAppzDBContext context)
         {
             var sericelocationlist = context.TabServicelocation.Include(t => t.TabZone).Where(x => x.Countryid == countryid && x.IsActive == 1 && x.IsDeleted == 0).ToList();
