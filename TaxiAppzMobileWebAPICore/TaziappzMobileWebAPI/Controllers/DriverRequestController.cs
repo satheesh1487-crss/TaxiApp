@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
@@ -14,73 +12,14 @@ namespace TaziappzMobileWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DriverController : ControllerBase
+    public class DriverRequestController : ControllerBase
     {
         public readonly TaxiAppzDBContext _context;
         private IValidate validate;
-        public DriverController(TaxiAppzDBContext context)
+        public DriverRequestController(TaxiAppzDBContext context)
         {
             _context = context;
         }
-
-     
-
-        #region Payment_Apis
-        /// <summary>
-        /// Hard Coded Data
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("getwallet")]
-        public IActionResult GetWallet(GeneralModel generalModel)
-        {
-            GetWalletModel getWalletModel = new GetWalletModel();
-            getWalletModel.Amount_Added = 500;
-            getWalletModel.Amount_Balance = 100;
-            getWalletModel.Amount_Spent = 400;
-            getWalletModel.Currency = "&";
-            return this.OKRESPONSE<GetWalletModel>(getWalletModel, getWalletModel == null ? "wallet_not_found" : "wallet_found");
-        }
-
-        [HttpPost]
-        [Route("cardlist")]
-        public IActionResult CardList(GeneralModel generalModel)
-        {
-            CardListModel cardListModel = new CardListModel();
-            cardListModel.Payment = new Payment();
-            cardListModel.Payment.Card_Id = 1;
-            cardListModel.Payment.Last_Number = "555";
-            cardListModel.Payment.Card_Type = "VISA";
-            cardListModel.Payment.Is_Default = true;
-            return this.OKRESPONSE<CardListModel>(cardListModel, cardListModel == null ? "CardList_Not_Found" : "CardList_Found");
-        }
-
-        [HttpPost]
-        [Route("addwallet")]
-        public IActionResult AddWallet(GeneralModel generalModel)
-        {
-            AddWalletModel addWalletModel = new AddWalletModel();
-            addWalletModel.Amount_Added = 500;
-            addWalletModel.Amount_Balance = 100;
-            addWalletModel.Amount_Spent = 400;
-            addWalletModel.Currency = "&";
-            return this.OKRESPONSE<AddWalletModel>(addWalletModel, addWalletModel == null ? "AddWallet_not_found" : "AddWallet_found");
-        }
-
-        [HttpPost]
-        [Route("addcard")]
-        public IActionResult AddCard(GeneralModel generalModel)
-        {
-            AddCardModel addCardModel = new AddCardModel();
-            addCardModel.Payment = new Payment();
-            addCardModel.Payment.Card_Id = 1;
-            addCardModel.Payment.Last_Number = "555";
-            addCardModel.Payment.Card_Type = "VISA";
-            addCardModel.Payment.Is_Default = true;
-            return this.OKRESPONSE<AddCardModel>(addCardModel, addCardModel == null ? "AddWallet_not_found" : "AddWallet_found");
-        }
-
-        #endregion
 
         #region Request_Apis
         /// <summary>
@@ -251,7 +190,7 @@ namespace TaziappzMobileWebAPI.Controllers
             historyDetailModel.Request.Bill.Show_Bill = 1;
             historyDetailModel.Request.Bill.Unit = 0;
             historyDetailModel.Request.Bill.Unit_In_Words_Without_Lang = "mile";
-            historyDetailModel.Request.Bill.Unit_In_Words= "mile";
+            historyDetailModel.Request.Bill.Unit_In_Words = "mile";
             historyDetailModel.Request.Bill.TotalAdditionalCharge = 0;
             historyDetailModel.Request.Bill.AdditionalCharge = null;
 
@@ -308,7 +247,7 @@ namespace TaziappzMobileWebAPI.Controllers
             requestBillModel.Request.Distance = 7.4564520000000005;
             requestBillModel.Request.Payment_Opt = 1;
             requestBillModel.Request.Time = 1;
-            requestBillModel.Request.Bill.Base_Price = 10;           
+            requestBillModel.Request.Bill.Base_Price = 10;
             requestBillModel.Request.Bill.Base_Distance = 1;
             requestBillModel.Request.Bill.Price_Per_Distance = 2;
             requestBillModel.Request.Bill.Price_Per_Time = 5;
@@ -330,7 +269,7 @@ namespace TaziappzMobileWebAPI.Controllers
             requestBillModel.Request.Bill.Show_Bill = 1;
             requestBillModel.Request.Bill.Unit = 0;
             requestBillModel.Request.Bill.Unit_In_Words_Without_Lang = "mile";
-            requestBillModel.Request.Bill.Unit_In_Words= "mile";
+            requestBillModel.Request.Bill.Unit_In_Words = "mile";
             requestBillModel.Request.Bill.Trip_Start_Time = " 15:15PM";
             requestBillModel.Request.Bill.Distance = 7.4564520000000005;
             requestBillModel.Request.Bill.TotalAdditionalCharge = 0;
@@ -362,70 +301,6 @@ namespace TaziappzMobileWebAPI.Controllers
             RequestRejectModel requestRejectModel = new RequestRejectModel();
             return this.OKRESPONSE<RequestRejectModel>(requestRejectModel, requestRejectModel == null ? "From_Request_Not_Found" : "From_Request_found");
         }
-        #endregion
-
-        #region Referral_Apis
-        /// <summary>
-        /// Hard Coded Data
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("code")]
-        public IActionResult Code(GeneralModel generalModel)
-        {
-            GetCodeModel getCodeModel = new GetCodeModel();           
-            return this.OKRESPONSE<GetCodeModel>(getCodeModel, getCodeModel == null ? "Get_Code_not_found" : "Get_Code_found");
-        }
-
-        [HttpPost]
-        [Route("apply")]
-        public IActionResult Apply(GeneralModel generalModel)
-        {
-            ApplyCodeModel applyCodeModel = new ApplyCodeModel();
-            return this.OKRESPONSE<ApplyCodeModel>(applyCodeModel, applyCodeModel == null ? "Apply_Code_not_found" : "Apply_Code_found");
-        }
-        #endregion
-
-        #region Common_Apis
-        /// <summary>
-        /// Hard Coded Data
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("review")]
-        public IActionResult Review(GeneralModel generalModel)
-        {
-            RequestReviewModel requestReviewModel = new RequestReviewModel();
-            return this.OKRESPONSE<RequestReviewModel>(requestReviewModel, requestReviewModel == null ? "Request_Review_not_found" : "Request_Review_found");
-        }
-
-        [HttpPost]
-        [Route("retrieve")]
-        public IActionResult Retrieve(GeneralModel generalModel)
-        {
-            GetProfileModel getProfileModel = new GetProfileModel();
-            getProfileModel.Driver = new Driver();
-            getProfileModel.Driver.Id = 15;
-            getProfileModel.Driver.FirstName = "rajesh";
-            getProfileModel.Driver.LastName = "kannan";
-            getProfileModel.Driver.Email = "raj@gmail.com";
-            getProfileModel.Driver.Phone = "918888888888";
-            getProfileModel.Driver.Login_By = "android";
-            getProfileModel.Driver.Login_Method = "manual";
-            getProfileModel.Driver.Token = "$2y$10$sMv.qYgeNoiaJ4r1GqgEWO59BMGRi0EEN17t/hmFS0S92YUqd70QS";
-            getProfileModel.Driver.Profile_Pic = "";
-            getProfileModel.Driver.Is_Active = 1;
-            getProfileModel.Driver.Is_Approve = 1;
-            getProfileModel.Driver.Is_Available = 1;
-            getProfileModel.Driver.Car_Model = "FFDJ";
-            getProfileModel.Driver.Car_Number = "8888";
-            getProfileModel.Driver.Total_Reward_Point = 0.5;
-            getProfileModel.Driver.Type_Name = "FKLF";
-            getProfileModel.Driver.Type_Icon = "http://192.168.1.25/production/captain_care/public/assets/img/uploads/54738.jpg";
-            return this.OKRESPONSE<GetProfileModel>(getProfileModel, getProfileModel == null ? "Get_Profile_not_found" : "Get_Profile_found");
-        }
-
-        
         #endregion
     }
 }

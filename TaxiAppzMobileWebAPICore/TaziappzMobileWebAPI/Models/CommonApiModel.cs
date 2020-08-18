@@ -83,7 +83,90 @@ namespace TaziappzMobileWebAPI.Models
     }
     public class Earnings
     {
+        [JsonProperty("today")]
+        public Earned Today { get; set; }
+
+        [JsonProperty("yesterday")]
+        public Earned Yesterday { get; set; }
+
+        [JsonProperty("previousMonth")]
+        public Earned PreviousMonth { get; set; }
+
+        [JsonProperty("currentMonth")]
+        public Earned CurrentMonth { get; set; }
+
+        [JsonProperty("currentWeek")]
+        public CurrentEarned CurrentWeek { get; set; }
+
+        [JsonProperty("lastTrip")]
+        public LastTrip LastTrip { get; set; }        
+    }
+    public class Earned
+    {
+        [JsonProperty("totalTrips")]
+        public int TotalTrips { get; set; }
+
+        [JsonProperty("totalEarned")]
+        public double TotalEarned { get; set; }
+    }
+    public class CurrentEarned
+    {
+        [JsonProperty("totalTrips")]
+        public int TotalTrips { get; set; }
+
+        [JsonProperty("totalEarned")]
+        public double TotalEarned { get; set; }
+
+        [JsonProperty("daysBased")]
+        public DaysBased DaysBased { get; set; }
 
     }
-    
+    public class DaysBased
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("totalTrips")]
+        public int TotalTrips { get; set; }
+
+        [JsonProperty("totalEarned")]
+        public int TotalEarned { get; set; }
+    }
+    public class LastTrip
+    {
+        [JsonProperty("requestId")]
+        public int RequestId { get; set; }
+
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
+
+        [JsonProperty("tripStartTime")]
+        public DateTime TripStartTime { get; set; }
+
+        [JsonProperty("driverEarned")]
+        public double DriverEarned { get; set; }
+
+        [JsonProperty("totalBill")]
+        public double TotalBill { get; set; }
+
+        [JsonProperty("adminEarned")]
+        public double AdminEarned { get; set; }
+    }
+
+    public class FAQListModel
+    {
+        [JsonProperty("faq_list")]
+        public Faq_List Faq_List { get; set; }
+    }
+    public class Faq_List
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("question")]
+        public string Question { get; set; }
+
+        [JsonProperty("answer")]
+        public string Answer { get; set; }
+    }
 }
