@@ -24,6 +24,7 @@ namespace TaziappzMobileWebAPI
         //public long Timezone { get; set; }
 
     }
+
     public class DetailsWithToken : SignUpmodel
     {
         [JsonProperty("id")]
@@ -42,30 +43,49 @@ namespace TaziappzMobileWebAPI
         public int IsExist { get; set; }
 
     }
-    public class DetailsWithDriverToken : SignUpmodel
+    public class SignUpDrivermodel
+    {
+
+        [JsonProperty("firstname")]
+        public string FirstName { get; set; }
+        [JsonProperty("lastname")]
+        public string LastName { get; set; }
+        [JsonProperty("mobileno")]
+        public string Mobileno { get; set; }
+        [JsonProperty("emailid")]
+        public string Emailid { get; set; }
+        [JsonProperty("login_by")]
+        public string Login_by { get; set; }
+        [JsonProperty("login_method")]
+        public string Login_method { get; set; }
+        
+        [JsonProperty("car_model")]
+        public string Car_model { get; set; }
+        [JsonProperty("car_number")]
+        public string Car_number { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+        [JsonProperty("servicelocationid")]
+        public long Servicelocationid { get; set; }
+        //[JsonProperty("timezone")]
+        //public long Timezone { get; set; }
+
+    }
+    public class DetailsWithDriverToken : SignUpDrivermodel
     {
         [JsonProperty("id")]
         public long Id { get; set; }
         [JsonProperty("token")]
-        public string AccessToken { get; set; }
+        public string Token { get; set; }
         [JsonProperty("refreshtoken")]
         public string RefreshToken { get; set; }
+        [JsonProperty("is_approve")]
+        public bool? Is_approve { get; set; }
+        [JsonProperty("is_available")]
+        public bool? Is_available { get; set; }
         [JsonProperty("isActive")]
         public bool? IsActive { get; set; }
-        [JsonProperty("login_by")]
-        public string Login_by { get; set; }
-        [JsonProperty("login_method")]
-        public bool Login_method { get; set; }
-        [JsonProperty("is_approve")]
-        public bool Is_approve { get; set; }
-        [JsonProperty("is_available")]
-        public bool Is_available { get; set; }
-        [JsonProperty("car_model")]
-        public bool Car_model { get; set; }
-        [JsonProperty("car_number")]
-        public bool Car_number { get; set; }
-        [JsonProperty("type_name")]
-        public bool Type_name { get; set; }
+        
         [JsonProperty("isExist")]
         public int IsExist { get; set; }
 

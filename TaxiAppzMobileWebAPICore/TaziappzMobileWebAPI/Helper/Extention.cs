@@ -52,7 +52,7 @@ namespace TaziappzMobileWebAPI
             {
                 ContentList = content,
                 Message = msg,
-                success=true
+                success = true
             });
         }
         //internal static IActionResult OK<T>(this ControllerBase controller,T content, string msg)

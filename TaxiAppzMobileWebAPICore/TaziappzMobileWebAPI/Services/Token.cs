@@ -69,7 +69,7 @@ namespace TaxiAppsWebAPICore.Services
                         LastName = IQDriver.LastName,
                         Mobileno = IQDriver.ContactNo,
                         Emailid = IQDriver.Email,
-                        AccessToken = tokenString,
+                        Token = tokenString,
                         RefreshToken = refreshtoken.RefeshToken,
                         IsExist = 1,
                         IsActive = IQDriver.IsActive
@@ -112,6 +112,41 @@ namespace TaxiAppsWebAPICore.Services
             }
               return user;
         }
+        public List<DetailsWithDriverToken> ReGenerateDriverJWTTokenDtls(string refreshtoken, string contactno)
+        {
+            List<DetailsWithDriverToken> driver = new List<DetailsWithDriverToken>();
+            var IQDriver = _context.TabDrivers.Include(x => x.Serviceloc).Where(t => t.ContactNo == contactno && t.Token == refreshtoken).FirstOrDefault();
+            if (IQDriver == null)
+                return null;
+            var Types = _context.TabTypes.Where(t => t.Typeid == IQDriver.Typeid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
+            if (Types == null)
+                return null;
+            var tokenString = GenerateDriverJWTToken(IQDriver, _context);
+                var regenfreshtoken = CreateRefreshToken();
+                driver.Add(new DetailsWithDriverToken()
+                {
+                    Id = IQDriver.Driverid,
+                    FirstName = IQDriver.FirstName,
+                    LastName = IQDriver.LastName,
+                    Mobileno = IQDriver.ContactNo,
+                    Emailid = IQDriver.Email,
+                    Token = tokenString,
+                    RefreshToken = regenfreshtoken.RefeshToken,
+                    IsExist = 1,
+                    IsActive = IQDriver.IsActive,
+                    Login_by = IQDriver.LoginBy,
+                    Login_method = IQDriver.LoginMethod,
+                     Is_approve = IQDriver.IsApproved,
+                    Is_available = IQDriver.IsAvailable,
+                    Car_model = IQDriver.Carmodel,
+                    Car_number = IQDriver.Carnumber,
+                     Type = Types.Typename,
+                     Servicelocationid = IQDriver.Serviceloc.Servicelocid
+                });
+                bool updatetoken = UpdateDriverToken(IQDriver.Driverid, driver[0], _context);
+                return driver;
+        }
+            
         private  string GenerateJWTToken(TabUser userinfo, TaxiAppzDBContext context)
         {
             try
@@ -160,10 +195,7 @@ namespace TaxiAppsWebAPICore.Services
                 new Claim("lastName", driverinfo.LastName),
                 new Claim("mailID", driverinfo.Email),
                  new Claim("Contactno", driverinfo.ContactNo),
-                //new Claim("isActive", driverinfo.IsActive.ToString()),
-                //new Claim("Carmodel", driverinfo.Carmodel),
-                // new Claim("carnumber", driverinfo.Carnumber),
-                // new Claim("typeid", driverinfo.Typeid.ToString()),
+               
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 

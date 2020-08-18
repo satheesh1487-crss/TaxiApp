@@ -107,6 +107,10 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [Column("login_method")]
         [StringLength(200)]
         public string LoginMethod { get; set; }
+        [Column("isApproved")]
+        public bool? IsApproved { get; set; }
+        [Column("isAvailable")]
+        public bool? IsAvailable { get; set; }
 
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabDrivers))]

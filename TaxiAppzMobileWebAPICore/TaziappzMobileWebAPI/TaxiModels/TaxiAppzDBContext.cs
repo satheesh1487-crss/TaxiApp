@@ -23,6 +23,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabCountries> TabCountries { get; set; }
         public virtual DbSet<TabCountry> TabCountry { get; set; }
         public virtual DbSet<TabCurrencies> TabCurrencies { get; set; }
+        public virtual DbSet<TabDocumentApporvalStatus> TabDocumentApporvalStatus { get; set; }
         public virtual DbSet<TabDriverBonus> TabDriverBonus { get; set; }
         public virtual DbSet<TabDriverCancellation> TabDriverCancellation { get; set; }
         public virtual DbSet<TabDriverComplaint> TabDriverComplaint { get; set; }
@@ -266,6 +267,16 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .HasConstraintName("FK__tab_curre__count__0E6E26BF");
             });
 
+            modelBuilder.Entity<TabDocumentApporvalStatus>(entity =>
+            {
+                entity.HasKey(e => e.DocApprovalId)
+                    .HasName("PK__tab_Docu__5F18C0180CB3A61D");
+
+                entity.Property(e => e.DocStatus).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+            });
+
             modelBuilder.Entity<TabDriverBonus>(entity =>
             {
                 entity.HasKey(e => e.Driverbonusid)
@@ -344,11 +355,15 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.HasKey(e => e.DriverDocId)
                     .HasName("PK__tab_Driv__545AF4F6E49E3966");
 
+                entity.Property(e => e.Comments).IsUnicode(false);
+
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.CreatedBy).IsUnicode(false);
 
                 entity.Property(e => e.DeletedBy).IsUnicode(false);
+
+                entity.Property(e => e.DocumentIdNumber).IsUnicode(false);
 
                 entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
@@ -357,6 +372,11 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.Property(e => e.UpdatedBy).IsUnicode(false);
 
                 entity.Property(e => e.UploadedFileName).IsUnicode(false);
+
+                entity.HasOne(d => d.DocApproval)
+                    .WithMany(p => p.TabDriverDocuments)
+                    .HasForeignKey(d => d.DocApprovalId)
+                    .HasConstraintName("FK__tab_Drive__Doc_A__0BE6BFCF");
 
                 entity.HasOne(d => d.Document)
                     .WithMany(p => p.TabDriverDocuments)
@@ -452,6 +472,10 @@ namespace TaziappzMobileWebAPI.TaxiModels
                 entity.Property(e => e.Gender).IsUnicode(false);
 
                 entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.IsApproved).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsAvailable).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
 

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Services;
 using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Interface;
@@ -14,15 +16,19 @@ namespace TaziappzMobileWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DrvierAuthenicationController : ControllerBase
+    public class DriverAuthenicationController : ControllerBase
     {
         public readonly TaxiAppzDBContext _context;
         private IValidate validate;
         public ISign sign;
         public IToken token;
-        public DrvierAuthenicationController(TaxiAppzDBContext context, ISign _sign, IToken _token)
+        public readonly IOptions<JWT> jwt;
+        public DriverAuthenicationController(TaxiAppzDBContext context, ISign _sign, IToken _token, IOptions<JWT> _jwt)
         {
             _context = context;
+            token = _token;
+            sign = _sign;
+            jwt = _jwt;
         }
 
         #region Driver Mobile no Validation
@@ -57,6 +63,34 @@ namespace TaziappzMobileWebAPI.Controllers
             detailsWithToken = sign.SignInDriver(signInmodel);
             return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 1 ? "User_Signdetails_Found" : "User_SignDetails_Not_Found");
         }
-         
+        /// <summary>
+        /// Use to Register Driver
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RegisterDriver")]
+        public IActionResult RegisterDriver([FromBody] SignUpDrivermodel signUpmodel)
+        {
+            sign = new DASign(_context, token);
+            bool result = sign.SignUpDriver(signUpmodel);
+            return this.OKStatus(result ? "Driver_Creation_Success" : "Driver_Creation_Failed");
+        }
+        /// <summary>
+        /// Use to Regenerate AccessToken once Session Exipred
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("DriverRegenerateAccessToken")]
+        public IActionResult RegenerateAccessToken(string refreshtoken, string contactno)
+        {
+            token = new Token(_context, jwt);
+            List<DetailsWithDriverToken> detailsWithToken = new List<DetailsWithDriverToken>();
+            detailsWithToken = token.ReGenerateDriverJWTTokenDtls(refreshtoken, contactno); //(List)token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
+            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 1 ? "Access token Generated Successfully" : "Access token Generation Failed");
+        }
+
+
     }
 }
