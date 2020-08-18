@@ -51,20 +51,20 @@ namespace TaziappzMobileWebAPI.DALayer
         {
             TabUser tabUser = new TabUser();
             DetailsWithToken detailsWithToken = new DetailsWithToken();
-            var timezone = context.TabTimezone.Where(t => t.Timezoneid == signUpmodel.Timezone && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
-            var country = context.TabCountry.Where(t => t.CountryId == signUpmodel.countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
-            var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signUpmodel.Mobileno).FirstOrDefault();
-            var isServiceLocExist = context.TabServicelocation.Where(t => t.Countryid == signUpmodel.countryid && t.Timezoneid == signUpmodel.Timezone && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
-            if (timezone == null || country == null || isUserExist != null || isServiceLocExist == null)
-            {
+            var isServiceLocExist = context.TabServicelocation.Where(t => t.Servicelocid == signUpmodel.Servicelocationid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
+            if (isServiceLocExist == null)
                 return false;
-            }
+            var timezone = context.TabTimezone.Where(t => t.Timezoneid == isServiceLocExist.Timezoneid && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
+            var country = context.TabCountry.Where(t => t.CountryId == isServiceLocExist.Countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
+            var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signUpmodel.Mobileno).FirstOrDefault();
+            if (timezone == null || country == null || isUserExist != null || isServiceLocExist == null)
+                 return false;
             tabUser.Firstname = signUpmodel.FirstName;
             tabUser.Lastname = signUpmodel.LastName;
             tabUser.Email = signUpmodel.Emailid;
             tabUser.PhoneNumber = signUpmodel.Mobileno;
-            tabUser.Countryid = signUpmodel.countryid;
-            tabUser.Timezoneid = signUpmodel.Timezone;
+            tabUser.Countryid = isServiceLocExist.Countryid;
+            tabUser.Timezoneid = isServiceLocExist.Timezoneid;
             tabUser.Currencyid = isServiceLocExist.Currencyid;
             context.TabUser.Add(tabUser);
             context.SaveChanges();

@@ -18,10 +18,10 @@ namespace TaziappzMobileWebAPI
         public string Mobileno { get; set; }
         [JsonProperty("emailid")]
         public string Emailid { get; set; }
-        [JsonProperty("countryid")]
-        public long countryid { get; set; }
-        [JsonProperty("timezone")]
-        public long Timezone { get; set; }
+        [JsonProperty("servicelocationid")]
+        public long Servicelocationid { get; set; }
+        //[JsonProperty("timezone")]
+        //public long Timezone { get; set; }
 
     }
     public class DetailsWithToken : SignUpmodel
