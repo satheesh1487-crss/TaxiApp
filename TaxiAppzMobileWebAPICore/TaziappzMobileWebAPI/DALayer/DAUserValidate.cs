@@ -16,7 +16,7 @@ namespace TaziappzMobileWebAPI.DALayer
         }
         public bool MobileValidation(SignInmodel signinmodel)
         {
-            var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signinmodel.Contactno && t.IsDelete == 0 && t.IsActive == 1).FirstOrDefault();
+            var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signinmodel.Contactno && t.IsDelete == 0 && t.IsActive == true).FirstOrDefault();
             return isUserExist != null ? true : false;
         }
     }

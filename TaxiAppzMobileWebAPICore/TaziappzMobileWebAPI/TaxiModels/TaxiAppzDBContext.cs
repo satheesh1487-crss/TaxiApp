@@ -445,6 +445,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
                 entity.Property(e => e.DeletedBy).IsUnicode(false);
 
+                entity.Property(e => e.DeviceToken).IsUnicode(false);
+
                 entity.Property(e => e.Email).IsUnicode(false);
 
                 entity.Property(e => e.Gender).IsUnicode(false);
@@ -453,11 +455,17 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
                 entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.LoginBy).IsUnicode(false);
+
+                entity.Property(e => e.LoginMethod).IsUnicode(false);
+
                 entity.Property(e => e.NationalId).IsUnicode(false);
 
                 entity.Property(e => e.Password).IsUnicode(false);
 
                 entity.Property(e => e.State).IsUnicode(false);
+
+                entity.Property(e => e.Token).IsUnicode(false);
 
                 entity.Property(e => e.UpdatedBy).IsUnicode(false);
 
@@ -1085,7 +1093,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
                 entity.Property(e => e.Gender).IsUnicode(false);
 
-                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.IsDelete).HasDefaultValueSql("((0))");
 

@@ -21,7 +21,7 @@ namespace TaziappzMobileWebAPI.DALayer
         {
             //TabUser tabUser = new TabUser();
             List<DetailsWithToken> user = new List<DetailsWithToken>();
-            var tabusers = context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
+           var tabusers = context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno && t.IsActive == true && t.IsDelete == 0).FirstOrDefault();
             if (tabusers != null)
             {
                 tabusers.LoginBy = signInmodel.LoginBy;
@@ -44,27 +44,55 @@ namespace TaziappzMobileWebAPI.DALayer
                 });
                 return user;
             }
-          
-            return user;
+               return user;
         }
-        public bool SignUp(SignUpmodel signUpmodel)
+
+        public List<DetailsWithDriverToken> SignInDriver(SignInmodel signInmodel)
+        {
+            List<DetailsWithDriverToken> driver = new List<DetailsWithDriverToken>();
+            var tabDrivers = context.TabDrivers.Where(t => t.ContactNo == signInmodel.Contactno && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
+            if (tabDrivers != null)
+            {
+                //tabDrivers.Lo = signInmodel.LoginBy;
+                //tabDrivers.LoginMethod = signInmodel.LoginMethod;
+                //tabDrivers.DeviceToken = signInmodel.Devicetoken;
+                //context.TabUser.Update(tabusers);
+                //context.SaveChanges();
+                var tokenString = _token.GenerateJWTDriverTokenDtls(signInmodel);
+                driver.Add(new DetailsWithDriverToken()
+                {
+                    FirstName = tokenString[0].FirstName,
+                    LastName = tokenString[0].LastName,
+                    Mobileno = tokenString[0].Mobileno,
+                    Emailid = tokenString[0].Emailid,
+                    AccessToken = tokenString[0].AccessToken,
+                    RefreshToken = tokenString[0].RefreshToken,
+                    IsExist = tokenString[0].IsExist,
+                    IsActive = tokenString[0].IsActive
+
+                });
+                return driver;
+            }
+            return driver;
+        }
+            public bool SignUp(SignUpmodel signUpmodel)
         {
             TabUser tabUser = new TabUser();
             DetailsWithToken detailsWithToken = new DetailsWithToken();
-            var timezone = context.TabTimezone.Where(t => t.Timezoneid == signUpmodel.Timezone && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
-            var country = context.TabCountry.Where(t => t.CountryId == signUpmodel.countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
-            var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signUpmodel.Mobileno).FirstOrDefault();
-            var isServiceLocExist = context.TabServicelocation.Where(t => t.Countryid == signUpmodel.countryid && t.Timezoneid == signUpmodel.Timezone && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
-            if (timezone == null || country == null || isUserExist != null || isServiceLocExist == null)
-            {
+            var isServiceLocExist = context.TabServicelocation.Where(t => t.Servicelocid == signUpmodel.Servicelocationid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
+            if (isServiceLocExist == null)
                 return false;
-            }
+            var timezone = context.TabTimezone.Where(t => t.Timezoneid == isServiceLocExist.Timezoneid && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
+            var country = context.TabCountry.Where(t => t.CountryId == isServiceLocExist.Countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
+            var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signUpmodel.Mobileno).FirstOrDefault();
+            if (timezone == null || country == null || isUserExist != null || isServiceLocExist == null)
+                 return false;
             tabUser.Firstname = signUpmodel.FirstName;
             tabUser.Lastname = signUpmodel.LastName;
             tabUser.Email = signUpmodel.Emailid;
             tabUser.PhoneNumber = signUpmodel.Mobileno;
-            tabUser.Countryid = signUpmodel.countryid;
-            tabUser.Timezoneid = signUpmodel.Timezone;
+            tabUser.Countryid = isServiceLocExist.Countryid;
+            tabUser.Timezoneid = isServiceLocExist.Timezoneid;
             tabUser.Currencyid = isServiceLocExist.Currencyid;
             context.TabUser.Add(tabUser);
             context.SaveChanges();

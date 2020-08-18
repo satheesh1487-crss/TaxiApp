@@ -25,7 +25,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Route("CreateRequest")]
+        [Route("UserCreateRequest")]
         public IActionResult PostRequest([FromBody] LatLong latLong)
         {
             DARequest dARequest = new DARequest();
@@ -39,7 +39,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Route("Requestprogress")]
+        [Route("UserRequestprogress")]
         public IActionResult Requestprogress([FromBody] RequestVehicleType requestVehicleType)
         {
             DARequest dARequest = new DARequest();

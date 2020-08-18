@@ -91,7 +91,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public int? CancellationContinuousSkipNotified { get; set; }
         [Column("continuous_cancellation_block")]
         public int? ContinuousCancellationBlock { get; set; }
-        public int? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         [Column("isDelete")]
         public int? IsDelete { get; set; }
         [Column("created_By")]

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaziappzMobileWebAPI.DALayer;
+using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
 
@@ -15,11 +17,13 @@ namespace TaziappzMobileWebAPI.Controllers
     public class DriverController : ControllerBase
     {
         public readonly TaxiAppzDBContext _context;
+        private IValidate validate;
         public DriverController(TaxiAppzDBContext context)
         {
             _context = context;
-
         }
+
+     
 
         #region Payment_Apis
         /// <summary>

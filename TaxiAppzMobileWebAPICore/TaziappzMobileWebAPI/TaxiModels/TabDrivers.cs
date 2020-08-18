@@ -93,6 +93,20 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public long? RewardPoint { get; set; }
         [Column("zoneid")]
         public long? Zoneid { get; set; }
+        [Column("token")]
+        [StringLength(500)]
+        public string Token { get; set; }
+        [Column("token_expiry", TypeName = "datetime")]
+        public DateTime? TokenExpiry { get; set; }
+        [Column("device_token")]
+        [StringLength(400)]
+        public string DeviceToken { get; set; }
+        [Column("login_by")]
+        [StringLength(200)]
+        public string LoginBy { get; set; }
+        [Column("login_method")]
+        [StringLength(200)]
+        public string LoginMethod { get; set; }
 
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabDrivers))]
