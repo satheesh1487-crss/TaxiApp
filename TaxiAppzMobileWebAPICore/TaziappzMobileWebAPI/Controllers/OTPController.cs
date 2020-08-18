@@ -56,7 +56,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        [Route("ValidateContactNo")]
+        [Route("userValidateContactNo")]
         public IActionResult ValidateMobileno(string contactno)
         {
             SignInmodel signinmodel = new SignInmodel();
@@ -72,7 +72,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        [Route("RegenerateAccessToken")]
+        [Route("UserRegenerateAccessToken")]
         public IActionResult RegenerateAccessToken(string refreshtoken, string contactno)
         {
             token = new Token(_context, jwt);
