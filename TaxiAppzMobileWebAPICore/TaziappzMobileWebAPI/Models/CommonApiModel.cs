@@ -118,7 +118,7 @@ namespace TaziappzMobileWebAPI.Models
         public double TotalEarned { get; set; }
 
         [JsonProperty("daysBased")]
-        public DaysBased DaysBased { get; set; }
+        public List<DaysBased> DaysBased { get; set; }
 
     }
     public class DaysBased

@@ -65,8 +65,7 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult Earninglist(GeneralModel generalModel)
         {
             EarningsListModel earningsListModel = new EarningsListModel();
-            earningsListModel.CurrencyCode = "$";
-            earningsListModel.CurrencySymbol = "USD";
+          
             earningsListModel.Earnings = new Earnings();
             earningsListModel.Earnings.Today = new Earned();
             earningsListModel.Earnings.Yesterday = new Earned();
@@ -74,6 +73,9 @@ namespace TaziappzMobileWebAPI.Controllers
             earningsListModel.Earnings.CurrentMonth = new Earned();
             earningsListModel.Earnings.CurrentWeek = new CurrentEarned();
             earningsListModel.Earnings.LastTrip = new LastTrip();
+
+            earningsListModel.CurrencyCode = "$";
+            earningsListModel.CurrencySymbol = "USD";
             earningsListModel.Earnings.Today.TotalTrips = 2;
             earningsListModel.Earnings.Today.TotalEarned = 4;
             earningsListModel.Earnings.Yesterday.TotalTrips = 3;
@@ -84,43 +86,18 @@ namespace TaziappzMobileWebAPI.Controllers
             earningsListModel.Earnings.CurrentMonth.TotalEarned = 11.2646;
             earningsListModel.Earnings.CurrentWeek.TotalTrips = 5;
             earningsListModel.Earnings.CurrentWeek.TotalEarned = 12.653;
-            earningsListModel.Earnings.CurrentWeek.DaysBased = new DaysBased();
+            earningsListModel.Earnings.CurrentWeek.DaysBased = new List<DaysBased>();
             List<DaysBased> daysBaseds = new List<DaysBased>();
             
-            DaysBased sunday = new DaysBased();            
-            earningsListModel.Earnings.CurrentWeek.DaysBased.Name = "SUNDAY";
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalTrips = 5;
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalEarned = 8;
+           
+            earningsListModel.Earnings.CurrentWeek.DaysBased.Add(new DaysBased() {Name="Sunday",TotalEarned=34,TotalTrips=45 });
+            earningsListModel.Earnings.CurrentWeek.DaysBased.Add(new DaysBased() { Name = "Monday", TotalEarned = 34, TotalTrips = 45 });
+            earningsListModel.Earnings.CurrentWeek.DaysBased.Add(new DaysBased() { Name = "Tueday", TotalEarned = 34, TotalTrips = 45 });
+            earningsListModel.Earnings.CurrentWeek.DaysBased.Add(new DaysBased() { Name = "Wednesday", TotalEarned = 34, TotalTrips = 45 });
+            earningsListModel.Earnings.CurrentWeek.DaysBased.Add(new DaysBased() { Name = "Thursday", TotalEarned = 34, TotalTrips = 45 });
+            earningsListModel.Earnings.CurrentWeek.DaysBased.Add(new DaysBased() { Name = "Friday", TotalEarned = 34, TotalTrips = 45 });
+            earningsListModel.Earnings.CurrentWeek.DaysBased.Add(new DaysBased() { Name = "Saturday", TotalEarned = 34, TotalTrips = 45 });
 
-            DaysBased monday = new DaysBased();
-            earningsListModel.Earnings.CurrentWeek.DaysBased.Name = "MONDAY";
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalTrips = 3;
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalEarned = 2;
-
-            DaysBased tuesday = new DaysBased();
-            earningsListModel.Earnings.CurrentWeek.DaysBased.Name = "TUESDAY";
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalTrips = 5;
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalEarned = 2;
-
-            DaysBased wednesday = new DaysBased();
-            earningsListModel.Earnings.CurrentWeek.DaysBased.Name = "WEDNESDAY";
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalTrips = 3;
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalEarned = 4;
-
-            DaysBased thursday = new DaysBased();
-            earningsListModel.Earnings.CurrentWeek.DaysBased.Name = "THURSDAY";
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalTrips = 6;
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalEarned = 2;
-
-            DaysBased friday = new DaysBased();
-            earningsListModel.Earnings.CurrentWeek.DaysBased.Name = "FRIDAY";
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalTrips = 3;
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalEarned = 5;
-
-            DaysBased saturday = new DaysBased();
-            earningsListModel.Earnings.CurrentWeek.DaysBased.Name = "SATURDAY";
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalTrips = 3;
-            earningsListModel.Earnings.CurrentWeek.DaysBased.TotalEarned = 7;
 
             earningsListModel.Earnings.LastTrip.RequestId = 251;
             earningsListModel.Earnings.LastTrip.UserName = "rajesh kannan";
