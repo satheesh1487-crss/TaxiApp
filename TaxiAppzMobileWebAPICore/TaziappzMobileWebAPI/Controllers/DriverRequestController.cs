@@ -61,8 +61,8 @@ namespace TaziappzMobileWebAPI.Controllers
             driverHistoryListModel.History.User_Id = 25;
             driverHistoryListModel.History.Pick_Latitude = 11.0150898;
             driverHistoryListModel.History.Pick_Longitude = 76.9825394;
-            driverHistoryListModel.History.Pick_Latitude = 11.00874532;
-            driverHistoryListModel.History.Pick_Longitude = 76.97907552;
+            driverHistoryListModel.History.Drop_Latitude = 11.00874532;
+            driverHistoryListModel.History.Drop_Longitude = 76.97907552;
             driverHistoryListModel.History.Pick_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
             driverHistoryListModel.History.Drop_Location = "Anna Silai, 1025/2, Avinashi Rd, Race Course, P N Palayam, Coimbatore, Tamil Nadu 641018, India";
             driverHistoryListModel.History.Trip_Start_Time = DateTime.Now;
@@ -90,8 +90,8 @@ namespace TaziappzMobileWebAPI.Controllers
             driver.History.User_Id = 25;
             driver.History.Pick_Latitude = 11.0150898;
             driver.History.Pick_Longitude = 76.9825394;
-            driver.History.Pick_Latitude = 11.00874532;
-            driver.History.Pick_Longitude = 76.97907552;
+            driver.History.Drop_Latitude = 11.00874532;
+            driver.History.Drop_Longitude = 76.97907552;
             driver.History.Pick_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
             driver.History.Drop_Location = "Anna Silai, 1025/2, Avinashi Rd, Race Course, P N Palayam, Coimbatore, Tamil Nadu 641018, India";
             driver.History.Trip_Start_Time = DateTime.Now;
