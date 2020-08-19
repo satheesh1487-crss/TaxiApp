@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
@@ -27,23 +29,26 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         [Route("requestInprogress")]
-        public IActionResult RequestInProgress(GeneralModel generalModel)
+        public IActionResult RequestInProgress()
         {
-            RequestInProgressModel requestInProgressModel = new RequestInProgressModel();
-            requestInProgressModel.Request = new IsRequest();
-            requestInProgressModel.Driver_Status = new DriverStatus();
-            requestInProgressModel.Share_Status = false;
-            requestInProgressModel.Enable_Referral = true;
-            requestInProgressModel.Admin_Phone_Number = "9658436528";
-            requestInProgressModel.Customer_Care_Number = "8569326534";
-            requestInProgressModel.Request.Trip = false;
-            requestInProgressModel.Driver_Status.Is_Active = 1;
-            requestInProgressModel.Driver_Status.Is_Approve = 1;
-            requestInProgressModel.Driver_Status.Is_Available = 1;
-            requestInProgressModel.Driver_Status.Document_Upload_Status = true;
-            requestInProgressModel.Emergecy = null;
-            return this.OKRESPONSE<RequestInProgressModel>(requestInProgressModel, requestInProgressModel == null ? "Request_Not_Found" : "Request_found");
+            List<RequestInProgress> requestInProgressModel = new List<RequestInProgress>();
+            DADriverRequest dADriverRequest = new DADriverRequest();
+            //requestInProgressModel.Request = new IsRequest();
+            //requestInProgressModel.Driver_Status = new DriverStatus();
+            //requestInProgressModel.Share_Status = false;
+            //requestInProgressModel.Enable_Referral = true;
+            //requestInProgressModel.Admin_Phone_Number = "9658436528";
+            //requestInProgressModel.Customer_Care_Number = "8569326534";
+            //requestInProgressModel.Request.Trip = false;
+            //requestInProgressModel.Driver_Status.Is_Active = 1;
+            //requestInProgressModel.Driver_Status.Is_Approve = 1;
+            //requestInProgressModel.Driver_Status.Is_Available = 1;
+            //requestInProgressModel.Driver_Status.Document_Upload_Status = true;
+            //requestInProgressModel.Emergecy = null;
+            requestInProgressModel = dADriverRequest.DriverRequestInprogress(User.ToAppUser(),_context);
+            return this.OK<RequestInProgress>(requestInProgressModel, requestInProgressModel == null ? "Request_Not_Found" : "Request_found", requestInProgressModel == null ? 0 : 1);
         }
 
         [HttpPost]

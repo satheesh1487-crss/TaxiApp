@@ -104,4 +104,6 @@ namespace TaziappzMobileWebAPI
         public string LoginBy { get; set; }
 
     }
+ 
+   
 }
