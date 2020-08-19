@@ -38,21 +38,23 @@ namespace TaziappzMobileWebAPI
                 success = true
             });
         }
-        internal static IActionResult OKStatus(this ControllerBase controller, string msg)
+        internal static IActionResult OKStatus(this ControllerBase controller, string msg, int isExist)
         {
             return controller.Ok(new APIResponse()
             {
                 Message = msg ,
-                success = true
+                success = true,
+                isExist = isExist
             });
         }
-        internal static IActionResult OK<T>(this ControllerBase controller, List<T> content, string msg)
+        internal static IActionResult OK<T>(this ControllerBase controller, List<T> content, string msg, int isExist)
         {
             return controller.Ok(new APIContentResponse<T>()
             {
                 ContentList = content,
                 Message = msg,
-                success = true
+                success = true,
+                isExist = isExist
             });
         }
         //internal static IActionResult OK<T>(this ControllerBase controller,T content, string msg)

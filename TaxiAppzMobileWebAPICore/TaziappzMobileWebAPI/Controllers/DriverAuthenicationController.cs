@@ -45,7 +45,7 @@ namespace TaziappzMobileWebAPI.Controllers
             signinmodel.Contactno = contactno;
             validate = new DADriverValidate(_context);
             bool status = validate.MobileValidation(signinmodel);
-            return this.OKStatus(status ? "phoneValidated" : "phoneInValidated");
+            return this.OKStatus(status ? "phoneValidated" : "phoneInValidated", status ? 1 : 0);
         }
         #endregion
 
@@ -61,7 +61,7 @@ namespace TaziappzMobileWebAPI.Controllers
             sign = new DASign(_context, token);
             List<DetailsWithDriverToken> detailsWithToken = new List<DetailsWithDriverToken>();
             detailsWithToken = sign.SignInDriver(signInmodel);
-            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 1 ? "User_Signdetails_Found" : "User_SignDetails_Not_Found");
+            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 0 ? "User_SignDetails_Not_Found" : "User_Signdetails_Found", detailsWithToken.Count == 0 ? 0 : 1);
         }
         /// <summary>
         /// Use to Register Driver
@@ -74,7 +74,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             sign = new DASign(_context, token);
             bool result = sign.SignUpDriver(signUpmodel);
-            return this.OKStatus(result ? "Driver_Creation_Success" : "Driver_Creation_Failed");
+            return this.OKStatus(result ? "Driver_Creation_Success" : "Driver_Creation_Failed", result ? 1 : 0);
         }
         /// <summary>
         /// Use to Regenerate AccessToken once Session Exipred
@@ -88,7 +88,7 @@ namespace TaziappzMobileWebAPI.Controllers
             token = new Token(_context, jwt);
             List<DetailsWithDriverToken> detailsWithToken = new List<DetailsWithDriverToken>();
             detailsWithToken = token.ReGenerateDriverJWTTokenDtls(refreshtoken, contactno); //(List)token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
-            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 1 ? "Access token Generated Successfully" : "Access token Generation Failed");
+            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 0 ? "Access token Generation Failed" : "Access token Generated Successfully", detailsWithToken.Count == 0 ? 0 : 1);
         }
 
 

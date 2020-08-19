@@ -63,7 +63,7 @@ namespace TaziappzMobileWebAPI.Controllers
             signinmodel.Contactno = contactno;
             validate = new DAUserValidate(_context);
             bool status = validate.MobileValidation(signinmodel);
-            return this.OKStatus(status ? "phoneValidated" : "phoneInValidated");
+            return this.OKStatus(status ? "phoneValidated" : "phoneInValidated", status ? 1 : 0);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace TaziappzMobileWebAPI.Controllers
             token = new Token(_context, jwt);
            List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
             detailsWithToken = token.ReGenerateJWTTokenDtls(refreshtoken, contactno); //(List)token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
-            return this.OK<DetailsWithToken>(detailsWithToken,detailsWithToken.Count == 1 ? "Access token Generated Successfully" : "Access token Generation Failed");
+            return this.OK<DetailsWithToken>(detailsWithToken,detailsWithToken.Count == 0 ? "Access token Generation Failed" : "Access token Generated Successfully", detailsWithToken.Count == 0 ? 0 : 1);
         }
        
         
