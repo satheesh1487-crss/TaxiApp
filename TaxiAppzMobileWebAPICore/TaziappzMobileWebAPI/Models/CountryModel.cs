@@ -19,6 +19,8 @@ namespace TaziappzMobileWebAPI.Models
 
         [JsonProperty("countryShortName")]
         public string CountryShortName { get; set; }
+        [JsonProperty("countryFlag")]
+        public string CountryFlag { get; set; }
 
     }
 }
