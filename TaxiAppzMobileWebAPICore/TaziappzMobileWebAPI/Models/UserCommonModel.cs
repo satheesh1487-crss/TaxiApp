@@ -60,4 +60,43 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("corporate")]
         public int Corporate { get; set; }
     }
+    public class UserSosModel
+    {
+        [JsonProperty("sos")]
+        public List<SosUser> sos { get; set; }
+
+        [JsonProperty("user_sos")]
+        public List<User_Sos> User_Sos { get; set; }
+    }
+    public class SosUser
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("name")]
+        public string name { get; set; }
+
+        [JsonProperty("number")]
+        public string number { get; set; }
+    }
+    public class User_Sos
+    {
+
+    }
+    public class UserFaqListModel
+    {
+        [JsonProperty("faq_list")]
+        public List<User_Faq_List> Faq_List { get; set; }        
+    }
+    public class User_Faq_List
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("question")]
+        public string Question { get; set; }
+
+        [JsonProperty("answer")]
+        public string Answer { get; set; }
+    }
 }

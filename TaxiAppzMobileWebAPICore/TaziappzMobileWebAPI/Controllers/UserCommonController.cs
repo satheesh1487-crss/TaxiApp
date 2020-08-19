@@ -51,5 +51,31 @@ namespace TaziappzMobileWebAPI.Controllers
             userProfileModel.corporate = 0;
             return this.OKRESPONSE<UserProfileModel>(userProfileModel, userProfileModel == null ? "User_Profile_Not_Found" : "User_Profile_found");
         }
+
+        [HttpPost]
+        [Route("zonesos")]
+        public IActionResult ZoneSos(GeneralModel generalModel)
+        {
+            List<UserSosModel> userSosModels = new List<UserSosModel>();
+            UserSosModel userSosModel = new UserSosModel();
+            userSosModel.sos = new List<SosUser>();
+            userSosModel.User_Sos = new List<User_Sos>();
+            List<User_Sos> usersos = new List<User_Sos>();
+            List<SosUser> userSos = new List<SosUser>();
+            userSosModel.sos.Add(new SosUser() { Id = 1, name = "CEO", number = "9632596589" });
+            return this.OKRESPONSE<UserSosModel>(userSosModel, userSosModel == null ? "User_Sos_Not_Found" : "User_Sos_found");
+        }
+
+        [HttpPost]
+        [Route("faq_list")]
+        public IActionResult Faq_List(GeneralModel generalModel)
+        {
+            List<UserFaqListModel> userFaqListModels = new List<UserFaqListModel>();
+            UserFaqListModel userFaqListModel = new UserFaqListModel();
+            userFaqListModel.Faq_List = new List<User_Faq_List>();
+            List<User_Faq_List> userfaq = new List<User_Faq_List>();
+            userFaqListModel.Faq_List.Add(new User_Faq_List() { Id = 1, Question = "DOB?", Answer = "257994" });
+            return this.OKRESPONSE<UserFaqListModel>(userFaqListModel, userFaqListModel == null ? "FAQ_List_Not_Found" : "FAQ_List_found");
+        }
     }
 }
