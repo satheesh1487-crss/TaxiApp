@@ -122,6 +122,8 @@ namespace TaziappzMobileWebAPI.DALayer
                 {
                     CountryId = country.CountryId,
                     CountryName = country.Name,
+                    CountryCode=country.DCode,
+                    CountryShortName=country.Code
 
                 });
             }

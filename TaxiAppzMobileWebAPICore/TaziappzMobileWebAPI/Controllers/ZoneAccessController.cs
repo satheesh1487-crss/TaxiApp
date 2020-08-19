@@ -27,7 +27,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DAZone daZone = new DAZone();
             List<LatLong> latLongs = new List<LatLong>();
             latLongs = daZone.GetPolygon(latLong, servicelocationid, context);
-            return this.OK<LatLong>(latLongs, latLongs.Count == 0 ? "Data Found" : "No Data Found");
+            return this.OK<LatLong>(latLongs, latLongs.Count == 0 ? "Data Found" : "No Data Found", latLongs.Count == 0 ? 0 : 1);
         }
     }
 }
