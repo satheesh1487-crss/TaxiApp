@@ -485,6 +485,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
                 entity.Property(e => e.NationalId).IsUnicode(false);
 
+                entity.Property(e => e.OnlineStatus).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Password).IsUnicode(false);
 
                 entity.Property(e => e.State).IsUnicode(false);

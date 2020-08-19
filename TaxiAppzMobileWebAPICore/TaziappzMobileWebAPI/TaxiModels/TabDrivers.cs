@@ -111,6 +111,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public bool? IsApproved { get; set; }
         [Column("isAvailable")]
         public bool? IsAvailable { get; set; }
+        [Column("Online_Status")]
+        public bool? OnlineStatus { get; set; }
 
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabDrivers))]

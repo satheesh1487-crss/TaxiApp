@@ -18,6 +18,8 @@ namespace TaziappzMobileWebAPI
         public string Mobileno { get; set; }
         [JsonProperty("emailid")]
         public string Emailid { get; set; }
+        [JsonProperty("profile_pic")]
+        public string Profile_pic { get; set; }
         [JsonProperty("servicelocationid")]
         public long Servicelocationid { get; set; }
         //[JsonProperty("timezone")]
