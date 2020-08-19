@@ -28,6 +28,11 @@ namespace TaziappzMobileWebAPI.Models
 
     public class UserAddCardModel
     {
+        [JsonProperty("payment")]
+        public List<UserAddPayment> Payment { get; set; }       
+    }
+    public class UserAddPayment
+    {
         [JsonProperty("card_id")]
         public int Card_Id { get; set; }
 
@@ -43,10 +48,40 @@ namespace TaziappzMobileWebAPI.Models
     public class UserDeleteCardModel
     {
         [JsonProperty("payment")]
-        public UserPayment Payment { get; set; }
+        public List<UserDeletePayment> Payment { get; set; }
     }
-    public class UserPayment
+    public class UserDeletePayment
     {
 
+    }
+
+    public class UserGetWalletModel
+    {
+        [JsonProperty("amount_added")]
+        public double? Amount_Added { get; set; }
+
+        [JsonProperty("amount_balance")]
+        public double? Amount_Balance { get; set; }
+
+        [JsonProperty("amount_spent")]
+        public double? Amount_Spent { get; set; }
+
+        [JsonProperty("currency")]
+        public string? Currency { get; set; }
+    }
+    public class UserCardListModel
+    {
+        [JsonProperty("payment")]
+        public List<CardListPayment> Payment { get; set; }
+    }
+    public class CardListPayment
+    {
+
+    }
+
+    public class UserClientTokenModel
+    {
+        [JsonProperty("client_token")]
+        public string Client_Token { get; set; }
     }
 }
