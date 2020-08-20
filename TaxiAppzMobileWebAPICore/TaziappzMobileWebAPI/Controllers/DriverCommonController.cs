@@ -38,26 +38,30 @@ namespace TaziappzMobileWebAPI.Controllers
         [Route("retrieve")]
         public IActionResult Retrieve(GeneralModel generalModel)
         {
-           List<GetProfileModel> getProfileModel = new List<GetProfileModel>();
-            getProfileModel[0].Driver = new Driver();
-            getProfileModel[0].Driver.Id = 15;
-            getProfileModel[0].Driver.FirstName = "rajesh";
-            getProfileModel[0].Driver.LastName = "kannan";
-            getProfileModel[0].Driver.Email = "raj@gmail.com";
-            getProfileModel[0].Driver.Phone = "918888888888";
-            getProfileModel[0].Driver.Login_By = "android";
-            getProfileModel[0].Driver.Login_Method = "manual";
-            getProfileModel[0].Driver.Token = "$2y$10$sMv.qYgeNoiaJ4r1GqgEWO59BMGRi0EEN17t/hmFS0S92YUqd70QS";
-            getProfileModel[0].Driver.Profile_Pic = "";
-            getProfileModel[0].Driver.Is_Active = 1;
-            getProfileModel[0].Driver.Is_Approve = 1;
-            getProfileModel[0].Driver.Is_Available = 1;
-            getProfileModel[0].Driver.Car_Model = "FFDJ";
-            getProfileModel[0].Driver.Car_Number = "8888";
-            getProfileModel[0].Driver.Total_Reward_Point = 0.5;
-            getProfileModel[0].Driver.Type_Name = "FKLF";
-            getProfileModel[0].Driver.Type_Icon = "http://192.168.1.25/production/captain_care/public/assets/img/uploads/54738.jpg";
-            return this.OK<GetProfileModel>(getProfileModel, getProfileModel == null ? "Get_Profile_not_found" : "Get_Profile_found", getProfileModel == null ? 0 : 1);
+            List<GetProfileModel> getProfileModel = new List<GetProfileModel>();
+            Driver driver = new Driver();
+            driver.Id = 15;
+            driver.FirstName = "rajesh";
+            driver.LastName = "kannan";
+            driver.Email = "raj@gmail.com";
+            driver.Phone = "918888888888";
+            driver.Login_By = "android";
+            driver.Login_Method = "manual";
+            driver.Token = "$2y$10$sMv.qYgeNoiaJ4r1GqgEWO59BMGRi0EEN17t/hmFS0S92YUqd70QS";
+            driver.Profile_Pic = "";
+            driver.Is_Active = 1;
+            driver.Is_Approve = 1;
+            driver.Is_Available = 1;
+            driver.Car_Model = "FFDJ";
+            driver.Car_Number = "8888";
+            driver.Total_Reward_Point = 0.5;
+            driver.Type_Name = "FKLF";
+            driver.Type_Icon = "http://192.168.1.25/production/captain_care/public/assets/img/uploads/54738.jpg";
+            getProfileModel.Add(new GetProfileModel()
+            {
+                Driver =driver
+            });
+         return this.OK<GetProfileModel>(getProfileModel, getProfileModel.Count == 0 ? "Get_Profile_not_found" : "Get_Profile_found", getProfileModel.Count == 0 ? 0 : 1);
         }
 
         [HttpPost]
@@ -65,8 +69,7 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult Earninglist(GeneralModel generalModel)
         {
             List<EarningsListModel> earningsListModel = new List<EarningsListModel>();
-          
-            earningsListModel[0].Earnings = new Earnings();
+             earningsListModel[0].Earnings = new Earnings();
             earningsListModel[0].Earnings.Today = new Earned();
             earningsListModel[0].Earnings.Yesterday = new Earned();
             earningsListModel[0].Earnings.PreviousMonth = new Earned();
@@ -106,7 +109,7 @@ namespace TaziappzMobileWebAPI.Controllers
             earningsListModel[0].Earnings.LastTrip.TotalBill = 6.89;
             earningsListModel[0].Earnings.LastTrip.AdminEarned = 0.95;
 
-            return this.OK<EarningsListModel>(earningsListModel, earningsListModel == null ? "Earning_List_not_found" : "Earning_List_found", earningsListModel == null ? 0 : 1);
+            return this.OK<EarningsListModel>(earningsListModel, earningsListModel.Count == 0 ? "Earning_List_not_found" : "Earning_List_found", earningsListModel.Count == 0 ? 0 : 1);
         }
 
         [HttpPost]
@@ -114,11 +117,15 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult FAQlist(GeneralModel generalModel)
         {
             List<FAQListModel> fAQListModel = new List<FAQListModel>();
-            fAQListModel[0].Faq_List = new Faq_List();
-            fAQListModel[0].Faq_List.Id = 2;
-            fAQListModel[0].Faq_List.Question = "how can i get more trips?";
-            fAQListModel[0].Faq_List.Answer = "you should follow the heat map tips";
-            return this.OK<FAQListModel>(fAQListModel, fAQListModel == null ? "FAQ_List_not_found" : "FAQ_List_found", fAQListModel == null ? 0 :1);
+            Faq_List faq_List = new Faq_List();
+            faq_List.Id = 2;
+            faq_List.Question = "how can i get more trips?";
+            faq_List.Answer=  "you should follow the heat map tips";
+            fAQListModel.Add(new FAQListModel()
+            {
+                Faq_List = faq_List
+            }) ;
+            return this.OK<FAQListModel>(fAQListModel, fAQListModel.Count == 0 ? "FAQ_List_not_found" : "FAQ_List_found", fAQListModel.Count == 0 ? 0 :1);
         }
         #endregion
     }
