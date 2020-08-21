@@ -176,14 +176,14 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("vehicle_type_name")]
         public string Vehicle_type_name { get; set; }
         [JsonProperty("pick_lat")]
-        public decimal Pick_lat { get; set; }
+        public decimal? Pick_lat { get; set; }
 
         [JsonProperty("pick_lng")]
-        public decimal Pick_lng { get; set; }
+        public decimal? Pick_lng { get; set; }
         [JsonProperty("drop_lat")]
-        public decimal Drop_lat { get; set; }
+        public decimal? Drop_lat { get; set; }
         [JsonProperty("drop_lng")]
-        public decimal Drop_lng { get; set; }
+        public decimal? Drop_lng { get; set; }
         [JsonProperty("pick_address")]
         public string Pick_address { get; set; }
         [JsonProperty("drop_address")]

@@ -37,41 +37,41 @@ namespace TaziappzMobileWebAPI.DALayer
             userdetails.Active = requestmeta != null ? requestmeta.User.IsActive : tripdtls.User.IsActive;
             userdetails.Email_confirmed = "";
             userdetails.Mobile_confirmed = 0;
-
             userdetails.Last_known_ip = "0";
             userdetails.Last_login_at = null;
-           
-            var requestdatadtls = context.TabRequest.Where(t => t.RequestId == requestmeta.RequestId.ToString()).FirstOrDefault();
+
             if (requestmeta != null)
             {
+                
+                var requestdatadtls = context.TabRequestPlace.Include(t => t.Request).Where(t => t.RequestId == requestmeta.RequestId).FirstOrDefault();
                 //NEED TO WRITE META REQUEST OBJECT
                 MetaRequest metaRequest = new MetaRequest();
-                //metaRequest.Id = requestdata.Id;
-                //metaRequest.Request_number = requestdata.RequestId;
-                //metaRequest.Is_later = requestdata.Later;
-                //metaRequest.User_id = requestdata.UserId;
-                //metaRequest.Trip_start_time = requestdata.TripStartTime;
-                //metaRequest.Arrived_at = "";
-                //metaRequest.Accepted_at = requestdata.DriverAcceptedTime;
-                //metaRequest.Completed_at = "";
+                metaRequest.Id = requestdatadtls.Request.Id;
+                metaRequest.Request_number = requestdatadtls.Request.RequestId;
+                metaRequest.Is_later = requestdatadtls.Request.Later;
+                metaRequest.User_id = requestdatadtls.Request.UserId;
+                metaRequest.Trip_start_time = requestdatadtls.Request.TripStartTime;
+                metaRequest.Arrived_at = "";
+                metaRequest.Accepted_at = requestdatadtls.Request.DriverAcceptedTime;
+                metaRequest.Completed_at = "";
 
-                //metaRequest.is_driver_started = requestdata.IsDriverStarted;
-                //metaRequest.Is_driver_arrived = requestdata.IsDriverArrived;
-                //metaRequest.Is_trip_start = requestdata.IsTripStart;
-                //metaRequest.Is_completed = requestdata.IsCompleted;
-                //metaRequest.Is_cancelled = requestdata.IsCancelled;
-                //metaRequest.Cancel_method = requestdata.CancelMethod;
-                //metaRequest.Payment_opt = requestdata.PaymentOpt;
-                //metaRequest.Is_paid = requestdata.IsPaid;
+                metaRequest.is_driver_started = requestdatadtls.Request.IsDriverStarted;
+                metaRequest.Is_driver_arrived = requestdatadtls.Request.IsDriverArrived;
+                metaRequest.Is_trip_start = requestdatadtls.Request.IsTripStart;
+                metaRequest.Is_completed = requestdatadtls.Request.IsCompleted;
+                metaRequest.Is_cancelled = requestdatadtls.Request.IsCancelled;
+                metaRequest.Cancel_method = requestdatadtls.Request.CancelMethod;
+                metaRequest.Payment_opt = requestdatadtls.Request.PaymentOpt;
+                metaRequest.Is_paid = requestdatadtls.Request.IsPaid;
 
-                //metaRequest.User_rated = requestdata.UserRated;
-                //metaRequest.Driver_rated = requestdata.DriverRated;
-                //metaRequest.Unit = requestdata.Unit;
-                //metaRequest.Zone_type_id = requestdata.Typeid;
-                //metaRequest.Pick_lat = requestdata.TabRequestPlace
-                //metaRequest.Pick_lng = requestdata.Id;
-                //metaRequest.Pick_address = requestdata.Id;
-                //metaRequest.Drop_address = requestdata.Id;
+                metaRequest.User_rated = requestdatadtls.Request.UserRated;
+                metaRequest.Driver_rated = requestdatadtls.Request.DriverRated;
+                metaRequest.Unit = requestdatadtls.Request.Unit;
+                metaRequest.Zone_type_id = requestdatadtls.Request.Typeid;
+                metaRequest.Pick_lat = requestdatadtls.PickLatitude;
+                metaRequest.Pick_lng = requestdatadtls.PickLongitude;
+                metaRequest.Pick_address = requestdatadtls.PickLocation;
+                metaRequest.Drop_address = requestdatadtls.DropLocation;
                 metaRequest.UserDetails = userdetails;
                 requestInProgresses.Add(new RequestInProgress()
                 {
@@ -93,16 +93,15 @@ namespace TaziappzMobileWebAPI.DALayer
                     Car_model = driverdtls.Carmodel,
                     Car_color = driverdtls.Carcolor,
                     Car_number = driverdtls.Carnumber,
-                     metaRequest = metaRequest
-            });
-               
+                    metaRequest = metaRequest
+                });
 
             }
             else
             {
                 var requestdata = context.TabRequest.Include(x => x.TabRequestPlace).Where(t => t.DriverId == driverdtls.Driverid).FirstOrDefault();
                 var requestplace = context.TabRequestPlace.Where(t => t.RequestId == Convert.ToInt64(requestdata.RequestId)).FirstOrDefault();
-               if (requestdata == null)
+                if (requestdata == null)
                     return requestInProgresses;
                 if (requestdata.IsDriverStarted.ToUpper() == "TRUE" || requestdata.IsDriverArrived.ToUpper() == "TRUE" ||
                     requestdata.IsTripStart.ToUpper() == "TRUE" || requestdata.IsCompleted.ToUpper() == "FALSE" || requestdata.IsCancelled.ToUpper() == "FALSE")
@@ -157,7 +156,7 @@ namespace TaziappzMobileWebAPI.DALayer
                         Car_model = driverdtls.Carmodel,
                         Car_color = driverdtls.Carcolor,
                         Car_number = driverdtls.Carnumber,
-                          OnTripRequest = tripRequest
+                        OnTripRequest = tripRequest
                     });
 
                 }
