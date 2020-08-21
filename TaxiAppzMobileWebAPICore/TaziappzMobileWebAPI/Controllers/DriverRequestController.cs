@@ -24,32 +24,34 @@ namespace TaziappzMobileWebAPI.Controllers
         }
 
         #region Request_requestInprogress
-        /* /// <summary>
-         /// Hard Coded Data
-         /// </summary>
-         /// <returns></returns>
-         [HttpPost]
-         [Authorize]
-         [Route("requestInprogress")]
-         public IActionResult RequestInProgress()
-         {
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        [Route("requestInprogress")]
+        public IActionResult RequestInProgress()
+        {
 
-             List<RequestInProgress> requestInProgressModel = new List<RequestInProgress>();
-             requestInProgressModel[0].Request = new IsRequest();
-             requestInProgressModel[0].Driver_Status = new DriverStatus();
-             requestInProgressModel[0].Share_Status = false;
-             requestInProgressModel[0].Enable_Referral = true;
-             requestInProgressModel[0].Admin_Phone_Number = "9658436528";
-             requestInProgressModel[0].Customer_Care_Number = "8569326534";
-             requestInProgressModel[0].Request.Trip = false;
-             requestInProgressModel[0].Driver_Status.Is_Active = 1;
-             requestInProgressModel[0].Driver_Status.Is_Approve = 1;
-             requestInProgressModel[0].Driver_Status.Is_Available = 1;
-             requestInProgressModel[0].Driver_Status.Document_Upload_Status = true;
-             requestInProgressModel[0].Emergecy = null;
-             return this.OK<RequestInProgress>(requestInProgressModel, requestInProgressModel == null ? "Request_Not_Found" : "Request_found", requestInProgressModel == null ? 0 : 1);
-         }
-        */
+            List<RequestInProgress> requestInProgressModel = new List<RequestInProgress>();
+            DADriverRequest dADriverRequest = new DADriverRequest();
+            requestInProgressModel = dADriverRequest.DriverRequestInprogress(User.ToAppUser(), _context);
+            //requestInProgressModel[0].Request = new IsRequest();
+            //requestInProgressModel[0].Driver_Status = new DriverStatus();
+            //requestInProgressModel[0].Share_Status = false;
+            //requestInProgressModel[0].Enable_Referral = true;
+            //requestInProgressModel[0].Admin_Phone_Number = "9658436528";
+            //requestInProgressModel[0].Customer_Care_Number = "8569326534";
+            //requestInProgressModel[0].Request.Trip = false;
+            //requestInProgressModel[0].Driver_Status.Is_Active = 1;
+            //requestInProgressModel[0].Driver_Status.Is_Approve = 1;
+            //requestInProgressModel[0].Driver_Status.Is_Available = 1;
+            //requestInProgressModel[0].Driver_Status.Document_Upload_Status = true;
+            //requestInProgressModel[0].Emergecy = null;
+            return this.OK<RequestInProgress>(requestInProgressModel, requestInProgressModel.Count == 0 ? "Request_Not_Found" : "Request_found", requestInProgressModel.Count == 0 ? 0 : 1);
+        }
+
         #endregion
 
         #region Request_historyList

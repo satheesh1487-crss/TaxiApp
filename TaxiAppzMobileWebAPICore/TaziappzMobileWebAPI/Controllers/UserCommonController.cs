@@ -51,7 +51,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DAUserCommon dAUserCommon = new DAUserCommon();
             List<UserProfileModel> userProfiles = new List<UserProfileModel>();
             userProfiles = dAUserCommon.GetProfile(_context, id, User.ToAppUser());
-            return this.OK<UserProfileModel>(userProfiles, userProfiles.Count == 0 ? "pro det not found" : "data found", userProfiles.Count == 0 ? 0 : 1);          
+            return this.OK<UserProfileModel>(userProfiles, userProfiles.Count == 0 ? "pro det not found" : "data found", userProfiles.Count == 0 ? 0 : 1);
         }
         #endregion
 
