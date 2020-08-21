@@ -28,7 +28,7 @@ namespace TaziappzMobileWebAPI.Models
     public class UserProfile
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("firstname")]
         public string FirstName { get; set; }
@@ -55,10 +55,10 @@ namespace TaziappzMobileWebAPI.Models
         public string Profile_Pic { get; set; }
 
         [JsonProperty("is_active")]
-        public int Is_Active { get; set; }
+        public bool ?Is_Active { get; set; }
 
         [JsonProperty("corporate")]
-        public int Corporate { get; set; }
+        public int ?Corporate { get; set; }
     }
     public class UserSosModel
     {

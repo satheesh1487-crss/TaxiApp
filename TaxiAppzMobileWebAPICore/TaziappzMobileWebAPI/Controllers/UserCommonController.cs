@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
@@ -42,25 +44,14 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         [Route("profile")]
-        public IActionResult Profile(GeneralModel generalModel)
+        public IActionResult Profile(long id)
         {
-            List<UserProfileModel> userProfileModel = new List<UserProfileModel>();
-            userProfileModel[0].User = new UserProfile();
-            userProfileModel[0].Sos = new List<UserProfileSos>();
-            userProfileModel[0].User.Id = 32;
-            userProfileModel[0].User.FirstName = "RAJESH";
-            userProfileModel[0].User.LastName = "KANNAN";
-            userProfileModel[0].User.Email = "raj@gmail.com";
-            userProfileModel[0].User.Phone = "+919865365236";
-            userProfileModel[0].User.Login_By = "android";
-            userProfileModel[0].User.Login_Method = "manual";
-            userProfileModel[0].User.Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
-            userProfileModel[0].User.Profile_Pic = "";
-            userProfileModel[0].User.Is_Active = 1;
-            userProfileModel[0].User.Corporate = 0;
-            userProfileModel[0].corporate = 0;
-            return this.OK<UserProfileModel>(userProfileModel, userProfileModel == null ? "User_Profile_Not_Found" : "User_Profile_found", userProfileModel == null ? 0 : 1);
+            DAUserCommon dAUserCommon = new DAUserCommon();
+            List<UserProfileModel> userProfiles = new List<UserProfileModel>();
+            userProfiles = dAUserCommon.GetProfile(_context, id, User.ToAppUser());
+            return this.OK<UserProfileModel>(userProfiles, userProfiles.Count == 0 ? "pro det not found" : "data found", userProfiles.Count == 0 ? 0 : 1);          
         }
         #endregion
 
