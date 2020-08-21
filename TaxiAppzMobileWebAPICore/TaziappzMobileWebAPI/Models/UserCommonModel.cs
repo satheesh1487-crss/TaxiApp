@@ -71,7 +71,7 @@ namespace TaziappzMobileWebAPI.Models
     public class SosUser
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -91,7 +91,7 @@ namespace TaziappzMobileWebAPI.Models
     public class User_Faq_List
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("question")]
         public string Question { get; set; }
