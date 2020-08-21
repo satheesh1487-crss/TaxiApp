@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
-using static TaziappzMobileWebAPI.Models.UserComplaintModel;
 
 namespace TaziappzMobileWebAPI.Controllers
 {
@@ -22,6 +21,11 @@ namespace TaziappzMobileWebAPI.Controllers
             _context = context;
         }
 
+        #region Complaint-list
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("list")]
         public IActionResult List(GeneralModel generalModel)
@@ -34,7 +38,13 @@ namespace TaziappzMobileWebAPI.Controllers
             complaintListModel.Complaint_List.Add(new User_Complaint_List() { Id = 1, Title = "plan changed" });
             return this.OKRESPONSE<ComplaintListModel>(complaintListModel, complaintListModel == null ? "List_Not_Found" : "List_found");
         }
+        #endregion
 
+        #region Complaint-userDispute
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("userDispute")]
         public IActionResult UserDispute(GeneralModel generalModel)
@@ -42,7 +52,13 @@ namespace TaziappzMobileWebAPI.Controllers
             UserDisputeModel userDisputeModel = new UserDisputeModel();            
             return this.OKRESPONSE<UserDisputeModel>(userDisputeModel, userDisputeModel == null ? "User_Not_Found" : "User_found");
         }
+        #endregion
 
+        #region Complaint-complaintsAdd
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("complaintsAdd")]
         public IActionResult ComplaintsAdd(GeneralModel generalModel)
@@ -50,6 +66,6 @@ namespace TaziappzMobileWebAPI.Controllers
             UserComplaintsAddModel userComplaintsAddModel = new UserComplaintsAddModel();
             return this.OKRESPONSE<UserComplaintsAddModel>(userComplaintsAddModel, userComplaintsAddModel == null ? "Complaints_Add_Not_Found" : "Complaints_Add_found");
         }
-
+        #endregion
     }
 }

@@ -21,7 +21,7 @@ namespace TaziappzMobileWebAPI.Controllers
             _context = context;
         }
 
-        #region Common_Apis
+        #region Common_review
         /// <summary>
         /// Hard Coded Data
         /// </summary>
@@ -33,7 +33,13 @@ namespace TaziappzMobileWebAPI.Controllers
             RequestReviewModel requestReviewModel = new RequestReviewModel();
             return this.OKRESPONSE<RequestReviewModel>(requestReviewModel, requestReviewModel == null ? "Request_Review_not_found" : "Request_Review_found");
         }
+        #endregion
 
+        #region Common_retrieve
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("retrieve")]
         public IActionResult Retrieve(GeneralModel generalModel)
@@ -59,7 +65,13 @@ namespace TaziappzMobileWebAPI.Controllers
             getProfileModel[0].Driver.Type_Icon = "http://192.168.1.25/production/captain_care/public/assets/img/uploads/54738.jpg";
             return this.OK<GetProfileModel>(getProfileModel, getProfileModel == null ? "Get_Profile_not_found" : "Get_Profile_found", getProfileModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Common_earninglist
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("earninglist")]
         public IActionResult Earninglist(GeneralModel generalModel)
@@ -108,7 +120,13 @@ namespace TaziappzMobileWebAPI.Controllers
 
             return this.OK<EarningsListModel>(earningsListModel, earningsListModel == null ? "Earning_List_not_found" : "Earning_List_found", earningsListModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Common_fAQlist
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("fAQlist")]
         public IActionResult FAQlist(GeneralModel generalModel)

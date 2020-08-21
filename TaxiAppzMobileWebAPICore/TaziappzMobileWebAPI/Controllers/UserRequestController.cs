@@ -21,73 +21,84 @@ namespace TaziappzMobileWebAPI.Controllers
             _context = context;
         }
 
+        #region Request-historySingle
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("historySingle")]
         public IActionResult HistorySingle(GeneralModel generalModel)
         {
-            UserHistoryModel userHistoryModel = new UserHistoryModel();
-            userHistoryModel.UserRequest = new UserRequest();
-            userHistoryModel.UserRequest.Driver = new Drivers();
-            userHistoryModel.UserRequest.UserBill = new UserBill();
-            userHistoryModel.UserRequest.Id = 525;
-            userHistoryModel.UserRequest.Is_Share = 0;
-            userHistoryModel.UserRequest.Later = 0;
-            userHistoryModel.UserRequest.Request_Id = "RES_36904";
-            userHistoryModel.UserRequest.Pick_Latitude = 11.0150595;
-            userHistoryModel.UserRequest.Pick_Longitude = 76.9825105;
-            userHistoryModel.UserRequest.Drop_Latitude = 11.0150595;
-            userHistoryModel.UserRequest.Drop_Longitude = 76.9825105;
-            userHistoryModel.UserRequest.Pick_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
-            userHistoryModel.UserRequest.Drop_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
-            userHistoryModel.UserRequest.Trip_Start_Time = DateTime.Now;
-            userHistoryModel.UserRequest.Is_Completed = 1;
-            userHistoryModel.UserRequest.Is_Cancelled = 0;
-            userHistoryModel.UserRequest.Payment_Opt = 1;
-            userHistoryModel.UserRequest.User_Id = 1;
-            userHistoryModel.UserRequest.Enable_Dispute_Button = true;
-            userHistoryModel.UserRequest.Driver.Id = 25;
-            userHistoryModel.UserRequest.Driver.FirstName = "rajesh";
-            userHistoryModel.UserRequest.Driver.LastName = "kannan";
-            userHistoryModel.UserRequest.Driver.Profile_Pic = " ";
-            userHistoryModel.UserRequest.Driver.Review = 0.35;
-            userHistoryModel.UserRequest.Driver.Phone_Number = "+919865896532";
-            userHistoryModel.UserRequest.Driver.Email = "raj@gmail.com";
-            userHistoryModel.UserRequest.Driver.Car_Model = "hhhh";
-            userHistoryModel.UserRequest.Driver.Car_Number = "AD23";
-            userHistoryModel.UserRequest.Driver_Type = 1;
-            userHistoryModel.UserRequest.Type_Icon = "http://192.168.1.32/captaincar/public/assets/img/uploads/89987.jpg";
-            userHistoryModel.UserRequest.Type_Name = "DKJH";
-            userHistoryModel.UserRequest.Distance = 0.20366141442004368;
-            userHistoryModel.UserRequest.Time = 3;
-            userHistoryModel.UserRequest.UserBill.Base_Price = 10;
-            userHistoryModel.UserRequest.UserBill.Ride_Fare = 0;
-            userHistoryModel.UserRequest.UserBill.Base_Distance = 1;
-            userHistoryModel.UserRequest.UserBill.Price_Per_Distance = 2;
-            userHistoryModel.UserRequest.UserBill.Price_Per_Time = 5;
-            userHistoryModel.UserRequest.UserBill.Distance_Price = 0;
-            userHistoryModel.UserRequest.UserBill.Time_Price = 15;
-            userHistoryModel.UserRequest.UserBill.Waiting_Price = 0;
-            userHistoryModel.UserRequest.UserBill.Tollgate_Price = 0;
-            userHistoryModel.UserRequest.UserBill.Tollgate_List = null;
-            userHistoryModel.UserRequest.UserBill.Service_Tax = 2.5;
-            userHistoryModel.UserRequest.UserBill.Service_Tax_Percentage = 10;
-            userHistoryModel.UserRequest.UserBill.Promo_Amount = 0;
-            userHistoryModel.UserRequest.UserBill.Referral_Amount = 0;
-            userHistoryModel.UserRequest.UserBill.Wallet_Amount = 0;
-            userHistoryModel.UserRequest.UserBill.Service_Fee = 5;
-            userHistoryModel.UserRequest.UserBill.Driver_Amount = 25;
-            userHistoryModel.UserRequest.UserBill.Total = 27.5;
-            userHistoryModel.UserRequest.UserBill.Currency = "JFJF";
-            userHistoryModel.UserRequest.UserBill.Show_Bill = 1;
-            userHistoryModel.UserRequest.UserBill.Unit = 0;
-            userHistoryModel.UserRequest.UserBill.Unit_In_Words_Without_Lang = "mile";
-            userHistoryModel.UserRequest.UserBill.Unit_In_Words = "mile";
-            userHistoryModel.UserRequest.UserBill.TotalAdditionalCharge = 0;
-            userHistoryModel.UserRequest.UserBill.AdditionalCharge = null;
+            List<UserHistoryModel> userHistoryModel = new List<UserHistoryModel>();
+            userHistoryModel[0].UserRequest = new UserRequest();
+            userHistoryModel[0].UserRequest.Driver = new Drivers();
+            userHistoryModel[0].UserRequest.UserBill = new UserBill();
+            userHistoryModel[0].UserRequest.Id = 525;
+            userHistoryModel[0].UserRequest.Is_Share = 0;
+            userHistoryModel[0].UserRequest.Later = 0;
+            userHistoryModel[0].UserRequest.Request_Id = "RES_36904";
+            userHistoryModel[0].UserRequest.Pick_Latitude = 11.0150595;
+            userHistoryModel[0].UserRequest.Pick_Longitude = 76.9825105;
+            userHistoryModel[0].UserRequest.Drop_Latitude = 11.0150595;
+            userHistoryModel[0].UserRequest.Drop_Longitude = 76.9825105;
+            userHistoryModel[0].UserRequest.Pick_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
+            userHistoryModel[0].UserRequest.Drop_Location = "56, LMS Street, P N Palayam, Tamil Nadu, 641044, India";
+            userHistoryModel[0].UserRequest.Trip_Start_Time = DateTime.Now;
+            userHistoryModel[0].UserRequest.Is_Completed = 1;
+            userHistoryModel[0].UserRequest.Is_Cancelled = 0;
+            userHistoryModel[0].UserRequest.Payment_Opt = 1;
+            userHistoryModel[0].UserRequest.User_Id = 1;
+            userHistoryModel[0].UserRequest.Enable_Dispute_Button = true;
+            userHistoryModel[0].UserRequest.Driver.Id = 25;
+            userHistoryModel[0].UserRequest.Driver.FirstName = "rajesh";
+            userHistoryModel[0].UserRequest.Driver.LastName = "kannan";
+            userHistoryModel[0].UserRequest.Driver.Profile_Pic = " ";
+            userHistoryModel[0].UserRequest.Driver.Review = 0.35;
+            userHistoryModel[0].UserRequest.Driver.Phone_Number = "+919865896532";
+            userHistoryModel[0].UserRequest.Driver.Email = "raj@gmail.com";
+            userHistoryModel[0].UserRequest.Driver.Car_Model = "hhhh";
+            userHistoryModel[0].UserRequest.Driver.Car_Number = "AD23";
+            userHistoryModel[0].UserRequest.Driver_Type = 1;
+            userHistoryModel[0].UserRequest.Type_Icon = "http://192.168.1.32/captaincar/public/assets/img/uploads/89987.jpg";
+            userHistoryModel[0].UserRequest.Type_Name = "DKJH";
+            userHistoryModel[0].UserRequest.Distance = 0.20366141442004368;
+            userHistoryModel[0].UserRequest.Time = 3;
+            userHistoryModel[0].UserRequest.UserBill.Base_Price = 10;
+            userHistoryModel[0].UserRequest.UserBill.Ride_Fare = 0;
+            userHistoryModel[0].UserRequest.UserBill.Base_Distance = 1;
+            userHistoryModel[0].UserRequest.UserBill.Price_Per_Distance = 2;
+            userHistoryModel[0].UserRequest.UserBill.Price_Per_Time = 5;
+            userHistoryModel[0].UserRequest.UserBill.Distance_Price = 0;
+            userHistoryModel[0].UserRequest.UserBill.Time_Price = 15;
+            userHistoryModel[0].UserRequest.UserBill.Waiting_Price = 0;
+            userHistoryModel[0].UserRequest.UserBill.Tollgate_Price = 0;
+            userHistoryModel[0].UserRequest.UserBill.Tollgate_List = null;
+            userHistoryModel[0].UserRequest.UserBill.Service_Tax = 2.5;
+            userHistoryModel[0].UserRequest.UserBill.Service_Tax_Percentage = 10;
+            userHistoryModel[0].UserRequest.UserBill.Promo_Amount = 0;
+            userHistoryModel[0].UserRequest.UserBill.Referral_Amount = 0;
+            userHistoryModel[0].UserRequest.UserBill.Wallet_Amount = 0;
+            userHistoryModel[0].UserRequest.UserBill.Service_Fee = 5;
+            userHistoryModel[0].UserRequest.UserBill.Driver_Amount = 25;
+            userHistoryModel[0].UserRequest.UserBill.Total = 27.5;
+            userHistoryModel[0].UserRequest.UserBill.Currency = "JFJF";
+            userHistoryModel[0].UserRequest.UserBill.Show_Bill = 1;
+            userHistoryModel[0].UserRequest.UserBill.Unit = 0;
+            userHistoryModel[0].UserRequest.UserBill.Unit_In_Words_Without_Lang = "mile";
+            userHistoryModel[0].UserRequest.UserBill.Unit_In_Words = "mile";
+            userHistoryModel[0].UserRequest.UserBill.TotalAdditionalCharge = 0;
+            userHistoryModel[0].UserRequest.UserBill.AdditionalCharge = null;
 
-            return this.OKRESPONSE<UserHistoryModel>(userHistoryModel, userHistoryModel == null ? "User_History_Not_Found" : "User_History_found");
+            return this.OK<UserHistoryModel>(userHistoryModel, userHistoryModel == null ? "User_History_Not_Found" : "User_History_found", userHistoryModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Request-hhistoryList
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("historyList")]
         public IActionResult HistoryList(GeneralModel generalModel)
@@ -157,31 +168,49 @@ namespace TaziappzMobileWebAPI.Controllers
             userHistoryListModels.Add(userHistoryListModel);
             return this.OKRESPONSE<List<UserHistoryListModel>>(userHistoryListModels, userHistoryListModels == null ? "User_History_List_Not_Found" : "User_History_List_found");
         }
+        #endregion
 
+        #region Request-temptoken
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("temptoken")]
         public IActionResult TempToken(GeneralModel generalModel)
         {
-            TempTokenModel tempTokenModel = new TempTokenModel();
-            tempTokenModel.Corporate = 0;
-            tempTokenModel.Request = new Request();
-            tempTokenModel.Sos = null;
-            tempTokenModel.User_Sos = null;
-            return this.OKRESPONSE<TempTokenModel>(tempTokenModel, tempTokenModel == null ? "Temp_Token_Not_Found" : "Temp_Token_found");
+            List<TempTokenModel> tempTokenModel = new List<TempTokenModel>();
+            tempTokenModel[0].Corporate = 0;
+            tempTokenModel[0].Request = new Request();
+            tempTokenModel[0].Sos = null;
+            tempTokenModel[0].User_Sos = null;
+            return this.OK<TempTokenModel>(tempTokenModel, tempTokenModel == null ? "Temp_Token_Not_Found" : "Temp_Token_found", tempTokenModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Request-requestInprogress
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("requestInprogress")]
         public IActionResult RequestInProgress(GeneralModel generalModel)
         {
-            TempTokenModel tempTokenModel = new TempTokenModel();
-            tempTokenModel.Corporate = 0;
-            tempTokenModel.Request = new Request();
-            tempTokenModel.Sos = null;
-            tempTokenModel.User_Sos = null;
-            return this.OKRESPONSE<TempTokenModel>(tempTokenModel, tempTokenModel == null ? "Request_InProgress_Not_Found" : "Request_InProgress_found");
+            List<TempTokenModel> tempTokenModel = new List<TempTokenModel>();
+            tempTokenModel[0].Corporate = 0;
+            tempTokenModel[0].Request = new Request();
+            tempTokenModel[0].Sos = null;
+            tempTokenModel[0].User_Sos = null;
+            return this.OK<TempTokenModel>(tempTokenModel, tempTokenModel == null ? "Request_InProgress_Not_Found" : "Request_InProgress_found", tempTokenModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Request-createRequest
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("createRequest")]
         public IActionResult CreateRequest(GeneralModel generalModel)
@@ -189,7 +218,13 @@ namespace TaziappzMobileWebAPI.Controllers
             CreateRequestModel createRequestModel = new CreateRequestModel();
             return this.OKRESPONSE<CreateRequestModel>(createRequestModel, createRequestModel == null ? "Create_Request_Not_Found" : "Create_Request_found");
         }
+        #endregion
 
+        #region Request-cancelRequest
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("cancelRequest")]
         public IActionResult CancelRequest(GeneralModel generalModel)
@@ -197,7 +232,13 @@ namespace TaziappzMobileWebAPI.Controllers
             CancelRequestModel cancelRequestModel = new CancelRequestModel();
             return this.OKRESPONSE<CancelRequestModel>(cancelRequestModel, cancelRequestModel == null ? "Cancel_Request_Not_Found" : "Cancel_Request_found");
         }
+        #endregion
 
+        #region Request-paymentStatus
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("paymentStatus")]
         public IActionResult PaymentStatus(GeneralModel generalModel)
@@ -205,68 +246,85 @@ namespace TaziappzMobileWebAPI.Controllers
             PaymentStatusModel paymentStatusModel = new PaymentStatusModel();
             return this.OKRESPONSE<PaymentStatusModel>(paymentStatusModel, paymentStatusModel == null ? "Payment_Status_Not_Found" : "Payment_Status_found");
         }
+        #endregion
 
+        #region Request-createRequestFirebase
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("createRequestFirebase")]
         public IActionResult CreateRequestFirebase(GeneralModel generalModel)
         {
-            CreateRequestFirebaseModel createRequestFirebaseModel = new CreateRequestFirebaseModel();
-            createRequestFirebaseModel.CreateRequest = new CreateRequest();
-            createRequestFirebaseModel.CreateRequest.Id = 1050;
-            createRequestFirebaseModel.CreateRequest.Request_Id = "RES_9787";
-            createRequestFirebaseModel.CreateRequest.Pick_Latitude = "11.3109683";
-            createRequestFirebaseModel.CreateRequest.Pick_Location = "37, Manthampalayam Road, Manthampalayam, Tamil Nadu 638052, India";
-            createRequestFirebaseModel.CreateRequest.Pick_Longitude = "77.59382";
-            createRequestFirebaseModel.CreateRequest.Drop_Latitude = "11.2790913";
-            createRequestFirebaseModel.CreateRequest.Drop_Location = "Anna Silai Perundurai, NH47, Perundurai, Tamil Nadu, India";
-            createRequestFirebaseModel.CreateRequest.Drop_Longitude = "77.5849145";
-            createRequestFirebaseModel.CreateRequest.Time_Left = "50";
-            createRequestFirebaseModel.User = new RequestUser();
-            createRequestFirebaseModel.User.Id = 96;
-            createRequestFirebaseModel.User.FirstName = "RAJESH";
-            createRequestFirebaseModel.User.LastName = "KANNAN";
-            createRequestFirebaseModel.User.Email = "raj@gmail.com";
-            createRequestFirebaseModel.User.Phone_Number = "+919685325698";
-            createRequestFirebaseModel.User.Profile_Pic = null;
-            createRequestFirebaseModel.User.Latitude = 0;
-            createRequestFirebaseModel.User.Longitude = 0;
-            return this.OKRESPONSE<CreateRequestFirebaseModel>(createRequestFirebaseModel, createRequestFirebaseModel == null ? "Create_Request_Firebase_Not_Found" : "Create_Request_Firebase_found");
+            List<CreateRequestFirebaseModel> createRequestFirebaseModel = new List<CreateRequestFirebaseModel>();
+            createRequestFirebaseModel[0].CreateRequest = new CreateRequest();
+            createRequestFirebaseModel[0].CreateRequest.Id = 1050;
+            createRequestFirebaseModel[0].CreateRequest.Request_Id = "RES_9787";
+            createRequestFirebaseModel[0].CreateRequest.Pick_Latitude = "11.3109683";
+            createRequestFirebaseModel[0].CreateRequest.Pick_Location = "37, Manthampalayam Road, Manthampalayam, Tamil Nadu 638052, India";
+            createRequestFirebaseModel[0].CreateRequest.Pick_Longitude = "77.59382";
+            createRequestFirebaseModel[0].CreateRequest.Drop_Latitude = "11.2790913";
+            createRequestFirebaseModel[0].CreateRequest.Drop_Location = "Anna Silai Perundurai, NH47, Perundurai, Tamil Nadu, India";
+            createRequestFirebaseModel[0].CreateRequest.Drop_Longitude = "77.5849145";
+            createRequestFirebaseModel[0].CreateRequest.Time_Left = "50";
+            createRequestFirebaseModel[0].User = new RequestUser();
+            createRequestFirebaseModel[0].User.Id = 96;
+            createRequestFirebaseModel[0].User.FirstName = "RAJESH";
+            createRequestFirebaseModel[0].User.LastName = "KANNAN";
+            createRequestFirebaseModel[0].User.Email = "raj@gmail.com";
+            createRequestFirebaseModel[0].User.Phone_Number = "+919685325698";
+            createRequestFirebaseModel[0].User.Profile_Pic = null;
+            createRequestFirebaseModel[0].User.Latitude = 0;
+            createRequestFirebaseModel[0].User.Longitude = 0;
+            return this.OK<CreateRequestFirebaseModel>(createRequestFirebaseModel, createRequestFirebaseModel == null ? "Create_Request_Firebase_Not_Found" : "Create_Request_Firebase_found", createRequestFirebaseModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Request-firebaseEta
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("firebaseEta")]
         public IActionResult FirebaseEta(GeneralModel generalModel)
         {
-            EtaFirebaseModel etaFirebaseModel = new EtaFirebaseModel();
-            etaFirebaseModel.Show_Price = 1;
-            etaFirebaseModel.Distance = 4.43;
-            etaFirebaseModel.Time = 11;
-            etaFirebaseModel.Base_Distance = 10;
-            etaFirebaseModel.Base_Price = 5;
-            etaFirebaseModel.Price_Per_Distance = 5;
-            etaFirebaseModel.Price_Per_Time = 5;
-            etaFirebaseModel.Distance_Price = 27.76;
-            etaFirebaseModel.time_price = 41.416666666666664;
-            etaFirebaseModel.Total = 5;
-            etaFirebaseModel.Approximate_Value = 1;
-            etaFirebaseModel.Min_Amount = 5;
-            etaFirebaseModel.Max_Amount = 5.2332;
-            etaFirebaseModel.Tax = "00";
-            etaFirebaseModel.Tax_Amount = 0;
-            etaFirebaseModel.Ride_Fare = 5;
-            etaFirebaseModel.Currency = "#";
-            etaFirebaseModel.Type_Id = "10";
-            etaFirebaseModel.Is_Private_Key_Trip = true;
-            etaFirebaseModel.Type_Name = "Suv - Tamilnadu";
-            etaFirebaseModel.Is_Accept_Share_Ride = 0;
-            etaFirebaseModel.Base_Share_Ride_Price = 0;
-            etaFirebaseModel.Share_Ride_Details = new Share_Ride();
-            etaFirebaseModel.Share_Ride_Details.Number_Of_Seats = 1;
-            etaFirebaseModel.Share_Ride_Details.Subtotal_Price = 0;
-            etaFirebaseModel.Share_Ride_Details.Tax_Amount = 0;
-            etaFirebaseModel.Share_Ride_Details.Total_Price = 0;
+            List<EtaFirebaseModel> etaFirebaseModel = new List<EtaFirebaseModel>();
+            etaFirebaseModel[0].Show_Price = 1;
+            etaFirebaseModel[0].Distance = 4.43;
+            etaFirebaseModel[0].Time = 11;
+            etaFirebaseModel[0].Base_Distance = 10;
+            etaFirebaseModel[0].Base_Price = 5;
+            etaFirebaseModel[0].Price_Per_Distance = 5;
+            etaFirebaseModel[0].Price_Per_Time = 5;
+            etaFirebaseModel[0].Distance_Price = 27.76;
+            etaFirebaseModel[0].time_price = 41.416666666666664;
+            etaFirebaseModel[0].Total = 5;
+            etaFirebaseModel[0].Approximate_Value = 1;
+            etaFirebaseModel[0].Min_Amount = 5;
+            etaFirebaseModel[0].Max_Amount = 5.2332;
+            etaFirebaseModel[0].Tax = "00";
+            etaFirebaseModel[0].Tax_Amount = 0;
+            etaFirebaseModel[0].Ride_Fare = 5;
+            etaFirebaseModel[0].Currency = "#";
+            etaFirebaseModel[0].Type_Id = "10";
+            etaFirebaseModel[0].Is_Private_Key_Trip = true;
+            etaFirebaseModel[0].Type_Name = "Suv - Tamilnadu";
+            etaFirebaseModel[0].Is_Accept_Share_Ride = 0;
+            etaFirebaseModel[0].Base_Share_Ride_Price = 0;
+            etaFirebaseModel[0].Unit = "0";
+            etaFirebaseModel[0].Unit_In_Words_Without_Lang = "Miles";
+            etaFirebaseModel[0].Unit_In_Words = "Miles";
+            etaFirebaseModel[0].Driver_Arival_Estimation = "1 min";
+            etaFirebaseModel[0].Share_Ride_Details = new Share_Ride();
+            etaFirebaseModel[0].Share_Ride_Details.Number_Of_Seats = 1;
+            etaFirebaseModel[0].Share_Ride_Details.Subtotal_Price = 0;
+            etaFirebaseModel[0].Share_Ride_Details.Tax_Amount = 0;
+            etaFirebaseModel[0].Share_Ride_Details.Total_Price = 0;
 
-            return this.OKRESPONSE<EtaFirebaseModel>(etaFirebaseModel, etaFirebaseModel == null ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found");
+            return this.OK<EtaFirebaseModel>(etaFirebaseModel, etaFirebaseModel == null ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found", etaFirebaseModel == null ? 0 : 1);
         }
+        #endregion
     }
 }
