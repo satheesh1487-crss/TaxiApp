@@ -21,7 +21,7 @@ namespace TaziappzMobileWebAPI.Controllers
             _context = context;
         }
 
-        #region Referral_Apis
+        #region Referral_code
         /// <summary>
         /// Hard Coded Data
         /// </summary>
@@ -33,7 +33,13 @@ namespace TaziappzMobileWebAPI.Controllers
             GetCodeModel getCodeModel = new GetCodeModel();
             return this.OKRESPONSE<GetCodeModel>(getCodeModel, getCodeModel == null ? "Get_Code_not_found" : "Get_Code_found");
         }
+        #endregion
 
+        #region Referral_apply
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("apply")]
         public IActionResult Apply(GeneralModel generalModel)

@@ -21,94 +21,136 @@ namespace TaziappzMobileWebAPI.Controllers
             _context = context;
         }
 
+        #region Authentication_oTPValidate
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("oTPValidate")]
         public IActionResult OTPValidate(GeneralModel generalModel)
         {
-            UserOTPValidateModel userOTPValidateModel = new UserOTPValidateModel();
-            userOTPValidateModel.Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
-            return this.OKRESPONSE<UserOTPValidateModel>(userOTPValidateModel, userOTPValidateModel == null ? "User_History_Not_Found" : "User_History_found");
+            List<UserOTPValidateModel> userOTPValidateModel = new List<UserOTPValidateModel>();
+            userOTPValidateModel[0].Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
+            return this.OK<UserOTPValidateModel>(userOTPValidateModel, userOTPValidateModel == null ? "User_History_Not_Found" : "User_History_found", userOTPValidateModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Authentication_signup
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("signup")]
         public IActionResult Signup(GeneralModel generalModel)
         {
-            UserSignUpModel userSignUpModel = new UserSignUpModel();
-            userSignUpModel.User = new UserSignup();
-            userSignUpModel.Sos = new List<UserSos>();
-            userSignUpModel.User.Id = 32;
-            userSignUpModel.User.FirstName = "RAJESH";
-            userSignUpModel.User.LastName = "KANNAN";
-            userSignUpModel.User.Email = "raj@gmail.com";
-            userSignUpModel.User.Phone = "+919865365236";
-            userSignUpModel.User.Login_By = "android";
-            userSignUpModel.User.Login_Method = "manual";
-            userSignUpModel.User.Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
-            userSignUpModel.User.Profile_Pic = "";
-            userSignUpModel.User.Is_Active = 1;
-            userSignUpModel.User.Corporate = 0;
-            userSignUpModel.corporate = 0;
-            return this.OKRESPONSE<UserSignUpModel>(userSignUpModel, userSignUpModel == null ? "User_SignUp_Not_Found" : "User_SignUp_found");
+            List<UserSignUpModel> userSignUpModel = new List<UserSignUpModel>();
+            userSignUpModel[0].User = new UserSignup();
+            userSignUpModel[0].Sos = new List<UserSos>();
+            userSignUpModel[0].User.Id = 32;
+            userSignUpModel[0].User.FirstName = "RAJESH";
+            userSignUpModel[0].User.LastName = "KANNAN";
+            userSignUpModel[0].User.Email = "raj@gmail.com";
+            userSignUpModel[0].User.Phone = "+919865365236";
+            userSignUpModel[0].User.Login_By = "android";
+            userSignUpModel[0].User.Login_Method = "manual";
+            userSignUpModel[0].User.Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
+            userSignUpModel[0].User.Profile_Pic = "";
+            userSignUpModel[0].User.Is_Active = 1;
+            userSignUpModel[0].User.Corporate = 0;
+            userSignUpModel[0].corporate = 0;
+            return this.OK<UserSignUpModel>(userSignUpModel, userSignUpModel == null ? "User_SignUp_Not_Found" : "User_SignUp_found", userSignUpModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Authentication_login
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("login")]
         public IActionResult Login(GeneralModel generalModel)
         {
-            UserLoginModel userLoginModel = new UserLoginModel();
-            userLoginModel.User = new UserLogin();
-            userLoginModel.Sos = new List<LoginSos>();
-            userLoginModel.User.Id = 32;
-            userLoginModel.User.FirstName = "RAJESH";
-            userLoginModel.User.LastName = "KANNAN";
-            userLoginModel.User.Email = "raj@gmail.com";
-            userLoginModel.User.Phone = "+919865365236";
-            userLoginModel.User.Login_By = "android";
-            userLoginModel.User.Login_Method = "manual";
-            userLoginModel.User.Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
-            userLoginModel.User.Profile_Pic = "";
-            userLoginModel.User.Is_Active = 1;
-            userLoginModel.User.Corporate = 0;
-            userLoginModel.corporate = 0;
-            return this.OKRESPONSE<UserLoginModel>(userLoginModel, userLoginModel == null ? "User_Login_Not_Found" : "User_Login_found");
+            List<UserLoginModel> userLoginModel = new List<UserLoginModel>();
+            userLoginModel[0].User = new UserLogin();
+            userLoginModel[0].Sos = new List<LoginSos>();
+            userLoginModel[0].User.Id = 32;
+            userLoginModel[0].User.FirstName = "RAJESH";
+            userLoginModel[0].User.LastName = "KANNAN";
+            userLoginModel[0].User.Email = "raj@gmail.com";
+            userLoginModel[0].User.Phone = "+919865365236";
+            userLoginModel[0].User.Login_By = "android";
+            userLoginModel[0].User.Login_Method = "manual";
+            userLoginModel[0].User.Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
+            userLoginModel[0].User.Profile_Pic = "";
+            userLoginModel[0].User.Is_Active = 1;
+            userLoginModel[0].User.Corporate = 0;
+            userLoginModel[0].corporate = 0;
+            return this.OK<UserLoginModel>(userLoginModel, userLoginModel == null ? "User_Login_Not_Found" : "User_Login_found", userLoginModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Authentication_otp
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("otp")]
         public IActionResult Otp(GeneralModel generalModel)
         {
-            LoginOtpModel loginOtpModel = new LoginOtpModel();
-            loginOtpModel.PhoneNumber = "+919653698745";
-            return this.OKRESPONSE<LoginOtpModel>(loginOtpModel, loginOtpModel == null ? "Login_OTP_Not_Found" : "Login_OTP_found");
+            List<LoginOtpModel> loginOtpModel = new List<LoginOtpModel>();
+            loginOtpModel[0].PhoneNumber = "+919653698745";
+            return this.OK<LoginOtpModel>(loginOtpModel, loginOtpModel == null ? "Login_OTP_Not_Found" : "Login_OTP_found", loginOtpModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Authentication_resendotp
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("resendotp")]
         public IActionResult Resendotp(GeneralModel generalModel)
         {
-            LoginResendOtpModel loginResendOtpModel = new LoginResendOtpModel();
-            loginResendOtpModel.Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
-            return this.OKRESPONSE<LoginResendOtpModel>(loginResendOtpModel, loginResendOtpModel == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found");
+            List<LoginResendOtpModel> loginResendOtpModel = new List<LoginResendOtpModel>();
+            loginResendOtpModel[0].Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
+            return this.OK<LoginResendOtpModel>(loginResendOtpModel, loginResendOtpModel == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found", loginResendOtpModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Authentication_sendotp
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("sendotp")]
         public IActionResult Sendotp(GeneralModel generalModel)
         {
-            LoginSendOtpModel loginSendOtpModel = new LoginSendOtpModel();
-            loginSendOtpModel.Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
-            return this.OKRESPONSE<LoginSendOtpModel>(loginSendOtpModel, loginSendOtpModel == null ? "Send_OTP_Not_Found" : "Send_OTP_found");
+            List<LoginSendOtpModel> loginSendOtpModel = new List<LoginSendOtpModel>();
+            loginSendOtpModel[0].Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
+            return this.OK<LoginSendOtpModel>(loginSendOtpModel, loginSendOtpModel == null ? "Send_OTP_Not_Found" : "Send_OTP_found", loginSendOtpModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Authentication_forgotpassword
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("forgotpassword")]
         public IActionResult ForgotPassword(GeneralModel generalModel)
         {
-            ForgotPasswordModel forgotPasswordModel = new ForgotPasswordModel();
-            forgotPasswordModel.User = new UserForgot();
-            forgotPasswordModel.User.Is_Presented = true;
-            return this.OKRESPONSE<ForgotPasswordModel>(forgotPasswordModel, forgotPasswordModel == null ? "Forgot_Password_Not_Found" : "Forgot_Password_found");
+            List<ForgotPasswordModel> forgotPasswordModel = new List<ForgotPasswordModel>();
+            forgotPasswordModel[0].User = new UserForgot();
+            forgotPasswordModel[0].User.Is_Presented = true;
+            return this.OK<ForgotPasswordModel>(forgotPasswordModel, forgotPasswordModel == null ? "Forgot_Password_Not_Found" : "Forgot_Password_found", forgotPasswordModel == null ? 0 : 1);
         }
+        #endregion
     }
 }

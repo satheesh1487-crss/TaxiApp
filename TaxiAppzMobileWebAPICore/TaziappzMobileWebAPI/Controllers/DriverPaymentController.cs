@@ -21,7 +21,7 @@ namespace TaziappzMobileWebAPI.Controllers
             _context = context;
         }
 
-        #region Payment_Apis
+        #region Payment_getwallet
         /// <summary>
         /// Hard Coded Data
         /// </summary>
@@ -30,52 +30,69 @@ namespace TaziappzMobileWebAPI.Controllers
         [Route("getwallet")]
         public IActionResult GetWallet(GeneralModel generalModel)
         {
-            GetWalletModel getWalletModel = new GetWalletModel();
-            getWalletModel.Amount_Added = 500;
-            getWalletModel.Amount_Balance = 100;
-            getWalletModel.Amount_Spent = 400;
-            getWalletModel.Currency = "&";
-            return this.OKRESPONSE<GetWalletModel>(getWalletModel, getWalletModel == null ? "wallet_not_found" : "wallet_found");
+            List<GetWalletModel> getWalletModel = new List<GetWalletModel>();
+            getWalletModel[0].Amount_Added = 500;
+            getWalletModel[0].Amount_Balance = 100;
+            getWalletModel[0].Amount_Spent = 400;
+            getWalletModel[0].Currency = "&";
+            return this.OK<GetWalletModel>(getWalletModel, getWalletModel == null ? "wallet_not_found" : "wallet_found", getWalletModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Payment_cardlist
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("cardlist")]
         public IActionResult CardList(GeneralModel generalModel)
         {
-            CardListModel cardListModel = new CardListModel();
-            cardListModel.Payment = new Payment();
-            cardListModel.Payment.Card_Id = 1;
-            cardListModel.Payment.Last_Number = "555";
-            cardListModel.Payment.Card_Type = "VISA";
-            cardListModel.Payment.Is_Default = true;
-            return this.OKRESPONSE<CardListModel>(cardListModel, cardListModel == null ? "CardList_Not_Found" : "CardList_Found");
+            List<CardListModel> cardListModel = new List<CardListModel>();
+            cardListModel[0].Payment = new Payment();
+            cardListModel[0].Payment.Card_Id = 1;
+            cardListModel[0].Payment.Last_Number = "555";
+            cardListModel[0].Payment.Card_Type = "VISA";
+            cardListModel[0].Payment.Is_Default = true;
+            return this.OK<CardListModel>(cardListModel, cardListModel == null ? "CardList_Not_Found" : "CardList_Found", cardListModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Payment_addwallet
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("addwallet")]
         public IActionResult AddWallet(GeneralModel generalModel)
         {
-            AddWalletModel addWalletModel = new AddWalletModel();
-            addWalletModel.Amount_Added = 500;
-            addWalletModel.Amount_Balance = 100;
-            addWalletModel.Amount_Spent = 400;
-            addWalletModel.Currency = "&";
-            return this.OKRESPONSE<AddWalletModel>(addWalletModel, addWalletModel == null ? "AddWallet_not_found" : "AddWallet_found");
+            List<AddWalletModel> addWalletModel = new List<AddWalletModel>();
+            addWalletModel[0].Amount_Added = 500;
+            addWalletModel[0].Amount_Balance = 100;
+            addWalletModel[0].Amount_Spent = 400;
+            addWalletModel[0].Currency = "&";
+            return this.OK<AddWalletModel>(addWalletModel, addWalletModel == null ? "AddWallet_not_found" : "AddWallet_found", addWalletModel == null ? 0 : 1);
         }
+        #endregion
 
+        #region Payment_addcard
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("addcard")]
         public IActionResult AddCard(GeneralModel generalModel)
         {
-            AddCardModel addCardModel = new AddCardModel();
-            addCardModel.Payment = new Payment();
-            addCardModel.Payment.Card_Id = 1;
-            addCardModel.Payment.Last_Number = "555";
-            addCardModel.Payment.Card_Type = "VISA";
-            addCardModel.Payment.Is_Default = true;
-            return this.OKRESPONSE<AddCardModel>(addCardModel, addCardModel == null ? "AddWallet_not_found" : "AddWallet_found");
+            List<AddCardModel> addCardModel = new List<AddCardModel>();
+            addCardModel[0].Payment = new Payment();
+            addCardModel[0].Payment.Card_Id = 1;
+            addCardModel[0].Payment.Last_Number = "555";
+            addCardModel[0].Payment.Card_Type = "VISA";
+            addCardModel[0].Payment.Is_Default = true;
+            return this.OK<AddCardModel>(addCardModel, addCardModel == null ? "AddWallet_not_found" : "AddWallet_found", addCardModel == null ? 0 : 1);
         }
-
         #endregion
     }
 }

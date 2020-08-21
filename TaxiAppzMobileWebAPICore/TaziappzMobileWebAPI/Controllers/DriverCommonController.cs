@@ -21,7 +21,7 @@ namespace TaziappzMobileWebAPI.Controllers
             _context = context;
         }
 
-        #region Common_Apis
+        #region Common_review
         /// <summary>
         /// Hard Coded Data
         /// </summary>
@@ -33,7 +33,13 @@ namespace TaziappzMobileWebAPI.Controllers
             RequestReviewModel requestReviewModel = new RequestReviewModel();
             return this.OKRESPONSE<RequestReviewModel>(requestReviewModel, requestReviewModel == null ? "Request_Review_not_found" : "Request_Review_found");
         }
+        #endregion
 
+        #region Common_retrieve
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("retrieve")]
         public IActionResult Retrieve(GeneralModel generalModel)
@@ -63,7 +69,13 @@ namespace TaziappzMobileWebAPI.Controllers
             });
          return this.OK<GetProfileModel>(getProfileModel, getProfileModel.Count == 0 ? "Get_Profile_not_found" : "Get_Profile_found", getProfileModel.Count == 0 ? 0 : 1);
         }
+        #endregion
 
+        #region Common_earninglist
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("earninglist")]
         public IActionResult Earninglist(GeneralModel generalModel)
@@ -111,7 +123,13 @@ namespace TaziappzMobileWebAPI.Controllers
 
             return this.OK<EarningsListModel>(earningsListModel, earningsListModel.Count == 0 ? "Earning_List_not_found" : "Earning_List_found", earningsListModel.Count == 0 ? 0 : 1);
         }
+        #endregion
 
+        #region Common_fAQlist
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("fAQlist")]
         public IActionResult FAQlist(GeneralModel generalModel)
