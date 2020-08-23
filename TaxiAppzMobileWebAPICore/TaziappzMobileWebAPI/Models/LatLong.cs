@@ -59,4 +59,16 @@ namespace TaziappzMobileWebAPI
         [JsonProperty("distance")]
         public double? Distance { get; set; }
     }
+
+    public class DriversCancel
+    {
+        [JsonProperty("requestId")]
+        public long RequestId { get; set; }
+        [JsonProperty("reason")]
+        public string Reason { get; set; }
+        [JsonProperty("cancel_other_reason")]
+        public long? Cancel_Other_Reason { get; set; }
+        [JsonProperty("request_id")]
+        public long Requestid { get; set; }
+    }
 }

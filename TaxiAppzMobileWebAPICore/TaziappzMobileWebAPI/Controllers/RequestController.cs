@@ -46,5 +46,19 @@ namespace TaziappzMobileWebAPI.Controllers
             bool result = dARequest.Requestprogress(requestVehicleType, User.ToAppUser(), context);
             return this.OKStatus(result ? "Data Found" : "No Data Found", result ? 1 : 0);
         }
+
+        /// <summary>
+        /// Use to Sent Push notification to Drivers based on User request
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        [Route("UserRequestCancel")]
+        public IActionResult RequestCancel([FromBody] DriversCancel  driversCancel)
+        {
+            DARequest dARequest = new DARequest();
+            bool result = dARequest.RequestCancel(driversCancel, User.ToAppUser(), context);
+            return this.OKStatus(result ? "Data Found" : "No Data Found", result ? 1 : 0);
+        }
     }
 }
