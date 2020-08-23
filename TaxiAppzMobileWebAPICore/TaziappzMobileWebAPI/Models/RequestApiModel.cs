@@ -20,12 +20,12 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("profile_picture")]
         public string Profile_picture { get; set; }
         [JsonProperty("active")]
-        public string Active { get; set; }
+        public bool? Active { get; set; }
 
         [JsonProperty("approve")]
-        public string Approve { get; set; }
+        public bool? Approve { get; set; }
         [JsonProperty("availabe")]
-        public string Availabe { get; set; }
+        public bool? Availabe { get; set; }
 
 
         [JsonProperty("uploaded_document")]
@@ -34,7 +34,7 @@ namespace TaziappzMobileWebAPI.Models
         public string Service_location_id { get; set; }
 
         [JsonProperty("vehicle_type_id")]
-        public string Vehicle_type_id { get; set; }
+        public long? Vehicle_type_id { get; set; }
         [JsonProperty("vehicle_type_name")]
         public string Vehicle_type_name { get; set; }
 
@@ -55,6 +55,8 @@ namespace TaziappzMobileWebAPI.Models
 
         [JsonProperty("onTripRequest")]
         public TripRequest OnTripRequest { get; set; }
+        [JsonProperty("metaRequest")]
+        public MetaRequest metaRequest { get; set; }
     }
     public class TripRequest
     {
@@ -63,27 +65,27 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("request_number")]
         public string Request_number { get; set; }
         [JsonProperty("is_later")]
-        public string Is_later { get; set; }
+        public int? Is_later { get; set; }
         [JsonProperty("user_id")]
-        public string User_id { get; set; }
+        public long? User_id { get; set; }
         [JsonProperty("trip_start_time")]
-        public string Trip_start_time { get; set; }
+        public DateTime? Trip_start_time { get; set; }
         [JsonProperty("arrived_at")]
         public string Arrived_at { get; set; }
 
         [JsonProperty("accepted_at")]
-        public string Accepted_at { get; set; }
+        public DateTime? Accepted_at { get; set; }
         [JsonProperty("completed_at")]
         public string Completed_at { get; set; }
 
         [JsonProperty("Is_driver_started")]
-        public bool is_driver_started { get; set; }
+        public string is_driver_started { get; set; }
         [JsonProperty("is_driver_arrived")]
-        public bool Is_driver_arrived { get; set; }
+        public string Is_driver_arrived { get; set; }
         [JsonProperty("is_trip_start")]
-        public bool Is_trip_start { get; set; }
+        public string Is_trip_start { get; set; }
         [JsonProperty("is_completed")]
-        public bool Is_completed { get; set; }
+        public string Is_completed { get; set; }
 
         [JsonProperty("is_cancelled")]
         public string Is_cancelled { get; set; }
@@ -93,27 +95,95 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("payment_opt")]
         public string Payment_opt { get; set; }
         [JsonProperty("is_paid")]
-        public long Is_paid { get; set; }
+        public string Is_paid { get; set; }
         [JsonProperty("user_rated")]
-        public long User_rated { get; set; }
+        public int? User_rated { get; set; }
         [JsonProperty("driver_rated")]
-        public long Driver_rated { get; set; }
+        public int? Driver_rated { get; set; }
 
         [JsonProperty("unit")]
-        public string Unit { get; set; }
+        public int? Unit { get; set; }
         [JsonProperty("zone_type_id")]
-        public long Zone_type_id { get; set; }
+        public long? Zone_type_id { get; set; }
         [JsonProperty("vehicle_type_name")]
         public string Vehicle_type_name { get; set; }
         [JsonProperty("pick_lat")]
-        public decimal Pick_lat { get; set; }
+        public decimal? Pick_lat { get; set; }
 
         [JsonProperty("pick_lng")]
-        public decimal Pick_lng { get; set; }
+        public decimal? Pick_lng { get; set; }
         [JsonProperty("drop_lat")]
         public decimal Drop_lat { get; set; }
         [JsonProperty("drop_lng")]
         public decimal Drop_lng { get; set; }
+        [JsonProperty("pick_address")]
+        public string Pick_address { get; set; }
+        [JsonProperty("drop_address")]
+        public string Drop_address { get; set; }
+
+        [JsonProperty("userDetail")]
+        public Details UserDetails { get; set; }
+
+    }
+
+    public class MetaRequest
+    {
+        [JsonProperty("id")]
+        public long Id { get; set; }
+        [JsonProperty("request_number")]
+        public string Request_number { get; set; }
+        [JsonProperty("is_later")]
+        public int? Is_later { get; set; }
+        [JsonProperty("user_id")]
+        public long? User_id { get; set; }
+        [JsonProperty("trip_start_time")]
+        public DateTime? Trip_start_time { get; set; }
+        [JsonProperty("arrived_at")]
+        public string Arrived_at { get; set; }
+
+        [JsonProperty("accepted_at")]
+        public DateTime? Accepted_at { get; set; }
+        [JsonProperty("completed_at")]
+        public string Completed_at { get; set; }
+
+        [JsonProperty("Is_driver_started")]
+        public string is_driver_started { get; set; }
+        [JsonProperty("is_driver_arrived")]
+        public string Is_driver_arrived { get; set; }
+        [JsonProperty("is_trip_start")]
+        public string Is_trip_start { get; set; }
+        [JsonProperty("is_completed")]
+        public string Is_completed { get; set; }
+
+        [JsonProperty("is_cancelled")]
+        public string Is_cancelled { get; set; }
+        [JsonProperty("cancel_method")]
+        public string Cancel_method { get; set; }
+
+        [JsonProperty("payment_opt")]
+        public string Payment_opt { get; set; }
+        [JsonProperty("is_paid")]
+        public string Is_paid { get; set; }
+        [JsonProperty("user_rated")]
+        public int? User_rated { get; set; }
+        [JsonProperty("driver_rated")]
+        public int? Driver_rated { get; set; }
+
+        [JsonProperty("unit")]
+        public int? Unit { get; set; }
+        [JsonProperty("zone_type_id")]
+        public long? Zone_type_id { get; set; }
+        [JsonProperty("vehicle_type_name")]
+        public string Vehicle_type_name { get; set; }
+        [JsonProperty("pick_lat")]
+        public decimal? Pick_lat { get; set; }
+
+        [JsonProperty("pick_lng")]
+        public decimal? Pick_lng { get; set; }
+        [JsonProperty("drop_lat")]
+        public decimal? Drop_lat { get; set; }
+        [JsonProperty("drop_lng")]
+        public decimal? Drop_lng { get; set; }
         [JsonProperty("pick_address")]
         public string Pick_address { get; set; }
         [JsonProperty("drop_address")]
