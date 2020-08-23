@@ -9,10 +9,7 @@ namespace TaziappzMobileWebAPI.Models
     public class GeneralModel
     {
         [JsonProperty("id")]
-        public long? Id { get; set; }
-
-        [JsonProperty("token")]
-        public  string Token { get; set; }
+        public long? Id { get; set; }       
     }
     public class ProfileModel : GeneralModel
     {
@@ -35,7 +32,7 @@ namespace TaziappzMobileWebAPI.Models
         public string Phone_Number { get; set; }
     }
 
-    public class DriverStatus : GeneralModel
+    public class DriverStatusModel : GeneralModel
     {
         [JsonProperty("online_status")]
         public bool Online_Status { get; set; }

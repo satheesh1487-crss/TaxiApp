@@ -367,13 +367,13 @@ namespace TaziappzMobileWebAPI.Controllers
         #region Request_OnlineStatus        
         [HttpPost]
         [Route("onlinStatus")]
-        public IActionResult OnlinStatus(DriverStatus driverStatus)
+        public IActionResult OnlinStatus(DriverStatusModel driverStatusModel)
         {
             try
             {
-                Validator.validateOnlineStatus(driverStatus);
+                Validator.validateOnlineStatus(driverStatusModel);
                 DADriverRequest dADriverRequest = new DADriverRequest();              
-                var result =dADriverRequest.onlineStatus(_context, driverStatus, User.ToAppUser());
+                var result =dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
                 List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
                 requestStatusModels.Add(result);               
                 return this.OK<RequestStatusModel>(requestStatusModels, requestStatusModels.Count == 0 ? "Driver_Online" : "Driver_Offline",  1);
