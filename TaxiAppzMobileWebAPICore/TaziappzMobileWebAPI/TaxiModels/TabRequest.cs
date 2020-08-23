@@ -10,6 +10,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
     {
         public TabRequest()
         {
+            TabCancellationFeeForDriver = new HashSet<TabCancellationFeeForDriver>();
             TabRequestMeta = new HashSet<TabRequestMeta>();
             TabRequestPlace = new HashSet<TabRequestPlace>();
         }
@@ -138,6 +139,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [ForeignKey(nameof(UserId))]
         [InverseProperty(nameof(TabUser.TabRequest))]
         public virtual TabUser User { get; set; }
+        [InverseProperty("Request")]
+        public virtual ICollection<TabCancellationFeeForDriver> TabCancellationFeeForDriver { get; set; }
         [InverseProperty("Request")]
         public virtual ICollection<TabRequestMeta> TabRequestMeta { get; set; }
         [InverseProperty("Request")]

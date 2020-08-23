@@ -401,7 +401,26 @@ namespace TaziappzMobileWebAPI.Controllers
             {
                 return this.KnowOperationError(ex.Message);
             }
-            #endregion
+            
         }
+        #endregion
+        #region Request Cancel
+        [HttpPost]
+        [Route("TripCancel")]
+        public IActionResult TripCancel(long requestid)
+        {
+            try
+            {
+                DADriverRequest dADriverRequest = new DADriverRequest();
+                var result = dADriverRequest.TripCancel(requestid, _context, User.ToAppUser());
+                return this.OKStatus(result ? "RequestCancel_Success" : "RequestCancel_Failed", result ? 1 : 0);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+            
+        }
+        #endregion
     }
 }

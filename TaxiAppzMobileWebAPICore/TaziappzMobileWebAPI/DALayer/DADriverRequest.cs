@@ -218,6 +218,29 @@ namespace TaziappzMobileWebAPI.DALayer
             }
             
          }
+
+        public bool TripCancel(long requestid,TaxiAppzDBContext context, LoggedInUser loggedInUser)
+        {
+            var driverdtls = context.TabDrivers.Where(t => t.ContactNo == loggedInUser.Contactno && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
+            if (driverdtls == null)
+                return false;
+            TabCancellationFeeForDriver tabCancellationFeeForDriver = new TabCancellationFeeForDriver();
+            tabCancellationFeeForDriver.Driverid = driverdtls.Driverid;
+            tabCancellationFeeForDriver.RequestId = requestid;
+            tabCancellationFeeForDriver.CreatedAt = DateTime.UtcNow;
+            context.TabCancellationFeeForDriver.Add(tabCancellationFeeForDriver);
+            context.SaveChanges();
+            var requestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid && t.DriverId == driverdtls.Driverid).FirstOrDefault();
+                context.TabRequestMeta.Remove(requestmeta);
+                context.SaveChanges();
+                var secondrequestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid).OrderBy(t => t.MetaId).FirstOrDefault();
+                secondrequestmeta.IsActive = true;
+                context.TabRequestMeta.Update(secondrequestmeta);
+                context.SaveChanges();
+                return true;
+           
+
+        }
         static double _eQuatorialEarthRadius = 6378.1370D;
         static double _d2r = (Math.PI / 180D);
 
