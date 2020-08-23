@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaziappzMobileWebAPI.DALayer;
+using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
@@ -42,23 +43,32 @@ namespace TaziappzMobileWebAPI.Controllers
         [HttpPost]
         [Authorize]
         [Route("profile")]
-        public IActionResult Profile(long id)
+        public IActionResult Profile(ProfileModel profileModel)
         {
-            DAUserCommon dAUserCommon = new DAUserCommon();
-            List<UserProfileModel> userProfiles = new List<UserProfileModel>();
-            userProfiles = dAUserCommon.GetProfile(_context, id, User.ToAppUser());
-            return this.OK<UserProfileModel>(userProfiles, userProfiles.Count == 0 ? "Profile data not found" : "Profie Data Found", userProfiles.Count == 0 ? 0 : 1);          
+            try
+            {
+                Validator.validateProfile(profileModel);
+                DAUserCommon dAUserCommon = new DAUserCommon();
+                List<UserProfileModel> userProfiles = new List<UserProfileModel>();
+                userProfiles = dAUserCommon.GetProfile(_context, profileModel, User.ToAppUser());
+                return this.OK<UserProfileModel>(userProfiles, userProfiles.Count == 0 ? "Profile data not found" : "Profie Data Found", userProfiles.Count == 0 ? 0 : 1);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }           
         }
         #endregion
 
         #region Common-zonesos       
         [HttpPost]
         [Route("zonesos")]
-        public IActionResult ZoneSos(long id, decimal lang, decimal lat)
+        public IActionResult ZoneSos(UserZoneSOSModel userZoneSOSModel)
         {
+            Validator.validateZoneSos(userZoneSOSModel);
             DAUserCommon dAUserCommon = new DAUserCommon();            
             List<UserSosModel> userSosModels = new List<UserSosModel>();            
-            userSosModels = dAUserCommon.List(_context,id, lang, lat);
+            userSosModels = dAUserCommon.List(_context, userZoneSOSModel, User.ToAppUser());
             return this.OK<UserSosModel>(userSosModels, userSosModels.Count == 0 ? "User SOS Details Not Found" : "User SOS Details Found", userSosModels.Count == 0 ? 0 : 1);            
         }
         #endregion
@@ -66,11 +76,12 @@ namespace TaziappzMobileWebAPI.Controllers
         #region Common-faq_list        
         [HttpPost]
         [Route("faq_list")]
-        public IActionResult Faq_List(long id, decimal lang, decimal lat, string type)
+        public IActionResult Faq_List(UserFAQListModel userFAQListModel)
         {
+            Validator.validateFAQList(userFAQListModel);
             DAUserCommon dAUserCommon = new DAUserCommon();
             List<UserFaqListModel> userFaqLists = new List<UserFaqListModel>();
-            userFaqLists = dAUserCommon.FaqList(_context, id, lang, lat, type);
+            userFaqLists = dAUserCommon.FaqList(_context, userFAQListModel, User.ToAppUser());
             return this.OK<UserFaqListModel>(userFaqLists, userFaqLists.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", userFaqLists.Count == 0 ? 0 : 1);
         }
         #endregion

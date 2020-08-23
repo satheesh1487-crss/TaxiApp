@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaziappzMobileWebAPI.DALayer;
+using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
@@ -35,39 +37,23 @@ namespace TaziappzMobileWebAPI.Controllers
         }
         #endregion
 
-        #region Common_retrieve
-        /// <summary>
-        /// Hard Coded Data
-        /// </summary>
-        /// <returns></returns>
+        #region Common_retrieve        
         [HttpPost]
         [Route("retrieve")]
         public IActionResult Retrieve(GeneralModel generalModel)
         {
-            List<GetProfileModel> getProfileModel = new List<GetProfileModel>();
-            Driver driver = new Driver();
-            driver.Id = 15;
-            driver.FirstName = "rajesh";
-            driver.LastName = "kannan";
-            driver.Email = "raj@gmail.com";
-            driver.Phone = "918888888888";
-            driver.Login_By = "android";
-            driver.Login_Method = "manual";
-            driver.Token = "$2y$10$sMv.qYgeNoiaJ4r1GqgEWO59BMGRi0EEN17t/hmFS0S92YUqd70QS";
-            driver.Profile_Pic = "";
-            driver.Is_Active = 1;
-            driver.Is_Approve = 1;
-            driver.Is_Available = 1;
-            driver.Car_Model = "FFDJ";
-            driver.Car_Number = "8888";
-            driver.Total_Reward_Point = 0.5;
-            driver.Type_Name = "FKLF";
-            driver.Type_Icon = "http://192.168.1.25/production/captain_care/public/assets/img/uploads/54738.jpg";
-            getProfileModel.Add(new GetProfileModel()
+            try
             {
-                Driver =driver
-            });
-         return this.OK<GetProfileModel>(getProfileModel, getProfileModel.Count == 0 ? "Get_Profile_not_found" : "Get_Profile_found", getProfileModel.Count == 0 ? 0 : 1);
+                Validator.validateDriverProfile(generalModel);
+                DADriverCommon dADriverCommon = new DADriverCommon();
+                List<GetProfileModel> getProfileModels = new List<GetProfileModel>();
+                getProfileModels = dADriverCommon.GetProfile(_context, generalModel, User.ToAppUser());
+                return this.OK<GetProfileModel>(getProfileModels, getProfileModels.Count == 0 ? "Driver Profile not found" : "Driver Profie Found", getProfileModels.Count == 0 ? 0 : 1);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
         #endregion
 

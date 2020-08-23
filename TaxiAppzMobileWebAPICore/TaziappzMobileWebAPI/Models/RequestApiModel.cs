@@ -653,5 +653,9 @@ namespace TaziappzMobileWebAPI.Models
     {
 
     }
-
+    public class RequestStatusModel
+    {
+        [JsonProperty("onlinestatus")]
+        public bool ?OnlineStatus { get; set; }
+    }
 }

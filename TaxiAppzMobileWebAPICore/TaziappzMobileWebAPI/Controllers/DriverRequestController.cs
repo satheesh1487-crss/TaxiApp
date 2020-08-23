@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaziappzMobileWebAPI.DALayer;
+using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
@@ -357,6 +359,27 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             RequestRejectModel requestRejectModel = new RequestRejectModel();
             return this.OKRESPONSE<RequestRejectModel>(requestRejectModel, requestRejectModel == null ? "From_Request_Not_Found" : "From_Request_found");
+        }
+        #endregion
+
+        #region Request_OnlineStatus        
+        [HttpPost]
+        [Route("onlinStatus")]
+        public IActionResult OnlinStatus(DriverStatus driverStatus)
+        {
+            try
+            {
+                Validator.validateOnlineStatus(driverStatus);
+                DADriverRequest dADriverRequest = new DADriverRequest();              
+                var result =dADriverRequest.onlineStatus(_context, driverStatus, User.ToAppUser());
+                List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
+                requestStatusModels.Add(result);               
+                return this.OK<RequestStatusModel>(requestStatusModels, requestStatusModels.Count == 0 ? "Driver_Online" : "Driver_Offline",  1);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
         #endregion
     }
