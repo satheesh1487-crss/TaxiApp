@@ -184,6 +184,40 @@ namespace TaziappzMobileWebAPI.DALayer
             }
             return requestStatusModel;
         } 
+
+        public bool RequestAcceptReject(long requestid, Boolean Acceptstatus, TaxiAppzDBContext context,LoggedInUser loggedInUser)
+        {
+            var driverdtls = context.TabDrivers.Where(t => t.ContactNo == loggedInUser.Contactno && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
+                if (driverdtls == null)
+                    return false;
+            if (Acceptstatus)
+            {
+                var requestdata = context.TabRequest.Where(t => t.Id == requestid).FirstOrDefault();
+                requestdata.DriverId = driverdtls.Driverid;
+                requestdata.IsDriverStarted = "True";
+                context.TabRequest.Update(requestdata);
+                context.SaveChanges();
+                var requestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid).ToList();
+                context.TabRequestMeta.RemoveRange(requestmeta);
+                context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                var requestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid && t.DriverId == driverdtls.Driverid).FirstOrDefault();
+                //requestmeta.RequestId = requestmeta.RequestId;
+                //requestmeta.DriverId = requestmeta.DriverId;
+                //requestmeta.IsActive = false;
+                context.TabRequestMeta.Remove(requestmeta);
+                context.SaveChanges();
+                var secondrequestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid).OrderBy(t => t.MetaId).FirstOrDefault();
+                secondrequestmeta.IsActive = true;
+                context.TabRequestMeta.Update(secondrequestmeta);
+                context.SaveChanges();
+                return true;
+            }
+            
+         }
         static double _eQuatorialEarthRadius = 6378.1370D;
         static double _d2r = (Math.PI / 180D);
 

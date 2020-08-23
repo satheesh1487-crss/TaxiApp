@@ -383,5 +383,23 @@ namespace TaziappzMobileWebAPI.Controllers
             }
         }
         #endregion
+
+        #region Accept Status
+        [HttpPost]
+        [Route("AcceptStatus")]
+        public IActionResult AcceptRequest(long requestid,Boolean Acceptstatus)
+        {
+            try
+            {
+                DADriverRequest dADriverRequest = new DADriverRequest();
+                var result = dADriverRequest.RequestAcceptReject(requestid, Acceptstatus,_context, User.ToAppUser());
+                return this.OKStatus(result ? "Success" : "Failed", result ? 1 : 0);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+            #endregion
+        }
     }
 }
