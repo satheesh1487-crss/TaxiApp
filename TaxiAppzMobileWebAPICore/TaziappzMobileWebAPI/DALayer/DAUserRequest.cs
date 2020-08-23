@@ -12,7 +12,7 @@ namespace TaziappzMobileWebAPI.DALayer
     {
         public List<CancelRequestModel> CancelList(TaxiAppzDBContext context, UserCancelTripModel userCancelTripModel, LoggedInUser loggedInUser)
         {
-            var userexist = context.TabUserCancellation.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.UserCancelId == userCancelTripModel.Id);
+            var userexist = context.TabUser.FirstOrDefault(t => t.IsDelete == 0 && t.IsActive == true && t.Id == userCancelTripModel.Id);
             if (userexist != null)
                 throw new DataValidationException($"User does not have a permission");
 

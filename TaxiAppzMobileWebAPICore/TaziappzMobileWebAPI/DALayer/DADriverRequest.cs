@@ -225,7 +225,7 @@ namespace TaziappzMobileWebAPI.DALayer
 
         public List<TripCancelModel> CancelList(TaxiAppzDBContext context, DriverCancelTripModel driverCancelTripModel, LoggedInUser loggedInUser)
         {
-            var driverexist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.DriverCancelId == driverCancelTripModel.Id);
+            var driverexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Driverid == driverCancelTripModel.Id);
             if (driverexist != null)
                 throw new DataValidationException($"Driver does not have a permission");
 
