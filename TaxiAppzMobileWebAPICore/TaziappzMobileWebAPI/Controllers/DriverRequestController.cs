@@ -371,12 +371,11 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             try
             {
-                Validator.validateOnlineStatus(driverStatusModel);
-                DADriverRequest dADriverRequest = new DADriverRequest();              
-                var result =dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
+                DADriverRequest dADriverRequest = new DADriverRequest();
+                var result = dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
                 List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
-                requestStatusModels.Add(result);               
-                return this.OK<RequestStatusModel>(requestStatusModels, requestStatusModels.Count == 0 ? "Driver_Online" : "Driver_Offline",  1);
+                requestStatusModels.Add(result);
+                return this.OK<RequestStatusModel>(requestStatusModels, requestStatusModels.Count == 0 ? "Driver_Online" : "Driver_Offline", 1);
             }
             catch (DataValidationException ex)
             {

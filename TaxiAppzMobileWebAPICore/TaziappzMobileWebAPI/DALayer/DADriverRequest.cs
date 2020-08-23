@@ -172,10 +172,10 @@ namespace TaziappzMobileWebAPI.DALayer
                 throw new DataValidationException($"Driver does not have a permission");
 
             RequestStatusModel requestStatusModel = new RequestStatusModel();           
-            var updatedate = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverStatusModel.Id && t.ContactNo == loggedInUser.Contactno && t.IsDelete == false && t.IsActive == true);
+            var updatedate = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverStatusModel.Id && t.IsDelete == false && t.IsActive == true);
             if (updatedate != null)
             {
-                updatedate.OnlineStatus = !driverStatusModel.Online_Status;
+                updatedate.OnlineStatus = requestStatusModel.OnlineStatus = driverStatusModel.Online_Status;
                 updatedate.UpdatedAt = DateTime.UtcNow;
                 updatedate.UpdatedBy = loggedInUser.Email;
                 context.Update(updatedate);
