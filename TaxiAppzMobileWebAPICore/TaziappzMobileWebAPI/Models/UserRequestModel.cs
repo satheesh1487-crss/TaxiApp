@@ -299,6 +299,14 @@ namespace TaziappzMobileWebAPI.Models
 
     public class CancelRequestModel
     {
+        [JsonProperty("user_CancelId")]
+        public long User_Cancelld { get; set; }
+
+        [JsonProperty("zone_TypeId")]
+        public long? Zone_TypeId { get; set; }
+
+        [JsonProperty("cancellation_reason_english")]
+        public string Cancellation_Reason_English { get; set; }
 
     }
     public class PaymentStatusModel
