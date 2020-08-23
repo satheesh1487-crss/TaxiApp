@@ -225,12 +225,12 @@ namespace TaziappzMobileWebAPI.DALayer
 
         public List<TripCancelModel> CancelList(TaxiAppzDBContext context, DriverCancelTripModel driverCancelTripModel, LoggedInUser loggedInUser)
         {
-            var driverexist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Zonetypeid == driverCancelTripModel.ZoneTypeId);
+            var driverexist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.DriverCancelId == driverCancelTripModel.Id);
             if (driverexist != null)
-                throw new DataValidationException($"User does not have a permission");
+                throw new DataValidationException($"Driver does not have a permission");
 
             List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();            
-            var listCancel = context.TabDriverCancellation.Where(t => t.IsDelete == false && t.IsActive == true && t.Zonetypeid==driverCancelTripModel.ZoneTypeId).ToList().OrderByDescending(t => t.UpdatedAt);
+            var listCancel = context.TabDriverCancellation.Where(t => t.IsDelete == false && t.IsActive == true && t.DriverCancelId==driverCancelTripModel.Id).ToList().OrderByDescending(t => t.UpdatedAt);
             foreach (var cancel in listCancel)
             {
                 tripCancelModels.Add(new TripCancelModel()
