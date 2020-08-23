@@ -167,12 +167,12 @@ namespace TaziappzMobileWebAPI.DALayer
 
         public RequestStatusModel onlineStatus(TaxiAppzDBContext context, DriverStatusModel driverStatusModel, LoggedInUser loggedInUser)
         {
-            var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Driverid == driverStatusModel.Id && t.Token == null);
+            var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.ContactNo == driverStatusModel.Contact_Number && t.Token == null);
             if (profileexist != null)
                 throw new DataValidationException($"Driver does not have a permission");
 
             RequestStatusModel requestStatusModel = new RequestStatusModel();           
-            var updatedate = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverStatusModel.Id && t.IsDelete == false && t.IsActive == true);
+            var updatedate = context.TabDrivers.FirstOrDefault(t => t.ContactNo == driverStatusModel.Contact_Number && t.IsDelete == false && t.IsActive == true);
             if (updatedate != null)
             {
                 updatedate.OnlineStatus = requestStatusModel.OnlineStatus = driverStatusModel.Online_Status;
@@ -201,6 +201,26 @@ namespace TaziappzMobileWebAPI.DALayer
             double d = _eQuatorialEarthRadius * c;
 
             return d;
+        }
+
+        public List<TripCancelModel> CancelList(TaxiAppzDBContext context, DriverCancelTripModel driverCancelTripModel, LoggedInUser loggedInUser)
+        {
+            var driverexist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Zonetypeid == driverCancelTripModel.ZoneTypeId);
+            if (driverexist != null)
+                throw new DataValidationException($"User does not have a permission");
+
+            List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();            
+            var listCancel = context.TabDriverCancellation.Where(t => t.IsDelete == false && t.IsActive == true && t.Zonetypeid==driverCancelTripModel.ZoneTypeId).ToList().OrderByDescending(t => t.UpdatedAt);
+            foreach (var cancel in listCancel)
+            {
+                tripCancelModels.Add(new TripCancelModel()
+                {
+                    Driver_Cancelld=cancel.DriverCancelId,
+                    Zone_TypeId=cancel.Zonetypeid,
+                    Cancellation_Reason_English=cancel.CancellationReasonEnglish                    
+                });
+            }            
+            return tripCancelModels;
         }
     }
 }

@@ -36,6 +36,9 @@ namespace TaziappzMobileWebAPI.Models
     {
         [JsonProperty("online_status")]
         public bool Online_Status { get; set; }
+
+        [JsonProperty("contact_number")]
+        public string Contact_Number { get; set; }
     }
 
     public class UserZoneSOSModel : GeneralModel
@@ -57,5 +60,17 @@ namespace TaziappzMobileWebAPI.Models
 
         [JsonProperty("type")]
         public int Type { get; set; }
+    }
+
+    public class DriverCancelTripModel
+    {
+        [JsonProperty("driver_cancelid")]
+        public int Driver_CancelId { get; set; }
+
+        [JsonProperty("zonetypeid")]
+        public int ZoneTypeId { get; set; }
+
+        [JsonProperty("cancel_reason_english")]
+        public string Cancel_Reason_English { get; set; }
     }
 }
