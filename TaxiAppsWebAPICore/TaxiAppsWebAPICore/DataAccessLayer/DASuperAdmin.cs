@@ -85,6 +85,14 @@ namespace TaxiAppsWebAPICore
             if (emailid != null)
                 throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
 
+            var service = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid ==  adminDetails.Area);
+            if (service != null)
+                throw new DataValidationException($"Service location  does not exists.");
+
+            var role = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.Roleid == adminDetails.RoleId);
+            if (role == null)
+                throw new DataValidationException($"Role already not exists.");
+
             TabAdmin tabAdmin = new TabAdmin();
             tabAdmin.AdminKey = "";
             tabAdmin.AdminReference = 0;
@@ -108,15 +116,10 @@ namespace TaxiAppsWebAPICore
             context.SaveChanges();
 
             TabAdminDetails tabAdminDetails = new TabAdminDetails();
-
             tabAdminDetails.AdminId = tabAdmin.Id;
-
             tabAdminDetails.Address = adminDetails.Address;
             tabAdminDetails.PostalCode = adminDetails.Postalcode;
-
             tabAdminDetails.CountryId = adminDetails.Country;
-
-
             context.TabAdminDetails.Add(tabAdminDetails);
             context.SaveChanges();
             return true;
@@ -125,8 +128,11 @@ namespace TaxiAppsWebAPICore
 
         public bool Edit(TaxiAppzDBContext context, AdminDetails adminDetails, LoggedInUser loggedInUser)
         {
-            
-                var emailid = context.TabAdmin.FirstOrDefault(t => t.IsDeleted == 0 && t.Email.ToLower() == adminDetails.Email.ToLower() && t.Id != adminDetails.Id);
+            var admin = context.TabAdmin.FirstOrDefault(t => t.IsDeleted == 0 && t.Id == adminDetails.Id);
+            if (admin != null)
+                throw new DataValidationException($"Admin does not exists");
+
+            var emailid = context.TabAdmin.FirstOrDefault(t => t.IsDeleted == 0 && t.Email.ToLower() == adminDetails.Email.ToLower() && t.Id != adminDetails.Id);
                 if (emailid != null)
                     throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
 
@@ -207,8 +213,7 @@ namespace TaxiAppsWebAPICore
         }
         public bool Delete(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
-            try
-            {
+            
                 var tabAdmin = context.TabAdmin.Where(r => r.Id == id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
                 {
@@ -219,18 +224,11 @@ namespace TaxiAppsWebAPICore
                     context.SaveChanges();
                 }
                 return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "Delete", context);
-                return false;
-            }
+          
         }
         public bool Status(TaxiAppzDBContext context, long id, bool status, LoggedInUser loggedInUser)
         {
-            try
-            {
-                var tabAdmin = context.TabAdmin.Where(r => r.Id == id && r.IsDeleted == 0).FirstOrDefault();
+           var tabAdmin = context.TabAdmin.Where(r => r.Id == id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabAdmin != null)
                 {
                     tabAdmin.IsActive = status == true ? 1 : 0;
@@ -241,18 +239,12 @@ namespace TaxiAppsWebAPICore
                     return true;
                 }
                 return false;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, "Admin", "Status", context);
-                return false;
-            }
+            
         }
 
         public bool EditPassword(TaxiAppzDBContext context, AdminPassword adminPassword, LoggedInUser loggedInUser)
         {
-            try
-            {
+            
 
                 var emailid = context.TabAdmin.Where(t => t.Id == adminPassword.Id && t.IsDeleted == 0).FirstOrDefault();
                 if (emailid == null)
@@ -266,12 +258,7 @@ namespace TaxiAppsWebAPICore
                 context.TabAdmin.Update(emailid);
                 context.SaveChanges();
                 return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.Email, "EditPassword", context);
-                return false;
-            }
+            
         }
     }
 }
