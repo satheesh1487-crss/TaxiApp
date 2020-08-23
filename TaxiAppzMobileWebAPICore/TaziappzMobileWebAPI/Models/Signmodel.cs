@@ -90,6 +90,10 @@ namespace TaziappzMobileWebAPI
         
         [JsonProperty("isExist")]
         public int IsExist { get; set; }
+        [JsonProperty("typeid")]
+        public long? Typeid { get; set; }
+        [JsonProperty("servicelocationid")]
+        public long? Servicelocationid { get; set; }
 
     }
     public class SignInmodel

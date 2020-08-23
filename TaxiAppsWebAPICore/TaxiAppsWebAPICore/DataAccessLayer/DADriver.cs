@@ -263,7 +263,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
             if (driverService == null)
                 throw new DataValidationException($"Service location does not already exists.");
 
-            var ZoneExist = context.TabZone.FirstOrDefault(t => t.Zoneid == editDriver.ZoneId);
+            var ZoneExist = context.TabZone.FirstOrDefault(t => t.Zoneid == editDriver.ZoneId && t.IsDeleted ==0);
             if (ZoneExist == null)
                 throw new DataValidationException($"Zone does not already exists.");
 

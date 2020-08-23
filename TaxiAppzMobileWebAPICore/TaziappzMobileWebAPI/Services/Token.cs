@@ -72,7 +72,10 @@ namespace TaxiAppsWebAPICore.Services
                         Token = tokenString,
                         RefreshToken = refreshtoken.RefeshToken,
                         IsExist = 1,
-                        IsActive = IQDriver.IsActive
+                        IsActive = IQDriver.IsActive,
+                        Typeid=IQDriver.Typeid,
+                        Servicelocationid=IQDriver.Servicelocid
+                       
 
                         //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
                         //   InsertedDate = IQAdmin.CreatedAt
