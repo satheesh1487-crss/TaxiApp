@@ -9,7 +9,7 @@ namespace TaziappzMobileWebAPI.Models
     public class GeneralModel
     {
         [JsonProperty("id")]
-        public long? Id { get; set; }       
+        public long? Id { get; set; }
     }
     public class ProfileModel : GeneralModel
     {
@@ -62,15 +62,24 @@ namespace TaziappzMobileWebAPI.Models
         public int Type { get; set; }
     }
 
-    public class DriverCancelTripModel
+    public class DriverCancelTripModel : GeneralModel
     {
-        [JsonProperty("driver_cancelid")]
-        public int Driver_CancelId { get; set; }
+        [JsonProperty("request_id")]
+        public int Request_Id { get; set; }
 
-        [JsonProperty("zonetypeid")]
-        public int ZoneTypeId { get; set; }
+        [JsonProperty("reason")]
+        public int Reason { get; set; }
+    }
 
-        [JsonProperty("cancel_reason_english")]
-        public string Cancel_Reason_English { get; set; }
+    public class UserCancelTripModel : GeneralModel
+    {
+        [JsonProperty("request_id")]
+        public int Request_Id { get; set; }
+
+        [JsonProperty("reason")]
+        public int Reason { get; set; }
+
+        [JsonProperty("cancel_other_reason")]
+        public string Cancel_Other_Reason { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
@@ -229,8 +230,13 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("cancelRequest")]
-        public IActionResult CancelRequest(GeneralModel generalModel)
+        public IActionResult CancelRequest(UserCancelTripModel userCancelTripModel)
         {
+            DAUserRequest dAUserRequest = new DAUserRequest();
+            List<CancelRequestModel> cancelRequestModels = new List<CancelRequestModel>();
+            cancelRequestModels = dAUserRequest.CancelList(_context, userCancelTripModel, User.ToAppUser());
+            return this.OK<CancelRequestModel>(cancelRequestModels, cancelRequestModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", cancelRequestModels.Count == 0 ? 0 : 1);
+
             CancelRequestModel cancelRequestModel = new CancelRequestModel();
             return this.OKRESPONSE<CancelRequestModel>(cancelRequestModel, cancelRequestModel == null ? "Cancel_Request_Not_Found" : "Cancel_Request_found");
         }
