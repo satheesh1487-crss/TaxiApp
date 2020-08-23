@@ -470,5 +470,5 @@ namespace TaziappzMobileWebAPI.Models
 
         [JsonProperty("total_price")]
         public double Total_Price { get; set; }
-    }
+    }   
 }

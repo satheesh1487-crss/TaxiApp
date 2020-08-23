@@ -136,10 +136,12 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("cancel")]
-        public IActionResult Cancel(GeneralModel generalModel)
+        public IActionResult Cancel(DriverCancelTripModel driverCancelTripModel)
         {
-            TripCancelModel tripCancelModel = new TripCancelModel();
-            return this.OKRESPONSE<TripCancelModel>(tripCancelModel, tripCancelModel == null ? "Trip_Cancel_Not_Found" : "Trip_Cancel_found");
+            DADriverRequest dADriverRequest = new DADriverRequest();
+            List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();
+            tripCancelModels = dADriverRequest.CancelList(_context, driverCancelTripModel, User.ToAppUser());
+            return this.OK<TripCancelModel>(tripCancelModels, tripCancelModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", tripCancelModels.Count == 0 ? 0 : 1);
         }
         #endregion
 
