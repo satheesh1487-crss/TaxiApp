@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -229,12 +230,13 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("cancelRequest")]
-        public IActionResult CancelRequest(UserCancelTripModel userCancelTripModel)
+        [Authorize]
+        [Route("UsercancelList")]
+        public IActionResult CancelRequest()
         {
             DAUserRequest dAUserRequest = new DAUserRequest();
             List<CancelRequestModel> cancelRequestModels = new List<CancelRequestModel>();
-            cancelRequestModels = dAUserRequest.CancelList(_context, userCancelTripModel, User.ToAppUser());
+            cancelRequestModels = dAUserRequest.CancelList(_context,  User.ToAppUser());
             return this.OK<CancelRequestModel>(cancelRequestModels, cancelRequestModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", cancelRequestModels.Count == 0 ? 0 : 1);
 
             CancelRequestModel cancelRequestModel = new CancelRequestModel();

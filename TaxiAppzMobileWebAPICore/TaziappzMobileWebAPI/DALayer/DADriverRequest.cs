@@ -246,14 +246,23 @@ namespace TaziappzMobileWebAPI.DALayer
 
       
 
-        public List<TripCancelModel> CancelList(TaxiAppzDBContext context, DriverCancelTripModel driverCancelTripModel, LoggedInUser loggedInUser)
+        public List<TripCancelModel> CancelList(TaxiAppzDBContext context, DriverLocation driverLocation, LoggedInUser loggedInUser)
         {
-            var driverexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Driverid == driverCancelTripModel.Id);
-            if (driverexist != null)
+            List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();
+            var driverexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Driverid ==loggedInUser.id);
+            if (driverexist == null)
                 throw new DataValidationException($"Driver does not have a permission");
-
-            List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();            
-            var listCancel = context.TabDriverCancellation.Where(t => t.IsDelete == false && t.IsActive == true && t.DriverCancelId==driverCancelTripModel.Id).ToList().OrderByDescending(t => t.UpdatedAt);
+            DARequest dARequest = new DARequest();
+            LatLong latLong = new LatLong();
+            latLong.Picklatitude = Convert.ToDecimal(driverLocation.Latitude);
+            latLong.Picklongtitude = Convert.ToDecimal(driverLocation.Longitude);
+            long? zoneid = dARequest.GetPolygon(latLong,loggedInUser.Country, context);
+            if (zoneid == 0)
+                return tripCancelModels;
+            var zonetypeid = context.TabZonetypeRelationship.Where(t => t.Zoneid == zoneid && t.Typeid == driverexist.Typeid).Select(t => t.Zoneid).FirstOrDefault();
+            if (zonetypeid == null)
+                return tripCancelModels;
+            var listCancel = context.TabDriverCancellation.Where(t => t.IsDelete == false && t.IsActive == true && t.Zonetypeid == zonetypeid).ToList().OrderByDescending(t => t.UpdatedAt);
             foreach (var cancel in listCancel)
             {
                 tripCancelModels.Add(new TripCancelModel()

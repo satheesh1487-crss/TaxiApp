@@ -135,12 +135,12 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("cancel")]
-        public IActionResult Cancel(DriverCancelTripModel driverCancelTripModel)
+        [Route("DriverCancelList")]
+        public IActionResult DriverCancelList(DriverLocation driverLocation)
         {
             DADriverRequest dADriverRequest = new DADriverRequest();
             List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();
-            tripCancelModels = dADriverRequest.CancelList(_context, driverCancelTripModel, User.ToAppUser());
+            tripCancelModels = dADriverRequest.CancelList(_context, driverLocation, User.ToAppUser());
             return this.OK<TripCancelModel>(tripCancelModels, tripCancelModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", tripCancelModels.Count == 0 ? 0 : 1);
         }
         #endregion
@@ -420,6 +420,24 @@ namespace TaziappzMobileWebAPI.Controllers
                 return this.KnowOperationError(ex.Message);
             }
             
+        }
+        #endregion
+        #region Request Cancel
+        [HttpPost]
+        [Route("TripStart")]
+        public IActionResult TripStart(long requestid)
+        {
+            try
+            {
+                DADriverRequest dADriverRequest = new DADriverRequest();
+                var result = dADriverRequest.TripCancel(requestid, _context, User.ToAppUser());
+                return this.OKStatus(result ? "RequestCancel_Success" : "RequestCancel_Failed", result ? 1 : 0);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
         }
         #endregion
     }

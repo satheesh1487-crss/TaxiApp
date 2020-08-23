@@ -164,6 +164,7 @@ namespace TaxiAppsWebAPICore.Services
                 new Claim("mailID", userinfo.Email),
                  new Claim("Contactno", userinfo.PhoneNumber),
                  new Claim("country", userinfo.Countryid.ToString()),
+                 new Claim("id", userinfo.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
@@ -198,7 +199,8 @@ namespace TaxiAppsWebAPICore.Services
                 new Claim("lastName", driverinfo.LastName),
                 new Claim("mailID", driverinfo.Email),
                  new Claim("Contactno", driverinfo.ContactNo),
-               
+                 new Claim("country", driverinfo.Countryid.ToString()),
+                 new Claim("id", driverinfo.Driverid.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
