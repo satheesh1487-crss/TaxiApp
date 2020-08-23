@@ -56,7 +56,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        [Route("ValidateContactNo")]
+        [Route("userValidateContactNo")]
         public IActionResult ValidateMobileno(string contactno)
         {
             SignInmodel signinmodel = new SignInmodel();
@@ -72,13 +72,13 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        [Route("RegenerateAccessToken")]
+        [Route("UserRegenerateAccessToken")]
         public IActionResult RegenerateAccessToken(string refreshtoken, string contactno)
         {
             token = new Token(_context, jwt);
-            DetailsWithToken detailsWithToken = new DetailsWithToken();
-            detailsWithToken = token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
-            return this.OK<DetailsWithToken>(detailsWithToken,detailsWithToken.IsExist == 1 ? "Access token Generated Successfully" : "Access token Generation Failed", detailsWithToken.IsExist);
+           List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
+            detailsWithToken = token.ReGenerateJWTTokenDtls(refreshtoken, contactno); //(List)token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
+            return this.OK<DetailsWithToken>(detailsWithToken,detailsWithToken.Count == 0 ? "Access token Generation Failed" : "Access token Generated Successfully", detailsWithToken.Count == 0 ? 0 : 1);
         }
        
         

@@ -25,13 +25,13 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Route("CreateRequest")]
+        [Route("UserCreateRequest")]
         public IActionResult PostRequest([FromBody] LatLong latLong)
         {
             DARequest dARequest = new DARequest();
-            Zone zone = new Zone();
+           List<Zone> zone = new List<Zone>();
            zone = dARequest.GetRequest(latLong,User.ToAppUser(),context);
-            return this.OK<Zone>(zone, zone.IsExist == 0 ? "No Data Found" : "Data Found", zone == null ? 0 : 1);
+            return this.OK<Zone>(zone, zone.Count == 0 ? "Request_Data_Not_Found" : "Request_Data_Found", zone.Count == 0 ? 0 : 1);
         }
         /// <summary>
         /// Use to Sent Push notification to Drivers based on User request
@@ -39,11 +39,11 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Route("Requestprogress")]
+        [Route("UserRequestprogress")]
         public IActionResult Requestprogress([FromBody] RequestVehicleType requestVehicleType)
         {
             DARequest dARequest = new DARequest();
-            bool result = dARequest.Requestprogress(requestVehicleType, context);
+            bool result = dARequest.Requestprogress(requestVehicleType, User.ToAppUser(), context);
             return this.OKStatus(result ? "Data Found" : "No Data Found", result ? 1 : 0);
         }
     }

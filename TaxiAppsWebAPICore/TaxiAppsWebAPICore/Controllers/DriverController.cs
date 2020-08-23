@@ -25,8 +25,6 @@ namespace TaxiAppsWebAPICore.Controllers
             _context = context;
         }
 
-
-
         [HttpGet]
         [Route("driverList")]
         [Authorize]
@@ -34,6 +32,15 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DADriver dADriver = new DADriver();
             return this.OK<List<DriverList>>(dADriver.List(_context));
+        }
+
+        [HttpGet]
+        [Route("listDocument")]
+        [Authorize]
+        public IActionResult ListDocument()
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<List<DocumentList>>(dADriver.ListDocument(_context));
         }
 
         [HttpGet]
@@ -52,6 +59,31 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             DADriver dADriver = new DADriver();
             return this.OK<DriverInfo>(dADriver.GetbyId(driverid, _context));
+        }
+
+        [HttpGet]
+        [Route("GetRewardEdit")]
+        [Authorize]
+        public IActionResult GetRewardEdit(long driverid)
+        {
+            DADriver dADriver = new DADriver();
+            return this.OK<EditReward>(dADriver.GetbyRewardPoint(driverid, _context));
+        }
+
+        [HttpPut]
+        [Route("EditRewardPoint")]
+        [Authorize]
+        public IActionResult EditRewardPoint(EditReward editReward)
+        {
+            try
+            {
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.EditRewardPoint(_context, editReward, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
         }
 
         [HttpDelete]

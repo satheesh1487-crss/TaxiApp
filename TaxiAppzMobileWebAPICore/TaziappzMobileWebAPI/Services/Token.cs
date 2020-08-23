@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -21,46 +22,78 @@ namespace TaxiAppsWebAPICore.Services
             _context = context;
             _jwt = jwt.Value; 
         }
-        public DetailsWithToken GenerateJWTTokenDtls(SignInmodel signInmodel)
+        public List<DetailsWithToken> GenerateJWTTokenDtls(SignInmodel signInmodel)
         {
-         var user = new DetailsWithToken();
+
+            List<DetailsWithToken> user = new List<DetailsWithToken>();
             var IQUser = _context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno).FirstOrDefault();
             if (IQUser != null)
             {
                 var tokenString = GenerateJWTToken(IQUser, _context);
                 var refreshtoken = CreateRefreshToken();
-                user = new DetailsWithToken()
+                user.Add(new DetailsWithToken()
                 {
-                    Id=IQUser.Id,
+                    Id = IQUser.Id,
                     FirstName = IQUser.Firstname,
                     LastName = IQUser.Lastname,
-                    Mobileno= IQUser.PhoneNumber,
+                    Mobileno = IQUser.PhoneNumber,
                     Emailid = IQUser.Email,
                     AccessToken = tokenString,
                     RefreshToken = refreshtoken.RefeshToken,
-                   IsExist = 1,
-                   IsActive= IQUser.IsActive
-                  
-                    //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
-                    //   InsertedDate = IQAdmin.CreatedAt
-                };
-                  bool updatetoken = UpdateToken(IQUser.Id, user, _context);
+                    IsExist = 1,
+                    IsActive = IQUser.IsActive
+                    //ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
+                    //InsertedDate = IQAdmin.CreatedAt
+                });
+                bool updatetoken = UpdateToken(IQUser.Id, user[0], _context);
 
                 return user;
             }
-
-            user.IsExist = 0;
             return user;
         }
-        public DetailsWithToken ReGenerateJWTTokenDtls(string refreshtoken, string contactno)
+         
+        
+
+        public List<DetailsWithDriverToken> GenerateJWTDriverTokenDtls(SignInmodel signInmodel)
         {
-            var user = new DetailsWithToken();
+                  List<DetailsWithDriverToken> driver = new List<DetailsWithDriverToken>();
+                var IQDriver = _context.TabDrivers.Where(t => t.ContactNo == signInmodel.Contactno).FirstOrDefault();
+                if (IQDriver != null)
+                {
+                    var tokenString = GenerateDriverJWTToken(IQDriver, _context);
+                    var refreshtoken = CreateRefreshToken();
+                    driver.Add(new DetailsWithDriverToken()
+                    {
+                        Id = IQDriver.Driverid,
+                        FirstName = IQDriver.FirstName,
+                        LastName = IQDriver.LastName,
+                        Mobileno = IQDriver.ContactNo,
+                        Emailid = IQDriver.Email,
+                        Token = tokenString,
+                        RefreshToken = refreshtoken.RefeshToken,
+                        IsExist = 1,
+                        IsActive = IQDriver.IsActive
+
+                        //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
+                        //   InsertedDate = IQAdmin.CreatedAt
+                    });
+                    bool updatetoken = UpdateDriverToken(IQDriver.Driverid, driver[0], _context);
+
+                    return driver;
+                }
+         
+            return driver;
+        }
+
+        public List<DetailsWithToken> ReGenerateJWTTokenDtls(string refreshtoken, string contactno)
+        {
+            List<DetailsWithToken> user = new List<DetailsWithToken>();
             var IQUser = _context.TabUser.Where(t => t.PhoneNumber == contactno &&  t.Token == refreshtoken).FirstOrDefault();
             if (IQUser != null)
             {
                 var tokenString = GenerateJWTToken(IQUser, _context);
                 var regenfreshtoken = CreateRefreshToken();
-                user = new DetailsWithToken()
+                user.Add(new DetailsWithToken()
                 {
                     Id = IQUser.Id,
                     FirstName = IQUser.Firstname,
@@ -73,13 +106,47 @@ namespace TaxiAppsWebAPICore.Services
                     IsExist = 1
                     //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
                     //   InsertedDate = IQAdmin.CreatedAt
-                };
-                bool updatetoken = UpdateToken(IQUser.Id, user, _context);
+                });
+                bool updatetoken = UpdateToken(IQUser.Id, user[0] , _context);
                 return user;
             }
-            user.IsExist = 0;
-            return user;
+              return user;
         }
+        public List<DetailsWithDriverToken> ReGenerateDriverJWTTokenDtls(string refreshtoken, string contactno)
+        {
+            List<DetailsWithDriverToken> driver = new List<DetailsWithDriverToken>();
+            var IQDriver = _context.TabDrivers.Include(x => x.Serviceloc).Where(t => t.ContactNo == contactno && t.Token == refreshtoken).FirstOrDefault();
+            if (IQDriver == null)
+                return null;
+            var Types = _context.TabTypes.Where(t => t.Typeid == IQDriver.Typeid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
+            if (Types == null)
+                return null;
+            var tokenString = GenerateDriverJWTToken(IQDriver, _context);
+                var regenfreshtoken = CreateRefreshToken();
+                driver.Add(new DetailsWithDriverToken()
+                {
+                    Id = IQDriver.Driverid,
+                    FirstName = IQDriver.FirstName,
+                    LastName = IQDriver.LastName,
+                    Mobileno = IQDriver.ContactNo,
+                    Emailid = IQDriver.Email,
+                    Token = tokenString,
+                    RefreshToken = regenfreshtoken.RefeshToken,
+                    IsExist = 1,
+                    IsActive = IQDriver.IsActive,
+                    Login_by = IQDriver.LoginBy,
+                    Login_method = IQDriver.LoginMethod,
+                     Is_approve = IQDriver.IsApproved,
+                    Is_available = IQDriver.IsAvailable,
+                    Car_model = IQDriver.Carmodel,
+                    Car_number = IQDriver.Carnumber,
+                     Type = Types.Typename,
+                     Servicelocationid = IQDriver.Serviceloc.Servicelocid
+                });
+                bool updatetoken = UpdateDriverToken(IQDriver.Driverid, driver[0], _context);
+                return driver;
+        }
+            
         private  string GenerateJWTToken(TabUser userinfo, TaxiAppzDBContext context)
         {
             try
@@ -114,6 +181,42 @@ namespace TaxiAppsWebAPICore.Services
             }
 
         }
+
+        private string GenerateDriverJWTToken(TabDrivers driverinfo, TaxiAppzDBContext context)
+        {
+            try
+            {
+                insertlog("Token Generation", driverinfo.Email, "GenerateJWTToken", context);
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.SecretKey));
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                var claims = new[]
+                {
+                new Claim(JwtRegisteredClaimNames.Sub, driverinfo.FirstName),
+                new Claim("lastName", driverinfo.LastName),
+                new Claim("mailID", driverinfo.Email),
+                 new Claim("Contactno", driverinfo.ContactNo),
+               
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+
+                var token = new JwtSecurityToken(
+                    issuer: _jwt.Issuer,
+                    audience: _jwt.Audience,
+                    claims: claims,
+                    expires: DateTime.Now.AddMinutes(_jwt.AccessTokenDuration),
+                    signingCredentials: credentials
+                );
+
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+            catch (Exception ex)
+            {
+                insertlog(ex.Message, driverinfo.Email, "GenerateJWTToken", context);
+                return null;
+            }
+
+        }
+
         private UserInfo CreateRefreshToken()
         {
             var randomNumber = new byte[32];
@@ -148,6 +251,25 @@ namespace TaxiAppsWebAPICore.Services
                 return false;
             }
         }
+        internal static bool UpdateDriverToken(long driverid, DetailsWithDriverToken driverInfo, TaxiAppzDBContext context)
+        {
+            try
+            {
+                insertlog("Update Token", driverInfo.Emailid, "GenerateJWTToken", context);
+                var getuserinfo = context.TabDrivers.Where(a => a.Driverid == driverid).FirstOrDefault();
+                getuserinfo.Token  = driverInfo.RefreshToken;
+                getuserinfo.UpdatedAt = DateTime.Now;
+                context.TabDrivers.Update(getuserinfo);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                insertlog(ex.Message, driverInfo.Emailid, "UpdateToken", context);
+                return false;
+            }
+        }
+
         internal static bool insertlog(string description, string userid, string functionname, TaxiAppzDBContext context)
         {
             TblErrorlog tblErrorlog = new TblErrorlog();

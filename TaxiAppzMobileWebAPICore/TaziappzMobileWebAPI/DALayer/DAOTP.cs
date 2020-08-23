@@ -74,7 +74,7 @@ namespace TaziappzMobileWebAPI.DALayer
                         var isUserExist = context.TabUser.Where(t => t.PhoneNumber == isOTPexist.UserContactNo.ToString() && t.IsDelete == 0).FirstOrDefault();
                         if (isUserExist != null)
                         {
-                            var isUserActive = context.TabUser.Where(t => t.PhoneNumber == isOTPexist.UserContactNo.ToString() && t.IsActive == 1).FirstOrDefault();
+                            var isUserActive = context.TabUser.Where(t => t.PhoneNumber == isOTPexist.UserContactNo.ToString() && t.IsActive == true).FirstOrDefault();
                             if (isUserActive != null)
                             {
                              
@@ -122,6 +122,8 @@ namespace TaziappzMobileWebAPI.DALayer
                 {
                     CountryId = country.CountryId,
                     CountryName = country.Name,
+                    CountryCode=country.DCode,
+                    CountryShortName=country.Code
 
                 });
             }

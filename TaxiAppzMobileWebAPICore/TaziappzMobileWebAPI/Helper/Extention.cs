@@ -26,38 +26,52 @@ namespace TaziappzMobileWebAPI
         {
             return controller.Ok(new APIResponse()
             {
-                Message = msg
+                Message = msg,
+                success = true
             });
         }
         internal static IActionResult OKFailed(this ControllerBase controller, string msg)
         {
             return controller.Ok(new APIResponse()
             {
-               Message = msg
+               Message = msg,
+                success = true
             });
         }
-        internal static IActionResult OKStatus(this ControllerBase controller, string msg,int IsExist)
+        internal static IActionResult OKStatus(this ControllerBase controller, string msg, int isExist)
         {
             return controller.Ok(new APIResponse()
             {
-                Message = msg,
-                isExist = IsExist,
+                Message = msg ,
+                success = true,
+                isExist = isExist
             });
         }
-        internal static IActionResult OK<T>(this ControllerBase controller, T content, string msg, int IsExist)
+        internal static IActionResult OK<T>(this ControllerBase controller, List<T> content, string msg, int isExist)
         {
             return controller.Ok(new APIContentResponse<T>()
             {
-                Content = content,
+                ContentList = content,
                 Message = msg,
-                isExist = IsExist,
+                success = true,
+                isExist = isExist
             });
         }
-        internal static IActionResult OK<T>(this ControllerBase controller, List<T> content)
+        //internal static IActionResult OK<T>(this ControllerBase controller,T content, string msg)
+        //{
+        //    return controller.Ok(new APIContentResponse<T>()
+        //    {
+        //        ContentList = content
+        //    });
+        //}
+
+        internal static IActionResult OKRESPONSE<T>(this ControllerBase controller, T content,string msg)
         {
             return controller.Ok(new APIContentResponse<T>()
             {
-               ContentList = content
+                success = true,
+                Message = msg,
+                Content =content
             });
         }
         internal static string GenerateJWTToken(TabUser userinfo,TaxiAppzDBContext context)
@@ -96,7 +110,22 @@ namespace TaziappzMobileWebAPI
             }
              
         }
-        
+
+        /// <summary>
+        /// Send an Not ok result
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        internal static IActionResult KnowOperationError(this ControllerBase controller, string message)
+        {
+            return controller.Ok(new APIResponse()
+            {
+                success = false,
+                Message = message
+            });
+        }
+
         internal static bool UpdateUserToken(string emailid, UserInfo userInfo, TaxiAppzDBContext context)
         {
             try

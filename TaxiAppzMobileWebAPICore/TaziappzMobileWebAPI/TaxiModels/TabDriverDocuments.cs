@@ -37,7 +37,17 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public string DeletedBy { get; set; }
         [Column("Deleted_at", TypeName = "datetime")]
         public DateTime? DeletedAt { get; set; }
+        [Column("DocumentID_Number")]
+        [StringLength(100)]
+        public string DocumentIdNumber { get; set; }
+        [StringLength(500)]
+        public string Comments { get; set; }
+        [Column("Doc_ApprovalID")]
+        public long? DocApprovalId { get; set; }
 
+        [ForeignKey(nameof(DocApprovalId))]
+        [InverseProperty(nameof(TabDocumentApporvalStatus.TabDriverDocuments))]
+        public virtual TabDocumentApporvalStatus DocApproval { get; set; }
         [ForeignKey(nameof(Documentid))]
         [InverseProperty(nameof(TabManageDocument.TabDriverDocuments))]
         public virtual TabManageDocument Document { get; set; }
