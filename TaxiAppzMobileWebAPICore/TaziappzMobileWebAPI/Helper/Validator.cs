@@ -10,7 +10,8 @@ namespace TaziappzMobileWebAPI.Helper
     {
         public static void validateProfile(ProfileModel profileModel)
         {
-            if (profileModel.Id == 0) {
+            if (profileModel.Id == 0)
+            {
                 throw new DataValidationException($"Id does not exists");
             }
             if (!string.IsNullOrEmpty(profileModel.FirstName))
@@ -46,7 +47,7 @@ namespace TaziappzMobileWebAPI.Helper
                 throw new DataValidationException($"Id does not exists");
             }
         }
-        
+
 
         public static void validateZoneSos(UserZoneSOSModel userZoneSOSModel)
         {
@@ -77,6 +78,6 @@ namespace TaziappzMobileWebAPI.Helper
             {
                 throw new DataValidationException($"Type does not exists");
             }
-        }
+        }        
     }
 }

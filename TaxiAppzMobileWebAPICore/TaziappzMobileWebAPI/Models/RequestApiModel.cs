@@ -327,7 +327,14 @@ namespace TaziappzMobileWebAPI.Models
 
     public class TripCancelModel
     {
+        [JsonProperty("driver_CancelId")]
+        public long Driver_Cancelld { get; set; }
 
+        [JsonProperty("zone_TypeId")]
+        public long ?Zone_TypeId { get; set; }
+
+        [JsonProperty("cancellation_reason_english")]
+        public string Cancellation_Reason_English { get; set; }
     }
 
     public class TripStartModel

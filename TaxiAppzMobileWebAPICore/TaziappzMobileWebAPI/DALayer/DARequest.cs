@@ -196,6 +196,16 @@ namespace TaziappzMobileWebAPI.DALayer
            
             return true;
         }
+
+
+        public bool RequestCancel(DriversCancel requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
+        {
+           
+
+           
+
+            return true;
+        }
         public List<DriversListwithDistance> SortLocation(RequestVehicleType requestVehicleType)
         {
             double baselat = Convert.ToDouble(requestVehicleType.Picklatitude);
