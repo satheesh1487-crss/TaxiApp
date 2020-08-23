@@ -110,7 +110,22 @@ namespace TaziappzMobileWebAPI
             }
              
         }
-        
+
+        /// <summary>
+        /// Send an Not ok result
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        internal static IActionResult KnowOperationError(this ControllerBase controller, string message)
+        {
+            return controller.Ok(new APIResponse()
+            {
+                success = false,
+                Message = message
+            });
+        }
+
         internal static bool UpdateUserToken(string emailid, UserInfo userInfo, TaxiAppzDBContext context)
         {
             try

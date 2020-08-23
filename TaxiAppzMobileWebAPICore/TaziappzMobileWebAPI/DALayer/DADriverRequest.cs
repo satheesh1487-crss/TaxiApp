@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
 
@@ -162,6 +163,26 @@ namespace TaziappzMobileWebAPI.DALayer
                 }
             }
             return requestInProgresses;
+        }
+
+        public RequestStatusModel onlineStatus(TaxiAppzDBContext context, DriverStatusModel driverStatusModel, LoggedInUser loggedInUser)
+        {
+            var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Driverid == driverStatusModel.Id && t.Token == null);
+            if (profileexist != null)
+                throw new DataValidationException($"Driver does not have a permission");
+
+            RequestStatusModel requestStatusModel = new RequestStatusModel();           
+            var updatedate = context.TabDrivers.FirstOrDefault(t => t.Driverid == driverStatusModel.Id && t.IsDelete == false && t.IsActive == true);
+            if (updatedate != null)
+            {
+                updatedate.OnlineStatus = requestStatusModel.OnlineStatus = driverStatusModel.Online_Status;
+                updatedate.UpdatedAt = DateTime.UtcNow;
+                updatedate.UpdatedBy = loggedInUser.Email;
+                context.Update(updatedate);
+                context.SaveChanges();
+                return requestStatusModel;
+            }
+            return requestStatusModel;
         }
     }
 }

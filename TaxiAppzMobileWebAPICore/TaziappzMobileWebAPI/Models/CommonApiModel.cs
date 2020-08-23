@@ -19,7 +19,7 @@ namespace TaziappzMobileWebAPI.Models
     public class Driver
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("firstname")]
         public string FirstName { get; set; }
@@ -46,13 +46,13 @@ namespace TaziappzMobileWebAPI.Models
         public string Profile_Pic { get; set; }
 
         [JsonProperty("is_active")]
-        public int Is_Active { get; set; }
+        public bool ?Is_Active { get; set; }
 
         [JsonProperty("is_approve")]
-        public int Is_Approve { get; set; }
+        public bool ?Is_Approve { get; set; }
 
         [JsonProperty("is_available")]
-        public int Is_Available { get; set; }
+        public bool ?Is_Available { get; set; }
 
         [JsonProperty("car_model")]
         public string Car_Model { get; set; }
@@ -61,7 +61,7 @@ namespace TaziappzMobileWebAPI.Models
         public string Car_Number { get; set; }
 
         [JsonProperty("total_reward_point")]
-        public double Total_Reward_Point { get; set; }
+        public long ?Total_Reward_Point { get; set; }
 
         [JsonProperty("type_name")]
         public string Type_Name { get; set; }
