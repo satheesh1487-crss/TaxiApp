@@ -10,6 +10,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
     {
         public TabDrivers()
         {
+            TabCancellationFeeForDriver = new HashSet<TabCancellationFeeForDriver>();
             TabDriverBonus = new HashSet<TabDriverBonus>();
             TabDriverDocuments = new HashSet<TabDriverDocuments>();
             TabDriverFine = new HashSet<TabDriverFine>();
@@ -126,6 +127,8 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [ForeignKey(nameof(Zoneid))]
         [InverseProperty(nameof(TabZone.TabDrivers))]
         public virtual TabZone Zone { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabCancellationFeeForDriver> TabCancellationFeeForDriver { get; set; }
         [InverseProperty("Driver")]
         public virtual ICollection<TabDriverBonus> TabDriverBonus { get; set; }
         [InverseProperty("Driver")]

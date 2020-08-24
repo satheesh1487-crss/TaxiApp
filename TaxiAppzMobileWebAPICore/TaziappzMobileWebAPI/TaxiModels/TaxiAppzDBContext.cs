@@ -18,6 +18,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabAdmin> TabAdmin { get; set; }
         public virtual DbSet<TabAdminDetails> TabAdminDetails { get; set; }
         public virtual DbSet<TabAdminDocument> TabAdminDocument { get; set; }
+        public virtual DbSet<TabCancellationFeeForDriver> TabCancellationFeeForDriver { get; set; }
         public virtual DbSet<TabCommonCurrency> TabCommonCurrency { get; set; }
         public virtual DbSet<TabCommonLanguages> TabCommonLanguages { get; set; }
         public virtual DbSet<TabCountries> TabCountries { get; set; }
@@ -168,6 +169,26 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .WithMany(p => p.TabAdminDocument)
                     .HasForeignKey(d => d.Adminid)
                     .HasConstraintName("FK__tab_Admin__admin__2D7CBDC4");
+            });
+
+            modelBuilder.Entity<TabCancellationFeeForDriver>(entity =>
+            {
+                entity.HasKey(e => e.CancellationId)
+                    .HasName("PK__tab_canc__4ED4366D775E3A76");
+
+                entity.Property(e => e.Amount).HasDefaultValueSql("((0.00))");
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabCancellationFeeForDriver)
+                    .HasForeignKey(d => d.Driverid)
+                    .HasConstraintName("FK__tab_cance__Drive__0FB750B3");
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.TabCancellationFeeForDriver)
+                    .HasForeignKey(d => d.RequestId)
+                    .HasConstraintName("FK__tab_cance__reque__10AB74EC");
             });
 
             modelBuilder.Entity<TabCommonCurrency>(entity =>

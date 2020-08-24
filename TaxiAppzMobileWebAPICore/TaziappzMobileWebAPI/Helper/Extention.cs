@@ -184,7 +184,9 @@ namespace TaziappzMobileWebAPI
                 LastName = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("lastName")?.Value,
                 Country = Convert.ToInt32(((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("country")?.Value),
                 Contactno = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("Contactno")?.Value,
-                Email = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("mailID")?.Value
+                Email = ((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("mailID")?.Value,
+                id = Convert.ToInt32(((ClaimsIdentity)claimsPrincipal.Identity).FindFirst("id")?.Value)
+               
             };
         }
 

@@ -62,6 +62,17 @@ namespace TaziappzMobileWebAPI.Models
         public int Type { get; set; }
     }
 
+    public class DriverLocation
+    {
+        [JsonProperty("latitude")]
+        public string Latitude { get; set; }
+        [JsonProperty("longitude")]
+        public string Longitude { get; set; }
+
+       
+ 
+    }
+
     public class DriverCancelTripModel : GeneralModel
     {
         [JsonProperty("request_id")]
