@@ -116,9 +116,11 @@ namespace TaziappzMobileWebAPI.Controllers
         [Route("resendotp")]
         public IActionResult Resendotp(GeneralModel generalModel)
         {
-            List<LoginResendOtpModel> loginResendOtpModel = new List<LoginResendOtpModel>();
-            loginResendOtpModel[0].Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
-            return this.OK<List<LoginResendOtpModel>>(loginResendOtpModel, loginResendOtpModel == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found", loginResendOtpModel == null ? 0 : 1);
+         
+            LoginResendOtpModel resendOtpModel = new LoginResendOtpModel();
+            resendOtpModel.Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
+            
+            return this.OK<LoginResendOtpModel>(resendOtpModel, resendOtpModel == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found", resendOtpModel == null ? 0 : 1);
         }
         #endregion
 
