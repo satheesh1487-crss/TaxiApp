@@ -333,7 +333,7 @@ namespace TaziappzMobileWebAPI.Controllers
             etaFirebaseModel[0].Share_Ride_Details.Tax_Amount = 0;
             etaFirebaseModel[0].Share_Ride_Details.Total_Price = 0;
 
-            return this.OK<EtaFirebaseModel>(etaFirebaseModel, etaFirebaseModel == null ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found", etaFirebaseModel == null ? 0 : 1);
+            return this.OK<List<EtaFirebaseModel>>(etaFirebaseModel, etaFirebaseModel == null ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found", etaFirebaseModel == null ? 0 : 1);
         }
         #endregion
 

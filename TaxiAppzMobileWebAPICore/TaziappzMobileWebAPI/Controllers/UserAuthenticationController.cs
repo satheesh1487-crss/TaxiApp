@@ -32,7 +32,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             List<UserOTPValidateModel> userOTPValidateModel = new List<UserOTPValidateModel>();
             userOTPValidateModel[0].Token = "$2y$10$R5FO7pys3hgE8Sfy2gBR7.msCpEmviVTLjaRiq.l5NEwUjNAYiiZ.";
-            return this.OK<UserOTPValidateModel>(userOTPValidateModel, userOTPValidateModel == null ? "User_History_Not_Found" : "User_History_found", userOTPValidateModel == null ? 0 : 1);
+            return this.OK<List<UserOTPValidateModel>>(userOTPValidateModel, userOTPValidateModel == null ? "User_History_Not_Found" : "User_History_found", userOTPValidateModel == null ? 0 : 1);
         }
         #endregion
 
@@ -60,7 +60,7 @@ namespace TaziappzMobileWebAPI.Controllers
             userSignUpModel[0].User.Is_Active = 1;
             userSignUpModel[0].User.Corporate = 0;
             userSignUpModel[0].corporate = 0;
-            return this.OK<UserSignUpModel>(userSignUpModel, userSignUpModel == null ? "User_SignUp_Not_Found" : "User_SignUp_found", userSignUpModel == null ? 0 : 1);
+            return this.OK<List<UserSignUpModel>>(userSignUpModel, userSignUpModel == null ? "User_SignUp_Not_Found" : "User_SignUp_found", userSignUpModel == null ? 0 : 1);
         }
         #endregion
 
@@ -88,7 +88,7 @@ namespace TaziappzMobileWebAPI.Controllers
             userLoginModel[0].User.Is_Active = 1;
             userLoginModel[0].User.Corporate = 0;
             userLoginModel[0].corporate = 0;
-            return this.OK<UserLoginModel>(userLoginModel, userLoginModel == null ? "User_Login_Not_Found" : "User_Login_found", userLoginModel == null ? 0 : 1);
+            return this.OK<List<UserLoginModel>>(userLoginModel, userLoginModel == null ? "User_Login_Not_Found" : "User_Login_found", userLoginModel == null ? 0 : 1);
         }
         #endregion
 
@@ -103,7 +103,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             List<LoginOtpModel> loginOtpModel = new List<LoginOtpModel>();
             loginOtpModel[0].PhoneNumber = "+919653698745";
-            return this.OK<LoginOtpModel>(loginOtpModel, loginOtpModel == null ? "Login_OTP_Not_Found" : "Login_OTP_found", loginOtpModel == null ? 0 : 1);
+            return this.OK<List<LoginOtpModel>>(loginOtpModel, loginOtpModel == null ? "Login_OTP_Not_Found" : "Login_OTP_found", loginOtpModel == null ? 0 : 1);
         }
         #endregion
 
@@ -118,7 +118,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             List<LoginResendOtpModel> loginResendOtpModel = new List<LoginResendOtpModel>();
             loginResendOtpModel[0].Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
-            return this.OK<LoginResendOtpModel>(loginResendOtpModel, loginResendOtpModel == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found", loginResendOtpModel == null ? 0 : 1);
+            return this.OK<List<LoginResendOtpModel>>(loginResendOtpModel, loginResendOtpModel == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found", loginResendOtpModel == null ? 0 : 1);
         }
         #endregion
 
@@ -133,7 +133,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             List<LoginSendOtpModel> loginSendOtpModel = new List<LoginSendOtpModel>();
             loginSendOtpModel[0].Token = "$2y$10$kuh/fg8wdcFhuSK8wOx8/O2sZdGT4FbIFuSZRh0Oq1JD45UFmdv3u";
-            return this.OK<LoginSendOtpModel>(loginSendOtpModel, loginSendOtpModel == null ? "Send_OTP_Not_Found" : "Send_OTP_found", loginSendOtpModel == null ? 0 : 1);
+            return this.OK<List<LoginSendOtpModel>>(loginSendOtpModel, loginSendOtpModel == null ? "Send_OTP_Not_Found" : "Send_OTP_found", loginSendOtpModel == null ? 0 : 1);
         }
         #endregion
 
@@ -149,7 +149,7 @@ namespace TaziappzMobileWebAPI.Controllers
             List<ForgotPasswordModel> forgotPasswordModel = new List<ForgotPasswordModel>();
             forgotPasswordModel[0].User = new UserForgot();
             forgotPasswordModel[0].User.Is_Presented = true;
-            return this.OK<ForgotPasswordModel>(forgotPasswordModel, forgotPasswordModel == null ? "Forgot_Password_Not_Found" : "Forgot_Password_found", forgotPasswordModel == null ? 0 : 1);
+            return this.OK<List<ForgotPasswordModel>>(forgotPasswordModel, forgotPasswordModel == null ? "Forgot_Password_Not_Found" : "Forgot_Password_found", forgotPasswordModel == null ? 0 : 1);
         }
         #endregion
     }

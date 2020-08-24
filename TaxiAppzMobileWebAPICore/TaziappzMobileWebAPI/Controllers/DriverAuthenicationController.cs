@@ -61,7 +61,7 @@ namespace TaziappzMobileWebAPI.Controllers
             sign = new DASign(_context, token);
             List<DetailsWithDriverToken> detailsWithToken = new List<DetailsWithDriverToken>();
             detailsWithToken = sign.SignInDriver(signInmodel);
-            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 0 ? "User_SignDetails_Not_Found" : "User_Signdetails_Found", detailsWithToken.Count == 0 ? 0 : 1);
+            return this.OK<List<DetailsWithDriverToken>>(detailsWithToken, detailsWithToken.Count == 0 ? "User_SignDetails_Not_Found" : "User_Signdetails_Found", detailsWithToken.Count == 0 ? 0 : 1);
         }
         /// <summary>
         /// Use to Register Driver
@@ -88,7 +88,7 @@ namespace TaziappzMobileWebAPI.Controllers
             token = new Token(_context, jwt);
             List<DetailsWithDriverToken> detailsWithToken = new List<DetailsWithDriverToken>();
             detailsWithToken = token.ReGenerateDriverJWTTokenDtls(refreshtoken, contactno); //(List)token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
-            return this.OK<DetailsWithDriverToken>(detailsWithToken, detailsWithToken.Count == 0 ? "Access token Generation Failed" : "Access token Generated Successfully", detailsWithToken.Count == 0 ? 0 : 1);
+            return this.OK<List<DetailsWithDriverToken>>(detailsWithToken, detailsWithToken.Count == 0 ? "Access token Generation Failed" : "Access token Generated Successfully", detailsWithToken.Count == 0 ? 0 : 1);
         }
 
 

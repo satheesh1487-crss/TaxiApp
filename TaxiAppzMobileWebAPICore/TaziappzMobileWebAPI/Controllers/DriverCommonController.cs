@@ -48,7 +48,7 @@ namespace TaziappzMobileWebAPI.Controllers
                 DADriverCommon dADriverCommon = new DADriverCommon();
                 List<GetProfileModel> getProfileModels = new List<GetProfileModel>();
                 getProfileModels = dADriverCommon.GetProfile(_context, generalModel, User.ToAppUser());
-                return this.OK<GetProfileModel>(getProfileModels, getProfileModels.Count == 0 ? "Driver Profile not found" : "Driver Profie Found", getProfileModels.Count == 0 ? 0 : 1);
+                return this.OK<List<GetProfileModel>>(getProfileModels, getProfileModels.Count == 0 ? "Driver Profile not found" : "Driver Profie Found", getProfileModels.Count == 0 ? 0 : 1);
             }
             catch (DataValidationException ex)
             {
@@ -107,7 +107,7 @@ namespace TaziappzMobileWebAPI.Controllers
             earningsListModel[0].Earnings.LastTrip.TotalBill = 6.89;
             earningsListModel[0].Earnings.LastTrip.AdminEarned = 0.95;
 
-            return this.OK<EarningsListModel>(earningsListModel, earningsListModel.Count == 0 ? "Earning_List_not_found" : "Earning_List_found", earningsListModel.Count == 0 ? 0 : 1);
+            return this.OK<List<EarningsListModel>>(earningsListModel, earningsListModel.Count == 0 ? "Earning_List_not_found" : "Earning_List_found", earningsListModel.Count == 0 ? 0 : 1);
         }
         #endregion
 
@@ -129,7 +129,7 @@ namespace TaziappzMobileWebAPI.Controllers
             {
                 Faq_List = faq_List
             }) ;
-            return this.OK<FAQListModel>(fAQListModel, fAQListModel.Count == 0 ? "FAQ_List_not_found" : "FAQ_List_found", fAQListModel.Count == 0 ? 0 :1);
+            return this.OK<List<FAQListModel>>(fAQListModel, fAQListModel.Count == 0 ? "FAQ_List_not_found" : "FAQ_List_found", fAQListModel.Count == 0 ? 0 :1);
         }
         #endregion
     }

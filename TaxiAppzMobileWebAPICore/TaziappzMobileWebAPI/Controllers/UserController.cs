@@ -38,7 +38,7 @@ namespace TaziappzMobileWebAPI.Controllers
             sign = new DASign(_context, token);
            List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
             detailsWithToken =sign.SignIn(signInmodel);
-            return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken.Count == 0 ? "User_SignDetails_Not_Found" : "User_Signdetails_Found", detailsWithToken.Count == 0 ? 0 : 1);
+            return this.OK<List<DetailsWithToken>>(detailsWithToken, detailsWithToken.Count == 0 ? "User_SignDetails_Not_Found" : "User_Signdetails_Found", detailsWithToken.Count == 0 ? 0 : 1);
         }
         /// <summary>
         /// Use to Register User

@@ -35,7 +35,7 @@ namespace TaziappzMobileWebAPI.Controllers
             complaintApiModel[0].Admin_key = "64654";
             complaintApiModel[0].Complaint_List.Id = 2;
             complaintApiModel[0].Complaint_List.Title = "Lunch break";           
-            return this.OK<ComplaintApiModel>(complaintApiModel, complaintApiModel == null ? "Complaint_Not_Found" : "Complaint_found", complaintApiModel == null ? 0 : 1);
+            return this.OK<List<ComplaintApiModel>>(complaintApiModel, complaintApiModel == null ? "Complaint_Not_Found" : "Complaint_found", complaintApiModel == null ? 0 : 1);
         }
         #endregion
 

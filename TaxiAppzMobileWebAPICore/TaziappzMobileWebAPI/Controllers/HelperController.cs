@@ -31,7 +31,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DAOTP dAOTP = new DAOTP();
             List<CountryModel> countryModel = new List<CountryModel>();
             countryModel = dAOTP.GetCountryList(_context);
-            return this.OK<CountryModel>(countryModel, countryModel.Count == 0 ? "No Data Found" : "Country_List", countryModel.Count == 0 ? 0 : 1);
+            return this.OK<List<CountryModel>>(countryModel, countryModel.Count == 0 ? "No Data Found" : "Country_List", countryModel.Count == 0 ? 0 : 1);
         }
         /// <summary>
         /// Use to List Service Opertaion

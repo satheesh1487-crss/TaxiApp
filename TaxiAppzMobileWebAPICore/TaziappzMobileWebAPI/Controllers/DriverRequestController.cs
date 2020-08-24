@@ -51,7 +51,7 @@ namespace TaziappzMobileWebAPI.Controllers
             //requestInProgressModel[0].Driver_Status.Is_Available = 1;
             //requestInProgressModel[0].Driver_Status.Document_Upload_Status = true;
             //requestInProgressModel[0].Emergecy = null;
-            return this.OK<RequestInProgress>(requestInProgressModel, requestInProgressModel.Count == 0 ? "Request_Not_Found" : "Request_found", requestInProgressModel.Count == 0 ? 0 : 1);
+            return this.OK<List<RequestInProgress>>(requestInProgressModel, requestInProgressModel.Count == 0 ? "Request_Not_Found" : "Request_found", requestInProgressModel.Count == 0 ? 0 : 1);
         }
 
         #endregion
@@ -141,7 +141,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DADriverRequest dADriverRequest = new DADriverRequest();
             List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();
             tripCancelModels = dADriverRequest.CancelList(_context, driverLocation, User.ToAppUser());
-            return this.OK<TripCancelModel>(tripCancelModels, tripCancelModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", tripCancelModels.Count == 0 ? 0 : 1);
+            return this.OK<List<TripCancelModel>>(tripCancelModels, tripCancelModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", tripCancelModels.Count == 0 ? 0 : 1);
         }
         #endregion
 
@@ -228,7 +228,7 @@ namespace TaziappzMobileWebAPI.Controllers
             historyDetailModel[0].Request.Bill.TotalAdditionalCharge = 0;
             historyDetailModel[0].Request.Bill.AdditionalCharge = null;
 
-            return this.OK<HistoryDetailModel>(historyDetailModel, historyDetailModel == null ? "History_Detail_Not_Found" : "History_Detail_found", historyDetailModel == null ? 0 : 1);
+            return this.OK<List<HistoryDetailModel>>(historyDetailModel, historyDetailModel == null ? "History_Detail_Not_Found" : "History_Detail_found", historyDetailModel == null ? 0 : 1);
         }
         #endregion
 
@@ -320,7 +320,7 @@ namespace TaziappzMobileWebAPI.Controllers
             requestBillModel[0].Request.Bill.TotalAdditionalCharge = 0;
             requestBillModel[0].Request.Bill.AdditionalCharge = null;
 
-            return this.OK<RequestBillModel>(requestBillModel, requestBillModel == null ? "History_Detail_Not_Found" : "History_Detail_found", requestBillModel == null ? 0 : 1);
+            return this.OK<List<RequestBillModel>>(requestBillModel, requestBillModel == null ? "History_Detail_Not_Found" : "History_Detail_found", requestBillModel == null ? 0 : 1);
         }
         #endregion
 
@@ -377,7 +377,7 @@ namespace TaziappzMobileWebAPI.Controllers
                 var result = dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
                 List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
                 requestStatusModels.Add(result);
-                return this.OK<RequestStatusModel>(requestStatusModels, requestStatusModels.Count == 0 ? "Driver_Online" : "Driver_Offline", 1);
+                return this.OK<List<RequestStatusModel>>(requestStatusModels, requestStatusModels.Count == 0 ? "Driver_Online" : "Driver_Offline", 1);
             }
             catch (DataValidationException ex)
             {
