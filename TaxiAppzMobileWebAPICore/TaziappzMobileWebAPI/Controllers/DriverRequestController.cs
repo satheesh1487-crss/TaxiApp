@@ -270,7 +270,7 @@ namespace TaziappzMobileWebAPI.Controllers
             requestAcceptedModel[0].Request.User.Phone_Number = "+919865896532";
             requestAcceptedModel[0].Request.User.Email = "raj@gmail.com";
 
-            return this.OK<RequestAcceptedModel>(requestAcceptedModel, requestAcceptedModel == null ? "History_Detail_Not_Found" : "History_Detail_found", requestAcceptedModel == null ? 0 : 1);
+            return this.OK<List<RequestAcceptedModel>>(requestAcceptedModel, requestAcceptedModel == null ? "History_Detail_Not_Found" : "History_Detail_found", requestAcceptedModel == null ? 0 : 1);
         }
         #endregion
 

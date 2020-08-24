@@ -44,7 +44,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DAOTP dAOTP = new DAOTP();
             List<ServiceLocationModel> serviceLocationModels = new List<ServiceLocationModel>();
             serviceLocationModels = dAOTP.ListService(id, _context);
-            return this.OK<ServiceLocationModel>(serviceLocationModels, serviceLocationModels.Count == 0 ? "No Data Found" : "ServiceOperation_List", serviceLocationModels.Count == 0 ? 0 : 1);
+            return this.OK<List<ServiceLocationModel>>(serviceLocationModels, serviceLocationModels.Count == 0 ? "No Data Found" : "ServiceOperation_List", serviceLocationModels.Count == 0 ? 0 : 1);
         }
 
     }
