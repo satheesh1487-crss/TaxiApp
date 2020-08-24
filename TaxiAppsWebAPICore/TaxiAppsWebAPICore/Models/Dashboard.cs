@@ -70,5 +70,21 @@ namespace TaxiAppsWebAPICore.Models
 
         [JsonProperty("total_Blocked_Drivers")]
         public long Total_Blocked_Drivers { set; get; }
+
+
+        [JsonProperty("zoneDash")]
+        public List<ZoneDash> ZoneDash { set; get; }
     }
+
+    public class ZoneDash
+    {
+        [JsonProperty("zone_name")]
+        public string ZoneName { set; get; }
+        [JsonProperty("driver_count")]
+        public int DriverCount { set; get; }
+
+        [JsonProperty("total_driver")]
+        public int Total_Driver { set; get; }
+    }
+
 }

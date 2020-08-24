@@ -35,7 +35,7 @@ namespace TaziappzMobileWebAPI.Controllers
             getWalletModel[0].Amount_Balance = 100;
             getWalletModel[0].Amount_Spent = 400;
             getWalletModel[0].Currency = "&";
-            return this.OK<GetWalletModel>(getWalletModel, getWalletModel == null ? "wallet_not_found" : "wallet_found", getWalletModel == null ? 0 : 1);
+            return this.OK<List<GetWalletModel>>(getWalletModel, getWalletModel == null ? "wallet_not_found" : "wallet_found", getWalletModel == null ? 0 : 1);
         }
         #endregion
 
@@ -54,7 +54,7 @@ namespace TaziappzMobileWebAPI.Controllers
             cardListModel[0].Payment.Last_Number = "555";
             cardListModel[0].Payment.Card_Type = "VISA";
             cardListModel[0].Payment.Is_Default = true;
-            return this.OK<CardListModel>(cardListModel, cardListModel == null ? "CardList_Not_Found" : "CardList_Found", cardListModel == null ? 0 : 1);
+            return this.OK<List<CardListModel>>(cardListModel, cardListModel == null ? "CardList_Not_Found" : "CardList_Found", cardListModel == null ? 0 : 1);
         }
         #endregion
 
@@ -72,7 +72,7 @@ namespace TaziappzMobileWebAPI.Controllers
             addWalletModel[0].Amount_Balance = 100;
             addWalletModel[0].Amount_Spent = 400;
             addWalletModel[0].Currency = "&";
-            return this.OK<AddWalletModel>(addWalletModel, addWalletModel == null ? "AddWallet_not_found" : "AddWallet_found", addWalletModel == null ? 0 : 1);
+            return this.OK<List<AddWalletModel>>(addWalletModel, addWalletModel == null ? "AddWallet_not_found" : "AddWallet_found", addWalletModel == null ? 0 : 1);
         }
         #endregion
 
@@ -91,7 +91,7 @@ namespace TaziappzMobileWebAPI.Controllers
             addCardModel[0].Payment.Last_Number = "555";
             addCardModel[0].Payment.Card_Type = "VISA";
             addCardModel[0].Payment.Is_Default = true;
-            return this.OK<AddCardModel>(addCardModel, addCardModel == null ? "AddWallet_not_found" : "AddWallet_found", addCardModel == null ? 0 : 1);
+            return this.OK<List<AddCardModel>>(addCardModel, addCardModel == null ? "AddWallet_not_found" : "AddWallet_found", addCardModel == null ? 0 : 1);
         }
         #endregion
     }

@@ -94,7 +94,7 @@ namespace TaziappzMobileWebAPI.Controllers
             userHistoryModel[0].UserRequest.UserBill.TotalAdditionalCharge = 0;
             userHistoryModel[0].UserRequest.UserBill.AdditionalCharge = null;
 
-            return this.OK<UserHistoryModel>(userHistoryModel, userHistoryModel == null ? "User_History_Not_Found" : "User_History_found", userHistoryModel == null ? 0 : 1);
+            return this.OK<List<UserHistoryModel>>(userHistoryModel, userHistoryModel == null ? "User_History_Not_Found" : "User_History_found", userHistoryModel == null ? 0 : 1);
         }
         #endregion
 
@@ -188,7 +188,7 @@ namespace TaziappzMobileWebAPI.Controllers
             tempTokenModel[0].Request = new Request();
             tempTokenModel[0].Sos = null;
             tempTokenModel[0].User_Sos = null;
-            return this.OK<TempTokenModel>(tempTokenModel, tempTokenModel == null ? "Temp_Token_Not_Found" : "Temp_Token_found", tempTokenModel == null ? 0 : 1);
+            return this.OK<List<TempTokenModel>>(tempTokenModel, tempTokenModel == null ? "Temp_Token_Not_Found" : "Temp_Token_found", tempTokenModel == null ? 0 : 1);
         }
         #endregion
 
@@ -206,7 +206,7 @@ namespace TaziappzMobileWebAPI.Controllers
             tempTokenModel[0].Request = new Request();
             tempTokenModel[0].Sos = null;
             tempTokenModel[0].User_Sos = null;
-            return this.OK<TempTokenModel>(tempTokenModel, tempTokenModel == null ? "Request_InProgress_Not_Found" : "Request_InProgress_found", tempTokenModel == null ? 0 : 1);
+            return this.OK<List<TempTokenModel>>(tempTokenModel, tempTokenModel == null ? "Request_InProgress_Not_Found" : "Request_InProgress_found", tempTokenModel == null ? 0 : 1);
         }
         #endregion
 
@@ -237,7 +237,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DAUserRequest dAUserRequest = new DAUserRequest();
             List<CancelRequestModel> cancelRequestModels = new List<CancelRequestModel>();
             cancelRequestModels = dAUserRequest.CancelList(_context,  User.ToAppUser());
-            return this.OK<CancelRequestModel>(cancelRequestModels, cancelRequestModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", cancelRequestModels.Count == 0 ? 0 : 1);
+            return this.OK<List<CancelRequestModel>>(cancelRequestModels, cancelRequestModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", cancelRequestModels.Count == 0 ? 0 : 1);
 
             CancelRequestModel cancelRequestModel = new CancelRequestModel();
             return this.OKRESPONSE<CancelRequestModel>(cancelRequestModel, cancelRequestModel == null ? "Cancel_Request_Not_Found" : "Cancel_Request_found");
@@ -287,7 +287,7 @@ namespace TaziappzMobileWebAPI.Controllers
             createRequestFirebaseModel[0].User.Profile_Pic = null;
             createRequestFirebaseModel[0].User.Latitude = 0;
             createRequestFirebaseModel[0].User.Longitude = 0;
-            return this.OK<CreateRequestFirebaseModel>(createRequestFirebaseModel, createRequestFirebaseModel == null ? "Create_Request_Firebase_Not_Found" : "Create_Request_Firebase_found", createRequestFirebaseModel == null ? 0 : 1);
+            return this.OK<List<CreateRequestFirebaseModel>>(createRequestFirebaseModel, createRequestFirebaseModel == null ? "Create_Request_Firebase_Not_Found" : "Create_Request_Firebase_found", createRequestFirebaseModel == null ? 0 : 1);
         }
         #endregion
 
@@ -333,7 +333,7 @@ namespace TaziappzMobileWebAPI.Controllers
             etaFirebaseModel[0].Share_Ride_Details.Tax_Amount = 0;
             etaFirebaseModel[0].Share_Ride_Details.Total_Price = 0;
 
-            return this.OK<EtaFirebaseModel>(etaFirebaseModel, etaFirebaseModel == null ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found", etaFirebaseModel == null ? 0 : 1);
+            return this.OK<List<EtaFirebaseModel>>(etaFirebaseModel, etaFirebaseModel == null ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found", etaFirebaseModel == null ? 0 : 1);
         }
         #endregion
 

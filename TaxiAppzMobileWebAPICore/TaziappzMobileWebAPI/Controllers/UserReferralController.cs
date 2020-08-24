@@ -36,7 +36,7 @@ namespace TaziappzMobileWebAPI.Controllers
             userGetReferralModel[0].Spent = 0;
             userGetReferralModel[0].balance = 0;
             userGetReferralModel[0].currency = "$";
-            return this.OK<UserGetReferralModel>(userGetReferralModel, userGetReferralModel == null ? "Get_Referral_Not_Found" : "Get_Referral_found", userGetReferralModel == null ? 0 : 1);
+            return this.OK<List<UserGetReferralModel>>(userGetReferralModel, userGetReferralModel == null ? "Get_Referral_Not_Found" : "Get_Referral_found", userGetReferralModel == null ? 0 : 1);
         }
         #endregion
 

@@ -197,7 +197,20 @@ namespace TaziappzMobileWebAPI.DALayer
             return true;
         }
 
+        public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)
+        {
+            TabUser tabUser = new TabUser();
+            var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(1440)).ToList();
+            foreach(var user in userid)
+            {
+                context.TabRequestMeta.Remove(user);
+            } 
 
+          
+            context.SaveChanges();
+
+            return true;
+        }
         public bool RequestCancel(DriversCancel requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
            

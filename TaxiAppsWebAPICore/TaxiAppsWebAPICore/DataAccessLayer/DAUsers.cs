@@ -23,7 +23,7 @@ namespace TaxiAppsWebAPICore
                         Name = user.Firstname + ' ' + user.Lastname,
                         Email = user.Email,
                         Phoneno = user.PhoneNumber,
-                        Status = user.IsActive == 1 ? true : false,
+                        Status = user.IsActive,
                         Id = user.Id
                     });
                 }
@@ -40,7 +40,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 List<UserList> userListModel = new List<UserList>();
-                var userlist = context.TabUser.Where(u => u.IsActive == 0 && u.IsDelete == 0).ToList();
+                var userlist = context.TabUser.Where(u => u.IsActive == true && u.IsDelete == 0).ToList();
                 foreach (var user in userlist)
                 {
                     userListModel.Add(new UserList()
@@ -48,7 +48,7 @@ namespace TaxiAppsWebAPICore
                         Name = user.Firstname + ' ' + user.Lastname,
                         Email = user.Email,
                         Phoneno = user.PhoneNumber,
-                        Status = user.IsActive == 1 ? true : false,
+                        Status = user.IsActive,
                         Id = user.Id
                     });
                 }
@@ -97,7 +97,7 @@ namespace TaxiAppsWebAPICore
                 {
                     updatedate.UpdatedAt = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
                     updatedate.UpdatedBy = "Admin";
-                    updatedate.IsActive = status == false ? 0 : 1;
+                    updatedate.IsActive = status;
                     context.Update(updatedate);
                     context.SaveChanges();
                     return true;

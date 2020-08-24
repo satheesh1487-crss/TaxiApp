@@ -18,10 +18,10 @@ namespace TaziappzMobileWebAPI.DALayer
             context = _context;
             _token = token;
         }
-        public List<DetailsWithToken> SignIn(SignInmodel signInmodel)
+        public DetailsWithToken  SignIn(SignInmodel signInmodel)
         {
             //TabUser tabUser = new TabUser();
-            List<DetailsWithToken> user = new List<DetailsWithToken>();
+             DetailsWithToken  user = new  DetailsWithToken();
            var tabusers = context.TabUser.Where(t => t.PhoneNumber == signInmodel.Contactno && t.IsActive == true && t.IsDelete == 0).FirstOrDefault();
             if (tabusers != null)
             {
@@ -31,18 +31,16 @@ namespace TaziappzMobileWebAPI.DALayer
                 context.TabUser.Update(tabusers);
                 context.SaveChanges();
                 var tokenString = _token.GenerateJWTTokenDtls(signInmodel);
-                user.Add(new DetailsWithToken()
-                {
-                    FirstName = tokenString[0].FirstName,
-                    LastName = tokenString[0].LastName,
-                    Mobileno = tokenString[0].Mobileno,
-                    Emailid = tokenString[0].Emailid,
-                    AccessToken = tokenString[0].AccessToken,
-                    RefreshToken = tokenString[0].RefreshToken,
-                    IsExist = tokenString[0].IsExist,
-                    IsActive = tokenString[0].IsActive
 
-                });
+                user.FirstName = tokenString[0].FirstName;
+                user.LastName = tokenString[0].LastName;
+                user.Mobileno = tokenString[0].Mobileno;
+                user.Emailid = tokenString[0].Emailid;
+                user.AccessToken = tokenString[0].AccessToken;
+                user.RefreshToken = tokenString[0].RefreshToken;
+                user.IsExist = tokenString[0].IsExist;
+                user.IsActive = tokenString[0].IsActive;
+ 
                 return user;
             }
                return user;

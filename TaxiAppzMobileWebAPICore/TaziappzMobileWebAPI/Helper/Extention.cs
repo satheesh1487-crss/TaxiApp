@@ -47,11 +47,11 @@ namespace TaziappzMobileWebAPI
                 isExist = isExist
             });
         }
-        internal static IActionResult OK<T>(this ControllerBase controller, List<T> content, string msg, int isExist)
+        internal static IActionResult OK<T>(this ControllerBase controller, T content, string msg, int isExist)
         {
             return controller.Ok(new APIContentResponse<T>()
             {
-                ContentList = content,
+                Content = content,
                 Message = msg,
                 success = true,
                 isExist = isExist

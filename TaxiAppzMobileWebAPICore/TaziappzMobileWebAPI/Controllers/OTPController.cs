@@ -78,7 +78,7 @@ namespace TaziappzMobileWebAPI.Controllers
             token = new Token(_context, jwt);
            List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
             detailsWithToken = token.ReGenerateJWTTokenDtls(refreshtoken, contactno); //(List)token.ReGenerateJWTTokenDtls(refreshtoken, contactno);
-            return this.OK<DetailsWithToken>(detailsWithToken,detailsWithToken.Count == 0 ? "Access token Generation Failed" : "Access token Generated Successfully", detailsWithToken.Count == 0 ? 0 : 1);
+            return this.OK<List<DetailsWithToken>>(detailsWithToken,detailsWithToken.Count == 0 ? "Access token Generation Failed" : "Access token Generated Successfully", detailsWithToken.Count == 0 ? 0 : 1);
         }
        
         

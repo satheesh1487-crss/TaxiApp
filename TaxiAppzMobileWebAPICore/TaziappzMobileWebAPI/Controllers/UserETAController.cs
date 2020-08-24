@@ -87,7 +87,7 @@ namespace TaziappzMobileWebAPI.Controllers
             eTAListModel.Share_Ride_Details.Tax_Amount = 0;
             eTAListModel.Share_Ride_Details.Total_Price = 0;
             eTAList.Add(eTAListModel);
-            return this.OK<ETAListModel>(eTAList, eTAList.Count == 0 ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found", eTAList.Count == 0 ? 0 : 1);
+            return this.OK<List<ETAListModel>>(eTAList, eTAList.Count == 0 ? "Firebase_ETA_Not_Found" : "Firebase_ETA_found", eTAList.Count == 0 ? 0 : 1);
         }
         #endregion
     }

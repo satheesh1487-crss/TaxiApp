@@ -51,7 +51,7 @@ namespace TaziappzMobileWebAPI.Controllers
                 DAUserCommon dAUserCommon = new DAUserCommon();
                 List<UserProfileModel> userProfiles = new List<UserProfileModel>();
                 userProfiles = dAUserCommon.GetProfile(_context, profileModel, User.ToAppUser());
-                return this.OK<UserProfileModel>(userProfiles, userProfiles.Count == 0 ? "Profile data not found" : "Profie Data Found", userProfiles.Count == 0 ? 0 : 1);
+                return this.OK<List<UserProfileModel>>(userProfiles, userProfiles.Count == 0 ? "Profile data not found" : "Profie Data Found", userProfiles.Count == 0 ? 0 : 1);
             }
             catch (DataValidationException ex)
             {
@@ -69,7 +69,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DAUserCommon dAUserCommon = new DAUserCommon();            
             List<UserSosModel> userSosModels = new List<UserSosModel>();            
             userSosModels = dAUserCommon.List(_context, userZoneSOSModel, User.ToAppUser());
-            return this.OK<UserSosModel>(userSosModels, userSosModels.Count == 0 ? "User SOS Details Not Found" : "User SOS Details Found", userSosModels.Count == 0 ? 0 : 1);            
+            return this.OK<List<UserSosModel>>(userSosModels, userSosModels.Count == 0 ? "User SOS Details Not Found" : "User SOS Details Found", userSosModels.Count == 0 ? 0 : 1);            
         }
         #endregion
 
@@ -82,7 +82,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DAUserCommon dAUserCommon = new DAUserCommon();
             List<UserFaqListModel> userFaqLists = new List<UserFaqListModel>();
             userFaqLists = dAUserCommon.FaqList(_context, userFAQListModel, User.ToAppUser());
-            return this.OK<UserFaqListModel>(userFaqLists, userFaqLists.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", userFaqLists.Count == 0 ? 0 : 1);
+            return this.OK<List<UserFaqListModel>>(userFaqLists, userFaqLists.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", userFaqLists.Count == 0 ? 0 : 1);
         }
         #endregion
     }

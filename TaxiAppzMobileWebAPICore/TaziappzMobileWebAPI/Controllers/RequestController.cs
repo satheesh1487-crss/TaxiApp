@@ -31,7 +31,7 @@ namespace TaziappzMobileWebAPI.Controllers
             DARequest dARequest = new DARequest();
            List<Zone> zone = new List<Zone>();
            zone = dARequest.GetRequest(latLong,User.ToAppUser(),context);
-            return this.OK<Zone>(zone, zone.Count == 0 ? "Request_Data_Not_Found" : "Request_Data_Found", zone.Count == 0 ? 0 : 1);
+            return this.OK<List<Zone>>(zone, zone.Count == 0 ? "Request_Data_Not_Found" : "Request_Data_Found", zone.Count == 0 ? 0 : 1);
         }
         /// <summary>
         /// Use to Sent Push notification to Drivers based on User request
