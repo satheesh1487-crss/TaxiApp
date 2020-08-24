@@ -50,8 +50,10 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult RegisterUser([FromBody] SignUpmodel signUpmodel)
         {
             sign = new DASign(_context, token);
-            bool result = sign.SignUp(signUpmodel);
-            return this.OKStatus(result ? "User_Creation_Success" : "User_Creation_Failed", result ? 1 : 0);
+            List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
+            detailsWithToken = sign.SignUp(signUpmodel);
+            return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken.Count == 0 ? "User_Creation_Failed" : "User_Creation_Success", detailsWithToken.Count == 0 ? 0 : 1);
+
         }
 
     }

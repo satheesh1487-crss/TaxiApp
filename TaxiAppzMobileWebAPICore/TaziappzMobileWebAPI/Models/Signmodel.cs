@@ -22,6 +22,12 @@ namespace TaziappzMobileWebAPI
         public string Profile_pic { get; set; }
         [JsonProperty("servicelocationid")]
         public long Servicelocationid { get; set; }
+        [JsonProperty("loginMethod")]
+        public string LoginMethod { get; set; }
+       [JsonProperty("devicetoken")]
+        public string Devicetoken { get; set; }
+        [JsonProperty("loginBy")]
+        public string LoginBy { get; set; }
         //[JsonProperty("timezone")]
         //public long Timezone { get; set; }
 

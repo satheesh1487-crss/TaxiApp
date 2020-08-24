@@ -86,18 +86,18 @@ namespace TaziappzMobileWebAPI.DALayer
                 return driver;
             
         }
-            public bool SignUp(SignUpmodel signUpmodel)
+            public List<DetailsWithToken> SignUp(SignUpmodel signUpmodel)
         {
             TabUser tabUser = new TabUser();
-            DetailsWithToken detailsWithToken = new DetailsWithToken();
+            List<DetailsWithToken> user = new List<DetailsWithToken>();
             var isServiceLocExist = context.TabServicelocation.Where(t => t.Servicelocid == signUpmodel.Servicelocationid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
             if (isServiceLocExist == null)
-                return false;
+                return user;
             var timezone = context.TabTimezone.Where(t => t.Timezoneid == isServiceLocExist.Timezoneid && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
             var country = context.TabCountry.Where(t => t.CountryId == isServiceLocExist.Countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
             var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signUpmodel.Mobileno).FirstOrDefault();
             if (timezone == null || country == null || isUserExist != null || isServiceLocExist == null)
-                 return false;
+                 return user;
             tabUser.Firstname = signUpmodel.FirstName;
             tabUser.Lastname = signUpmodel.LastName;
             tabUser.Email = signUpmodel.Emailid;
@@ -105,9 +105,31 @@ namespace TaziappzMobileWebAPI.DALayer
             tabUser.Countryid = isServiceLocExist.Countryid;
             tabUser.Timezoneid = isServiceLocExist.Timezoneid;
             tabUser.Currencyid = isServiceLocExist.Currencyid;
+            tabUser.DeviceToken = signUpmodel.Devicetoken;
+            tabUser.LoginBy = signUpmodel.LoginBy;
+            tabUser.LoginMethod = signUpmodel.LoginMethod;
             context.TabUser.Add(tabUser);
             context.SaveChanges();
-            return true;
+           SignInmodel signInmodel = new SignInmodel();
+            signInmodel.LoginBy = signUpmodel.LoginBy;
+            signInmodel.LoginMethod = signUpmodel.LoginMethod;
+            signInmodel.Devicetoken = signUpmodel.Devicetoken;
+            signInmodel.Contactno = signUpmodel.Mobileno;
+            var tokenString = _token.GenerateJWTTokenDtls(signInmodel);
+            user.Add(new DetailsWithToken()
+            {
+                FirstName = tokenString[0].FirstName,
+                LastName = tokenString[0].LastName,
+                Mobileno = tokenString[0].Mobileno,
+                Emailid = tokenString[0].Emailid,
+                AccessToken = tokenString[0].AccessToken,
+                RefreshToken = tokenString[0].RefreshToken,
+                IsExist = tokenString[0].IsExist,
+                IsActive = tokenString[0].IsActive
+
+            });
+            return user;
+            
         }
         public bool SignUpDriver(SignUpDrivermodel signUpmodel)
         {
