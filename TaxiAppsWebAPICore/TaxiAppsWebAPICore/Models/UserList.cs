@@ -21,7 +21,7 @@ namespace TaxiAppsWebAPICore.Models
         public string Phoneno { set; get; }
 
         [JsonProperty("status")]
-        public bool Status { set; get; }
+        public bool ?Status { set; get; }
 
     }
 }

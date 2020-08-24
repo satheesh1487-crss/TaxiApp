@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
 using TaziappzMobileWebAPI.TaxiModels;
@@ -152,6 +153,24 @@ namespace TaziappzMobileWebAPI.Controllers
             forgotPasswordModel[0].User = new UserForgot();
             forgotPasswordModel[0].User.Is_Presented = true;
             return this.OK<List<ForgotPasswordModel>>(forgotPasswordModel, forgotPasswordModel == null ? "Forgot_Password_Not_Found" : "Forgot_Password_found", forgotPasswordModel == null ? 0 : 1);
+        }
+        #endregion
+
+
+        #region DriverMetatableDelete
+        /// <summary>
+        /// Hard Coded Data
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("deleteMetaDriver")]
+        public IActionResult DeleteMetaDriver()
+        {
+
+            DARequest dARequest = new DARequest();
+          var val=  dARequest.DeleteMetaDriver(User.ToAppUser(), _context);
+
+            return this.OK<bool>(val, val == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found", val == null ? 0 : 1);
         }
         #endregion
     }
