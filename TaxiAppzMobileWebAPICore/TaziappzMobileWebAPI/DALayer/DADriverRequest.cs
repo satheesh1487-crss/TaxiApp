@@ -110,8 +110,8 @@ namespace TaziappzMobileWebAPI.DALayer
                 var requestplace = context.TabRequestPlace.Where(t => t.RequestId == Convert.ToInt64(requestdata.RequestId)).FirstOrDefault();
                 if (requestdata == null)
                     return requestInProgresses;
-                if (requestdata.IsDriverStarted.ToUpper() == "TRUE" || requestdata.IsDriverArrived.ToUpper() == "TRUE" ||
-                    requestdata.IsTripStart.ToUpper() == "TRUE" || requestdata.IsCompleted.ToUpper() == "FALSE" || requestdata.IsCancelled.ToUpper() == "FALSE")
+                if (requestdata.IsDriverStarted  == true || requestdata.IsDriverArrived  == true ||
+                    requestdata.IsTripStart  == true || requestdata.IsCompleted  == false || requestdata.IsCancelled  == false )
                 {
                     //NEED TO WRITE TRIP REQUEST OBJECT
                     TripRequest tripRequest = new TripRequest();
@@ -200,7 +200,7 @@ namespace TaziappzMobileWebAPI.DALayer
             {
                 var requestdata = context.TabRequest.Where(t => t.Id == requestid).FirstOrDefault();
                 requestdata.DriverId = driverdtls.Driverid;
-                requestdata.IsDriverStarted = "True";
+                requestdata.IsDriverStarted = true;
                 context.TabRequest.Update(requestdata);
                 context.SaveChanges();
                 var requestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid).ToList();
@@ -225,7 +225,7 @@ namespace TaziappzMobileWebAPI.DALayer
             
          }
 
-        public bool TripCancel(long requestid,TaxiAppzDBContext context, LoggedInUser loggedInUser)
+        public bool TripCancel(long requestid, long reasonid, string reasondescription,TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             var driverdtls = context.TabDrivers.Where(t => t.ContactNo == loggedInUser.Contactno && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
             if (driverdtls == null)
@@ -236,23 +236,24 @@ namespace TaziappzMobileWebAPI.DALayer
             tabCancellationFeeForDriver.CreatedAt = DateTime.UtcNow;
             context.TabCancellationFeeForDriver.Add(tabCancellationFeeForDriver);
             context.SaveChanges();
-            var requestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid && t.DriverId == driverdtls.Driverid).FirstOrDefault();
-                context.TabRequestMeta.Remove(requestmeta);
-                context.SaveChanges();
-                var secondrequestmeta = context.TabRequestMeta.Where(t => t.RequestId == requestid).OrderBy(t => t.MetaId).FirstOrDefault();
-                secondrequestmeta.IsActive = true;
-                context.TabRequestMeta.Update(secondrequestmeta);
-                context.SaveChanges();
-                return true;
-           
-
-        }
+            var requestdtls = context.TabRequest.Where(t => t.Id == requestid && t.DriverId == driverdtls.Driverid).FirstOrDefault();
+            if (requestdtls == null)
+                return false;
+            requestdtls.IsCancelled = true;
+            requestdtls.Reason = reasonid;
+            requestdtls.CancelOtherReason = reasondescription;
+            requestdtls.CancelMethod = "DRIVER";
+            context.TabRequest.Update(requestdtls);
+            context.SaveChanges();
+               return true;
+       }
         public bool TripStart(long requestid, long OTP,TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             var requestdata = context.TabRequest.Where(t => t.Id == requestid && t.RequestOtp == OTP && t.DriverId == loggedInUser.id).FirstOrDefault();
             if (requestdata == null)
                 return false;
-                requestdata.IsTripStart = "True";
+                requestdata.TripStartTime = DateTime.UtcNow;
+                requestdata.IsTripStart = true;
                 requestdata.UpdatedAt = DateTime.UtcNow;
                 context.TabRequest.Update(requestdata);
                 context.SaveChanges();
@@ -271,7 +272,7 @@ namespace TaziappzMobileWebAPI.DALayer
             var radiusarrivedlimit = context.TabTripSettings.Where(t => t.TripSettingsId == settingModel.Value.tripsettingquestionid).Select( t => t.TripSettingsAnswer).FirstOrDefault();
            if(meter <= Convert.ToInt32(radiusarrivedlimit))
             {
-                requestdata.IsDriverArrived = "True";
+                requestdata.IsDriverArrived = true;
                 requestdata.UpdatedAt = DateTime.UtcNow;
                 context.TabRequest.Update(requestdata);
                 context.SaveChanges();

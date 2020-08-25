@@ -818,23 +818,11 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .IsUnicode(false)
                     .HasDefaultValueSql("('Normal Trip')");
 
-                entity.Property(e => e.IsCancelled).IsUnicode(false);
-
-                entity.Property(e => e.IsCompleted).IsUnicode(false);
-
-                entity.Property(e => e.IsDriverArrived).IsUnicode(false);
-
-                entity.Property(e => e.IsDriverStarted)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('False')");
-
                 entity.Property(e => e.IsPaid)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('UNPAID')");
 
                 entity.Property(e => e.IsShare).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsTripStart).IsUnicode(false);
 
                 entity.Property(e => e.Isreschedule)
                     .IsUnicode(false)
@@ -849,8 +837,6 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .HasDefaultValueSql("('CASH')");
 
                 entity.Property(e => e.PromoId).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Reason).IsUnicode(false);
 
                 entity.Property(e => e.RequestId).IsUnicode(false);
 

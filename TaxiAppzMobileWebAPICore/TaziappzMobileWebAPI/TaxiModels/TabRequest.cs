@@ -36,23 +36,17 @@ namespace TaziappzMobileWebAPI.TaxiModels
         [Column("trip_start_time", TypeName = "datetime")]
         public DateTime? TripStartTime { get; set; }
         [Column("is_driver_started")]
-        [StringLength(10)]
-        public string IsDriverStarted { get; set; }
+        public bool? IsDriverStarted { get; set; }
         [Column("is_driver_arrived")]
-        [StringLength(100)]
-        public string IsDriverArrived { get; set; }
+        public bool? IsDriverArrived { get; set; }
         [Column("is_trip_start")]
-        [StringLength(100)]
-        public string IsTripStart { get; set; }
+        public bool? IsTripStart { get; set; }
         [Column("is_completed")]
-        [StringLength(100)]
-        public string IsCompleted { get; set; }
+        public bool? IsCompleted { get; set; }
         [Column("is_cancelled")]
-        [StringLength(100)]
-        public string IsCancelled { get; set; }
+        public bool? IsCancelled { get; set; }
         [Column("reason")]
-        [StringLength(200)]
-        public string Reason { get; set; }
+        public long? Reason { get; set; }
         [Column("cancel_other_reason")]
         [StringLength(200)]
         public string CancelOtherReason { get; set; }

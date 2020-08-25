@@ -26,7 +26,7 @@ namespace TaziappzMobileWebAPI.DALayer
                 throw new DataValidationException($"User does not have a permission");
             DARequest dARequest = new DARequest(settingmodel);
             var requestexist = context.TabRequest.Where(t => t.UserId == userexist.Id
-            && t.IsTripStart.ToUpper() == "false").OrderBy(t => t.RequestId).FirstOrDefault();
+            && t.IsTripStart == false).OrderBy(t => t.RequestId).FirstOrDefault();
             if (requestexist == null)
                 return cancelRequestModels;
             var requestplace = context.TabRequestPlace.Where(t => t.RequestId == requestexist.Id).FirstOrDefault();

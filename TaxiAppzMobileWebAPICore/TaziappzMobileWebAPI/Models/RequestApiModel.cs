@@ -79,16 +79,16 @@ namespace TaziappzMobileWebAPI.Models
         public string Completed_at { get; set; }
 
         [JsonProperty("Is_driver_started")]
-        public string is_driver_started { get; set; }
+        public bool? is_driver_started { get; set; }
         [JsonProperty("is_driver_arrived")]
-        public string Is_driver_arrived { get; set; }
+        public bool? Is_driver_arrived { get; set; }
         [JsonProperty("is_trip_start")]
-        public string Is_trip_start { get; set; }
+        public bool? Is_trip_start { get; set; }
         [JsonProperty("is_completed")]
-        public string Is_completed { get; set; }
+        public bool? Is_completed { get; set; }
 
         [JsonProperty("is_cancelled")]
-        public string Is_cancelled { get; set; }
+        public bool? Is_cancelled { get; set; }
         [JsonProperty("cancel_method")]
         public string Cancel_method { get; set; }
 
@@ -147,16 +147,16 @@ namespace TaziappzMobileWebAPI.Models
         public string Completed_at { get; set; }
 
         [JsonProperty("Is_driver_started")]
-        public string is_driver_started { get; set; }
+        public bool? is_driver_started { get; set; }
         [JsonProperty("is_driver_arrived")]
-        public string Is_driver_arrived { get; set; }
+        public bool? Is_driver_arrived { get; set; }
         [JsonProperty("is_trip_start")]
-        public string Is_trip_start { get; set; }
+        public bool? Is_trip_start { get; set; }
         [JsonProperty("is_completed")]
-        public string Is_completed { get; set; }
+        public bool? Is_completed { get; set; }
 
         [JsonProperty("is_cancelled")]
-        public string Is_cancelled { get; set; }
+        public bool? Is_cancelled { get; set; }
         [JsonProperty("cancel_method")]
         public string Cancel_method { get; set; }
 

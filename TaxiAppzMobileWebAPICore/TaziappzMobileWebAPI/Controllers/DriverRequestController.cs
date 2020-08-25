@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Options;
 using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Helper;
@@ -399,7 +400,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("AcceptStatus")]
+        [Route("AcceptRjectStatus")]
         public IActionResult AcceptRequest(long requestid,Boolean Acceptstatus)
         {
             try
@@ -422,12 +423,12 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("TripCancel")]
-        public IActionResult TripCancel(long requestid)
+        public IActionResult TripCancel(long requestid,long reasonid,string reasondescription)
         {
             try
             {
                 DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
-                var result = dADriverRequest.TripCancel(requestid, _context, User.ToAppUser());
+                var result = dADriverRequest.TripCancel(requestid, reasonid , reasondescription,_context, User.ToAppUser());
                 return this.OKStatus(result ? "RequestCancel_Success" : "RequestCancel_Failed", result ? 1 : 0);
             }
             catch (DataValidationException ex)

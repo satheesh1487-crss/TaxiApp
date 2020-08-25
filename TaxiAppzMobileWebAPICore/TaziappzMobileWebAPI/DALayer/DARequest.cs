@@ -162,11 +162,11 @@ namespace TaziappzMobileWebAPI.DALayer
             tabRequest.RequestId = "REQ_" + reqid;
             tabRequest.RequestOtp = random.Next(1000, 9999);
             tabRequest.UserId = userid;
-            tabRequest.IsCancelled = "false";
-            tabRequest.IsCompleted = "false";
-            tabRequest.IsDriverArrived = "false";
-            tabRequest.IsDriverStarted = "false";
-            tabRequest.IsTripStart = "false";
+            tabRequest.IsCancelled = false;
+            tabRequest.IsCompleted = false;
+            tabRequest.IsDriverArrived = false;
+            tabRequest.IsDriverStarted = false;
+            tabRequest.IsTripStart = false;
             context.TabRequest.Add(tabRequest);
             context.SaveChanges();
 
