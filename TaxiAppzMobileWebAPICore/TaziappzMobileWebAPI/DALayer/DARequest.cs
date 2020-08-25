@@ -208,7 +208,7 @@ namespace TaziappzMobileWebAPI.DALayer
         public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
-            var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(settingModel.DriverMeta)).ToList();
+            var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(settingModel.Seconds)).ToList();
             foreach(var user in userid)
             {
                 context.TabRequestMeta.Remove(user);

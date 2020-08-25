@@ -95,7 +95,7 @@ namespace TaziappzMobileWebAPI.Models
     }
     public class SettingModel
     {
-         public int DriverMeta { get; set; }
+         public int Seconds { get; set; }
 
        
     }
