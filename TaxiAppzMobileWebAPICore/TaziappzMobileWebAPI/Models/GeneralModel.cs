@@ -96,7 +96,8 @@ namespace TaziappzMobileWebAPI.Models
     public class SettingModel
     {
          public int Seconds { get; set; }
+          public int tripsettingquestionid { get; set; }
 
-       
+
     }
 }

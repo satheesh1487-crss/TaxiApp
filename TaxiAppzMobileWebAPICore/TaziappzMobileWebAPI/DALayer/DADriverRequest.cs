@@ -247,6 +247,38 @@ namespace TaziappzMobileWebAPI.DALayer
            
 
         }
+        public bool TripStart(long requestid, long OTP,TaxiAppzDBContext context, LoggedInUser loggedInUser)
+        {
+            var requestdata = context.TabRequest.Where(t => t.Id == requestid && t.RequestOtp == OTP && t.DriverId == loggedInUser.id).FirstOrDefault();
+            if (requestdata == null)
+                return false;
+                requestdata.IsTripStart = "True";
+                requestdata.UpdatedAt = DateTime.UtcNow;
+                context.TabRequest.Update(requestdata);
+                context.SaveChanges();
+                return true;
+        }
+        public bool DriverArrived(long requestid, LatLong latLong, TaxiAppzDBContext context, LoggedInUser loggedInUser)
+        {
+            var requestdata = context.TabRequest.Where(t => t.Id == requestid).FirstOrDefault();
+            if (requestdata == null)
+                return false;
+            var requestplace = context.TabRequestPlace.Where(t => t.RequestId == requestdata.Id).FirstOrDefault();
+            if (requestplace == null)
+                return false;
+            int meter = HaversineInM(Convert.ToDouble(requestplace.PickLatitude), Convert.ToDouble(requestplace.PickLongitude),
+                Convert.ToDouble(latLong.Picklatitude), Convert.ToDouble(latLong.Picklongtitude));
+            var radiusarrivedlimit = context.TabTripSettings.Where(t => t.TripSettingsId == settingModel.Value.tripsettingquestionid).Select( t => t.TripSettingsAnswer).FirstOrDefault();
+           if(meter <= Convert.ToInt32(radiusarrivedlimit))
+            {
+                requestdata.IsDriverArrived = "True";
+                requestdata.UpdatedAt = DateTime.UtcNow;
+                context.TabRequest.Update(requestdata);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         static double _eQuatorialEarthRadius = 6378.1370D;
         static double _d2r = (Math.PI / 180D);
 

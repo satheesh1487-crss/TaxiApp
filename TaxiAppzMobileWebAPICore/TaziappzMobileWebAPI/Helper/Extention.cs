@@ -26,16 +26,16 @@ namespace TaziappzMobileWebAPI
         {
             return controller.Ok(new APIResponse()
             {
-                Message = msg,
-                success = true
+                Message = msg
+              //  success = true
             });
         }
         internal static IActionResult OKFailed(this ControllerBase controller, string msg)
         {
             return controller.Ok(new APIResponse()
             {
-               Message = msg,
-                success = true
+               Message = msg
+              //  success = true
             });
         }
         internal static IActionResult OKStatus(this ControllerBase controller, string msg, int isExist)
@@ -43,7 +43,7 @@ namespace TaziappzMobileWebAPI
             return controller.Ok(new APIResponse()
             {
                 Message = msg ,
-                success = true,
+              //  success = true,
                 isExist = isExist
             });
         }
@@ -53,7 +53,7 @@ namespace TaziappzMobileWebAPI
             {
                 Content = content,
                 Message = msg,
-                success = true,
+               // success = true,
                 isExist = isExist
             });
         }
@@ -69,7 +69,7 @@ namespace TaziappzMobileWebAPI
         {
             return controller.Ok(new APIContentResponse<T>()
             {
-                success = true,
+               // success = true,
                 Message = msg,
                 Content =content
             });
@@ -121,7 +121,7 @@ namespace TaziappzMobileWebAPI
         {
             return controller.Ok(new APIResponse()
             {
-                success = false,
+             //   success = false,
                 Message = message
             });
         }
