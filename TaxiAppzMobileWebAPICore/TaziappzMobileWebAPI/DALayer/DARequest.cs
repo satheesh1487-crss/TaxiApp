@@ -177,7 +177,8 @@ namespace TaziappzMobileWebAPI.DALayer
             context.TabRequestPlace.Add(tabRequestPlace);
 
             List<DriversListwithDistance> driversListwithDistance = new List<DriversListwithDistance>();
-            driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
+            //  driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
+            driversListwithDistance = driversListwithDistance.OrderBy(t => t.Distance).ToList();
             int index = 0;
             foreach (var driver in driversListwithDistance)
             {
@@ -213,10 +214,6 @@ namespace TaziappzMobileWebAPI.DALayer
         }
         public bool RequestCancel(DriversCancel requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
-           
-
-           
-
             return true;
         }
         public List<DriversListwithDistance> SortLocation(RequestVehicleType requestVehicleType)
