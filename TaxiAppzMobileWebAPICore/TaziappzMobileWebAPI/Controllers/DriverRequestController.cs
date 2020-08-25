@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Interface;
@@ -20,9 +21,11 @@ namespace TaziappzMobileWebAPI.Controllers
     {
         public readonly TaxiAppzDBContext _context;
         private IValidate validate;
-        public DriverRequestController(TaxiAppzDBContext context)
+        public readonly IOptions<SettingModel> settingmodel;
+        public DriverRequestController(TaxiAppzDBContext context, IOptions<SettingModel> _settingmodel)
         {
             _context = context;
+            settingmodel = _settingmodel;
         }
 
         #region Request_requestInprogress
@@ -37,7 +40,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
 
             List<RequestInProgress> requestInProgressModel = new List<RequestInProgress>();
-            DADriverRequest dADriverRequest = new DADriverRequest();
+            DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
             requestInProgressModel = dADriverRequest.DriverRequestInprogress(User.ToAppUser(), _context);
             //requestInProgressModel[0].Request = new IsRequest();
             //requestInProgressModel[0].Driver_Status = new DriverStatus();
@@ -138,7 +141,7 @@ namespace TaziappzMobileWebAPI.Controllers
         [Route("DriverCancelList")]
         public IActionResult DriverCancelList(DriverLocation driverLocation)
         {
-            DADriverRequest dADriverRequest = new DADriverRequest();
+            DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
             List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();
             tripCancelModels = dADriverRequest.CancelList(_context, driverLocation, User.ToAppUser());
             return this.OK<List<TripCancelModel>>(tripCancelModels, tripCancelModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", tripCancelModels.Count == 0 ? 0 : 1);
@@ -373,7 +376,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
                 var result = dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
                 List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
                 requestStatusModels.Add(result);
@@ -393,7 +396,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
                 var result = dADriverRequest.RequestAcceptReject(requestid, Acceptstatus,_context, User.ToAppUser());
                 return this.OKStatus(result ? "Success" : "Failed", result ? 1 : 0);
             }
@@ -411,7 +414,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
                 var result = dADriverRequest.TripCancel(requestid, _context, User.ToAppUser());
                 return this.OKStatus(result ? "RequestCancel_Success" : "RequestCancel_Failed", result ? 1 : 0);
             }
@@ -429,7 +432,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
                 var result = dADriverRequest.TripCancel(requestid, _context, User.ToAppUser());
                 return this.OKStatus(result ? "RequestCancel_Success" : "RequestCancel_Failed", result ? 1 : 0);
             }

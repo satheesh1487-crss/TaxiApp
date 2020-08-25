@@ -44,17 +44,17 @@ namespace TaziappzMobileWebAPI.Controllers
         /// Use to Register User
         /// </summary>
         /// <returns></returns>
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[Route("RegisterUser")]
-        //public IActionResult RegisterUser([FromBody] SignUpmodel signUpmodel)
-        //{
-        //    sign = new DASign(_context, token);
-        //    List<DetailsWithToken> detailsWithToken = new List<DetailsWithToken>();
-        //    detailsWithToken = sign.SignUp(signUpmodel);
-        //    return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken.Count == 0 ? "User_Creation_Failed" : "User_Creation_Success", detailsWithToken.Count == 0 ? 0 : 1);
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("RegisterUser")]
+        public IActionResult RegisterUser([FromBody] SignUpmodel signUpmodel)
+        {
+            sign = new DASign(_context, token);
+            DetailsWithToken detailsWithToken = new DetailsWithToken();
+            detailsWithToken = sign.SignUp(signUpmodel);
+            return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken == null ? "User_Creation_Failed" : "User_Creation_Success", detailsWithToken ==  null ? 0 : 1);
 
-        //}
+        }
 
     }
 

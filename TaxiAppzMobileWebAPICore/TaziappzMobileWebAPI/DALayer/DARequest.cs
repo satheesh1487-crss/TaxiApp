@@ -9,11 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.ComponentModel;
 using Microsoft.VisualBasic;
+using TaziappzMobileWebAPI.Models;
+using Microsoft.Extensions.Options;
 
 namespace TaziappzMobileWebAPI.DALayer
 {
     public class DARequest
     {
+        public readonly SettingModel settingModel;
+        public DARequest(IOptions<SettingModel> _settingmodel)
+        {
+            settingModel = _settingmodel.Value;
+        }
         //TO find polygon
         public long? GetPolygon(LatLong latLong, long countryid, TaxiAppzDBContext context)
         {
@@ -201,7 +208,7 @@ namespace TaziappzMobileWebAPI.DALayer
         public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
-            var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(1440)).ToList();
+            var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(settingModel.DriverMeta)).ToList();
             foreach(var user in userid)
             {
                 context.TabRequestMeta.Remove(user);

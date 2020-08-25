@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,19 @@ namespace TaziappzMobileWebAPI.DALayer
 {
     public class DAUserRequest
     {
+        public readonly IOptions<SettingModel> settingmodel;
+        public DAUserRequest(IOptions<SettingModel> _settingmodel)
+        {
+            settingmodel = _settingmodel;
+
+        }
         public List<CancelRequestModel> CancelList(TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             List<CancelRequestModel> cancelRequestModels = new List<CancelRequestModel>();
             var userexist = context.TabUser.FirstOrDefault(t => t.IsDelete == 0 && t.IsActive == true && t.Id == loggedInUser.id);
             if (userexist == null)
                 throw new DataValidationException($"User does not have a permission");
-            DARequest dARequest = new DARequest();
+            DARequest dARequest = new DARequest(settingmodel);
             var requestexist = context.TabRequest.Where(t => t.UserId == userexist.Id
             && t.IsTripStart.ToUpper() == "false").OrderBy(t => t.RequestId).FirstOrDefault();
             if (requestexist == null)

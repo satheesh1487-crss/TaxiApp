@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace TaziappzMobileWebAPI.DALayer
 {
     public class DADriverRequest
     {
+        public readonly IOptions<SettingModel> settingModel;
+        public DADriverRequest(IOptions<SettingModel> _settingmodel)
+        {
+            settingModel = _settingmodel;
+        }
         public List<RequestInProgress> DriverRequestInprogress(LoggedInUser loggedInUser,TaxiAppzDBContext context)
         {
             List<RequestInProgress> requestInProgresses = new List<RequestInProgress>();
@@ -252,7 +258,7 @@ namespace TaziappzMobileWebAPI.DALayer
             var driverexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.Driverid ==loggedInUser.id);
             if (driverexist == null)
                 throw new DataValidationException($"Driver does not have a permission");
-            DARequest dARequest = new DARequest();
+            DARequest dARequest = new DARequest(settingModel);
             LatLong latLong = new LatLong();
             latLong.Picklatitude = Convert.ToDecimal(driverLocation.Latitude);
             latLong.Picklongtitude = Convert.ToDecimal(driverLocation.Longitude);
