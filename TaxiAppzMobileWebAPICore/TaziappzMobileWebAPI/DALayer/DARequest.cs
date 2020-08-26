@@ -66,13 +66,13 @@ namespace TaziappzMobileWebAPI.DALayer
             List<Zone> zone = new List<Zone>();
             long? zoneid = this.GetPolygon(latLong, loggedInUser.Country, context);
             if (zoneid == 0)
-              return zone;
-             else
+                return zone;
+            else
             {
                 var iszoneexist = context.TabZone.Include(x => x.Serviceloc).Where(t => t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
                 if (iszoneexist == null)
-                     return zone;
-                 var zonelist = context.TabZonetypeRelationship.Include(t => t.Zone).Include(y => y.Type).Where(x => x.Zoneid == zoneid && x.IsActive == 1 && x.IsDelete == 0).ToList();
+                    return zone;
+                var zonelist = context.TabZonetypeRelationship.Include(t => t.Zone).Include(y => y.Type).Where(x => x.Zoneid == zoneid && x.IsActive == 1 && x.IsDelete == 0).ToList();
                 if (zonelist.Count == 0)
                     return zone;
                 List<VehicleType> vehicleTypes = new List<VehicleType>();
@@ -193,29 +193,27 @@ namespace TaziappzMobileWebAPI.DALayer
                 context.TabRequestMeta.Add(tabRequestMeta);
             }
             context.SaveChanges();
-           
+
             return true;
         }
 
         public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
-            var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(1440)).ToList();
-            foreach(var user in userid)
+            var userid = context.TabRequestMeta.Where(t => t.CreatedAt > DateTime.Now.AddMinutes(1440)).ToList();
+            foreach (var user in userid)
             {
                 context.TabRequestMeta.Remove(user);
-            } 
-
-          
+            }
             context.SaveChanges();
-
             return true;
         }
+
         public bool RequestCancel(DriversCancel requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
-           
 
-           
+
+
 
             return true;
         }
@@ -223,8 +221,8 @@ namespace TaziappzMobileWebAPI.DALayer
         {
             double baselat = Convert.ToDouble(requestVehicleType.Picklatitude);
             double baselng = Convert.ToDouble(requestVehicleType.Picklongtitude);
-          
-               List<DriversListwithDistance> driversListwithDistance = new List<DriversListwithDistance>();
+
+            List<DriversListwithDistance> driversListwithDistance = new List<DriversListwithDistance>();
             foreach (DriversList driversList in requestVehicleType.DriversLists)
             {
                 double designlat = Convert.ToDouble(driversList.Driverlatitude);
@@ -246,13 +244,13 @@ namespace TaziappzMobileWebAPI.DALayer
                 });
             }
             return driversListwithDistance;
-               
-           
+
+
         }
         public static double toRadians(double angle)
         {
             return Math.PI * angle / 180.0;
         }
     }
-   
+
 }
