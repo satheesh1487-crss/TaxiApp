@@ -12,7 +12,7 @@ namespace TaziappzMobileWebAPI
         public string Message { get; set; }
 
         [JsonProperty("success")]
-        public bool success { get; set; }
+        public bool success => isExist == 1;
 
         [JsonProperty("isExist")]
         public int isExist { get; set; }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.Models;
@@ -17,9 +18,11 @@ namespace TaziappzMobileWebAPI.Controllers
     {
         public readonly TaxiAppzDBContext _context;
         private IValidate validate;
-        public UserAuthenticationController(TaxiAppzDBContext context)
+        public readonly IOptions<SettingModel> settingModel;
+        public UserAuthenticationController(TaxiAppzDBContext context, IOptions<SettingModel> _settingModel)
         {
-            _context = context;
+           _context = context;
+            settingModel = _settingModel;
         }
 
         #region Authentication_oTPValidate
@@ -167,7 +170,7 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult DeleteMetaDriver()
         {
 
-            DARequest dARequest = new DARequest();
+            DARequest dARequest = new DARequest(settingModel);
           var val=  dARequest.DeleteMetaDriver(User.ToAppUser(), _context);
 
             return this.OK<bool>(val, val == null ? "Resend_OTP_Not_Found" : "Resend_OTP_found", val == null ? 0 : 1);

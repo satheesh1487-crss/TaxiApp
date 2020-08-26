@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Options;
 using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Interface;
@@ -20,9 +22,11 @@ namespace TaziappzMobileWebAPI.Controllers
     {
         public readonly TaxiAppzDBContext _context;
         private IValidate validate;
-        public DriverRequestController(TaxiAppzDBContext context)
+        public readonly IOptions<SettingModel> settingmodel;
+        public DriverRequestController(TaxiAppzDBContext context, IOptions<SettingModel> _settingmodel)
         {
             _context = context;
+            settingmodel = _settingmodel;
         }
 
         #region Request_requestInprogress
@@ -37,7 +41,7 @@ namespace TaziappzMobileWebAPI.Controllers
         {
 
             List<RequestInProgress> requestInProgressModel = new List<RequestInProgress>();
-            DADriverRequest dADriverRequest = new DADriverRequest();
+            DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
             requestInProgressModel = dADriverRequest.DriverRequestInprogress(User.ToAppUser(), _context);
             //requestInProgressModel[0].Request = new IsRequest();
             //requestInProgressModel[0].Driver_Status = new DriverStatus();
@@ -138,7 +142,7 @@ namespace TaziappzMobileWebAPI.Controllers
         [Route("DriverCancelList")]
         public IActionResult DriverCancelList(DriverLocation driverLocation)
         {
-            DADriverRequest dADriverRequest = new DADriverRequest();
+            DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
             List<TripCancelModel> tripCancelModels = new List<TripCancelModel>();
             tripCancelModels = dADriverRequest.CancelList(_context, driverLocation, User.ToAppUser());
             return this.OK<List<TripCancelModel>>(tripCancelModels, tripCancelModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", tripCancelModels.Count == 0 ? 0 : 1);
@@ -367,13 +371,17 @@ namespace TaziappzMobileWebAPI.Controllers
         #endregion
 
         #region Request_OnlineStatus        
+        /// <summary>
+        /// Driver Online/Offline
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("onlinStatus")]
         public IActionResult OnlinStatus(DriverStatusModel driverStatusModel)
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
                 var result = dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
                 List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
                 requestStatusModels.Add(result);
@@ -387,13 +395,17 @@ namespace TaziappzMobileWebAPI.Controllers
         #endregion
 
         #region Accept Status
+        /// <summary>
+        /// Driver Accept Reject
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
-        [Route("AcceptStatus")]
+        [Route("AcceptRjectStatus")]
         public IActionResult AcceptRequest(long requestid,Boolean Acceptstatus)
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
                 var result = dADriverRequest.RequestAcceptReject(requestid, Acceptstatus,_context, User.ToAppUser());
                 return this.OKStatus(result ? "Success" : "Failed", result ? 1 : 0);
             }
@@ -404,15 +416,19 @@ namespace TaziappzMobileWebAPI.Controllers
             
         }
         #endregion
-        #region Request Cancel
+        #region Trip Cancel
+        /// <summary>
+        /// Driver Trip Cancel
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("TripCancel")]
-        public IActionResult TripCancel(long requestid)
+        public IActionResult TripCancel(long requestid,long reasonid,string reasondescription)
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
-                var result = dADriverRequest.TripCancel(requestid, _context, User.ToAppUser());
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
+                var result = dADriverRequest.TripCancel(requestid, reasonid , reasondescription,_context, User.ToAppUser());
                 return this.OKStatus(result ? "RequestCancel_Success" : "RequestCancel_Failed", result ? 1 : 0);
             }
             catch (DataValidationException ex)
@@ -422,16 +438,44 @@ namespace TaziappzMobileWebAPI.Controllers
             
         }
         #endregion
-        #region Request Cancel
+        #region Trip Start
+        /// <summary>
+        /// Driver Trip Start
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("TripStart")]
-        public IActionResult TripStart(long requestid)
+        public IActionResult TripStart(long requestid,long OTP)
         {
             try
             {
-                DADriverRequest dADriverRequest = new DADriverRequest();
-                var result = dADriverRequest.TripCancel(requestid, _context, User.ToAppUser());
-                return this.OKStatus(result ? "RequestCancel_Success" : "RequestCancel_Failed", result ? 1 : 0);
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
+                var result = dADriverRequest.TripStart(requestid, OTP, _context, User.ToAppUser());
+                return this.OKStatus(result ? "TripStart_Success" : "TripStart_Failed", result ? 1 : 0);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region Driver Arrived
+        /// <summary>
+        /// Driver Arrived
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        [Route("DriverArrived")]
+        public IActionResult DriverArrived(long requestid,LatLong latLong)
+        {
+            try
+            {
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
+                var result = dADriverRequest.DriverArrived(requestid, latLong, _context, User.ToAppUser());
+                return this.OKStatus(result ? "Driver_Arrived" : "Driver_Not_Arrived", result ? 1 : 0);
             }
             catch (DataValidationException ex)
             {

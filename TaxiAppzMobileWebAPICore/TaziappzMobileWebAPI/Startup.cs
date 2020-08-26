@@ -21,6 +21,7 @@ using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Services;
 using TaziappzMobileWebAPI.Interface;
 using TaziappzMobileWebAPI.DALayer;
+using TaziappzMobileWebAPI.Models;
 
 namespace TaziappzMobileWebAPI
 {
@@ -96,6 +97,7 @@ namespace TaziappzMobileWebAPI
      options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
  );
             services.Configure<JWT>(Configuration.GetSection("Jwt"));
+            services.Configure<SettingModel>(Configuration.GetSection("DriverMeta"));
             services.AddScoped<IToken, Token>();
             services.AddScoped<ISign, DASign>();
             services.AddScoped<IValidate, DADriverValidate>();

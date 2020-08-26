@@ -9,7 +9,7 @@ namespace TaziappzMobileWebAPI.Interface
     {
         public DetailsWithToken SignIn(SignInmodel signInmodel);
         public List<DetailsWithDriverToken> SignInDriver(SignInmodel signInmodel);
-        public List<DetailsWithToken> SignUp(SignUpmodel signUpmodel);
+        public DetailsWithToken SignUp(SignUpmodel signUpmodel);
         public bool SignUpDriver(SignUpDrivermodel signUpmodel);
         
         //  public DetailsWithToken RegisterUser(SignUpmodel signUpmodel);

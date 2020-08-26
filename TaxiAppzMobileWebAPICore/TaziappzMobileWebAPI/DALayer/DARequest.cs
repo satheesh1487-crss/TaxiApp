@@ -9,11 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.ComponentModel;
 using Microsoft.VisualBasic;
+using TaziappzMobileWebAPI.Models;
+using Microsoft.Extensions.Options;
 
 namespace TaziappzMobileWebAPI.DALayer
 {
     public class DARequest
     {
+        public readonly SettingModel settingModel;
+        public DARequest(IOptions<SettingModel> _settingmodel)
+        {
+            settingModel = _settingmodel.Value;
+        }
         //TO find polygon
         public long? GetPolygon(LatLong latLong, long countryid, TaxiAppzDBContext context)
         {
@@ -155,11 +162,11 @@ namespace TaziappzMobileWebAPI.DALayer
             tabRequest.RequestId = "REQ_" + reqid;
             tabRequest.RequestOtp = random.Next(1000, 9999);
             tabRequest.UserId = userid;
-            tabRequest.IsCancelled = "false";
-            tabRequest.IsCompleted = "false";
-            tabRequest.IsDriverArrived = "false";
-            tabRequest.IsDriverStarted = "false";
-            tabRequest.IsTripStart = "false";
+            tabRequest.IsCancelled = false;
+            tabRequest.IsCompleted = false;
+            tabRequest.IsDriverArrived = false;
+            tabRequest.IsDriverStarted = false;
+            tabRequest.IsTripStart = false;
             context.TabRequest.Add(tabRequest);
             context.SaveChanges();
 
@@ -177,7 +184,8 @@ namespace TaziappzMobileWebAPI.DALayer
             context.TabRequestPlace.Add(tabRequestPlace);
 
             List<DriversListwithDistance> driversListwithDistance = new List<DriversListwithDistance>();
-            driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
+            //  driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
+            driversListwithDistance = driversListwithDistance.OrderBy(t => t.Distance).ToList();
             int index = 0;
             foreach (var driver in driversListwithDistance)
             {
@@ -200,8 +208,13 @@ namespace TaziappzMobileWebAPI.DALayer
         public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
+<<<<<<< .mine
             var userid = context.TabRequestMeta.Where(t => t.CreatedAt > DateTime.Now.AddMinutes(1440)).ToList();
             foreach (var user in userid)
+=======
+            var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(settingModel.Seconds)).ToList();
+            foreach(var user in userid)
+>>>>>>> .theirs
             {
                 context.TabRequestMeta.Remove(user);
             }
@@ -211,8 +224,13 @@ namespace TaziappzMobileWebAPI.DALayer
 
         public bool RequestCancel(DriversCancel requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
+<<<<<<< .mine
 
 
+=======
+
+
+>>>>>>> .theirs
 
 
             return true;

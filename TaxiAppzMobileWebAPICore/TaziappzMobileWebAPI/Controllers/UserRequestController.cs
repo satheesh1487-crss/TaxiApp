@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TaziappzMobileWebAPI.DALayer;
 using TaziappzMobileWebAPI.Helper;
 using TaziappzMobileWebAPI.Interface;
@@ -20,9 +21,11 @@ namespace TaziappzMobileWebAPI.Controllers
     {
         public readonly TaxiAppzDBContext _context;
         private IValidate validate;
-        public UserRequestController(TaxiAppzDBContext context)
+        public readonly IOptions<SettingModel> settingModel;
+        public UserRequestController(TaxiAppzDBContext context, IOptions<SettingModel> _settingModel)
         {
             _context = context;
+            settingModel = _settingModel;
         }
 
         #region Request-historySingle
@@ -234,7 +237,7 @@ namespace TaziappzMobileWebAPI.Controllers
         [Route("UsercancelList")]
         public IActionResult CancelRequest()
         {
-            DAUserRequest dAUserRequest = new DAUserRequest();
+            DAUserRequest dAUserRequest = new DAUserRequest(settingModel);
             List<CancelRequestModel> cancelRequestModels = new List<CancelRequestModel>();
             cancelRequestModels = dAUserRequest.CancelList(_context,  User.ToAppUser());
             return this.OK<List<CancelRequestModel>>(cancelRequestModels, cancelRequestModels.Count == 0 ? "FAQ_List_Not_Found" : "FAQ_List_found", cancelRequestModels.Count == 0 ? 0 : 1);

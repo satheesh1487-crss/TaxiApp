@@ -93,4 +93,11 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("cancel_other_reason")]
         public string Cancel_Other_Reason { get; set; }
     }
+    public class SettingModel
+    {
+         public int Seconds { get; set; }
+          public int tripsettingquestionid { get; set; }
+
+
+    }
 }
