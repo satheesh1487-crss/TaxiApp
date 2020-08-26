@@ -66,7 +66,7 @@ namespace TaxiAppsWebAPICore.Controllers
             try
             {
                 DAManangeNotify dAManangeNotify = new DAManangeNotify();
-                return this.OKResponse(dAManangeNotify.StatusEmail(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+                return this.OKResponse(dAManangeNotify.StatusEmail(_context, id, isStatus, User.ToAppUser()) == true ? (isStatus == true ? "Active Successfully" : "InActive Successfully") : "Failed to Update");
             }
             catch (DataValidationException ex)
             {
@@ -118,7 +118,7 @@ namespace TaxiAppsWebAPICore.Controllers
             try
             {
                 DAManangeNotify dAManangeNotify = new DAManangeNotify();
-                return this.OKResponse(dAManangeNotify.StatusSms(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+                return this.OKResponse(dAManangeNotify.StatusSms(_context, id, isStatus, User.ToAppUser()) == true ? (isStatus == true ? "Active Successfully" : "InActive Successfully"): "Failed to Update");
             }
             catch (DataValidationException ex)
             {

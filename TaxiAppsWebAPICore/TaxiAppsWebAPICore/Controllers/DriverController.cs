@@ -101,7 +101,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult InActivedriver(long driverid, bool status)
         {
             DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.DisableUser(_context, driverid, status, User.ToAppUser()) == true ? "Active Successfully" : "InActive Successfully");
+            return this.OKResponse(dADriver.DisableUser(_context, driverid, status, User.ToAppUser()) == true ? (status == true ? "Active Successfully" : "InActive Successfully") : "Failed to Update");
         }
 
         [HttpPut]

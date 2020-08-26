@@ -118,7 +118,7 @@ namespace TaxiAppsWebAPICore.Controllers
             try
             {
                 DACurrency dACurrency = new DACurrency();
-                return this.OKResponse(dACurrency.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+                return this.OKResponse(dACurrency.StatusType(_context, id, isStatus, User.ToAppUser()) == true ? (isStatus == true ? "Active Successfully" : "InActive Successfully") : "Failed to Update");
             }
             catch (DataValidationException ex)
             {

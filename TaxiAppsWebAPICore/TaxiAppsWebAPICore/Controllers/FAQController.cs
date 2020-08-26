@@ -85,7 +85,7 @@ namespace TaxiAppsWebAPICore.Controllers
             try
             {
                 DAFAQ dAFAQ = new DAFAQ();
-                return this.OKResponse(dAFAQ.StatusFAQ(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+                return this.OKResponse(dAFAQ.StatusFAQ(_context, id, isStatus, User.ToAppUser()) == true ? (isStatus == true ? "Active Successfully" : "InActive Successfully") : "Failed to Update");
             }
             catch (DataValidationException ex)
             {
