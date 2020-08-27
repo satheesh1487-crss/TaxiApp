@@ -208,13 +208,11 @@ namespace TaziappzMobileWebAPI.DALayer
         public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
-<<<<<<< .mine
-            var userid = context.TabRequestMeta.Where(t => t.CreatedAt > DateTime.Now.AddMinutes(1440)).ToList();
-            foreach (var user in userid)
-=======
+
+
             var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(settingModel.Seconds)).ToList();
             foreach(var user in userid)
->>>>>>> .theirs
+
             {
                 context.TabRequestMeta.Remove(user);
             }
@@ -224,13 +222,6 @@ namespace TaziappzMobileWebAPI.DALayer
 
         public bool RequestCancel(DriversCancel requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
-<<<<<<< .mine
-
-
-=======
-
-
->>>>>>> .theirs
 
 
             return true;
