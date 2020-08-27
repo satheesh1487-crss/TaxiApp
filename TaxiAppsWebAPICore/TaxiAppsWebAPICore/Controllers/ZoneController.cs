@@ -97,7 +97,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult ActiveZone(long zoneid,bool isStatus)
         {
             DAZone dAZone = new DAZone();
-            return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            return this.OKResponse(dAZone.ActiveZone(zoneid, isStatus, _context, User.ToAppUser()) == true ? (isStatus == true ? "Active Successfully" : "Blocked Successfully") : "Failed to Update");
         }
         [HttpGet]
         [Route("ListZoneType")]

@@ -80,7 +80,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusType(long id, bool isStatus)
         {
             DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.StatusType(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            return this.OKResponse(dATypes.StatusType(_context, id, isStatus, User.ToAppUser()) == true ? (isStatus == true ? "Active Successfully" : "Blocked Successfully") : "Failed to Update");
         }
 
         [HttpGet]

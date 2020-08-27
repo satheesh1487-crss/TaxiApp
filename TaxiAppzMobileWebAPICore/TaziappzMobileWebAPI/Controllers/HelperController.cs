@@ -47,5 +47,20 @@ namespace TaziappzMobileWebAPI.Controllers
             return this.OK<List<ServiceLocationModel>>(serviceLocationModels, serviceLocationModels.Count == 0 ? "No Data Found" : "ServiceOperation_List", serviceLocationModels.Count == 0 ? 0 : 1);
         }
 
+      
+        /// <summary>
+        /// Use to List type Opertaion
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("typeByTypeId")]
+        public IActionResult ListType(long zoneId)
+        {
+            DAOTP dAOTP = new DAOTP();
+            List<TypeModel> listZone = new List<TypeModel>();
+            listZone = dAOTP.ListType(zoneId, _context);
+            return this.OK<List<TypeModel>>(listZone, listZone.Count == 0 ? "No Data Found" : "Type_List", listZone.Count == 0 ? 0 : 1);
+        }
+
     }
 }

@@ -40,7 +40,7 @@ namespace TaxiAppsWebAPICore
             try
             {
                 List<UserList> userListModel = new List<UserList>();
-                var userlist = context.TabUser.Where(u => u.IsActive == true && u.IsDelete == 0).ToList();
+                var userlist = context.TabUser.Where(u => u.IsActive == false && u.IsDelete == 0).ToList();
                 foreach (var user in userlist)
                 {
                     userListModel.Add(new UserList()

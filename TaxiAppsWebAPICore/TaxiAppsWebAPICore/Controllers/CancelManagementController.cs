@@ -77,7 +77,7 @@ namespace TaxiAppsWebAPICore.Controllers
             try
             {
                 DACancel dACancel = new DACancel();
-                return this.OKResponse(dACancel.StatusUser(_context, usercancelid, status, User.ToAppUser()) == true ? "Active Successfully" : "InActive Successfully");
+                return this.OKResponse(dACancel.StatusUser(_context, usercancelid, status, User.ToAppUser()) == true ? (status == true ? "Active Successfully" : "InActive Successfully") : "Failed to Update");
             }
             catch (DataValidationException ex)
             {
@@ -160,7 +160,7 @@ namespace TaxiAppsWebAPICore.Controllers
             try
             {
                 DACancel dACancel = new DACancel();
-                return this.OKResponse(dACancel.StatusDriver(_context, driverCancelId, status, User.ToAppUser()) == true ? "Active Successfully" : "InActive Successfully");
+                return this.OKResponse(dACancel.StatusDriver(_context, driverCancelId, status, User.ToAppUser()) == true ? (status == true ? "Active Successfully" : "InActive Successfully") : "Failed to Update");
             }
             catch (DataValidationException ex)
             {
