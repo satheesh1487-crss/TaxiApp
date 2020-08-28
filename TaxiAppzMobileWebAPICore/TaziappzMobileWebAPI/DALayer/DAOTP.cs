@@ -131,9 +131,7 @@ namespace TaziappzMobileWebAPI.DALayer
         }
 
         public List<ServiceLocationModel> ListService(long id,TaxiAppzDBContext context)
-        {
-            try
-            {
+        {            
                 List<ServiceLocationModel> serviceList = new List<ServiceLocationModel>();
                 var listService = context.TabServicelocation.Where(t => t.Countryid == id && t.IsDeleted==0).ToList();
                 foreach (var service in listService)
@@ -145,13 +143,27 @@ namespace TaziappzMobileWebAPI.DALayer
                     });
                 }
                 return serviceList != null ? serviceList : null;
+           
+        }
 
-            }
-            catch (Exception ex)
+      
+        public List<TypeModel> ListType(long servicelocId, TaxiAppzDBContext context)
+        {
+            List<TypeModel> serviceList = new List<TypeModel>();
+            var listService = context.TabZone.Where(t => t.Servicelocid == servicelocId && t.IsDeleted == 0 && t.IsActive == 1).ToList();
+            foreach (var service in listService)
             {
-                Extention.insertlog(ex.Message, "Admin", "ListService", context);
-                return null;
+                var types = context.TabZonetypeRelationship.Include(t=>t.Type).Where(t => t.Zoneid == service.Zoneid && t.IsDelete == 0 && t.IsActive == 1).ToList();
+                foreach (var type in types)
+                {
+                    serviceList.Add(new TypeModel()
+                    {
+                        TypeId = type.Type.Typeid,
+                        TypeName = type.Type.Typename
+                    });
+                }
             }
+            return serviceList != null ? serviceList : null;
 
         }
     }

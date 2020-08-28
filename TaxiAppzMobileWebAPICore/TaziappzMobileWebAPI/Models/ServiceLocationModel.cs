@@ -14,4 +14,21 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("serviceName")]
         public string ServiceName { get; set; }
     }
+
+    public class ZoneModel
+    {
+        [JsonProperty("zoneId")]
+        public long? ZoneId { get; set; }
+
+        [JsonProperty("zoneName")]
+        public string ZoneName { get; set; }
+    }
+    public class TypeModel
+    {
+        [JsonProperty("TypeId")]
+        public long? TypeId { get; set; }
+
+        [JsonProperty("typeName")]
+        public string TypeName { get; set; }
+    }
 }
