@@ -19,11 +19,11 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
                 var userlist = context.TabRequest.ToList();
 
 
-                dashboard.Cancelled_Trips = userlist.Where(t => t.IsCancelled == "").Count();
+                dashboard.Cancelled_Trips = userlist.Where(t => t.IsCancelled == false).Count();
                 dashboard.Company_Earnings = 500;
                 dashboard.Completed_Trips = 200;
                 dashboard.Driver_Earnings = 150;
-                dashboard.On_Going_Trips = userlist.Where(t => t.IsDriverStarted == "false").Count();
+                dashboard.On_Going_Trips = userlist.Where(t => t.IsDriverStarted == false).Count();
                 dashboard.Payment_Cards = 1350;
                 dashboard.Payment_Cash = 256;
                 dashboard.Payment_Withdraw = 235;
