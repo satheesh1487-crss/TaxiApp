@@ -209,7 +209,6 @@ namespace TaziappzMobileWebAPI.DALayer
         {
             TabUser tabUser = new TabUser();
 
-
             var userid = context.TabRequestMeta.Where(t => t.CreatedAt> DateTime.Now.AddMinutes(settingModel.Seconds)).ToList();
             foreach(var user in userid)
 
@@ -222,6 +221,7 @@ namespace TaziappzMobileWebAPI.DALayer
 
         public bool RequestCancel(DriversCancel requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
+
 
 
             return true;
