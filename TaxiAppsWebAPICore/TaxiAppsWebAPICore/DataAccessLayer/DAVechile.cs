@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TaxiAppsWebAPICore.Helper;
@@ -21,10 +22,11 @@ namespace TaxiAppsWebAPICore
                 var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var vechiles in vechilesTupe)
                 {
+                    var files= File.ReadAllBytes(filesStorage.GetDownloadFile(vechiles.Imagename, vechiles.Typeid.ToString(), "VechileTypes").FullName);
                     vehicleTypeLists.Add(new VehicleTypeList()
                     {
                         Id = vechiles.Typeid,
-                        Image = filesStorage.GetDownloadFile(vechiles.Imagename, vechiles.Typeid.ToString(), "VechileTypes").FullName,
+                        Image =Convert.ToBase64String(files),
                         IsActive = vechiles.IsActive == 1 ? true : false,
                         Name = vechiles.Typename
                     }); 
