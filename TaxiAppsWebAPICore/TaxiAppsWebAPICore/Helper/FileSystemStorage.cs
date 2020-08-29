@@ -103,10 +103,11 @@ namespace TaxiAppsWebAPICore.Helper
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
+        /// <param name="filesType"></param>
         /// <returns></returns>
-        public void MoveToPersistant(string fileName, string uniqueId)
+        public void MoveToPersistant(string fileName, string uniqueId,string filesType)
         {
-            MoveRootRelative($"{TEMP}/{fileName}", $"{UPLOAD}/{uniqueId}/{fileName}");
+            MoveRootRelative($"{TEMP}/{fileName}", $"{UPLOAD}/{filesType}/{uniqueId}/{fileName}");
         }
 
 
@@ -115,7 +116,7 @@ namespace TaxiAppsWebAPICore.Helper
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
-        public string MoveToPersistantConfiguration(FileInfo taskFile, string path, string fileName, string uniqueId)
+        public string MoveToPersistantConfiguration(FileInfo taskFile, string path, string fileName, string uniqueId,string fileTypes)
         {
             path = path.TrimStart('/');
             path = path.TrimStart('\\');
@@ -150,7 +151,7 @@ namespace TaxiAppsWebAPICore.Helper
 
             var hash = GetMD5HashFromFile(zipFile.FullName);
 
-            MoveToPersistant(zipFile.Name, uniqueId);
+            MoveToPersistant(zipFile.Name, uniqueId, fileTypes);
 
             return hash;
         }
@@ -161,7 +162,7 @@ namespace TaxiAppsWebAPICore.Helper
         /// <param name="path"></param>
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
-        public void RevertPeristantConfiguration(string path, string fileName, string uniqueId)
+        public void RevertPeristantConfiguration(string path, string fileName, string uniqueId,string fileTypes)
         {
             path = path.TrimStart('/');
             path = path.TrimStart('\\');
@@ -188,7 +189,7 @@ namespace TaxiAppsWebAPICore.Helper
 
             zipFile.Delete();
 
-            MoveToTemp(fileName, uniqueId);
+            MoveToTemp(fileName, uniqueId, fileTypes);
 
         }
 
@@ -240,9 +241,9 @@ namespace TaxiAppsWebAPICore.Helper
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public FileInfo GetDownloadFile(string fileName, string uniqueId)
+        public FileInfo GetDownloadFile(string fileName, string uniqueId,string fileTypes)
         {
-            return GetBaseRelativeFile($"{UPLOAD}/{uniqueId}/{fileName}");
+            return GetBaseRelativeFile($"{UPLOAD}/{fileTypes}/{uniqueId}/{fileName}");
         }
 
         /// <summary>
@@ -259,9 +260,9 @@ namespace TaxiAppsWebAPICore.Helper
         /// Move file from upload folder to temp folder
         /// </summary>
         /// <param name="fileName"></param>
-        public void MoveToTemp(string fileName, string uniqueId)
+        public void MoveToTemp(string fileName, string uniqueId,string fileTypes)
         {
-            MoveRootRelative($"{UPLOAD}/{uniqueId}/{fileName}", $"{TEMP}/{fileName}");
+            MoveRootRelative($"{UPLOAD}/{fileTypes}/{uniqueId}/{fileName}", $"{TEMP}/{fileName}");
 
             var sourcePath = GetBaseRelativeFile($"{UPLOAD}/{uniqueId}/{fileName}");
 

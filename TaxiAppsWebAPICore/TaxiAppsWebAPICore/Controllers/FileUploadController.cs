@@ -8,6 +8,7 @@ using TaxiAppsWebAPICore.TaxiModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaxiAppsWebAPICore.Helper;
+using TaxiAppsWebAPICore.DataAccessLayer;
 
 namespace TaxiAppsWebAPICore.Controllers
 {
@@ -27,11 +28,13 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                DAFiles dAFiles = new DAFiles();
                 var storage = StorageFactory.GetStorage();
                 var storagefile = uploadedFile.GetStorageFile();
                 var hash = storage.Save(storagefile);
-
-                return Ok();
+              var Id=  dAFiles.SaveFiles(uploadedFile, storagefile.UploadId.ToString(), _context,User.ToAppUser());
+                
+                return this.OK<string>(Id.ToString());
             }
             catch (DataValidationException vx)
             {

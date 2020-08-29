@@ -16,7 +16,7 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-
+                var filesStorage = StorageFactory.GetStorage();
                 List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
                 var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var vechiles in vechilesTupe)
@@ -24,10 +24,10 @@ namespace TaxiAppsWebAPICore
                     vehicleTypeLists.Add(new VehicleTypeList()
                     {
                         Id = vechiles.Typeid,
-                        Image = vechiles.Imagename,
+                        Image = filesStorage.GetDownloadFile(vechiles.Imagename, vechiles.Typeid.ToString(), "VechileTypes").FullName,
                         IsActive = vechiles.IsActive == 1 ? true : false,
                         Name = vechiles.Typename
-                    });
+                    }); 
                 }
                 return vehicleTypeLists;
             }
@@ -39,24 +39,37 @@ namespace TaxiAppsWebAPICore
         }
         public bool AddType(TaxiAppzDBContext context, VehicleTypeInfo vehicleTypeInfo, LoggedInUser loggedInUser)
         {
+            var filesStorage = StorageFactory.GetStorage();
+            bool isFileMoved = false;
+            var file = context.TabUploadfiledetails.FirstOrDefault(t => t.Fileid == long.Parse(vehicleTypeInfo.Image));
+            if (file == null)
+                throw new DataValidationException("File does not exist");
+
             try
             {
+                var fileName = file.Filename;
+                isFileMoved = fileName == "" ? false : true;
                 TabTypes tabTypes = new TabTypes();
-                tabTypes.Typeid = vehicleTypeInfo.Id;
-                tabTypes.Imagename = vehicleTypeInfo.Image;
+                tabTypes.Imagename = fileName;
                 tabTypes.Typename = vehicleTypeInfo.Name;
                 tabTypes.IsActive = 1;
                 tabTypes.IsDeleted = 0;
                 tabTypes.CreatedAt = DateTime.UtcNow;
                 tabTypes.UpdatedAt = DateTime.UtcNow;
                 tabTypes.UpdatedBy = tabTypes.CreatedBy = loggedInUser.UserName;
-                
+
                 context.TabTypes.Add(tabTypes);
                 context.SaveChanges();
+
+                filesStorage.MoveToPersistant(file.Filename, tabTypes.Typeid.ToString(), "VechileTypes");
+                isFileMoved=true;
+
                 return true;
             }
             catch (Exception ex)
             {
+                if (!isFileMoved)
+                    filesStorage.MoveToTemp(file.Filename, vehicleTypeInfo.Image, "VechileTypes");
                 Extention.insertlog(ex.Message, "Admin", System.Reflection.MethodBase.GetCurrentMethod().Name, context);
                 return false;
             }
@@ -309,7 +322,7 @@ namespace TaxiAppsWebAPICore
         public bool StatusEmer(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
             try
-            { 
+            {
                 var tabSos = context.TabSos.Where(r => r.Sosid == id && r.IsDeleted == 0).FirstOrDefault();
                 if (tabSos != null)
                 {
@@ -355,15 +368,15 @@ namespace TaxiAppsWebAPICore
             }
         }
 
-        public SurgePrice GetSurgePrice(TaxiAppzDBContext context,long zoneId)
+        public SurgePrice GetSurgePrice(TaxiAppzDBContext context, long zoneId)
         {
             try
             {
                 SurgePrice surgePrice = new SurgePrice();
-                var listSurgePrice = context.TabSurgeprice.FirstOrDefault(t => t.ZoneId==zoneId);
+                var listSurgePrice = context.TabSurgeprice.FirstOrDefault(t => t.ZoneId == zoneId);
                 if (listSurgePrice != null)
                 {
-                    surgePrice.Id = listSurgePrice.SurgepriceId;                    
+                    surgePrice.Id = listSurgePrice.SurgepriceId;
                     surgePrice.Starttime = listSurgePrice.StartTime;
                     surgePrice.Endtime = listSurgePrice.EndTime;
                     surgePrice.Peaktype = listSurgePrice.PeakType;
@@ -386,7 +399,7 @@ namespace TaxiAppsWebAPICore
             if (existZone == null)
                 throw new DataValidationException("Zone name does not exist");
 
-                var exist = content.TabSurgeprice.FirstOrDefault(t => t.IsDelete == false && t.ZoneId == surgePrice.Zoneid);
+            var exist = content.TabSurgeprice.FirstOrDefault(t => t.IsDelete == false && t.ZoneId == surgePrice.Zoneid);
             if (exist == null)
             {
                 TabSurgeprice tabSurgeprice = new TabSurgeprice();
@@ -399,7 +412,7 @@ namespace TaxiAppsWebAPICore
                 tabSurgeprice.IsActive = true;
                 tabSurgeprice.UpdatedAt = tabSurgeprice.CreatedAt = Extention.GetDateTime();
                 tabSurgeprice.UpdatedBy = tabSurgeprice.CreatedBy = loggedIn.UserName;
-                content.TabSurgeprice.Add(tabSurgeprice);              
+                content.TabSurgeprice.Add(tabSurgeprice);
                 content.SaveChanges();
                 return true;
             }
@@ -410,14 +423,14 @@ namespace TaxiAppsWebAPICore
                 exist.EndTime = surgePrice.Endtime;
                 exist.SurgepriceType = surgePrice.Surgepricetype;
                 exist.SurgepriceValue = surgePrice.Surgepricevalue;
-               
+
                 exist.UpdatedAt = Extention.GetDateTime();
-                exist.UpdatedBy =  loggedIn.UserName;
-                content.TabSurgeprice.Update(exist);               
+                exist.UpdatedBy = loggedIn.UserName;
+                content.TabSurgeprice.Update(exist);
                 content.SaveChanges();
                 return true;
             }
-           
+
         }
     }
 }

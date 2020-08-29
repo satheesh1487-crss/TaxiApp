@@ -40,8 +40,8 @@ namespace TaxiAppsWebAPICore.Services
                     RememberToken = tokenString,
                     Role = IQAdmin.RoleNavigation.RoleName,
                     Menukey = dARoles.GetMenukey(IQAdmin.RoleNavigation.RoleName, _context),
-                    RefeshToken = refreshtoken.RefeshToken
-                    //   ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
+                    RefeshToken = refreshtoken.RefeshToken,
+                     ExpireDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddMinutes(300)),
                     //   InsertedDate = IQAdmin.CreatedAt
                 };
                   bool updatetoken = UpdateToken(IQAdmin.Id, user, _context);

@@ -98,22 +98,23 @@
             <param name="fileName"></param>
             <returns></returns>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.MoveToPersistant(System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.MoveToPersistant(System.String,System.String,System.String)">
             <summary>
             move file from temporary location to final location
             </summary>
             <param name="fileName"></param>
             <param name="uniqueId"></param>
+            <param name="filesType"></param>
             <returns></returns>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.MoveToPersistantConfiguration(System.IO.FileInfo,System.String,System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.MoveToPersistantConfiguration(System.IO.FileInfo,System.String,System.String,System.String,System.String)">
             <summary>
             Convert the file to deployable zip and move
             </summary>
             <param name="fileName"></param>
             <param name="uniqueId"></param>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.RevertPeristantConfiguration(System.String,System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.RevertPeristantConfiguration(System.String,System.String,System.String,System.String)">
             <summary>
             Revert a configuration which was persisted
             </summary>
@@ -141,7 +142,7 @@
             <param name="sourcePathRelative"></param>
             <param name="detinationPathRelative"></param>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.GetDownloadFile(System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.GetDownloadFile(System.String,System.String,System.String)">
             <summary>
             Read the file content
             </summary>
@@ -156,7 +157,7 @@
             <param name="metaData"></param>
             <returns></returns>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.MoveToTemp(System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.FileSystemStorage.MoveToTemp(System.String,System.String,System.String)">
             <summary>
             Move file from upload folder to temp folder
             </summary>
@@ -182,14 +183,14 @@
             </summary>
             <param name="file"></param>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.GetDownloadFile(System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.GetDownloadFile(System.String,System.String,System.String)">
             <summary>
             Download file given location
             </summary>
             <param name="fileName"></param>
             <param name="uniqueId"></param>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.MoveToPersistant(System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.MoveToPersistant(System.String,System.String,System.String)">
             <summary>
             Move File one  location to another location
             </summary>
@@ -208,14 +209,14 @@
             </summary>
             <param name="uniqueId"></param>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.MoveToTemp(System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.MoveToTemp(System.String,System.String,System.String)">
             <summary>
             Move file fro persistent to temp location
             </summary>
             <param name="uniqueId"></param>
             <param name="artifactId"></param>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.MoveToPersistantConfiguration(System.IO.FileInfo,System.String,System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.MoveToPersistantConfiguration(System.IO.FileInfo,System.String,System.String,System.String,System.String)">
             <summary>
             Make necessary configuration zip and make persistent
             </summary>
@@ -223,7 +224,7 @@
             <param name="fileName"></param>
             <param name="uniqueId"></param>
         </member>
-        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.RevertPeristantConfiguration(System.String,System.String,System.String)">
+        <member name="M:TaxiAppsWebAPICore.Helper.InterFace.IFileStorage.RevertPeristantConfiguration(System.String,System.String,System.String,System.String)">
             <summary>
             Revert persistent configuration to local
             </summary>

@@ -19,14 +19,14 @@ namespace TaxiAppsWebAPICore.Helper.InterFace
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
-        FileInfo GetDownloadFile(string fileName, string uniqueId);
+        FileInfo GetDownloadFile(string fileName, string uniqueId, string fileTypes);
 
         /// <summary>
         /// Move File one  location to another location
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
-        void MoveToPersistant(string fileName, string uniqueId);
+        void MoveToPersistant(string fileName, string uniqueId,string fileTypes);
 
         /// <summary>
         /// Move File from upload folder to delete folder
@@ -45,7 +45,7 @@ namespace TaxiAppsWebAPICore.Helper.InterFace
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <param name="artifactId"></param>
-        void MoveToTemp(string fileName, string uniqueId);
+        void MoveToTemp(string fileName, string uniqueId, string fileTypes);
 
         /// <summary>
         /// Make necessary configuration zip and make persistent
@@ -53,7 +53,7 @@ namespace TaxiAppsWebAPICore.Helper.InterFace
         /// <param name="path"></param>
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
-        string MoveToPersistantConfiguration(FileInfo taskFile, string path, string fileName, string uniqueId);
+        string MoveToPersistantConfiguration(FileInfo taskFile, string path, string fileName, string uniqueId, string fileTypes);
 
         /// <summary>
         /// Revert persistent configuration to local
@@ -61,7 +61,7 @@ namespace TaxiAppsWebAPICore.Helper.InterFace
         /// <param name="path"></param>
         /// <param name="fileName"></param>
         /// <param name="uniqueId"></param>
-        void RevertPeristantConfiguration(string path, string fileName, string uniqueId);
+        void RevertPeristantConfiguration(string path, string fileName, string uniqueId, string fileTypes);
 
         /// <summary>
         /// Get the temporary file
