@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Policy;
 
 namespace TaxiAppsWebAPICore
@@ -12,7 +13,7 @@ namespace TaxiAppsWebAPICore
         [JsonProperty("name")]
         public string Name { set; get; }
 
-        [JsonProperty("`    ")]
+        [JsonProperty("image")]
         public string Image { set; get; }
 
         [JsonProperty("isActive")]
