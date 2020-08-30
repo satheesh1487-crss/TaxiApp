@@ -149,21 +149,42 @@ namespace TaziappzMobileWebAPI.DALayer
       
         public List<TypeModel> ListType(long servicelocId, TaxiAppzDBContext context)
         {
-            List<TypeModel> serviceList = new List<TypeModel>();
-            var listService = context.TabZone.Where(t => t.Servicelocid == servicelocId && t.IsDeleted == 0 && t.IsActive == 1).ToList();
-            foreach (var service in listService)
+            List<TypeModel> typelist = new List<TypeModel>();
+            var isServiceLocavailable = context.TabServicelocation.Where(t => t.Servicelocid == servicelocId && t.IsActive == 1 && t.IsDeleted == 0).ToList();
+            if (isServiceLocavailable == null)
+                return typelist;
+            var zonelist = context.TabZone.Where(t => t.Servicelocid == servicelocId && t.IsActive == 1 && t.IsDeleted == 0).ToList();
+            if (zonelist.Count == 0)
+                return typelist;
+            foreach (var zone in zonelist)
             {
-                var types = context.TabZonetypeRelationship.Include(t=>t.Type).Where(t => t.Zoneid == service.Zoneid && t.IsDelete == 0 && t.IsActive == 1).ToList();
-                foreach (var type in types)
+                var zonetyperelation = context.TabZonetypeRelationship.Include(t => t.Type).Where(t => t.Zoneid == zone.Zoneid && t.IsActive == 1 && t.IsDelete == 0).ToList();
+              
+                foreach (var type in zonetyperelation)
                 {
-                    serviceList.Add(new TypeModel()
+                    typelist.Add(new TypeModel()
                     {
-                        TypeId = type.Type.Typeid,
+                        TypeId=type.Type.Typeid,
                         TypeName = type.Type.Typename
                     });
                 }
-            }
-            return serviceList != null ? serviceList : null;
+
+                }
+            return typelist;
+            //var listService = context.TabZone.Where(t => t.Servicelocid == servicelocId && t.IsDeleted == 0 && t.IsActive == 1).ToList();
+            //foreach (var service in listService)
+            //{
+            //    var types = context.TabZonetypeRelationship.Include(t=>t.Type).Where(t => t.Zoneid == service.Zoneid && t.IsDelete == 0 && t.IsActive == 1).ToList();
+            //    foreach (var type in types)
+            //    {
+            //        serviceList.Add(new TypeModel()
+            //        {
+            //            TypeId = type.Type.Typeid,
+            //            TypeName = type.Type.Typename
+            //        });
+            //    }
+            //}
+            //return serviceList != null ? serviceList : null;
 
         }
     }
