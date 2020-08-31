@@ -53,12 +53,12 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("typeByTypeId")]
-        public IActionResult ListType(long zoneId)
+        [Route("typebyServicelocid")]
+        public IActionResult ListType(long servicelocid)
         {
             DAOTP dAOTP = new DAOTP();
             List<TypeModel> listZone = new List<TypeModel>();
-            listZone = dAOTP.ListType(zoneId, _context);
+            listZone = dAOTP.ListType(servicelocid, _context);
             return this.OK<List<TypeModel>>(listZone, listZone.Count == 0 ? "No Data Found" : "Type_List", listZone.Count == 0 ? 0 : 1);
         }
 
