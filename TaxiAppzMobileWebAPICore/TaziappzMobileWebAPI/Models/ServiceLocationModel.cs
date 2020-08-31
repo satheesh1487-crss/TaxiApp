@@ -30,5 +30,7 @@ namespace TaziappzMobileWebAPI.Models
 
         [JsonProperty("typeName")]
         public string TypeName { get; set; }
+        [JsonProperty("image")]
+        public string Image { get; set; }
     }
 }

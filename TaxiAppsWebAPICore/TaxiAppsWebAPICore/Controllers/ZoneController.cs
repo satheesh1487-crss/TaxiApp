@@ -27,8 +27,15 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ZoneList()
         {
-            DAZone dAZone = new DAZone();
-            return this.OK<List<ManageZone>>(dAZone.ListZone(_context));
+            try
+            {
+                DAZone dAZone = new DAZone();
+                return this.OK<List<ManageZone>>(dAZone.ListZone(_context, User.ToAppUser()));
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
         [HttpGet]
         [Route("GetZonedetails")]
