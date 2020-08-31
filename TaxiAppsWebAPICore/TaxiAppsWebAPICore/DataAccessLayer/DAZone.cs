@@ -12,34 +12,30 @@ namespace TaxiAppsWebAPICore
 {
     public class DAZone
     {
-        public List<ManageZone> ListZone(TaxiAppzDBContext context)
+        public List<ManageZone> ListZone(TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
-            try
+            var zoneexist = context.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.IsActive == 1);
+            if (zoneexist != null)
+                throw new DataValidationException($"Does not have a permission");
+
+            List<ManageZone> manageZones = new List<ManageZone>();
+            var zonelist = context.TabZone.Include(t => t.Serviceloc).Where(t => t.IsDeleted == 0).ToList();
+            foreach (var zone in zonelist)
             {
-                List<ManageZone> manageZones = new List<ManageZone>();
-                var zonelist = context.TabZone.Include(t => t.Serviceloc).Where(t => t.IsDeleted == 0).ToList();
-                foreach (var zone in zonelist)
+                manageZones.Add(new ManageZone()
                 {
-                    manageZones.Add(new ManageZone()
-                    {
-                        Zoneid = zone.Zoneid,
-                        ZoneName = zone.Zonename,
-                        Serviceslocid = zone.Servicelocid,
-                        Unit = zone.Unit,
-                        ServiceName = zone.Serviceloc.Name,
-                        IsActive = zone.IsActive == 0 ? false : true
+                    Zoneid = zone.Zoneid,
+                    ZoneName = zone.Zonename,
+                    Serviceslocid = zone.Servicelocid,
+                    Unit = zone.Unit,
+                    ServiceName = zone.Serviceloc.Name,
+                    IsActive = zone.IsActive == 0 ? false : true
 
-                    });
-                }
-                return manageZones;
+                });
             }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message.ToString(), "Admin", "ListZone", context);
-                return null;
-            }
-
+            return manageZones;
         }
+
         public ManageZone GetZonedetails(long zoneid, TaxiAppzDBContext context)
         {
             try
@@ -397,7 +393,7 @@ namespace TaxiAppsWebAPICore
             {
                 List<SetPrice> setPrices = new List<SetPrice>();
 
-                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid && t.IsDelete ==  false).ToList();
+                var getsetpricelist = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid && t.IsDelete == false).ToList();
 
                 foreach (var getprice in getsetpricelist)
                 {
