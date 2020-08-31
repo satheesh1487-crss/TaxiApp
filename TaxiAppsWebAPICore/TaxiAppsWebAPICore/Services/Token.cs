@@ -23,7 +23,7 @@ namespace TaxiAppsWebAPICore.Services
         public Token(TaxiAppzDBContext context,IOptions<JWT> jwt)
         {
             _context = context;
-            _jwt = jwt.Value; 
+            _jwt = jwt.Value;
         }
         public UserInfo GenerateJWTTokenDtls(LoginRequest admin)
         {
