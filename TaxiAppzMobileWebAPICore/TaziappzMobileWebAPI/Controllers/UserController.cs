@@ -52,7 +52,7 @@ namespace TaziappzMobileWebAPI.Controllers
             sign = new DASign(_context, token);
             DetailsWithToken detailsWithToken = new DetailsWithToken();
             detailsWithToken = sign.SignUp(signUpmodel);
-            return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken == null ? "User_Creation_Failed" : "User_Creation_Success", detailsWithToken ==  null ? 0 : 1);
+            return this.OK<DetailsWithToken>(detailsWithToken, detailsWithToken.IsExist == 0 ? "User_Creation_Failed" : "User_Creation_Success", detailsWithToken.IsExist == 0 ? 0 : 1);
 
         }
 
