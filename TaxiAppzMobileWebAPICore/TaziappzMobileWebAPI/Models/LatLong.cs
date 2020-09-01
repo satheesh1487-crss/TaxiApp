@@ -47,6 +47,8 @@ namespace TaziappzMobileWebAPI
         public decimal? Driverlongtitude { get; set; }
         [JsonProperty("driverid")]
         public long? Driverid { get; set; }
+        [JsonProperty("distance")]
+        public double? Distance { get; set; }
     }
     public class DriversListwithDistance
     {

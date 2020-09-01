@@ -28,5 +28,22 @@ namespace TaziappzMobileWebAPI
         [JsonProperty("status")]
         public string Status { get; set; }
     }
-    
+    public class UserTripRequest
+    {
+        [JsonProperty("userName")]
+        public string UserName { get; set; }
+        [JsonProperty("driverName")]
+        public string DriverName { get; set; }
+        [JsonProperty("driverid")]
+        public long? driverid { get; set; }
+        [JsonProperty("triptype")]
+        public string Triptype { get; set; }
+        [JsonProperty("pickuplocation")]
+        public string Pickup { get; set; }
+        [JsonProperty("droplocation")]
+        public string Droplocation { get; set; }
+        [JsonProperty("isExist")]
+        public int IsExist { get; set; }
+    }
+
 }

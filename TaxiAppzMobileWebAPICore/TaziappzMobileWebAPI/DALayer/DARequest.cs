@@ -150,12 +150,22 @@ namespace TaziappzMobileWebAPI.DALayer
             }
         }
         //test
-        public bool Requestprogress(RequestVehicleType requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
+        public UserTripRequest Requestprogress(RequestVehicleType requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
+            UserTripRequest userTripRequest = new UserTripRequest();
+            var isRequestExist = context.TabRequest.Where(t => t.UserId == loggedInUser.id && t.IsCancelled == false).FirstOrDefault();
+            if (isRequestExist != null)
+            {
+                userTripRequest.IsExist = 0;
+                return userTripRequest;
+            }
             var userid = context.TabUser.Where(t => t.PhoneNumber.Contains(loggedInUser.Contactno) && t.IsActive == true && t.IsDelete == 0).Select(t => t.Id).FirstOrDefault();
             if (userid == null)
-                return false;
+            {
+                userTripRequest.IsExist = 0;
+                return userTripRequest;
+            }
             Random random = new Random();
             var reqid = random.Next(001, 9999);
             TabRequest tabRequest = new TabRequest();
@@ -183,9 +193,9 @@ namespace TaziappzMobileWebAPI.DALayer
             tabRequestPlace.CreatedAt = DateTime.UtcNow;
             context.TabRequestPlace.Add(tabRequestPlace);
 
-            List<DriversListwithDistance> driversListwithDistance = new List<DriversListwithDistance>();
-            //  driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
-            driversListwithDistance = driversListwithDistance.OrderBy(t => t.Distance).ToList();
+            List<DriversList> driversListwithDistance = new List<DriversList>();
+           //  driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
+            driversListwithDistance = requestVehicleType.DriversLists.OrderBy(t => t.Distance).ToList();
             int index = 0;
             foreach (var driver in driversListwithDistance)
             {
@@ -202,7 +212,23 @@ namespace TaziappzMobileWebAPI.DALayer
             }
             context.SaveChanges();
 
-            return true;
+            var requestmetadtls = context.TabRequestMeta.Include(t => t.User).Include(t => t.Driver).Where(t => t.RequestId == tabRequest.Id && t.IsActive == true && t.AssignMethod.ToUpper() == "ONEBYONE").FirstOrDefault();
+            var requestplace = context.TabRequestPlace.Where(t => t.RequestId == requestmetadtls.RequestId).FirstOrDefault();
+            if (requestmetadtls == null || requestplace == null)
+            {
+                userTripRequest.IsExist = 0;
+                return userTripRequest;
+            }
+            else
+                userTripRequest.UserName = requestmetadtls.User.Firstname;
+            userTripRequest.Pickup = requestplace.PickLocation;
+            userTripRequest.Droplocation = requestplace.DropLocation;
+            userTripRequest.driverid = requestmetadtls.Driver.Driverid;
+            userTripRequest.DriverName = requestmetadtls.Driver.FirstName;
+            userTripRequest.Triptype = requestmetadtls.AssignMethod;
+            userTripRequest.IsExist = 1;
+            //  var tabrequest = context.TabRequestPlace.Include(t => t.)
+            return userTripRequest;
         }
 
         public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)

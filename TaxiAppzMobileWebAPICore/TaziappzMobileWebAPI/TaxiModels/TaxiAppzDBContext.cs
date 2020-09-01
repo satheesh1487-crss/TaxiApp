@@ -51,6 +51,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabRequest> TabRequest { get; set; }
         public virtual DbSet<TabRequestMeta> TabRequestMeta { get; set; }
         public virtual DbSet<TabRequestPlace> TabRequestPlace { get; set; }
+        public virtual DbSet<TabRequestRating> TabRequestRating { get; set; }
         public virtual DbSet<TabRoles> TabRoles { get; set; }
         public virtual DbSet<TabServicelocation> TabServicelocation { get; set; }
         public virtual DbSet<TabSetpriceZonetype> TabSetpriceZonetype { get; set; }
@@ -920,6 +921,35 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .WithMany(p => p.TabRequestPlace)
                     .HasForeignKey(d => d.RequestId)
                     .HasConstraintName("FK__tab_reque__Reque__7F80E8EA");
+            });
+
+            modelBuilder.Entity<TabRequestRating>(entity =>
+            {
+                entity.HasKey(e => e.RatingId)
+                    .HasName("PK__tab_requ__D35B278BC1C198EF");
+
+                entity.Property(e => e.Comments).IsUnicode(false);
+
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.RatingBy).IsUnicode(false);
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.TabRequestRating)
+                    .HasForeignKey(d => d.DriverId)
+                    .HasConstraintName("FK__tab_reque__drive__1A34DF26");
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.TabRequestRating)
+                    .HasForeignKey(d => d.RequestId)
+                    .HasConstraintName("FK__tab_reque__reque__1B29035F");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TabRequestRating)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__tab_reque__user___1940BAED");
             });
 
             modelBuilder.Entity<TabRoles>(entity =>

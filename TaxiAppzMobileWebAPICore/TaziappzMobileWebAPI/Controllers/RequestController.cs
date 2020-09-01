@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,13 @@ namespace TaziappzMobileWebAPI.Controllers
     {
         public readonly TaxiAppzDBContext context;
         public readonly IOptions<SettingModel> settingModel;
-        public RequestController(TaxiAppzDBContext _context,IOptions<SettingModel> _settingmodel)
+        private IHubContext<MessageHub> _messageHubContext;
+
+        public RequestController(TaxiAppzDBContext _context,IOptions<SettingModel> _settingmodel, IHubContext<MessageHub> messageHubContext)
         {
             context = _context;
             settingModel = _settingmodel;
+            _messageHubContext = messageHubContext;
         }
         /// <summary>
         /// Use to Get List of Vehicels based on Zone once click book now
@@ -47,8 +51,12 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult Requestprogress([FromBody] RequestVehicleType requestVehicleType)
         {
             DARequest dARequest = new DARequest(settingModel);
-            bool result = dARequest.Requestprogress(requestVehicleType, User.ToAppUser(), context);
-            return this.OKStatus(result ? "Data Found" : "No Data Found", result ? 1 : 0);
+            UserTripRequest userTripRequest = new UserTripRequest();
+            userTripRequest = dARequest.Requestprogress(requestVehicleType, User.ToAppUser(), context);
+            if (userTripRequest.IsExist == 0)
+                return this.OKStatus("No Data Found",0);
+            _messageHubContext.Clients.All.SendAsync("Send", userTripRequest);
+                return this.OKStatus(userTripRequest.IsExist == 1 ? "Data Found" : "No Data Found", userTripRequest.IsExist == 1 ? 1 : 0);
         }
 
         /// <summary>
