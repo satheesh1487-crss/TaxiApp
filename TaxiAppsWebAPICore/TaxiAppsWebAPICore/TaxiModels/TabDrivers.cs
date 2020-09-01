@@ -17,6 +17,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
             TabDriverWallet = new HashSet<TabDriverWallet>();
             TabRequest = new HashSet<TabRequest>();
             TabRequestMeta = new HashSet<TabRequestMeta>();
+            TabRequestRating = new HashSet<TabRequestRating>();
         }
 
         [Key]
@@ -114,6 +115,10 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public bool? IsAvailable { get; set; }
         [Column("Online_Status")]
         public bool? OnlineStatus { get; set; }
+        public double? Rating { get; set; }
+        public long? NoofRating { get; set; }
+        [Column("Avg_Rating")]
+        public double? AvgRating { get; set; }
 
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabDrivers))]
@@ -141,5 +146,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual ICollection<TabRequest> TabRequest { get; set; }
         [InverseProperty("Driver")]
         public virtual ICollection<TabRequestMeta> TabRequestMeta { get; set; }
+        [InverseProperty("Driver")]
+        public virtual ICollection<TabRequestRating> TabRequestRating { get; set; }
     }
 }

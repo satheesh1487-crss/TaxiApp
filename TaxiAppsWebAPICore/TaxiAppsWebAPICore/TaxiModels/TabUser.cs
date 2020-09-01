@@ -12,6 +12,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         {
             TabRequest = new HashSet<TabRequest>();
             TabRequestMeta = new HashSet<TabRequestMeta>();
+            TabRequestRating = new HashSet<TabRequestRating>();
         }
 
         [Key]
@@ -109,6 +110,10 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public string DeletedBy { get; set; }
         [Column("deleted_at", TypeName = "datetime")]
         public DateTime? DeletedAt { get; set; }
+        public double? Rating { get; set; }
+        public long? NoofRating { get; set; }
+        [Column("Avg_Rating")]
+        public double? AvgRating { get; set; }
 
         [ForeignKey(nameof(Countryid))]
         [InverseProperty(nameof(TabCountry.TabUser))]
@@ -123,5 +128,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual ICollection<TabRequest> TabRequest { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<TabRequestMeta> TabRequestMeta { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<TabRequestRating> TabRequestRating { get; set; }
     }
 }

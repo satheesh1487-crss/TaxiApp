@@ -13,6 +13,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
             TabCancellationFeeForDriver = new HashSet<TabCancellationFeeForDriver>();
             TabRequestMeta = new HashSet<TabRequestMeta>();
             TabRequestPlace = new HashSet<TabRequestPlace>();
+            TabRequestRating = new HashSet<TabRequestRating>();
         }
 
         [Key]
@@ -139,5 +140,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
         public virtual ICollection<TabRequestMeta> TabRequestMeta { get; set; }
         [InverseProperty("Request")]
         public virtual ICollection<TabRequestPlace> TabRequestPlace { get; set; }
+        [InverseProperty("Request")]
+        public virtual ICollection<TabRequestRating> TabRequestRating { get; set; }
     }
 }

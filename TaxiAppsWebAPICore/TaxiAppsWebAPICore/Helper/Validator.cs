@@ -224,7 +224,7 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"LastName does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.Address)
+            if (!string.IsNullOrEmpty(editDriver.Address))
             {
                 throw new DataValidationException($"Address does not exists");
             }
@@ -295,7 +295,7 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"LastName does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.Address)
+            if (!string.IsNullOrEmpty(driverInfo.Address))
             {
                 throw new DataValidationException($"Address does not exists");
             }
