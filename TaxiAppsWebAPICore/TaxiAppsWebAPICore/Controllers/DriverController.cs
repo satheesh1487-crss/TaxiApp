@@ -77,6 +77,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateRewardPoint(editReward);
                 DADriver dADriver = new DADriver();
                 return this.OKResponse(dADriver.EditRewardPoint(_context, editReward, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
             }
@@ -111,6 +112,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriver(editDriver);
                 DADriver dADriver = new DADriver();
                 return this.OKResponse(dADriver.Edit(_context, editDriver, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
             }
@@ -128,6 +130,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriverInfo(driverInfo);
                 DADriver dADriver = new DADriver();
                 return this.OKResponse(dADriver.Save(_context, driverInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -148,6 +151,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriverWallet(driverAddWallet);
                 DADriver dADriver = new DADriver();
                 return this.OKResponse(dADriver.AddWallet(_context, driverAddWallet, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -180,6 +184,7 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddFine(DriverFineInfo driverFineInfo)
         {
+            Validator.validateDriverFine(driverFineInfo);
             DADriver dADriver = new DADriver();
             return this.OKResponse(dADriver.AddFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
         }
@@ -200,6 +205,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriverFine(driverFineInfo);
                 DADriver dADriver = new DADriver();
                 return this.OKResponse(dADriver.EditFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
             }
@@ -242,6 +248,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriverBonus(driverBonusInfo);
                 DADriver dADriver = new DADriver();
                 return this.OKResponse(dADriver.AddBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -257,6 +264,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriverBonus(driverBonusInfo);
                 DADriver dADriver = new DADriver();
                 return this.OKResponse(dADriver.EditBonus(_context, driverBonusInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
             }

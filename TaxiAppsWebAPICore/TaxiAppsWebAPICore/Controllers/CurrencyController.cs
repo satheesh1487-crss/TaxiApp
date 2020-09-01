@@ -55,6 +55,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateCurrency(currencyInfo);
                 DACurrency dACurrency = new DACurrency();
                 return this.OKResponse(dACurrency.AddCurrency(_context, currencyInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -74,6 +75,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateCurrency(currencyInfo);
                 DACurrency dACurrency = new DACurrency();
                 return this.OKResponse(dACurrency.EditCurrency(_context, currencyInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }

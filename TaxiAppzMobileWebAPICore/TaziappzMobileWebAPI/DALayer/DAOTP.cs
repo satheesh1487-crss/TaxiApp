@@ -165,7 +165,9 @@ namespace TaziappzMobileWebAPI.DALayer
                     typelist.Add(new TypeModel()
                     {
                         TypeId=type.Type.Typeid,
-                        TypeName = type.Type.Typename
+                        TypeName = type.Type.Typename,
+                        Image=""
+                        
                     });
                 }
 
