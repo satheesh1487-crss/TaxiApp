@@ -37,6 +37,10 @@ namespace TaziappzMobileWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+            services.AddCors(options => options.AddPolicy("AllowAny", x => {
+                x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            }));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -101,6 +105,7 @@ namespace TaziappzMobileWebAPI
             services.AddScoped<IToken, Token>();
             services.AddScoped<ISign, DASign>();
             services.AddScoped<IValidate, DADriverValidate>();
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,6 +115,10 @@ namespace TaziappzMobileWebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MessageHub>("/message");
+            });
 
             app.UseHttpsRedirection();
             app.UseAuthentication();

@@ -14,6 +14,7 @@ using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.Services;
 using TaxiAppsWebAPICore.TaxiModels;
+using TaziappzMobileWebAPI.DALayer;
 
 namespace TaxiAppsWebAPICore
 {
@@ -37,6 +38,10 @@ namespace TaxiAppsWebAPICore
             //_context.SaveChanges();
             try
             {
+                services.AddSignalR();
+                services.AddCors(options => options.AddPolicy("AllowAny", x => {
+                    x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                }));
                 services.AddControllers();
                 services.AddSwaggerGen(c =>
                 {
@@ -105,16 +110,16 @@ namespace TaxiAppsWebAPICore
                 services.AddMvc(option => option.EnableEndpointRouting = false);
                 services.AddOptions();
                 services.AddMvc();
-                var cors = EnableCor(Configuration);
+               // var cors = EnableCor(Configuration);
 
               
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("AllowAll", builder =>
-                    {
-                        builder.AllowAnyOrigin();
-                    });
-                });
+              //  services.AddCors(options =>
+                //{
+                //    options.AddPolicy("AllowAll", builder =>
+                //    {
+                //        builder.AllowAnyOrigin();
+                //    });
+                //});
                 services.Configure<JWT>(Configuration.GetSection("Jwt"));
                 services.AddScoped<IToken, Token>();
 
@@ -173,6 +178,10 @@ namespace TaxiAppsWebAPICore
                 {
                     app.UseDeveloperExceptionPage();
                 }
+                app.UseSignalR(routes =>
+                {
+                    routes.MapHub<MessageHub>("/message");
+                });
 
                 app.UseHttpsRedirection();
 

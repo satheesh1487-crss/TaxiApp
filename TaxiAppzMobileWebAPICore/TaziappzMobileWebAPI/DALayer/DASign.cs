@@ -90,12 +90,18 @@ namespace TaziappzMobileWebAPI.DALayer
            DetailsWithToken user = new DetailsWithToken();
             var isServiceLocExist = context.TabServicelocation.Where(t => t.Servicelocid == signUpmodel.Servicelocationid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
             if (isServiceLocExist == null)
+            {
+                user.IsExist = 0;
                 return user;
+            }
             var timezone = context.TabTimezone.Where(t => t.Timezoneid == isServiceLocExist.Timezoneid && t.IsActive == 1 && t.IsDelete == 0).FirstOrDefault();
             var country = context.TabCountry.Where(t => t.CountryId == isServiceLocExist.Countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
             var isUserExist = context.TabUser.Where(t => t.PhoneNumber == signUpmodel.Mobileno).FirstOrDefault();
             if (timezone == null || country == null || isUserExist != null || isServiceLocExist == null)
-                 return user;
+            {
+                user.IsExist = 0;
+                return user;
+            }
             tabUser.Firstname = signUpmodel.FirstName;
             tabUser.Lastname = signUpmodel.LastName;
             tabUser.Email = signUpmodel.Emailid;
