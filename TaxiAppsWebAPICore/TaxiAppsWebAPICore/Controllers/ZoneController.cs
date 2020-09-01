@@ -54,6 +54,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateZoneAdd(manageZone);
                 DAZone dAZone = new DAZone();
                 return this.OKResponse(dAZone.AddZone(manageZone, _context, User.ToAppUser()) ? "Zone Created" : "Zone Creation Failed");
             }
@@ -73,6 +74,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateZoneAdd(manageZone);
                 DAZone dAZone = new DAZone();
                 return this.OKResponse(dAZone.EditZone(manageZone, _context, User.ToAppUser()) ? "Zone Updated" : "Zone Updation Failed");
             }
@@ -131,6 +133,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateZoneRel(zoneTypeRelation);
                 DAZone dAZone = new DAZone();
                 return this.OKResponse(dAZone.AddZoneType(zoneid, zoneTypeRelation, _context, User.ToAppUser()) ? "Saved Successfully" : "Saved Failed");
             }
@@ -156,6 +159,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateZoneRel(zoneTypeRelation);
                 DAZone dAZone = new DAZone();
                 return this.OKResponse(dAZone.EditZoneType(zoneTypeRelation, _context, User.ToAppUser()) ? "Updated Successfully" : "updation Failed");
             }

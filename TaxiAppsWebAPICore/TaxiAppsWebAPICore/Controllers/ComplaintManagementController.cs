@@ -44,6 +44,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateUserComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.AddUserComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
             }
@@ -60,6 +61,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateUserComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.EditUserComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Edited Successfully" : "Failed to Edit");
             }
@@ -124,6 +126,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriverComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.AddDriverComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
             }
@@ -140,6 +143,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateDriverComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.EditDriverComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Edited Successfully" : "Failed to Edit");
             }

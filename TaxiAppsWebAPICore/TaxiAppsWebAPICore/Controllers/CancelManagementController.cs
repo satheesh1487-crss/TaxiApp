@@ -45,6 +45,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validataeCancelUser(cancelUserInfo);
                 DACancel dACancel = new DACancel();
                 return this.OKResponse(dACancel.SaveCancelUser(_context, cancelUserInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -92,6 +93,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validataeCancelUser(cancelUserInfo);
                 DACancel dACancel = new DACancel();
                 return this.OKResponse(dACancel.EditUser(_context, cancelUserInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
             }
@@ -127,6 +129,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateCancelDriver(cancelDriverInfo);
                 DACancel dACancel = new DACancel();
                 return this.OKResponse(dACancel.SaveCancelDriver(_context, cancelDriverInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -175,6 +178,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateCancelDriver(cancelDriverInfo);
                 DACancel dACancel = new DACancel();
                 return this.OKResponse(dACancel.EditDriver(_context, cancelDriverInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
             }
