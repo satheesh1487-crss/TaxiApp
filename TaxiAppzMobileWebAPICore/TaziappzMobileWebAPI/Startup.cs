@@ -117,7 +117,7 @@ namespace TaziappzMobileWebAPI
             }
             app.UseSignalR(routes =>
             {
-                routes.MapHub<MessageHub>("/message");
+                routes.MapHub<MessageHub>("/Requestmessage");
             });
 
             app.UseHttpsRedirection();

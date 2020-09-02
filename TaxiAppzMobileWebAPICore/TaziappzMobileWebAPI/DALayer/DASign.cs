@@ -133,18 +133,18 @@ namespace TaziappzMobileWebAPI.DALayer
             return user;
             
         }
-        public bool SignUpDriver(SignUpDrivermodel signUpmodel)
+        public List<DetailsWithDriverToken> SignUpDriver(SignUpDrivermodel signUpmodel)
         {
             TabDrivers tabDrivers = new TabDrivers();
-            DetailsWithToken detailsWithToken = new DetailsWithToken();
+             List<DetailsWithDriverToken> driver = new List<DetailsWithDriverToken>();
             var isServiceLocExist = context.TabServicelocation.Where(t => t.Servicelocid == signUpmodel.Servicelocationid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
             if (isServiceLocExist == null)
-                return false;
+                return driver;
             var country = context.TabCountry.Where(t => t.CountryId == isServiceLocExist.Countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
             var Types = context.TabTypes.Where(t => t.Typeid == Convert.ToInt32(signUpmodel.Type) && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
             var isDriverExist = context.TabDrivers.Where(t => t.ContactNo == signUpmodel.Mobileno).FirstOrDefault();
             if (country == null || isDriverExist != null || isServiceLocExist == null || Types == null)
-                return false;
+                return driver;
             tabDrivers.FirstName = signUpmodel.FirstName;
             tabDrivers.LastName = signUpmodel.LastName;
             tabDrivers.Email = signUpmodel.Emailid;
@@ -156,9 +156,39 @@ namespace TaziappzMobileWebAPI.DALayer
             tabDrivers.Carmodel = signUpmodel.Car_model;
             tabDrivers.LoginBy = signUpmodel.Login_by;
             tabDrivers.LoginMethod = signUpmodel.Login_method;
+            tabDrivers.IsApproved = true;
+            tabDrivers.IsAvailable = true;
+            tabDrivers.OnlineStatus = true;
             context.TabDrivers.Add(tabDrivers);
             context.SaveChanges();
-            return true;
+            SignInmodel signInmodel = new SignInmodel();
+            signInmodel.LoginBy = signUpmodel.Login_by;
+            signInmodel.LoginMethod = signUpmodel.Login_method;
+            signInmodel.Devicetoken = signUpmodel.Devicetoken;
+            signInmodel.Contactno = signUpmodel.Mobileno;
+            var tokenString = _token.GenerateJWTDriverTokenDtls(signInmodel);
+            driver.Add(new DetailsWithDriverToken()
+            {
+                FirstName = tokenString[0].FirstName,
+                LastName = tokenString[0].LastName,
+                Mobileno = tokenString[0].Mobileno,
+                Emailid = tokenString[0].Emailid,
+                Id = tabDrivers.Driverid,
+                Login_by = tabDrivers.LoginBy,
+                Login_method = tabDrivers.LoginMethod,
+                Token = tokenString[0].Token,
+                Is_approve = tabDrivers.IsApproved,
+                Is_available = tabDrivers.IsAvailable,
+                Car_model = tabDrivers.Carmodel,
+                Car_number = tabDrivers.Carnumber,
+                RefreshToken = tokenString[0].RefreshToken,
+                Type = Types.Typename,
+                IsExist = 1,
+                IsActive = tabDrivers.IsActive,
+                Servicelocationid = tabDrivers.Serviceloc.Servicelocid
+            });
+            return driver;
+            
         }
 
     }
