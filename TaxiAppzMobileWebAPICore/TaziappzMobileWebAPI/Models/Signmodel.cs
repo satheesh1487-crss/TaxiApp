@@ -76,6 +76,8 @@ namespace TaziappzMobileWebAPI
         public string Type { get; set; }
         [JsonProperty("servicelocationid")]
         public long Servicelocationid { get; set; }
+        [JsonProperty("national_id")]
+        public string National_id { get; set; }
         //[JsonProperty("timezone")]
         //public long Timezone { get; set; }
 

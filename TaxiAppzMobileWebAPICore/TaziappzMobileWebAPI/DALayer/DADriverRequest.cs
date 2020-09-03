@@ -171,24 +171,28 @@ namespace TaziappzMobileWebAPI.DALayer
             return requestInProgresses;
         }
 
-        public RequestStatusModel onlineStatus(TaxiAppzDBContext context, DriverStatusModel driverStatusModel, LoggedInUser loggedInUser)
+        public List<RequestStatusModel> onlineStatus(TaxiAppzDBContext context, DriverStatusModel driverStatusModel, LoggedInUser loggedInUser)
         {
-            var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.ContactNo == driverStatusModel.Contact_Number && t.Token == null);
-            if (profileexist != null)
-                throw new DataValidationException($"Driver does not have a permission");
-
-            RequestStatusModel requestStatusModel = new RequestStatusModel();           
-            var updatedate = context.TabDrivers.FirstOrDefault(t => t.ContactNo == driverStatusModel.Contact_Number && t.IsDelete == false && t.IsActive == true);
+            var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.ContactNo == loggedInUser.Contactno);
+            //var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.ContactNo == driverStatusModel.Contact_Number && t.Token == null);
+            if (profileexist == null)
+            throw new DataValidationException($"Driver does not Exist");
+            List<RequestStatusModel> requestStatusModel = new List<RequestStatusModel>();           
+            var updatedate = context.TabDrivers.FirstOrDefault(t => t.ContactNo == loggedInUser.Contactno && t.IsDelete == false && t.IsActive == true);
             if (updatedate != null)
             {
-                updatedate.OnlineStatus = requestStatusModel.OnlineStatus = driverStatusModel.Online_Status;
+                updatedate.OnlineStatus = driverStatusModel.Online_Status;
                 updatedate.UpdatedAt = DateTime.UtcNow;
                 updatedate.UpdatedBy = loggedInUser.Email;
                 context.Update(updatedate);
                 context.SaveChanges();
+                requestStatusModel.Add(new RequestStatusModel()
+                {
+                    OnlineStatus = driverStatusModel.Online_Status
+                }) ;
                 return requestStatusModel;
             }
-            return requestStatusModel;
+           return requestStatusModel;
         } 
 
         public bool RequestAcceptReject(long requestid, Boolean Acceptstatus, TaxiAppzDBContext context,LoggedInUser loggedInUser)

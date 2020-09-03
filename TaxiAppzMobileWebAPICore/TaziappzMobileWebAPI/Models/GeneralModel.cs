@@ -37,8 +37,8 @@ namespace TaziappzMobileWebAPI.Models
         [JsonProperty("online_status")]
         public bool Online_Status { get; set; }
 
-        [JsonProperty("contact_number")]
-        public string Contact_Number { get; set; }
+        //[JsonProperty("contact_number")]
+        //public string Contact_Number { get; set; }
     }
 
     public class UserZoneSOSModel : GeneralModel

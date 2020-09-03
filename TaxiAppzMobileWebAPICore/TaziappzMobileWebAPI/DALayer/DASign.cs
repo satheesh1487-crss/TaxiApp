@@ -159,6 +159,7 @@ namespace TaziappzMobileWebAPI.DALayer
             tabDrivers.IsApproved = true;
             tabDrivers.IsAvailable = true;
             tabDrivers.OnlineStatus = true;
+            tabDrivers.NationalId = signUpmodel.National_id;
             context.TabDrivers.Add(tabDrivers);
             context.SaveChanges();
             SignInmodel signInmodel = new SignInmodel();
@@ -185,7 +186,8 @@ namespace TaziappzMobileWebAPI.DALayer
                 Type = Types.Typename,
                 IsExist = 1,
                 IsActive = tabDrivers.IsActive,
-                Servicelocationid = tabDrivers.Serviceloc.Servicelocid
+                Servicelocationid = tabDrivers.Serviceloc.Servicelocid,
+                National_id=tabDrivers.NationalId
             });
             return driver;
             

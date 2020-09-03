@@ -376,16 +376,16 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         [Route("onlinStatus")]
         public IActionResult OnlinStatus(DriverStatusModel driverStatusModel)
         {
             try
             {
                 DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
-                var result = dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
                 List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
-                requestStatusModels.Add(result);
-                return this.OK<List<RequestStatusModel>>(requestStatusModels, requestStatusModels.Count == 0 ? "Driver_Online" : "Driver_Offline", 1);
+                requestStatusModels = dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
+               return this.OK<List<RequestStatusModel>>(requestStatusModels, requestStatusModels.Count == 1 ? requestStatusModels[0].OnlineStatus  ? "Driver_Online" : "Driver_Offline" : "Updation_Failed", requestStatusModels.Count == 1 ? 1 : 0);
             }
             catch (DataValidationException ex)
             {
@@ -422,6 +422,7 @@ namespace TaziappzMobileWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         [Route("TripCancel")]
         public IActionResult TripCancel(long requestid,long reasonid,string reasondescription)
         {
