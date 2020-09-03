@@ -378,14 +378,14 @@ namespace TaziappzMobileWebAPI.Controllers
         [HttpPost]
         [Authorize]
         [Route("onlinStatus")]
-        public IActionResult OnlinStatus(DriverStatusModel driverStatusModel)
+        public IActionResult OnlinStatus()
         {
             try
             {
                 DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
                 List<RequestStatusModel> requestStatusModels = new List<RequestStatusModel>();
-                requestStatusModels = dADriverRequest.onlineStatus(_context, driverStatusModel, User.ToAppUser());
-               return this.OK<List<RequestStatusModel>>(requestStatusModels, requestStatusModels.Count == 1 ? requestStatusModels[0].OnlineStatus  ? "Driver_Online" : "Driver_Offline" : "Updation_Failed", requestStatusModels.Count == 1 ? 1 : 0);
+                requestStatusModels = dADriverRequest.onlineStatus(_context, User.ToAppUser());
+               return this.OK<List<RequestStatusModel>>(requestStatusModels, requestStatusModels.Count == 1 ? requestStatusModels[0].OnlineStatus == true  ? "Driver_Online" : "Driver_Offline" : "Updation_Failed", requestStatusModels.Count == 1 ? 1 : 0);
             }
             catch (DataValidationException ex)
             {

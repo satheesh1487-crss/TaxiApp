@@ -171,7 +171,7 @@ namespace TaziappzMobileWebAPI.DALayer
             return requestInProgresses;
         }
 
-        public List<RequestStatusModel> onlineStatus(TaxiAppzDBContext context, DriverStatusModel driverStatusModel, LoggedInUser loggedInUser)
+        public List<RequestStatusModel> onlineStatus(TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.ContactNo == loggedInUser.Contactno);
             //var profileexist = context.TabDrivers.FirstOrDefault(t => t.IsDelete == false && t.IsActive == true && t.ContactNo == driverStatusModel.Contact_Number && t.Token == null);
@@ -181,14 +181,14 @@ namespace TaziappzMobileWebAPI.DALayer
             var updatedate = context.TabDrivers.FirstOrDefault(t => t.ContactNo == loggedInUser.Contactno && t.IsDelete == false && t.IsActive == true);
             if (updatedate != null)
             {
-                updatedate.OnlineStatus = driverStatusModel.Online_Status;
+                updatedate.OnlineStatus = !updatedate.OnlineStatus;
                 updatedate.UpdatedAt = DateTime.UtcNow;
                 updatedate.UpdatedBy = loggedInUser.Email;
                 context.Update(updatedate);
                 context.SaveChanges();
                 requestStatusModel.Add(new RequestStatusModel()
                 {
-                    OnlineStatus = driverStatusModel.Online_Status
+                    OnlineStatus = updatedate.OnlineStatus
                 }) ;
                 return requestStatusModel;
             }

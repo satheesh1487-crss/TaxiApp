@@ -142,7 +142,7 @@ namespace TaziappzMobileWebAPI.DALayer
                 return driver;
             var country = context.TabCountry.Where(t => t.CountryId == isServiceLocExist.Countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
             var Types = context.TabTypes.Where(t => t.Typeid == Convert.ToInt32(signUpmodel.Type) && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
-            var isDriverExist = context.TabDrivers.Where(t => t.ContactNo == signUpmodel.Mobileno).FirstOrDefault();
+            var isDriverExist = context.TabDrivers.Where(t => t.ContactNo == signUpmodel.Mobileno && t.IsDelete == true).FirstOrDefault();
             if (country == null || isDriverExist != null || isServiceLocExist == null || Types == null)
                 return driver;
             tabDrivers.FirstName = signUpmodel.FirstName;
