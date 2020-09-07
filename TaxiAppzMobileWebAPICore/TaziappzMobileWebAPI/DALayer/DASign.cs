@@ -140,10 +140,11 @@ namespace TaziappzMobileWebAPI.DALayer
             var isServiceLocExist = context.TabServicelocation.Where(t => t.Servicelocid == signUpmodel.Servicelocationid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
             if (isServiceLocExist == null)
                 return driver;
+            var zone = context.TabZone.Where(t => t.Servicelocid == isServiceLocExist.Servicelocid && t.IsActive== 1 && t.IsDeleted == 0).FirstOrDefault();
             var country = context.TabCountry.Where(t => t.CountryId == isServiceLocExist.Countryid && t.IsActive == true && t.IsDelete == false).FirstOrDefault();
             var Types = context.TabTypes.Where(t => t.Typeid == Convert.ToInt32(signUpmodel.Type) && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
             var isDriverExist = context.TabDrivers.Where(t => t.ContactNo == signUpmodel.Mobileno && t.IsDelete == true).FirstOrDefault();
-            if (country == null || isDriverExist != null || isServiceLocExist == null || Types == null)
+            if (country == null || isDriverExist != null || isServiceLocExist == null || Types == null || zone == null)
                 return driver;
             tabDrivers.FirstName = signUpmodel.FirstName;
             tabDrivers.LastName = signUpmodel.LastName;
@@ -157,6 +158,7 @@ namespace TaziappzMobileWebAPI.DALayer
             tabDrivers.LoginBy = signUpmodel.Login_by;
             tabDrivers.LoginMethod = signUpmodel.Login_method;
             tabDrivers.IsApproved = true;
+            tabDrivers.Zoneid = zone.Zoneid;
             tabDrivers.IsAvailable = true;
             tabDrivers.OnlineStatus = true;
             tabDrivers.NationalId = signUpmodel.National_id;
