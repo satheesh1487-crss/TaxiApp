@@ -184,9 +184,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddFine(DriverFineInfo driverFineInfo)
         {
-            Validator.validateDriverFine(driverFineInfo);
-            DADriver dADriver = new DADriver();
-            return this.OKResponse(dADriver.AddFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                Validator.validateDriverFine(driverFineInfo);
+                DADriver dADriver = new DADriver();
+                return this.OKResponse(dADriver.AddFine(_context, driverFineInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         [HttpGet]

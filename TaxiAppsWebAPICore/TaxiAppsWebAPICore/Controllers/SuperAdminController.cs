@@ -50,6 +50,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateAdminDetails(adminDetails);
                 DASuperAdmin dASuperAdmin = new DASuperAdmin();
                 return this.OKResponse(dASuperAdmin.Save(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
@@ -67,6 +68,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateAdminDetails(adminDetails);
                 DASuperAdmin dASuperAdmin = new DASuperAdmin();
                 return this.OKResponse(dASuperAdmin.Edit(_context, adminDetails, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
@@ -102,8 +104,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditPassword(AdminPassword adminPassword)
         {
-            DASuperAdmin dASuperAdmin = new DASuperAdmin();
-            return this.OKResponse(dASuperAdmin.EditPassword(_context, adminPassword, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                Validator.validateAdminPassword(adminPassword);
+                DASuperAdmin dASuperAdmin = new DASuperAdmin();
+                return this.OKResponse(dASuperAdmin.EditPassword(_context, adminPassword, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
     }

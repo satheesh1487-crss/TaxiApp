@@ -39,6 +39,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateFAQ(manageFAQList);
                 DAFAQ dAFAQ = new DAFAQ();
                 return this.OKResponse(dAFAQ.EditFAQ(_context, manageFAQList, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
@@ -66,6 +67,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateFAQ(manageFAQList);
                 DAFAQ dAFAQ = new DAFAQ();
                 return this.OKResponse(dAFAQ.SaveFAQ(_context, manageFAQList, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
             }
