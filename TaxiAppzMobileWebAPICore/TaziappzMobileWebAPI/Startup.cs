@@ -115,10 +115,10 @@ namespace TaziappzMobileWebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<MessageHub>("/message");
-            });
+            //app.UseSignalR(routes =>
+            //{
+            //    routes.MapHub<MessageHub>("/Requestmessage");
+            //});
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
@@ -129,6 +129,7 @@ namespace TaziappzMobileWebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/Requestmessage");
             });
             app.UseDeveloperExceptionPage();
             app.UseSwagger();

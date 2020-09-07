@@ -73,8 +73,9 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult RegisterDriver([FromBody] SignUpDrivermodel signUpmodel)
         {
             sign = new DASign(_context, token);
-            bool result = sign.SignUpDriver(signUpmodel);
-            return this.OKStatus(result ? "Driver_Creation_Success" : "Driver_Creation_Failed", result ? 1 : 0);
+            List<DetailsWithDriverToken> detailsWithToken = new List<DetailsWithDriverToken>();
+            detailsWithToken = sign.SignUpDriver(signUpmodel);
+            return this.OK<List<DetailsWithDriverToken>>(detailsWithToken, detailsWithToken.Count == 0 ? "Driver_Creation_Failed" : "Driver_Creation_Success", detailsWithToken.Count == 0 ? 0 : 1);
         }
         /// <summary>
         /// Use to Regenerate AccessToken once Session Exipred

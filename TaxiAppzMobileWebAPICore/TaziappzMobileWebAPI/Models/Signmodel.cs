@@ -66,7 +66,8 @@ namespace TaziappzMobileWebAPI
         public string Login_by { get; set; }
         [JsonProperty("login_method")]
         public string Login_method { get; set; }
-        
+        [JsonProperty("devicetoken")]
+        public string Devicetoken { get; set; }
         [JsonProperty("car_model")]
         public string Car_model { get; set; }
         [JsonProperty("car_number")]
@@ -75,6 +76,8 @@ namespace TaziappzMobileWebAPI
         public string Type { get; set; }
         [JsonProperty("servicelocationid")]
         public long Servicelocationid { get; set; }
+        [JsonProperty("national_id")]
+        public string National_id { get; set; }
         //[JsonProperty("timezone")]
         //public long Timezone { get; set; }
 

@@ -178,10 +178,10 @@ namespace TaxiAppsWebAPICore
                 {
                     app.UseDeveloperExceptionPage();
                 }
-                app.UseSignalR(routes =>
-                {
-                    routes.MapHub<MessageHub>("/message");
-                });
+                //app.UseSignalR(routes =>
+                //{
+                //    routes.MapHub<MessageHub>("/message");
+                //});
 
                 app.UseHttpsRedirection();
 
@@ -192,6 +192,7 @@ namespace TaxiAppsWebAPICore
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
+                    endpoints.MapHub<MessageHub>("/Requestmessage");
                 });
                 app.UseCors("AllowAll");
                 //app.UseMvc();
