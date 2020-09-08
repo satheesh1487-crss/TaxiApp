@@ -39,6 +39,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateEmail(manageEmailOption);
                 DAManangeNotify dAManangeNotify = new DAManangeNotify();
                 return this.OKResponse(dAManangeNotify.EditEmail(_context, manageEmailOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
@@ -92,6 +93,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
+                Validator.validateSMS(manageSMSOption);
                 DAManangeNotify dAManangeNotify = new DAManangeNotify();
                 return this.OKResponse(dAManangeNotify.EditSms(_context, manageSMSOption, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }

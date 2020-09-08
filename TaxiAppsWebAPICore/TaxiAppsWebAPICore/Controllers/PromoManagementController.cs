@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaxiAppsWebAPICore.DataAccessLayer;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.TaxiModels;
 
 namespace TaxiAppsWebAPICore.Controllers
@@ -48,17 +49,35 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult AddPromo(ManagePromo managePromo)
         {
-            DAPromo dAPromo = new DAPromo();
-            return this.OK(dAPromo.AddPromo(managePromo, _content ,User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
+            try
+            {
+                Validator.validatePromo(managePromo);
+                DAPromo dAPromo = new DAPromo();
+                return this.OK(dAPromo.AddPromo(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
+
         [HttpPut]
         [Route("EditPromo")]
         [Authorize]
         public IActionResult EditPromo(ManagePromo managePromo)
         {
-            DAPromo dAPromo = new DAPromo();
-            return this.OK(dAPromo.EditPromo(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
+            try
+            {
+                Validator.validatePromo(managePromo);
+                DAPromo dAPromo = new DAPromo();
+                return this.OK(dAPromo.EditPromo(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
+
         [HttpPut]
         [Route("IsActivePromo")]
         [Authorize]
