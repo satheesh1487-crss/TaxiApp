@@ -42,7 +42,24 @@ namespace TaziappzMobileWebAPI.Controllers
             return this.OK<List<Zone>>(zone, zone.Count == 0 ? "Request_Data_Not_Found" : "Request_Data_Found", zone.Count == 0 ? 0 : 1);
         }
         /// <summary>
-        /// Use to Sent Push notification to Drivers based on User request
+        /// Use to Sent Push notification to Drivers based on User request with signalR logic
+        /// </summary>
+        /// <returns></returns>
+        //[HttpPost]
+        //[Authorize]
+        //[Route("UserCreateRequest")]
+        //public IActionResult Requestprogress([FromBody] RequestVehicleType requestVehicleType)
+        //{
+        //    DARequest dARequest = new DARequest(settingModel);
+        //    UserTripRequest userTripRequest = new UserTripRequest();
+        //    userTripRequest = dARequest.Requestprogress(requestVehicleType, User.ToAppUser(), context);
+        //    if (userTripRequest.IsExist == 0)
+        //        return this.OKStatus("No Data Found",0);
+        //    _messageHubContext.Clients.All.SendAsync("Send", userTripRequest);
+        //        return this.OKStatus(userTripRequest.IsExist == 1 ? "Data Found" : "No Data Found", userTripRequest.IsExist == 1 ? 1 : 0);
+        //}
+        /// <summary>
+        /// Use to Get Confrim Booking Request from User
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -51,14 +68,30 @@ namespace TaziappzMobileWebAPI.Controllers
         public IActionResult Requestprogress([FromBody] RequestVehicleType requestVehicleType)
         {
             DARequest dARequest = new DARequest(settingModel);
-            UserTripRequest userTripRequest = new UserTripRequest();
-            userTripRequest = dARequest.Requestprogress(requestVehicleType, User.ToAppUser(), context);
-            if (userTripRequest.IsExist == 0)
-                return this.OKStatus("No Data Found",0);
-            _messageHubContext.Clients.All.SendAsync("Send", userTripRequest);
-                return this.OKStatus(userTripRequest.IsExist == 1 ? "Data Found" : "No Data Found", userTripRequest.IsExist == 1 ? 1 : 0);
+           // UserTripRequest userTripRequest = new UserTripRequest();
+            bool result = dARequest.UserRequestprogress(requestVehicleType, User.ToAppUser(), context);
+         //   if (userTripRequest.IsExist == 0)
+          //      return this.OKStatus("No Data Found", 0);
+          //  _messageHubContext.Clients.All.SendAsync("Send", userTripRequest);
+            return this.OKStatus(result ? "Data Found" : "No Data Found", result ? 1 : 0);
         }
-
+        /// <summary>
+        /// Use to Send notification based on timer to Driver
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        [Route("DriverGetTripRequest")]
+        public IActionResult DriverRequestsent()
+        {
+            DARequest dARequest = new DARequest(settingModel);
+             UserTripRequest userTripRequest = new UserTripRequest();
+            userTripRequest = dARequest.GetDriverRequest(User.ToAppUser(), context);
+            //   if (userTripRequest.IsExist == 0)
+            //      return this.OKStatus("No Data Found", 0);
+            //  _messageHubContext.Clients.All.SendAsync("Send", userTripRequest);
+            return this.OK<UserTripRequest>(userTripRequest,userTripRequest.IsExist == 1  ? "Data Found" : "No Data Found",userTripRequest.IsExist == 1 ? 1 : 0);
+        }
         /// <summary>
         /// Use to Sent Push notification to Drivers based on User request
         /// </summary>
