@@ -61,9 +61,7 @@ namespace TaxiAppsWebAPICore.Controllers
             catch (DataValidationException ex)
             {
                 return this.KnowOperationError(ex.Message);
-            }
-          
-            
+            }           
         }
 
         //TODO:: check parent record is deleted

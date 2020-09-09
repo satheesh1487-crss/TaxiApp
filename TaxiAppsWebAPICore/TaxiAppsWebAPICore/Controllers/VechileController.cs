@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
+using TaxiAppsWebAPICore.Helper;
 using TaxiAppsWebAPICore.Models;
 using TaxiAppsWebAPICore.TaxiModels;
 using TaziappzMobileWebAPI.Models;
@@ -40,8 +41,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult SaveType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
-            DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                Validator.validateVehicle(vehicleTypeInfo);
+                DAVechile dATypes = new DAVechile();
+                return this.OKResponse(dATypes.AddType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }          
         }
 
 
@@ -51,8 +60,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditType([FromBody] VehicleTypeInfo vehicleTypeInfo)
         {
-            DAVechile dATypes = new DAVechile();
-            return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                Validator.validateVehicle(vehicleTypeInfo);
+                DAVechile dATypes = new DAVechile();
+                return this.OKResponse(dATypes.EditType(_context, vehicleTypeInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         //TODO:: check parent record is deleted
@@ -117,8 +134,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult SaveEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
         {
-            DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            try
+            {
+                Validator.validateEmerVehicle(vehicleEmerInfo);
+                DAVechile dAVechile = new DAVechile();
+                return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }            
         }
 
         //TODO:: Duplicate record check
@@ -127,8 +152,16 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult EditEmer([FromBody] VehicleEmerInfo vehicleEmerInfo)
         {
-            DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.EditEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            try
+            {
+                Validator.validateEmerVehicle(vehicleEmerInfo);
+                DAVechile dAVechile = new DAVechile();
+                return this.OKResponse(dAVechile.EditEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }           
         }
 
         //TODO:: check parent record is deleted

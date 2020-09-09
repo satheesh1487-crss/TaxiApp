@@ -613,5 +613,35 @@ namespace TaxiAppsWebAPICore.Helper
                 throw new DataValidationException($"Password does not exists");
             }
         }
+        public static void validateVehicle(VehicleTypeInfo vehicleTypeInfo)
+        {
+            if (vehicleTypeInfo.Id == 0)
+            {
+                throw new DataValidationException($"Id does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeInfo.Name))
+            {
+                throw new DataValidationException($"Name does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeInfo.Image))
+            {
+                throw new DataValidationException($"Image does not exists");
+            }
+        }
+        public static void validateEmerVehicle(VehicleEmerInfo vehicleEmerInfo)
+        {
+            if (vehicleEmerInfo.Id == 0)
+            {
+                throw new DataValidationException($"Id does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleEmerInfo.Name))
+            {
+                throw new DataValidationException($"Name does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleEmerInfo.Number))
+            {
+                throw new DataValidationException($"Number does not exists");
+            }
+        }
     }
 }

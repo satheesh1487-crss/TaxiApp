@@ -22,14 +22,14 @@ namespace TaxiAppsWebAPICore
                 var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var vechiles in vechilesTupe)
                 {
-                    var files= File.ReadAllBytes(filesStorage.GetDownloadFile(vechiles.Imagename, vechiles.Typeid.ToString(), "VechileTypes").FullName);
+                    var files = File.ReadAllBytes(filesStorage.GetDownloadFile(vechiles.Imagename, vechiles.Typeid.ToString(), "VechileTypes").FullName);
                     vehicleTypeLists.Add(new VehicleTypeList()
                     {
                         Id = vechiles.Typeid,
-                        Image =Convert.ToBase64String(files),
+                        Image = Convert.ToBase64String(files),
                         IsActive = vechiles.IsActive == 1 ? true : false,
                         Name = vechiles.Typename
-                    }); 
+                    });
                 }
                 return vehicleTypeLists;
             }
@@ -64,7 +64,7 @@ namespace TaxiAppsWebAPICore
                 context.SaveChanges();
 
                 filesStorage.MoveToPersistant(file.Filename, tabTypes.Typeid.ToString(), "VechileTypes");
-                isFileMoved=true;
+                isFileMoved = true;
 
                 return true;
             }
@@ -225,51 +225,36 @@ namespace TaxiAppsWebAPICore
 
         public bool SaveEmer(TaxiAppzDBContext context, VehicleEmerInfo vehicleEmerInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                TabSos tabSos = new TabSos();
-                tabSos.Sosid = vehicleEmerInfo.Id;
-                tabSos.Sosname = vehicleEmerInfo.Name;
-                tabSos.ContactNumber = vehicleEmerInfo.Number;
-                tabSos.IsActive = 1;
-                tabSos.IsDeleted = 0;
-                tabSos.CreatedAt = tabSos.UpdatedAt = DateTime.UtcNow;
-                tabSos.CreatedBy = tabSos.UpdatedBy = loggedInUser.UserName;
-                context.TabSos.Add(tabSos);
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Extention.insertlog(ex.Message, loggedInUser.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, context);
-                return false;
-            }
+            TabSos tabSos = new TabSos();
+            tabSos.Sosid = vehicleEmerInfo.Id;
+            tabSos.Sosname = vehicleEmerInfo.Name;
+            tabSos.ContactNumber = vehicleEmerInfo.Number;
+            tabSos.IsActive = 1;
+            tabSos.IsDeleted = 0;
+            tabSos.CreatedAt = tabSos.UpdatedAt = DateTime.UtcNow;
+            tabSos.CreatedBy = tabSos.UpdatedBy = loggedInUser.UserName;
+            context.TabSos.Add(tabSos);
+            context.SaveChanges();
+            return true;
         }
 
         public bool EditEmer(TaxiAppzDBContext context, VehicleEmerInfo vehicleEmerInfo, LoggedInUser loggedInUser)
         {
-            try
-            {
-                var tabSos = context.TabSos.Where(r => r.Sosid == vehicleEmerInfo.Id && r.IsDeleted == 0).FirstOrDefault();
-                if (tabSos != null)
-                {
 
-                    tabSos.Sosname = vehicleEmerInfo.Name;
-                    tabSos.ContactNumber = vehicleEmerInfo.Number;
-
-                    tabSos.UpdatedAt = DateTime.UtcNow;
-                    tabSos.UpdatedBy = loggedInUser.UserName;
-                    context.Update(tabSos);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
+            var tabSos = context.TabSos.Where(r => r.Sosid == vehicleEmerInfo.Id && r.IsDeleted == 0).FirstOrDefault();
+            if (tabSos != null)
             {
-                Extention.insertlog(ex.Message, loggedInUser.UserName, System.Reflection.MethodBase.GetCurrentMethod().Name, context);
-                return false;
+
+                tabSos.Sosname = vehicleEmerInfo.Name;
+                tabSos.ContactNumber = vehicleEmerInfo.Number;
+
+                tabSos.UpdatedAt = DateTime.UtcNow;
+                tabSos.UpdatedBy = loggedInUser.UserName;
+                context.Update(tabSos);
+                context.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         public bool DeleteEmer(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
