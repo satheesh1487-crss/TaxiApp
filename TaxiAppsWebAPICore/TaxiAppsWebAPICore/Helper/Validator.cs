@@ -510,11 +510,8 @@ namespace TaxiAppsWebAPICore.Helper
         }
         public static void validateService(ServiceInfo serviceInfo)
         {
-            if (serviceInfo.ServiceId == 0)
-            {
-                throw new DataValidationException($"ServiceId does not exists");
-            }
-            if (!string.IsNullOrEmpty(serviceInfo.ServiceName))
+            
+            if (string.IsNullOrEmpty(serviceInfo.ServiceName))
             {
                 throw new DataValidationException($"ServiceName does not exists");
             }
@@ -537,11 +534,11 @@ namespace TaxiAppsWebAPICore.Helper
         }
         public static void validateAdminDetails(AdminDetails adminDetails)
         {
-            if (!string.IsNullOrEmpty(adminDetails.Firstname))
+            if (string.IsNullOrEmpty(adminDetails.Firstname))
             {
                 throw new DataValidationException($"Firstname does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.Lastname))
+            if (string.IsNullOrEmpty(adminDetails.Lastname))
             {
                 throw new DataValidationException($"Lastname does not exists");
             }
@@ -553,15 +550,15 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Area does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.Email))
+            if (string.IsNullOrEmpty(adminDetails.Email))
             {
                 throw new DataValidationException($"Email does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.Phonenumber))
+            if (string.IsNullOrEmpty(adminDetails.Phonenumber))
             {
                 throw new DataValidationException($"Phonenumber does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.Emerphonenumber))
+            if (string.IsNullOrEmpty(adminDetails.Emerphonenumber))
             {
                 throw new DataValidationException($"Emerphonenumber does not exists");
             }
@@ -573,11 +570,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Country does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.Address))
+            if (string.IsNullOrEmpty(adminDetails.Address))
             {
                 throw new DataValidationException($"Address does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.TimeZone))
+            if (string.IsNullOrEmpty(adminDetails.TimeZone))
             {
                 throw new DataValidationException($"TimeZone does not exists");
             }
@@ -585,22 +582,22 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Languagename does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.Userlogin))
+            if (string.IsNullOrEmpty(adminDetails.Userlogin))
             {
                 throw new DataValidationException($"Userlogin does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.Password))
+            if (string.IsNullOrEmpty(adminDetails.Password))
             {
                 throw new DataValidationException($"Password does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.ProfilePicture))
+            if (string.IsNullOrEmpty(adminDetails.ProfilePicture))
             {
                 throw new DataValidationException($"ProfilePicture does not exists");
             }
-            if (!string.IsNullOrEmpty(adminDetails.DocumentName))
+            /*if (string.IsNullOrEmpty(adminDetails.DocumentName))
             {
                 throw new DataValidationException($"DocumentName does not exists");
-            }
+            }*/
         }
         public static void validateAdminPassword(AdminPassword adminPassword)
         {
@@ -611,6 +608,36 @@ namespace TaxiAppsWebAPICore.Helper
             if (!string.IsNullOrEmpty(adminPassword.Password))
             {
                 throw new DataValidationException($"Password does not exists");
+            }
+        }
+        public static void validateVehicle(VehicleTypeInfo vehicleTypeInfo)
+        {
+            if (vehicleTypeInfo.Id == 0)
+            {
+                throw new DataValidationException($"Id does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeInfo.Name))
+            {
+                throw new DataValidationException($"Name does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeInfo.Image))
+            {
+                throw new DataValidationException($"Image does not exists");
+            }
+        }
+        public static void validateEmerVehicle(VehicleEmerInfo vehicleEmerInfo)
+        {
+            if (vehicleEmerInfo.Id == 0)
+            {
+                throw new DataValidationException($"Id does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleEmerInfo.Name))
+            {
+                throw new DataValidationException($"Name does not exists");
+            }
+            if (!string.IsNullOrEmpty(vehicleEmerInfo.Number))
+            {
+                throw new DataValidationException($"Number does not exists");
             }
         }
     }
