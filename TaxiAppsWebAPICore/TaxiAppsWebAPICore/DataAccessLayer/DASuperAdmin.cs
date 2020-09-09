@@ -86,7 +86,7 @@ namespace TaxiAppsWebAPICore
                 throw new DataValidationException($"Email id '{emailid.Email}' already exists.");
 
             var service = context.TabServicelocation.FirstOrDefault(t => t.IsDeleted == 0 && t.Servicelocid ==  adminDetails.Area);
-            if (service != null)
+            if (service == null)
                 throw new DataValidationException($"Service location  does not exists.");
 
             var role = context.TabRoles.FirstOrDefault(t => t.IsDelete == 0 && t.Roleid == adminDetails.RoleId);
