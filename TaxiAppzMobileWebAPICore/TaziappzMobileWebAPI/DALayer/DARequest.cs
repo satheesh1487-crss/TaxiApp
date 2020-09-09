@@ -149,7 +149,7 @@ namespace TaziappzMobileWebAPI.DALayer
                 return zone;
             }
         }
-        //test
+        #region API while user do confirm booking if signalR got enabled
         public UserTripRequest Requestprogress(RequestVehicleType requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();
@@ -194,7 +194,7 @@ namespace TaziappzMobileWebAPI.DALayer
             context.TabRequestPlace.Add(tabRequestPlace);
 
             List<DriversList> driversListwithDistance = new List<DriversList>();
-           //  driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
+            //  driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
             driversListwithDistance = requestVehicleType.DriversLists.OrderBy(t => t.Distance).ToList();
             int index = 0;
             foreach (var driver in driversListwithDistance)
@@ -230,7 +230,114 @@ namespace TaziappzMobileWebAPI.DALayer
             //  var tabrequest = context.TabRequestPlace.Include(t => t.)
             return userTripRequest;
         }
+        #endregion
 
+        #region API call while user do confirm booking for timer API Call
+        public bool UserRequestprogress(RequestVehicleType requestVehicleType, LoggedInUser loggedInUser, TaxiAppzDBContext context)
+        {
+            TabUser tabUser = new TabUser();
+           // UserTripRequest userTripRequest = new UserTripRequest();
+            var isRequestExist = context.TabRequest.Where(t => t.UserId == loggedInUser.id && t.IsCancelled == false).FirstOrDefault();
+            if (isRequestExist != null)
+            //{
+           //     userTripRequest.IsExist = 0;
+                return false;
+           // }
+            var userid = context.TabUser.Where(t => t.PhoneNumber.Contains(loggedInUser.Contactno) && t.IsActive == true && t.IsDelete == 0).Select(t => t.Id).FirstOrDefault();
+            if (userid == 0)
+           // {
+           //     userTripRequest.IsExist = 0;
+                return false;
+           // }
+            Random random = new Random();
+            var reqid = random.Next(001, 9999);
+            TabRequest tabRequest = new TabRequest();
+            tabRequest.RequestId = "REQ_" + reqid;
+            tabRequest.RequestOtp = random.Next(1000, 9999);
+            tabRequest.UserId = userid;
+            tabRequest.IsCancelled = false;
+            tabRequest.IsCompleted = false;
+            tabRequest.IsDriverArrived = false;
+            tabRequest.IsDriverStarted = false;
+            tabRequest.IsTripStart = false;
+            context.TabRequest.Add(tabRequest);
+            context.SaveChanges();
+
+            TabRequestPlace tabRequestPlace = new TabRequestPlace();
+            tabRequestPlace.PickLatitude = requestVehicleType.Picklatitude;
+            tabRequestPlace.PickLongitude = requestVehicleType.Picklongtitude;
+            tabRequestPlace.DropLatitude = requestVehicleType.Droplatitude;
+            tabRequestPlace.DropLongitude = requestVehicleType.droplongtitude;
+            tabRequestPlace.PickLocation = requestVehicleType.Pickuplocation;
+            tabRequestPlace.DropLocation = requestVehicleType.Droplocation;
+            tabRequestPlace.RequestId = tabRequest.Id;
+            tabRequestPlace.IsActive = true;
+            tabRequestPlace.CreatedBy = loggedInUser.Contactno;
+            tabRequestPlace.CreatedAt = DateTime.UtcNow;
+            context.TabRequestPlace.Add(tabRequestPlace);
+
+            List<DriversList> driversListwithDistance = new List<DriversList>();
+            //  driversListwithDistance = SortLocation(requestVehicleType).OrderBy(t => t.Distance).ToList();
+            driversListwithDistance = requestVehicleType.DriversLists.OrderBy(t => t.Distance).ToList();
+            int index = 0;
+            foreach (var driver in driversListwithDistance)
+            {
+                TabRequestMeta tabRequestMeta = new TabRequestMeta();
+                tabRequestMeta.RequestId = tabRequest.Id;
+                tabRequestMeta.UserId = userid;
+                tabRequestMeta.DriverId = driver.Driverid;
+                tabRequestMeta.IsActive = index == 0;
+                tabRequestMeta.AssignMethod = "OnebyOne";
+                tabRequestMeta.Notification = "Normal Request";
+                tabRequestMeta.CreatedAt = DateTime.UtcNow;
+                index++;
+                context.TabRequestMeta.Add(tabRequestMeta);
+            }
+            context.SaveChanges();
+            return true;
+            //var requestmetadtls = context.TabRequestMeta.Include(t => t.User).Include(t => t.Driver).Where(t => t.RequestId == tabRequest.Id && t.IsActive == true && t.AssignMethod.ToUpper() == "ONEBYONE").FirstOrDefault();
+            //var requestplace = context.TabRequestPlace.Where(t => t.RequestId == requestmetadtls.RequestId).FirstOrDefault();
+            //if (requestmetadtls == null || requestplace == null)
+            //{
+            //    userTripRequest.IsExist = 0;
+            //    return userTripRequest;
+            //}
+            //else
+            //    userTripRequest.UserName = requestmetadtls.User.Firstname;
+            //userTripRequest.Pickup = requestplace.PickLocation;
+            //userTripRequest.Droplocation = requestplace.DropLocation;
+            //userTripRequest.driverid = requestmetadtls.Driver.Driverid;
+            //userTripRequest.DriverName = requestmetadtls.Driver.FirstName;
+            //userTripRequest.Triptype = requestmetadtls.AssignMethod;
+            //userTripRequest.IsExist = 1;
+            ////  var tabrequest = context.TabRequestPlace.Include(t => t.)
+            //return userTripRequest;
+        }
+        #endregion
+
+        #region driver API during waiting for trip
+        public UserTripRequest GetDriverRequest(LoggedInUser loggedInDriver, TaxiAppzDBContext context)
+        {
+            UserTripRequest userTripRequest = new UserTripRequest();
+            var requestmetadtls = context.TabRequestMeta.Include(t => t.User).Include(t => t.Driver).Where(t => t.DriverId == loggedInDriver.id && t.IsActive == true && t.AssignMethod.ToUpper() == "ONEBYONE").FirstOrDefault();
+            var requestplace = context.TabRequestPlace.Where(t => t.RequestId == requestmetadtls.RequestId).FirstOrDefault();
+            if (requestmetadtls == null || requestplace == null)
+            {
+                userTripRequest.IsExist = 0;
+                return userTripRequest;
+            }
+            else
+                userTripRequest.UserName = requestmetadtls.User.Firstname;
+            userTripRequest.Pickup = requestplace.PickLocation;
+            userTripRequest.Droplocation = requestplace.DropLocation;
+            userTripRequest.driverid = requestmetadtls.Driver.Driverid;
+            userTripRequest.DriverName = requestmetadtls.Driver.FirstName;
+            userTripRequest.Triptype = requestmetadtls.AssignMethod;
+            userTripRequest.IsExist = 1;
+            //  var tabrequest = context.TabRequestPlace.Include(t => t.)
+            return userTripRequest;
+        }
+        #endregion
         public bool DeleteMetaDriver(LoggedInUser loggedInUser, TaxiAppzDBContext context)
         {
             TabUser tabUser = new TabUser();

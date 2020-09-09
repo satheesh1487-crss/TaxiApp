@@ -28,11 +28,37 @@ namespace TaziappzMobileWebAPI.DALayer
             var tripdtls = new TabRequest();
             if (requestmeta == null)
             {
-                tripdtls = context.TabRequest.Include(t => t.User).Where(t => t.DriverId == driverdtls.Driverid).FirstOrDefault();
+                tripdtls = context.TabRequest.Include(t => t.User).Where(t => t.DriverId == driverdtls.Driverid && t.IsCancelled ==false && t.DriverRated == 0 && t.UserRated == 0).FirstOrDefault();
             }
             var servicelocdetails = context.TabServicelocation.Where(t => t.Servicelocid == driverdtls.Serviceloc.Servicelocid && t.IsActive == 1 && t.IsDeleted == 0).FirstOrDefault();
-            if(servicelocdetails == null)
+            if (servicelocdetails == null)
                 return requestInProgresses;
+            if(tripdtls == null)
+            {
+                requestInProgresses.Add(new RequestInProgress()
+                {
+                    Id = driverdtls.Driverid,
+                    Name = driverdtls.FirstName,
+                    Email = driverdtls.Email,
+                    Mobile = driverdtls.ContactNo,
+                    Profile_picture = "",
+                    Active = driverdtls.IsActive,
+
+                    Approve = driverdtls.IsApproved,
+                    Availabe = driverdtls.IsAvailable,
+                    Uploaded_document = driverdtls.Email,
+                    Service_location_id = driverdtls.ContactNo,
+                    Vehicle_type_id = driverdtls.Type.Typeid,
+                    Vehicle_type_name = driverdtls.Type.Typename,
+
+                    Car_make = driverdtls.Carmanufacturer,
+                    Car_model = driverdtls.Carmodel,
+                    Car_color = driverdtls.Carcolor,
+                    Car_number = driverdtls.Carnumber,
+                    metaRequest = null
+                });
+                return requestInProgresses;
+            }
             Details userdetails = new Details();
             userdetails.Id = requestmeta != null ? requestmeta.User.Id : tripdtls.User.Id;
             userdetails.Name = requestmeta != null ? requestmeta.User.Firstname : tripdtls.User.Firstname;

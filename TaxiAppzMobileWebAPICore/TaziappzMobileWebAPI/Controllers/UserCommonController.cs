@@ -59,6 +59,26 @@ namespace TaziappzMobileWebAPI.Controllers
             }           
         }
         #endregion
+        #region user profile retrive
+        [HttpPost]
+        [Authorize]
+        [Route("UserProfileRetrive")]
+        public IActionResult UserProfileRetrive()
+        {
+            try
+            {
+                List<UserRequestInProgress> requestInProgressModel = new List<UserRequestInProgress>();
+                DAUserCommon dAUserCommon = new DAUserCommon();
+                 requestInProgressModel = dAUserCommon.UserProfileRetrive(User.ToAppUser(), _context);
+
+                return this.OK<List<UserRequestInProgress>>(requestInProgressModel, requestInProgressModel.Count == 0 ? "Request_Not_Found" : "Request_found", requestInProgressModel.Count == 0 ? 0 : 1);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+        }
+        #endregion
 
         #region Common-zonesos       
         [HttpPost]
