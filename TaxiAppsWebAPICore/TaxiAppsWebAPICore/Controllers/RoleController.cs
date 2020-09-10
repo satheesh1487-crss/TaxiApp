@@ -54,7 +54,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateRole(roles);
+                Validator.validateAddRole(roles);
                 DARoles dARoles = new DARoles();
                 return this.OKResponse(dARoles.AddRole(_context, roles, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -74,7 +74,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateRole(roles);
+                Validator.validateEditRole(roles);
                 DARoles dARoles = new DARoles();
                 return this.OKResponse(dARoles.EditRole(_context, id, roles, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
