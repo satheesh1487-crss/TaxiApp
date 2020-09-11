@@ -33,6 +33,7 @@ namespace TaziappzMobileWebAPI.DALayer
                 {
                     var zonepolygon = context.TabZonepolygon.Where(t => t.Zoneid == zone.Zoneid && t.IsActive == 1 && t.IsDeleted == 0).ToList();
                     List<LatLong> listlatlong = new List<LatLong>();
+                    
                     foreach (var zonepoly in zonepolygon)
                     {
                         listlatlong.Add(new LatLong()
@@ -40,21 +41,54 @@ namespace TaziappzMobileWebAPI.DALayer
                             Picklatitude = zonepoly.Latitudes,
                             Picklongtitude = zonepoly.Longitudes
                         });
+                        
                     }
+                    LatLong[] vs = listlatlong.ToArray();
+
+
                     if (listlatlong.Count > 0)
                     {
-                        int i, k;
-                        int nvert = listlatlong.Count;
-                        bool result = false;
-                        for (i = 0, k = nvert - 1; i < nvert; k = i++)
+                        int i, j;
+                        bool c = false;
+                        for (i = 0, j = listlatlong.Count - 1; i < listlatlong.Count; j = i++)
                         {
-                            if (((listlatlong[i].Picklongtitude > latLong.Picklongtitude) != (listlatlong[k].Picklongtitude > latLong.Picklongtitude)) &&
-                             (latLong.Picklatitude < (listlatlong[k].Picklatitude - listlatlong[i].Picklatitude) * (latLong.Picklongtitude - listlatlong[i].Picklongtitude) / (listlatlong[k].Picklongtitude - listlatlong[i].Picklongtitude) + listlatlong[i].Picklatitude))
-                                result = !result;
+                            if (((((double)listlatlong[i].Picklatitude <= (double)latLong.Picklatitude) && ((double)latLong.Picklatitude < (double)listlatlong[j].Picklatitude))
+                                    || (((double)listlatlong[j].Picklatitude <= (double)latLong.Picklatitude) && ((double)latLong.Picklatitude < (double)listlatlong[i].Picklatitude)))
+                                    && ((double)latLong.Picklongtitude < ((double)listlatlong[j].Picklongtitude - (double)listlatlong[i].Picklongtitude) * ((double)latLong.Picklatitude - (double)listlatlong[i].Picklatitude)
+                                        / ((double)listlatlong[j].Picklatitude - (double)listlatlong[i].Picklatitude) + (double)listlatlong[i].Picklongtitude))
+                            {
+
+                                c = !c;
+                            }
                         }
-                        if (result)
-                            return zone.Zoneid;
+
+                        //decimal? x = latLong.Picklatitude;
+                        //decimal? y = latLong.Picklongtitude;
+
+                        //bool inside = false;
+                        //for (int i = 0, j = vs.Length - 1; i < vs.Length; j = i++)
+                        //{
+                        //    decimal? xi = vs[i].Picklatitude, yi = vs[i].Picklongtitude;
+                        //    decimal? xj = vs[j].Picklatitude, yj = vs[j].Picklongtitude;
+
+                        //    var intersect = ((yi > y) != (yj > y))
+                        //        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                        //    if (intersect) inside = !inside;
                         //}
+
+                        //     inside;
+                        //int i, k;
+                        //int nvert = listlatlong.Count;
+                        //bool result = false;
+                        //for (i = 0, k = nvert - 1; i < nvert; k = i++)
+                        //{
+                        //    if (((listlatlong[i].Picklongtitude > latLong.Picklongtitude) != (listlatlong[k].Picklongtitude > latLong.Picklongtitude)) &&
+                        //     (latLong.Picklatitude < (listlatlong[k].Picklatitude - listlatlong[i].Picklatitude) * (latLong.Picklongtitude - listlatlong[i].Picklongtitude) / (listlatlong[k].Picklongtitude - listlatlong[i].Picklongtitude) + listlatlong[i].Picklatitude))
+                        //        result = !result;
+                        //}
+                        if (c)
+                            return zone.Zoneid;
+
                     }
                 }
                 //var zonepolygon = context.TabZonepolygon.Where(t => t.Zoneid == zone.TabZone && t.IsActive == 1 && t.IsDeleted == 0).ToList();
