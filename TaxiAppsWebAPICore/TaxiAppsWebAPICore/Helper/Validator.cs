@@ -10,11 +10,11 @@ namespace TaxiAppsWebAPICore.Helper
     {
         public static void validateZoneAdd(ManageZoneAdd manageZone)
         {
-            if (!string.IsNullOrEmpty(manageZone.ZoneName))
+            if (string.IsNullOrEmpty(manageZone.ZoneName))
             {
                 throw new DataValidationException($"ZoneName does not exists");
             }
-            if (!string.IsNullOrEmpty(manageZone.Unit))
+            if (string.IsNullOrEmpty(manageZone.Unit))
             {
                 throw new DataValidationException($"Unit does not exists");
             }
@@ -38,11 +38,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Typeid does not exists");
             }
-            if (!string.IsNullOrEmpty(zoneTypeRelation.Paymentmode))
+            if (string.IsNullOrEmpty(zoneTypeRelation.Paymentmode))
             {
                 throw new DataValidationException($"Paymentmode does not exists");
             }
-            if (!string.IsNullOrEmpty(zoneTypeRelation.Showbill))
+            if (string.IsNullOrEmpty(zoneTypeRelation.Showbill))
             {
                 throw new DataValidationException($"Showbill does not exists");
             }
@@ -58,23 +58,23 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Zonetypeid does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelUserInfo.PaymentStatus))
+            if (string.IsNullOrEmpty(cancelUserInfo.PaymentStatus))
             {
                 throw new DataValidationException($"PaymentStatus does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelUserInfo.ArrivalStatus))
+            if (string.IsNullOrEmpty(cancelUserInfo.ArrivalStatus))
             {
                 throw new DataValidationException($"ArrivalStatus does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelUserInfo.CancelReasonArabic))
+            if (string.IsNullOrEmpty(cancelUserInfo.CancelReasonArabic))
             {
                 throw new DataValidationException($"CancelReasonArabic does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelUserInfo.CancelReasonEnglish))
+            if (string.IsNullOrEmpty(cancelUserInfo.CancelReasonEnglish))
             {
                 throw new DataValidationException($"CancelReasonEnglish does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelUserInfo.CancelReasonSpanish))
+            if (string.IsNullOrEmpty(cancelUserInfo.CancelReasonSpanish))
             {
                 throw new DataValidationException($"CancelReasonSpanish does not exists");
             }
@@ -90,23 +90,23 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Zonetypeid does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelDriverInfo.PaymentStatus))
+            if (string.IsNullOrEmpty(cancelDriverInfo.PaymentStatus))
             {
                 throw new DataValidationException($"PaymentStatus does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelDriverInfo.ArrivalStatus))
+            if (string.IsNullOrEmpty(cancelDriverInfo.ArrivalStatus))
             {
                 throw new DataValidationException($"ArrivalStatus does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelDriverInfo.CancelReasonArabic))
+            if (string.IsNullOrEmpty(cancelDriverInfo.CancelReasonArabic))
             {
                 throw new DataValidationException($"CancelReasonArabic does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelDriverInfo.CancelReasonEnglish))
+            if (string.IsNullOrEmpty(cancelDriverInfo.CancelReasonEnglish))
             {
                 throw new DataValidationException($"CancelReasonEnglish does not exists");
             }
-            if (!string.IsNullOrEmpty(cancelDriverInfo.CancelReasonSpanish))
+            if (string.IsNullOrEmpty(cancelDriverInfo.CancelReasonSpanish))
             {
                 throw new DataValidationException($"CancelReasonSpanish does not exists");
             }
@@ -121,11 +121,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"UserCompalintID does not exists");
             }
-            if (!string.IsNullOrEmpty(managePromo.UserComplaintTitle))
+            if (string.IsNullOrEmpty(managePromo.UserComplaintTitle))
             {
                 throw new DataValidationException($"UserComplaintTitle does not exists");
             }
-            if (!string.IsNullOrEmpty(managePromo.UserComplaintType))
+            if (string.IsNullOrEmpty(managePromo.UserComplaintType))
             {
                 throw new DataValidationException($"UserComplaintType does not exists");
             }
@@ -141,11 +141,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"DriverCompalintID does not exists");
             }
-            if (!string.IsNullOrEmpty(managePromo.DriverComplaintTitle))
+            if (string.IsNullOrEmpty(managePromo.DriverComplaintTitle))
             {
                 throw new DataValidationException($"DriverComplaintTitle does not exists");
             }
-            if (!string.IsNullOrEmpty(managePromo.DriverComplaintType))
+            if (string.IsNullOrEmpty(managePromo.DriverComplaintType))
             {
                 throw new DataValidationException($"DriverComplaintType does not exists");
             }
@@ -161,11 +161,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"StandardId does not exists");
             }
-            if (!string.IsNullOrEmpty(currencyInfo.CurrencyName))
+            if (string.IsNullOrEmpty(currencyInfo.CurrencyName))
             {
                 throw new DataValidationException($"CurrencyName does not exists");
             }
-            if (!string.IsNullOrEmpty(currencyInfo.CurrencySymbol))
+            if (string.IsNullOrEmpty(currencyInfo.CurrencySymbol))
             {
                 throw new DataValidationException($"CurrencySymbol does not exists");
             }
@@ -204,51 +204,51 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"ZoneId does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.State))
+            if (string.IsNullOrEmpty(editDriver.State))
             {
                 throw new DataValidationException($"State does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.ProfilePic))
+            if (string.IsNullOrEmpty(editDriver.ProfilePic))
             {
                 throw new DataValidationException($"ProfilePic does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.Password))
+            if (string.IsNullOrEmpty(editDriver.Password))
             {
                 throw new DataValidationException($"Password does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.NationalId))
+            if (string.IsNullOrEmpty(editDriver.NationalId))
             {
                 throw new DataValidationException($"NationalId does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.LastName))
+            if (string.IsNullOrEmpty(editDriver.LastName))
             {
                 throw new DataValidationException($"LastName does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.Address))
+            if (string.IsNullOrEmpty(editDriver.Address))
             {
                 throw new DataValidationException($"Address does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.City))
+            if (string.IsNullOrEmpty(editDriver.City))
             {
                 throw new DataValidationException($"City does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.Company))
+            if (string.IsNullOrEmpty(editDriver.Company))
             {
                 throw new DataValidationException($"Company does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.ContactNo))
+            if (string.IsNullOrEmpty(editDriver.ContactNo))
             {
                 throw new DataValidationException($"ContactNo does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.Email))
+            if (string.IsNullOrEmpty(editDriver.Email))
             {
                 throw new DataValidationException($"Email does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.Gender))
+            if (string.IsNullOrEmpty(editDriver.Gender))
             {
                 throw new DataValidationException($"Gender does not exists");
             }
-            if (!string.IsNullOrEmpty(editDriver.FirstName))
+            if (string.IsNullOrEmpty(editDriver.FirstName))
             {
                 throw new DataValidationException($"FirstName does not exists");
             }
@@ -275,67 +275,67 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"ZoneId does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.State))
+            if (string.IsNullOrEmpty(driverInfo.State))
             {
                 throw new DataValidationException($"State does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.ProfilePic))
+            if (string.IsNullOrEmpty(driverInfo.ProfilePic))
             {
                 throw new DataValidationException($"ProfilePic does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.Password))
+            if (string.IsNullOrEmpty(driverInfo.Password))
             {
                 throw new DataValidationException($"Password does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.NationalId))
+            if (string.IsNullOrEmpty(driverInfo.NationalId))
             {
                 throw new DataValidationException($"NationalId does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.LastName))
+            if (string.IsNullOrEmpty(driverInfo.LastName))
             {
                 throw new DataValidationException($"LastName does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.Address))
+            if (string.IsNullOrEmpty(driverInfo.Address))
             {
                 throw new DataValidationException($"Address does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.City))
+            if (string.IsNullOrEmpty(driverInfo.City))
             {
                 throw new DataValidationException($"City does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.Company))
+            if (string.IsNullOrEmpty(driverInfo.Company))
             {
                 throw new DataValidationException($"Company does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.ContactNo))
+            if (string.IsNullOrEmpty(driverInfo.ContactNo))
             {
                 throw new DataValidationException($"ContactNo does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.Email))
+            if (string.IsNullOrEmpty(driverInfo.Email))
             {
                 throw new DataValidationException($"Email does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.Gender))
+            if (string.IsNullOrEmpty(driverInfo.Gender))
             {
                 throw new DataValidationException($"Gender does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.FirstName))
+            if (string.IsNullOrEmpty(driverInfo.FirstName))
             {
                 throw new DataValidationException($"FirstName does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.CarColour))
+            if (string.IsNullOrEmpty(driverInfo.CarColour))
             {
                 throw new DataValidationException($"CarColour does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.CarManu))
+            if (string.IsNullOrEmpty(driverInfo.CarManu))
             {
                 throw new DataValidationException($"CarManu does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.CarModel))
+            if (string.IsNullOrEmpty(driverInfo.CarModel))
             {
                 throw new DataValidationException($"CarModel does not exists");
             }
-            if (!string.IsNullOrEmpty(driverInfo.CarNumber))
+            if (string.IsNullOrEmpty(driverInfo.CarNumber))
             {
                 throw new DataValidationException($"CarNumber does not exists");
             }
@@ -381,7 +381,7 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Fineamount does not exists");
             }
-            if (!string.IsNullOrEmpty(driverFineInfo.Fine_reason))
+            if (string.IsNullOrEmpty(driverFineInfo.Fine_reason))
             {
                 throw new DataValidationException($"Fine_reason does not exists");
             }
@@ -400,22 +400,22 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Amount does not exists");
             }
-            if (!string.IsNullOrEmpty(driverBonusInfo.Reason))
+            if (string.IsNullOrEmpty(driverBonusInfo.Reason))
             {
                 throw new DataValidationException($"Reason does not exists");
             }
         }
         public static void validateFAQ(ManageFAQList manageFAQList)
         {
-            if (!string.IsNullOrEmpty(manageFAQList.FAQ_Question))
+            if (string.IsNullOrEmpty(manageFAQList.FAQ_Question))
             {
                 throw new DataValidationException($"FAQ_Question does not exists");
             }
-            if (!string.IsNullOrEmpty(manageFAQList.FAQ_Answer))
+            if (string.IsNullOrEmpty(manageFAQList.FAQ_Answer))
             {
                 throw new DataValidationException($"FAQ_Answer does not exists");
             }
-            if (!string.IsNullOrEmpty(manageFAQList.Complaint_Type))
+            if (string.IsNullOrEmpty(manageFAQList.Complaint_Type))
             {
                 throw new DataValidationException($"Complaint_Type does not exists");
             }
@@ -426,11 +426,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Id does not exists");
             }
-            if (!string.IsNullOrEmpty(manageEmailOption.EmailTitle))
+            if (string.IsNullOrEmpty(manageEmailOption.EmailTitle))
             {
                 throw new DataValidationException($"EmailTitle does not exists");
             }
-            if (!string.IsNullOrEmpty(manageEmailOption.Description))
+            if (string.IsNullOrEmpty(manageEmailOption.Description))
             {
                 throw new DataValidationException($"Description does not exists");
             }
@@ -441,11 +441,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Id does not exists");
             }
-            if (!string.IsNullOrEmpty(manageSMSOption.SMSTitle))
+            if (string.IsNullOrEmpty(manageSMSOption.SMSTitle))
             {
                 throw new DataValidationException($"SMSTitle does not exists");
             }
-            if (!string.IsNullOrEmpty(manageSMSOption.Description))
+            if (string.IsNullOrEmpty(manageSMSOption.Description))
             {
                 throw new DataValidationException($"Description does not exists");
             }
@@ -476,41 +476,76 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"RepeatedlyUse does not exists");
             }
-            if (!string.IsNullOrEmpty(managePromo.CoupenCode))
+            if (string.IsNullOrEmpty(managePromo.CoupenCode))
             {
                 throw new DataValidationException($"CoupenCode does not exists");
             }
-            if (!string.IsNullOrEmpty(managePromo.Operation))
+            if (string.IsNullOrEmpty(managePromo.Operation))
             {
                 throw new DataValidationException($"Operation does not exists");
             }
         }
-        public static void validateRole(Roles roles)
+        public static void validateAddRole(Roles roles)
+        {
+            if (string.IsNullOrEmpty(roles.RoleName))
+            {
+                throw new DataValidationException($"RoleName does not exists");
+            }
+            if (string.IsNullOrEmpty(roles.DisplayName))
+            {
+                throw new DataValidationException($"DisplayName does not exists");
+            }
+            if (string.IsNullOrEmpty(roles.Description))
+            {
+                throw new DataValidationException($"Description does not exists");
+            }            
+        }
+        public static void validateEditRole(Roles roles)
         {
             if (roles.RoleID == 0)
             {
                 throw new DataValidationException($"RoleID does not exists");
             }
-            if (!string.IsNullOrEmpty(roles.RoleName))
+            if (string.IsNullOrEmpty(roles.RoleName))
             {
                 throw new DataValidationException($"RoleName does not exists");
             }
-            if (!string.IsNullOrEmpty(roles.DisplayName))
+            if (string.IsNullOrEmpty(roles.DisplayName))
             {
                 throw new DataValidationException($"DisplayName does not exists");
             }
-            if (!string.IsNullOrEmpty(roles.Description))
+            if (string.IsNullOrEmpty(roles.Description))
             {
                 throw new DataValidationException($"Description does not exists");
-            }
-            if (!string.IsNullOrEmpty(roles.Status))
+            }           
+        }
+        public static void validateAddService(ServiceInfo serviceInfo)
+        {
+
+            if (string.IsNullOrEmpty(serviceInfo.ServiceName))
             {
-                throw new DataValidationException($"Status does not exists");
+                throw new DataValidationException($"ServiceName does not exists");
+            }
+            if (serviceInfo.CountryId == 0)
+            {
+                throw new DataValidationException($"CountryId does not exists");
+            }
+            if (serviceInfo.CurrencyId == 0)
+            {
+                throw new DataValidationException($"CurrencyId does not exists");
+            }
+            if (serviceInfo.SymbolCurrencyId == 0)
+            {
+                throw new DataValidationException($"SymbolCurrencyId does not exists");
+            }
+            if (serviceInfo.TimezoneId == 0)
+            {
+                throw new DataValidationException($"TimezoneId does not exists");
             }
         }
-        public static void validateService(ServiceInfo serviceInfo)
+        public static void validateEditService(ServiceInfo serviceInfo)
         {
-            
+
             if (string.IsNullOrEmpty(serviceInfo.ServiceName))
             {
                 throw new DataValidationException($"ServiceName does not exists");
@@ -616,11 +651,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Id does not exists");
             }
-            if (!string.IsNullOrEmpty(vehicleTypeInfo.Name))
+            if (string.IsNullOrEmpty(vehicleTypeInfo.Name))
             {
                 throw new DataValidationException($"Name does not exists");
             }
-            if (!string.IsNullOrEmpty(vehicleTypeInfo.Image))
+            if (string.IsNullOrEmpty(vehicleTypeInfo.Image))
             {
                 throw new DataValidationException($"Image does not exists");
             }
@@ -631,11 +666,11 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Id does not exists");
             }
-            if (!string.IsNullOrEmpty(vehicleEmerInfo.Name))
+            if (string.IsNullOrEmpty(vehicleEmerInfo.Name))
             {
                 throw new DataValidationException($"Name does not exists");
             }
-            if (!string.IsNullOrEmpty(vehicleEmerInfo.Number))
+            if (string.IsNullOrEmpty(vehicleEmerInfo.Number))
             {
                 throw new DataValidationException($"Number does not exists");
             }

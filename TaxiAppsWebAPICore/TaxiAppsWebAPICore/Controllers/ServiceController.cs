@@ -41,7 +41,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateService(serviceInfo);
+                Validator.validateAddService(serviceInfo);
                 DAService dAService = new DAService();
                 return this.OKResponse(dAService.AddService(_context, serviceInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -59,7 +59,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateService(serviceInfo);
+                Validator.validateEditService(serviceInfo);
                 DAService dAService = new DAService();
                 return this.OKResponse(dAService.EditService(_context, serviceInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
