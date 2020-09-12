@@ -48,19 +48,19 @@ namespace TaziappzMobileWebAPI.DALayer
 
                     if (listlatlong.Count > 0)
                     {
-                        int i, j;
-                        bool c = false;
-                        for (i = 0, j = listlatlong.Count - 1; i < listlatlong.Count; j = i++)
-                        {
-                            if (((((double)listlatlong[i].Picklatitude <= (double)latLong.Picklatitude) && ((double)latLong.Picklatitude < (double)listlatlong[j].Picklatitude))
-                                    || (((double)listlatlong[j].Picklatitude <= (double)latLong.Picklatitude) && ((double)latLong.Picklatitude < (double)listlatlong[i].Picklatitude)))
-                                    && ((double)latLong.Picklongtitude < ((double)listlatlong[j].Picklongtitude - (double)listlatlong[i].Picklongtitude) * ((double)latLong.Picklatitude - (double)listlatlong[i].Picklatitude)
-                                        / ((double)listlatlong[j].Picklatitude - (double)listlatlong[i].Picklatitude) + (double)listlatlong[i].Picklongtitude))
-                            {
+                        //int i, j;
+                        //bool c = false;
+                        //for (i = 0, j = listlatlong.Count - 1; i < listlatlong.Count; j = i++)
+                        //{
+                        //    if (((((double)listlatlong[i].Picklatitude <= (double)latLong.Picklatitude) && ((double)latLong.Picklatitude < (double)listlatlong[j].Picklatitude))
+                        //            || (((double)listlatlong[j].Picklatitude <= (double)latLong.Picklatitude) && ((double)latLong.Picklatitude < (double)listlatlong[i].Picklatitude)))
+                        //            && ((double)latLong.Picklongtitude < ((double)listlatlong[j].Picklongtitude - (double)listlatlong[i].Picklongtitude) * ((double)latLong.Picklatitude - (double)listlatlong[i].Picklatitude)
+                        //                / ((double)listlatlong[j].Picklatitude - (double)listlatlong[i].Picklatitude) + (double)listlatlong[i].Picklongtitude))
+                        //    {
 
-                                c = !c;
-                            }
-                        }
+                        //        c = !c;
+                        //    }
+                        //}
 
                         //decimal? x = latLong.Picklatitude;
                         //decimal? y = latLong.Picklongtitude;
@@ -77,16 +77,16 @@ namespace TaziappzMobileWebAPI.DALayer
                         //}
 
                         //     inside;
-                        //int i, k;
-                        //int nvert = listlatlong.Count;
-                        //bool result = false;
-                        //for (i = 0, k = nvert - 1; i < nvert; k = i++)
-                        //{
-                        //    if (((listlatlong[i].Picklongtitude > latLong.Picklongtitude) != (listlatlong[k].Picklongtitude > latLong.Picklongtitude)) &&
-                        //     (latLong.Picklatitude < (listlatlong[k].Picklatitude - listlatlong[i].Picklatitude) * (latLong.Picklongtitude - listlatlong[i].Picklongtitude) / (listlatlong[k].Picklongtitude - listlatlong[i].Picklongtitude) + listlatlong[i].Picklatitude))
-                        //        result = !result;
-                        //}
-                        if (c)
+                        int i, k;
+                        int nvert = listlatlong.Count;
+                        bool result = false;
+                        for (i = 0, k = nvert - 1; i < nvert; k = i++)
+                        {
+                            if (((listlatlong[i].Picklongtitude > latLong.Picklongtitude) != (listlatlong[k].Picklongtitude > latLong.Picklongtitude)) &&
+                             (latLong.Picklatitude < (listlatlong[k].Picklatitude - listlatlong[i].Picklatitude) * (latLong.Picklongtitude - listlatlong[i].Picklongtitude) / (listlatlong[k].Picklongtitude - listlatlong[i].Picklongtitude) + listlatlong[i].Picklatitude))
+                                result = !result;
+                        }
+                        if (result)
                             return zone.Zoneid;
 
                     }
