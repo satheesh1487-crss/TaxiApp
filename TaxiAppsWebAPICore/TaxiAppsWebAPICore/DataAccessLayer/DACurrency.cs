@@ -64,7 +64,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
 
             var zoneexist = context.TabCurrencies.FirstOrDefault(t => t.IsDelete == 0 && t.Currenciesid == currencyInfo.StandardId);
-            if (zoneexist != null)
+            if (zoneexist == null)
                 throw new DataValidationException($"Currency standard does not exists");
 
             TabCommonCurrency currency = new TabCommonCurrency();
@@ -86,7 +86,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool EditCurrency(TaxiAppzDBContext context, CurrencyInfo currencyInfo, LoggedInUser loggedInUser)
         {
             var zoneexist = context.TabCurrencies.FirstOrDefault(t => t.IsDelete == 0 && t.Currenciesid == currencyInfo.StandardId);
-            if (zoneexist != null)
+            if (zoneexist == null)
                 throw new DataValidationException($"Currency standard does not exists");
 
             var updatedate = context.TabCommonCurrency.Where(r => r.Currencyid == currencyInfo.CurrencyID && r.IsDeleted == 0).FirstOrDefault();

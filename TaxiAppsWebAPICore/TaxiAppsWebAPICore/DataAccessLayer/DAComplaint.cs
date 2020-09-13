@@ -63,7 +63,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool AddUserComplainttemplate(ManageUserComplaint manageUser, TaxiAppzDBContext content, LoggedInUser loggedInUser)
         {
             var zoneexist = content.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == manageUser.ZoneId);
-            if (zoneexist != null)
+            if (zoneexist == null)
                 throw new DataValidationException($"Zone does not exists");
 
             TabUserComplaint tabUserComplaint = new TabUserComplaint();
@@ -81,7 +81,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool EditUserComplainttemplate(ManageUserComplaint manageUser, TaxiAppzDBContext content, LoggedInUser loggedInUser)
         {
             var zoneexist = content.TabUserComplaint.FirstOrDefault(t => t.IsDelete == false && t.UserComplaintId == manageUser.UserCompalintID);
-            if (zoneexist != null)
+            if (zoneexist == null)
                 throw new DataValidationException($"User complaints does not exists");
 
             var userComplaintdtls = content.TabUserComplaint.Where(t => t.UserComplaintId == manageUser.UserCompalintID && t.IsDelete ==false).FirstOrDefault();
@@ -179,7 +179,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool AddDriverComplainttemplate(ManageDriverComplaint manageDriver, TaxiAppzDBContext content, LoggedInUser loggedInUser)
         {
             var zoneexist = content.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == manageDriver.ZoneId);
-            if (zoneexist != null)
+            if (zoneexist == null)
                 throw new DataValidationException($"Zone does not exists");
 
             TabDriverComplaint tabDriverComplaint = new TabDriverComplaint();
@@ -197,7 +197,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool EditDriverComplainttemplate(ManageDriverComplaint manageDriver, TaxiAppzDBContext content, LoggedInUser loggedInUser)
         {
             var roleExist = content.TabDriverComplaint.FirstOrDefault(t => t.IsDelete == false && t.DriverComplaintId == manageDriver.DriverCompalintID);
-            if (roleExist != null)
+            if (roleExist == null)
                 throw new DataValidationException($"Driver comlaints does not exists");
 
             var zoneexist = content.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.Zoneid == manageDriver.ZoneId);

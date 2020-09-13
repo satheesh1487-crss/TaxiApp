@@ -51,7 +51,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validatePromo(managePromo);
+                Validator.validateAddPromo(managePromo);
                 DAPromo dAPromo = new DAPromo();
                 return this.OK(dAPromo.AddPromo(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
             }
@@ -68,7 +68,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validatePromo(managePromo);
+                Validator.validateEditPromo(managePromo);
                 DAPromo dAPromo = new DAPromo();
                 return this.OK(dAPromo.EditPromo(managePromo, _content) ? "Recored Edited Successfully" : "Failed to Edit");
             }

@@ -136,7 +136,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateEmerVehicle(vehicleEmerInfo);
+                Validator.validateEmerAddVehicle(vehicleEmerInfo);
                 DAVechile dAVechile = new DAVechile();
                 return this.OKResponse(dAVechile.SaveEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -154,7 +154,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateEmerVehicle(vehicleEmerInfo);
+                Validator.validateEmerEditVehicle(vehicleEmerInfo);
                 DAVechile dAVechile = new DAVechile();
                 return this.OKResponse(dAVechile.EditEmer(_context, vehicleEmerInfo, User.ToAppUser()) ? "Updated Successfully" : "Updation Failed");
             }
@@ -189,7 +189,7 @@ namespace TaxiAppsWebAPICore.Controllers
         public IActionResult StatusEmer(long id, bool isStatus)
         {
             DAVechile dAVechile = new DAVechile();
-            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus, User.ToAppUser()) ? "Active Successfully" : "InActive Successfully");
+            return this.OKResponse(dAVechile.StatusEmer(_context, id, isStatus, User.ToAppUser()) == true ? (isStatus == true ? "Active Successfully" : "InActive Successfully") : "Failed to Update");
         }
 
 
