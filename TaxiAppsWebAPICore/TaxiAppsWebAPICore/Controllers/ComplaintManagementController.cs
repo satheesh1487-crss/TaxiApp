@@ -106,11 +106,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ManageDriver()
         {
-            List<ManagerDriver> manageDrivers = new List<ManagerDriver>();
-            manageDrivers.Add(new ManagerDriver() { Sno = 1, ComplaintType = "Complaint", ComplaintTitle = "not pick up the call", Description = "Testing", RequestID = "RES_81117", DriverName = "Vasudev", IsActive = "New" });
-
-            return this.OK<List<ManagerDriver>>(manageDrivers);
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK<List<ManageDriverComplaint>>(dAComplaint.ListDriverComplaintTemplate(_content));
         }
+
         [HttpGet]
         [Route("DriverComplainttemplateDtls")]
         [Authorize]
