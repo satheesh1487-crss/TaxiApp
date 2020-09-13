@@ -9,15 +9,15 @@ namespace TaxiAppsWebAPICore
     public class UsertoDriver
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
         [JsonProperty("userName")]
         public string UserName { get; set; }
         [JsonProperty("rating")]
-        public decimal Rating { get; set; }
+        public double ?Rating { get; set; }
         [JsonProperty("comment")]
         public string Comment { get; set; }
         [JsonProperty("requestid")]
-        public Int64 RequestID { get; set; }
+        public long ?RequestID { get; set; }
         [JsonProperty("driverName")]
         public string DriverName { get; set; }
         [JsonProperty("isActive")]
@@ -27,15 +27,15 @@ namespace TaxiAppsWebAPICore
     public class DrivertoUser
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
         [JsonProperty("userName")]
         public string UserName { get; set; }
         [JsonProperty("rating")]
-        public decimal Rating { get; set; }
+        public double ?Rating { get; set; }
         [JsonProperty("comment")]
         public string Comment { get; set; }
         [JsonProperty("requestid")]
-        public Int64 RequestID { get; set; }
+        public long ?RequestID { get; set; }
         [JsonProperty("driverName")]
         public string DriverName { get; set; }
         [JsonProperty("isActive")]
