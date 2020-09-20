@@ -129,7 +129,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateCancelDriver(cancelDriverInfo);
+                Validator.validateAddCancelDriver(cancelDriverInfo);
                 DACancel dACancel = new DACancel();
                 return this.OKResponse(dACancel.SaveCancelDriver(_context, cancelDriverInfo, User.ToAppUser()) == true ? "Inserted Successfully" : "Insertion Failed");
             }
@@ -178,7 +178,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateCancelDriver(cancelDriverInfo);
+                Validator.validateEditCancelDriver(cancelDriverInfo);
                 DACancel dACancel = new DACancel();
                 return this.OKResponse(dACancel.EditDriver(_context, cancelDriverInfo, User.ToAppUser()) == true ? "Updated Successfully" : "Updation Failed");
             }

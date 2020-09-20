@@ -50,10 +50,6 @@ namespace TaxiAppsWebAPICore.Helper
 
         public static void validataeCancelUser(CancelUserInfo cancelUserInfo)
         {
-            if (cancelUserInfo.Id == 0)
-            {
-                throw new DataValidationException($"Id does not exists");
-            }
             if (cancelUserInfo.Zonetypeid == 0)
             {
                 throw new DataValidationException($"Zonetypeid does not exists");
@@ -80,7 +76,34 @@ namespace TaxiAppsWebAPICore.Helper
             }
         }
 
-        public static void validateCancelDriver(CancelDriverInfo cancelDriverInfo)
+        public static void validateAddCancelDriver(CancelDriverInfo cancelDriverInfo)
+        {
+            if (cancelDriverInfo.Zonetypeid == 0)
+            {
+                throw new DataValidationException($"Zonetypeid does not exists");
+            }
+            if (string.IsNullOrEmpty(cancelDriverInfo.PaymentStatus))
+            {
+                throw new DataValidationException($"PaymentStatus does not exists");
+            }
+            if (string.IsNullOrEmpty(cancelDriverInfo.ArrivalStatus))
+            {
+                throw new DataValidationException($"ArrivalStatus does not exists");
+            }
+            if (string.IsNullOrEmpty(cancelDriverInfo.CancelReasonArabic))
+            {
+                throw new DataValidationException($"CancelReasonArabic does not exists");
+            }
+            if (string.IsNullOrEmpty(cancelDriverInfo.CancelReasonEnglish))
+            {
+                throw new DataValidationException($"CancelReasonEnglish does not exists");
+            }
+            if (string.IsNullOrEmpty(cancelDriverInfo.CancelReasonSpanish))
+            {
+                throw new DataValidationException($"CancelReasonSpanish does not exists");
+            }
+        }
+        public static void validateEditCancelDriver(CancelDriverInfo cancelDriverInfo)
         {
             if (cancelDriverInfo.Id == 0)
             {
@@ -111,7 +134,22 @@ namespace TaxiAppsWebAPICore.Helper
                 throw new DataValidationException($"CancelReasonSpanish does not exists");
             }
         }
-        public static void validateUserComplaint(ManageUserComplaint managePromo)
+        public static void validateUserAddComplaint(ManageUserComplaint managePromo)
+        {
+            if (managePromo.ZoneId == 0)
+            {
+                throw new DataValidationException($"ZoneId does not exists");
+            }            
+            if (string.IsNullOrEmpty(managePromo.UserComplaintTitle))
+            {
+                throw new DataValidationException($"UserComplaintTitle does not exists");
+            }
+            if (string.IsNullOrEmpty(managePromo.UserComplaintType))
+            {
+                throw new DataValidationException($"UserComplaintType does not exists");
+            }
+        }
+        public static void validateUserEditComplaint(ManageUserComplaint managePromo)
         {
             if (managePromo.ZoneId == 0)
             {
@@ -131,7 +169,22 @@ namespace TaxiAppsWebAPICore.Helper
             }
         }
 
-        public static void validateDriverComplaint(ManageDriverComplaint managePromo)
+        public static void validateDriverAddComplaint(ManageDriverComplaint managePromo)
+        {
+            if (managePromo.ZoneId == 0)
+            {
+                throw new DataValidationException($"ZoneId does not exists");
+            }            
+            if (string.IsNullOrEmpty(managePromo.DriverComplaintTitle))
+            {
+                throw new DataValidationException($"DriverComplaintTitle does not exists");
+            }
+            if (string.IsNullOrEmpty(managePromo.DriverComplaintType))
+            {
+                throw new DataValidationException($"DriverComplaintType does not exists");
+            }
+        }
+        public static void validateDriverEditComplaint(ManageDriverComplaint managePromo)
         {
             if (managePromo.ZoneId == 0)
             {
@@ -151,7 +204,22 @@ namespace TaxiAppsWebAPICore.Helper
             }
         }
 
-        public static void validateCurrency(CurrencyInfo currencyInfo)
+        public static void validateAddCurrency(CurrencyInfo currencyInfo)
+        {
+            if (currencyInfo.StandardId == 0)
+            {
+                throw new DataValidationException($"StandardId does not exists");
+            }
+            if (string.IsNullOrEmpty(currencyInfo.CurrencyName))
+            {
+                throw new DataValidationException($"CurrencyName does not exists");
+            }
+            if (string.IsNullOrEmpty(currencyInfo.CurrencySymbol))
+            {
+                throw new DataValidationException($"CurrencySymbol does not exists");
+            }
+        }
+        public static void validateEditCurrency(CurrencyInfo currencyInfo)
         {
             if (currencyInfo.CurrencyID == 0)
             {
@@ -426,7 +494,7 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Id does not exists");
             }
-            if (string.IsNullOrEmpty(manageEmailOption.EmailTitle))
+            if (!string.IsNullOrEmpty(manageEmailOption.EmailTitle))
             {
                 throw new DataValidationException($"EmailTitle does not exists");
             }
@@ -441,7 +509,7 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"Id does not exists");
             }
-            if (string.IsNullOrEmpty(manageSMSOption.SMSTitle))
+            if (!string.IsNullOrEmpty(manageSMSOption.SMSTitle))
             {
                 throw new DataValidationException($"SMSTitle does not exists");
             }
@@ -450,7 +518,38 @@ namespace TaxiAppsWebAPICore.Helper
                 throw new DataValidationException($"Description does not exists");
             }
         }
-        public static void validatePromo(ManagePromo managePromo)
+        public static void validateAddPromo(ManagePromo managePromo)
+        {
+            if (managePromo.EstimateAmount == 0)
+            {
+                throw new DataValidationException($"EstimateAmount does not exists");
+            }
+            if (managePromo.Value == 0)
+            {
+                throw new DataValidationException($"Value does not exists");
+            }
+            if (managePromo.Zoneid == 0)
+            {
+                throw new DataValidationException($"Zoneid does not exists");
+            }
+            if (managePromo.Uses == 0)
+            {
+                throw new DataValidationException($"Uses does not exists");
+            }
+            if (managePromo.RepeatedlyUse == 0)
+            {
+                throw new DataValidationException($"RepeatedlyUse does not exists");
+            }
+            if (string.IsNullOrEmpty(managePromo.CoupenCode))
+            {
+                throw new DataValidationException($"CoupenCode does not exists");
+            }
+            /*if (string.IsNullOrEmpty(managePromo.Operation))
+            {
+                throw new DataValidationException($"Operation does not exists");
+            }*/
+        }
+        public static void validateEditPromo(ManagePromo managePromo)
         {
             if (managePromo.PromoID == 0)
             {
@@ -480,10 +579,10 @@ namespace TaxiAppsWebAPICore.Helper
             {
                 throw new DataValidationException($"CoupenCode does not exists");
             }
-            if (string.IsNullOrEmpty(managePromo.Operation))
+            /*if (string.IsNullOrEmpty(managePromo.Operation))
             {
                 throw new DataValidationException($"Operation does not exists");
-            }
+            }*/
         }
         public static void validateAddRole(Roles roles)
         {
@@ -498,7 +597,7 @@ namespace TaxiAppsWebAPICore.Helper
             if (string.IsNullOrEmpty(roles.Description))
             {
                 throw new DataValidationException($"Description does not exists");
-            }            
+            }
         }
         public static void validateEditRole(Roles roles)
         {
@@ -517,7 +616,7 @@ namespace TaxiAppsWebAPICore.Helper
             if (string.IsNullOrEmpty(roles.Description))
             {
                 throw new DataValidationException($"Description does not exists");
-            }           
+            }
         }
         public static void validateAddService(ServiceInfo serviceInfo)
         {
@@ -660,7 +759,18 @@ namespace TaxiAppsWebAPICore.Helper
                 throw new DataValidationException($"Image does not exists");
             }
         }
-        public static void validateEmerVehicle(VehicleEmerInfo vehicleEmerInfo)
+        public static void validateEmerAddVehicle(VehicleEmerInfo vehicleEmerInfo)
+        {
+            if (string.IsNullOrEmpty(vehicleEmerInfo.Name))
+            {
+                throw new DataValidationException($"Name does not exists");
+            }
+            if (string.IsNullOrEmpty(vehicleEmerInfo.Number))
+            {
+                throw new DataValidationException($"Number does not exists");
+            }
+        }
+        public static void validateEmerEditVehicle(VehicleEmerInfo vehicleEmerInfo)
         {
             if (vehicleEmerInfo.Id == 0)
             {

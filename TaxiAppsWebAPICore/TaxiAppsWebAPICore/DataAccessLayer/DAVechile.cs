@@ -17,16 +17,16 @@ namespace TaxiAppsWebAPICore
         {
             try
             {
-                var filesStorage = StorageFactory.GetStorage();
+                //var filesStorage = StorageFactory.GetStorage();
                 List<VehicleTypeList> vehicleTypeLists = new List<VehicleTypeList>();
                 var vechilesTupe = context.TabTypes.Where(t => t.IsDeleted == 0).ToList().OrderByDescending(t => t.UpdatedAt);
                 foreach (var vechiles in vechilesTupe)
                 {
-                    var files = File.ReadAllBytes(filesStorage.GetDownloadFile(vechiles.Imagename, vechiles.Typeid.ToString(), "VechileTypes").FullName);
+                    //var files = File.ReadAllBytes(filesStorage.GetDownloadFile(vechiles.Imagename, vechiles.Typeid.ToString(), "VechileTypes").FullName);
                     vehicleTypeLists.Add(new VehicleTypeList()
                     {
                         Id = vechiles.Typeid,
-                        Image = Convert.ToBase64String(files),
+                        //Image = Convert.ToBase64String(files),
                         IsActive = vechiles.IsActive == 1 ? true : false,
                         Name = vechiles.Typename
                     });

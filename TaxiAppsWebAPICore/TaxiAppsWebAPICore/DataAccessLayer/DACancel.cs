@@ -72,7 +72,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         {
 
             var roleExist = context.TabZonetypeRelationship.FirstOrDefault(t => t.IsDelete == 0 && t.Zonetypeid == cancelUserInfo.Zonetypeid);
-            if (roleExist != null)
+            if (roleExist == null)
                 throw new DataValidationException($"Zone type does not exists");
 
             TabUserCancellation tabUserCancellation = new TabUserCancellation();
@@ -96,7 +96,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool EditUser(TaxiAppzDBContext context, CancelUserInfo cancelUserInfo, LoggedInUser loggedInUser)
         {
             var roleExist = context.TabZonetypeRelationship.FirstOrDefault(t => t.IsDelete == 0 && t.Zonetypeid == cancelUserInfo.Zonetypeid);
-            if (roleExist != null)
+            if (roleExist == null)
                 throw new DataValidationException($"Zone type does not exists");
 
             var tabUserCancellation = context.TabUserCancellation.Where(r => r.UserCancelId == cancelUserInfo.Id && r.IsDelete == false).FirstOrDefault();
@@ -121,7 +121,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool DeleteUser(TaxiAppzDBContext context, long id, LoggedInUser loggedInUser)
         {
             var roleExist = context.TabUserCancellation.FirstOrDefault(t => t.IsDelete == false && t.UserCancelId == id);
-            if (roleExist != null)
+            if (roleExist == null)
                 throw new DataValidationException($"Tab user cancellation does not exists");
 
             var updatedate = context.TabUserCancellation.Where(u => u.UserCancelId == id && u.IsDelete == false).FirstOrDefault();
@@ -141,7 +141,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool StatusUser(TaxiAppzDBContext context, long id, bool isStatus, LoggedInUser loggedInUser)
         {
             var roleExist = context.TabUserCancellation.FirstOrDefault(t => t.IsDelete == false && t.UserCancelId == id);
-            if (roleExist != null)
+            if (roleExist == null)
                 throw new DataValidationException($"Tab user cancellation does not exists");
 
             var updatedate = context.TabUserCancellation.Where(r => r.UserCancelId == id && r.IsDelete == false).FirstOrDefault();
@@ -213,7 +213,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool SaveCancelDriver(TaxiAppzDBContext context, CancelDriverInfo cancelDriverInfo, LoggedInUser loggedInUser)
         {
             var roleExist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.Zonetypeid == cancelDriverInfo.Zonetypeid);
-            if (roleExist != null)
+            if (roleExist == null)
                 throw new DataValidationException($"Tab driver cancellation does not exists");
 
             TabDriverCancellation tabDriverCancellation = new TabDriverCancellation();
@@ -236,7 +236,7 @@ namespace TaxiAppsWebAPICore.DataAccessLayer
         public bool EditDriver(TaxiAppzDBContext context, CancelDriverInfo cancelDriverInfo, LoggedInUser loggedInUser)
         {
             var roleExist = context.TabDriverCancellation.FirstOrDefault(t => t.IsDelete == false && t.Zonetypeid == cancelDriverInfo.Zonetypeid);
-            if (roleExist != null)
+            if (roleExist == null)
                 throw new DataValidationException($"Tab driver cancellation does not exists");
 
             var tabDriverCancellation = context.TabDriverCancellation.Where(r => r.DriverCancelId == cancelDriverInfo.Id && r.IsDelete == false).FirstOrDefault();

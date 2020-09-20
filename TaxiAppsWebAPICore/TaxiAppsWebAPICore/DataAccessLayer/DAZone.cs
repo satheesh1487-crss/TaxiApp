@@ -14,10 +14,6 @@ namespace TaxiAppsWebAPICore
     {
         public List<ManageZone> ListZone(TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
-            var zoneexist = context.TabZone.FirstOrDefault(t => t.IsDeleted == 0 && t.IsActive == 1);
-            if (zoneexist != null)
-                throw new DataValidationException($"Does not have a permission");
-
             List<ManageZone> manageZones = new List<ManageZone>();
             var zonelist = context.TabZone.Include(t => t.Serviceloc).Where(t => t.IsDeleted == 0).ToList();
             foreach (var zone in zonelist)

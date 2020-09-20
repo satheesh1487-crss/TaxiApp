@@ -44,7 +44,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateUserComplaint(managePromo);
+                Validator.validateUserAddComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.AddUserComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
             }
@@ -61,7 +61,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateUserComplaint(managePromo);
+                Validator.validateUserEditComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.EditUserComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Edited Successfully" : "Failed to Edit");
             }
@@ -106,11 +106,10 @@ namespace TaxiAppsWebAPICore.Controllers
         [Authorize]
         public IActionResult ManageDriver()
         {
-            List<ManagerDriver> manageDrivers = new List<ManagerDriver>();
-            manageDrivers.Add(new ManagerDriver() { Sno = 1, ComplaintType = "Complaint", ComplaintTitle = "not pick up the call", Description = "Testing", RequestID = "RES_81117", DriverName = "Vasudev", IsActive = "New" });
-
-            return this.OK<List<ManagerDriver>>(manageDrivers);
+            DAComplaint dAComplaint = new DAComplaint();
+            return this.OK<List<ManageDriverComplaint>>(dAComplaint.ListDriverComplaintTemplate(_content));
         }
+
         [HttpGet]
         [Route("DriverComplainttemplateDtls")]
         [Authorize]
@@ -126,7 +125,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateDriverComplaint(managePromo);
+                Validator.validateDriverAddComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.AddDriverComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Added Successfully" : "Failed to Add");
             }
@@ -143,7 +142,7 @@ namespace TaxiAppsWebAPICore.Controllers
         {
             try
             {
-                Validator.validateDriverComplaint(managePromo);
+                Validator.validateDriverEditComplaint(managePromo);
                 DAComplaint dAComplaint = new DAComplaint();
                 return this.OK(dAComplaint.EditDriverComplainttemplate(managePromo, _content, User.ToAppUser()) ? "Recored Edited Successfully" : "Failed to Edit");
             }
