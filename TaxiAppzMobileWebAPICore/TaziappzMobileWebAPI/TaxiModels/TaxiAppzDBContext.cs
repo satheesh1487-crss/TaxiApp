@@ -15,6 +15,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         {
         }
 
+        public virtual DbSet<Settings> Settings { get; set; }
         public virtual DbSet<TabAdmin> TabAdmin { get; set; }
         public virtual DbSet<TabAdminDetails> TabAdminDetails { get; set; }
         public virtual DbSet<TabAdminDocument> TabAdminDocument { get; set; }
@@ -81,6 +82,100 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Settings>(entity =>
+            {
+                entity.HasKey(e => e.Settingid)
+                    .HasName("PK__settings__097FE60451C254F2");
+
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+
+                entity.Property(e => e.GeneralApplicationLogo).IsUnicode(false);
+
+                entity.Property(e => e.GeneralApplicationName).IsUnicode(false);
+
+                entity.Property(e => e.GeneralCustomerCareNumber).IsUnicode(false);
+
+                entity.Property(e => e.GeneralHeadOfficeNumber).IsUnicode(false);
+
+                entity.Property(e => e.GeneralHelpEmailAddress).IsUnicode(false);
+
+                entity.Property(e => e.GeneralTimeZone).IsUnicode(false);
+
+                entity.Property(e => e.InstallationBraintreeDefaultMerchant).IsUnicode(false);
+
+                entity.Property(e => e.InstallationBraintreeEnvironment).IsUnicode(false);
+
+                entity.Property(e => e.InstallationBraintreeMasterMerchant).IsUnicode(false);
+
+                entity.Property(e => e.InstallationBraintreeMerchantId).IsUnicode(false);
+
+                entity.Property(e => e.InstallationBraintreePrivateKey).IsUnicode(false);
+
+                entity.Property(e => e.InstallationBraintreePublicKey).IsUnicode(false);
+
+                entity.Property(e => e.InstallationGoogleBrowserKey).IsUnicode(false);
+
+                entity.Property(e => e.InstallationPaymentGatewayMerchantId).IsUnicode(false);
+
+                entity.Property(e => e.InstallationSandbox).IsUnicode(false);
+
+                entity.Property(e => e.InstallationSmsAccountSid).IsUnicode(false);
+
+                entity.Property(e => e.InstallationSmsAuthNumber).IsUnicode(false);
+
+                entity.Property(e => e.InstallationSmsAuthTaken).IsUnicode(false);
+
+                entity.Property(e => e.InstallationSmsGatewayUrl).IsUnicode(false);
+
+                entity.Property(e => e.InstallationStripePaymentDefaultMerchant).IsUnicode(false);
+
+                entity.Property(e => e.InstallationStripePaymentMasterMerchant).IsUnicode(false);
+
+                entity.Property(e => e.InstallationStripePaymentPrivateKey).IsUnicode(false);
+
+                entity.Property(e => e.InstallationStripePaymentPublicKey).IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.TripAutoTransfer).IsUnicode(false);
+
+                entity.Property(e => e.TripCancelButtonEnable).IsUnicode(false);
+
+                entity.Property(e => e.TripCaptainAutoOffline).IsUnicode(false);
+
+                entity.Property(e => e.TripDispatchRequest).IsUnicode(false);
+
+                entity.Property(e => e.TripGraceTimeWaiting).IsUnicode(false);
+
+                entity.Property(e => e.TripHowManySeconds).IsUnicode(false);
+
+                entity.Property(e => e.TripHowManyTrips).IsUnicode(false);
+
+                entity.Property(e => e.TripHowTripAssign).IsUnicode(false);
+
+                entity.Property(e => e.TripMinimumTimePeriod).IsUnicode(false);
+
+                entity.Property(e => e.TripPickupLocation).IsUnicode(false);
+
+                entity.Property(e => e.TripRadiusNearPickup).IsUnicode(false);
+
+                entity.Property(e => e.TripRadiusToGetCaptains).IsUnicode(false);
+
+                entity.Property(e => e.TripRewardPoints).IsUnicode(false);
+
+                entity.Property(e => e.TripTop20Captains).IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy).IsUnicode(false);
+
+                entity.Property(e => e.WalletCaptainWalletAmount).IsUnicode(false);
+
+                entity.Property(e => e.WalletMaximumAmountAdded).IsUnicode(false);
+
+                entity.Property(e => e.WalletMaximumBalance).IsUnicode(false);
+
+                entity.Property(e => e.WalletUserWalletAmount).IsUnicode(false);
+            });
+
             modelBuilder.Entity<TabAdmin>(entity =>
             {
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
