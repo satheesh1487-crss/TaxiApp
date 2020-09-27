@@ -10,6 +10,7 @@ namespace TaxiAppsWebAPICore.TaxiModels
     {
         public TabRoles()
         {
+            SetPrivilege = new HashSet<SetPrivilege>();
             TabAdmin = new HashSet<TabAdmin>();
             TabMenuAccess = new HashSet<TabMenuAccess>();
         }
@@ -45,6 +46,8 @@ namespace TaxiAppsWebAPICore.TaxiModels
         [Column("isDelete")]
         public int? IsDelete { get; set; }
 
+        [InverseProperty("Role")]
+        public virtual ICollection<SetPrivilege> SetPrivilege { get; set; }
         [InverseProperty("RoleNavigation")]
         public virtual ICollection<TabAdmin> TabAdmin { get; set; }
         [InverseProperty("Role")]
