@@ -15,6 +15,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         {
         }
 
+        public virtual DbSet<SetPrivilege> SetPrivilege { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
         public virtual DbSet<TabAdmin> TabAdmin { get; set; }
         public virtual DbSet<TabAdminDetails> TabAdminDetails { get; set; }
@@ -33,6 +34,7 @@ namespace TaziappzMobileWebAPI.TaxiModels
         public virtual DbSet<TabDriverFine> TabDriverFine { get; set; }
         public virtual DbSet<TabDriverWallet> TabDriverWallet { get; set; }
         public virtual DbSet<TabDrivers> TabDrivers { get; set; }
+        public virtual DbSet<TabEmployeeDetails> TabEmployeeDetails { get; set; }
         public virtual DbSet<TabFaq> TabFaq { get; set; }
         public virtual DbSet<TabGeneralSettings> TabGeneralSettings { get; set; }
         public virtual DbSet<TabInstallationSettings> TabInstallationSettings { get; set; }
@@ -82,6 +84,371 @@ namespace TaziappzMobileWebAPI.TaxiModels
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SetPrivilege>(entity =>
+            {
+                entity.HasKey(e => e.Privilegeid)
+                    .HasName("PK__set_priv__49AE8D49C9B0F957");
+
+                entity.Property(e => e.AdminManageAdmin).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminManageAdminAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminManageAdminDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminManageAdminEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminManageRole).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminManageRoleAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminManageRoleEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminManageRolePrivilege).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AdminMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageDriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageDriverActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageDriverAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageDriverCompensate).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageDriverDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageDriverEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageDriverInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageUser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageUserActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageUserAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageUserCompensate).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageUserDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageUserEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelManageUserInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CancelMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyDriverDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyDriverEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyDrivers).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyManage).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyManageDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyManageEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyTransaction).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyTransactionDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.CompanyTransactionEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintDriverAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintDriverSolved).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintDriverTaken).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintManageDriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintManageUser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintUserAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintUserSolved).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ComplaintUserTaken).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Createdat).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Createdby).IsUnicode(false);
+
+                entity.Property(e => e.Dashboard).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DashboardDash).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverAccountPayment).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverAccountPaymentAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverAccountPaymentTransfer).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverBlocked).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverBlockedApprove).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverBonus).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverBonusAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverEarningPayment).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverEarningPaymentCancel).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverEarningPaymentEarning).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverEarningPaymentSavings).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverFine).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverFineAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverFineDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverFineEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverFinePay).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverManageDriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverManageDriverAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverManageDriverApprove).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverManageDriverDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverManageDriverEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverManageDriverEditReward).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverManageDriverUpload).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverWalletPayment).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverWalletPaymentAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DriverWalletPaymentWallet).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageCurrencyActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageCurrencyDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageCurrencyEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageCurrencyInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageCurrencyMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageEmail).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageEmailActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageEmailEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageEmailInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageFaq).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageFaqActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageFaqAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageFaqDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageFaqEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageFaqInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageFaqMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageHeatMap).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageMap).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageMapMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageMapView).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageNotifiPush).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageNotificationMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSettings).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSettingsGeneral).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSettingsInstallation).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSettingsMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSettingsTrip).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSettingsWallet).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSms).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSmsActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSmsEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSmsInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ManageSmsOption).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoCodeMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoManageActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoManageAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoManageDash).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoManageDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoManageEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoManageInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoManageOption).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PromoTransaction).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReferralDriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReferralManageOption).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReferralMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReferralUser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsBlockedDriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsBlockedUser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsBusiness).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsDriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsFinance).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsLedger).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsRating).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsTravel).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReportsUser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RequestManage).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RequestManageView).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RequestMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RequestSchedule).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RequestScheduleCancel).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.RequestScheduleView).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReviewDrivertouser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReviewMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReviewUsertodriver).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReviewUsertodriverActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ReviewUsertodriverInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.TransactionDetailsMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.TransactionTransDetails).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Updatedby).IsUnicode(false);
+
+                entity.Property(e => e.UserBlockedUser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserBlockedUserApprove).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserManageUser).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserManageUserAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserManageUserDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserManageUserEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserManageUserWallet).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.UserMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehicleManageActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehicleManageDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehicleManageEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehicleManageInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehicleManageType).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehicleMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehiclePricing).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehiclePricingDefault).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehiclePricingSet).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehiclePricingSurge).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.VehiclePricingUndefault).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneManageZone).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneManageZoneActive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneManageZoneAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneManageZoneDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneManageZoneEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneManageZoneInactive).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneManageZoneMap).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneMgnt).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneOperation).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneOperationAdd).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneOperationDelete).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneOperationEdit).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneOperationMap).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ZoneOperationZoneSettings).HasDefaultValueSql("((0))");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.SetPrivilege)
+                    .HasForeignKey(d => d.Roleid)
+                    .HasConstraintName("FK__set_privi__rolei__0C3BC58A");
+            });
+
             modelBuilder.Entity<Settings>(entity =>
             {
                 entity.HasKey(e => e.Settingid)
@@ -631,6 +998,28 @@ namespace TaziappzMobileWebAPI.TaxiModels
                     .WithMany(p => p.TabDrivers)
                     .HasForeignKey(d => d.Zoneid)
                     .HasConstraintName("FK__tab_Drive__zonei__473C8FC7");
+            });
+
+            modelBuilder.Entity<TabEmployeeDetails>(entity =>
+            {
+                entity.HasKey(e => e.Empid)
+                    .HasName("PK__tab_empl__AF4CE865E0763AB0");
+
+                entity.Property(e => e.EmpCreatedby).IsUnicode(false);
+
+                entity.Property(e => e.EmpCreateddate).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.EmpEmailid).IsUnicode(false);
+
+                entity.Property(e => e.EmpFirstname).IsUnicode(false);
+
+                entity.Property(e => e.EmpIsactive).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.EmpLastname).IsUnicode(false);
+
+                entity.Property(e => e.EmpUpdatedby).IsUnicode(false);
+
+                entity.Property(e => e.Gender).IsUnicode(false);
             });
 
             modelBuilder.Entity<TabFaq>(entity =>

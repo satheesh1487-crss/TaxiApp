@@ -289,6 +289,51 @@ namespace TaziappzMobileWebAPI.DALayer
                 context.SaveChanges();
                 return true;
         }
+        public bool TripEnd(string requestid, TaxiAppzDBContext context, LoggedInUser loggedInUser,double lat,double lng)
+        {
+            var requestdata = context.TabRequest.Where(t => t.RequestId == requestid && t.DriverId == loggedInUser.id).FirstOrDefault();
+            if (requestdata == null)
+                return false;
+            var requestplace = context.TabRequestPlace.Where(t => t.RequestId == requestdata.Id).FirstOrDefault();
+            var zoneid = context.TabDrivers.Where(t => t.Driverid == requestdata.DriverId).Select(t => t.Zoneid).FirstOrDefault();
+            var zonetypeid = context.TabZonetypeRelationship.Where(t => t.Zoneid == zoneid && t.Typeid == requestdata.Typeid).Select(t => t.Zonetypeid).FirstOrDefault();
+            var setprice = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid).FirstOrDefault();
+            if (setprice == null)
+                return false;
+            double distancekm = HaversineInKM(Convert.ToDouble(requestplace.PickLatitude),Convert.ToDouble(requestplace.PickLongitude), lat, lng);
+            DateTime start = Convert.ToDateTime(requestdata.TripStartTime);
+            int timeinminutes = (int)DateTime.UtcNow.Subtract(start).TotalMinutes;
+            var baseprice = setprice.Baseprice;
+            var basedistance = setprice.Basedistance;
+            var priceperdistance = setprice.Priceperdistance;
+            var pricepertime = setprice.Pricepertime;
+            var waitingcharge = setprice.Waitingcharges;
+            var distanceprice = Convert.ToDecimal(distancekm - basedistance) * priceperdistance;
+            var timeprice = timeinminutes * pricepertime;
+            var subtotal = baseprice + distanceprice + timeprice + waitingcharge;
+
+            var taxpercentage = 2;
+            var taxamount = subtotal * (taxpercentage / 100);
+
+            var admincommvalue = setprice.Admincommission;
+            var admincommission = subtotal * (admincommvalue / 100);
+
+            var taxandadmincommission = taxamount + admincommission;
+
+            var drivercommission = subtotal;
+            var grandtotal = subtotal + taxandadmincommission;
+
+            requestdata.IsCompleted = true;
+            requestdata.Distance = Convert.ToDecimal(distancekm);
+            requestdata.Time = timeinminutes;
+            requestdata.Total =Convert.ToDouble(grandtotal);
+            requestdata.IsPaid = "CASH";
+          
+            requestdata.UpdatedAt = DateTime.UtcNow;
+            context.TabRequest.Update(requestdata);
+            context.SaveChanges();
+            return true;
+        }
         public bool DriverArrived(long requestid, LatLong latLong, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
             var requestdata = context.TabRequest.Where(t => t.Id == requestid).FirstOrDefault();

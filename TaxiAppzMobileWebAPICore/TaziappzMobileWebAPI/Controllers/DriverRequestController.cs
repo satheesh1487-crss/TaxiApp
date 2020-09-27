@@ -485,5 +485,28 @@ namespace TaziappzMobileWebAPI.Controllers
 
         }
         #endregion
+
+        #region Trip End
+        /// <summary>
+        /// Driver Trip End
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("TripEnd")]
+        public IActionResult TripEnd(string requestid, double lat, double lng)
+        {
+            try
+            {
+                DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
+                var result = dADriverRequest.TripEnd(requestid, _context, User.ToAppUser(), lat,lng);
+                return this.OKStatus(result ? "TripStart_Success" : "TripStart_Failed", result ? 1 : 0);
+            }
+            catch (DataValidationException ex)
+            {
+                return this.KnowOperationError(ex.Message);
+            }
+
+        }
+        #endregion
     }
 }
