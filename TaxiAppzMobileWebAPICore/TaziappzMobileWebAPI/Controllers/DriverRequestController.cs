@@ -493,13 +493,14 @@ namespace TaziappzMobileWebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("TripEnd")]
-        public IActionResult TripEnd(string requestid, double lat, double lng)
+        public IActionResult TripEnd(string requestid, double droplat, double droplng)
         {
             try
             {
                 DADriverRequest dADriverRequest = new DADriverRequest(settingmodel);
-                var result = dADriverRequest.TripEnd(requestid, _context, User.ToAppUser(), lat,lng);
-                return this.OKStatus(result ? "TripStart_Success" : "TripStart_Failed", result ? 1 : 0);
+                Receipt receipt = new Receipt();
+                receipt = dADriverRequest.TripEnd(requestid, _context, User.ToAppUser(), droplat, droplng);
+                return this.OK<Receipt>(receipt, receipt.Result ? "TripEnd_Success" : "TripEnd_Failed", receipt.Result ? 1 : 0);
             }
             catch (DataValidationException ex)
             {

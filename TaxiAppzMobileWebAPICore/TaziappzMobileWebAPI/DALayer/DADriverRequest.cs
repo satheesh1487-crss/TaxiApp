@@ -289,34 +289,43 @@ namespace TaziappzMobileWebAPI.DALayer
                 context.SaveChanges();
                 return true;
         }
-        public bool TripEnd(string requestid, TaxiAppzDBContext context, LoggedInUser loggedInUser,double lat,double lng)
+        public Receipt TripEnd(string requestid, TaxiAppzDBContext context, LoggedInUser loggedInUser,double lat,double lng)
         {
+            Receipt receipt = new Receipt();
             var requestdata = context.TabRequest.Where(t => t.RequestId == requestid && t.DriverId == loggedInUser.id).FirstOrDefault();
             if (requestdata == null)
-                return false;
+            {
+                receipt.Result = false;
+                return receipt;
+            }
             var requestplace = context.TabRequestPlace.Where(t => t.RequestId == requestdata.Id).FirstOrDefault();
             var zoneid = context.TabDrivers.Where(t => t.Driverid == requestdata.DriverId).Select(t => t.Zoneid).FirstOrDefault();
             var zonetypeid = context.TabZonetypeRelationship.Where(t => t.Zoneid == zoneid && t.Typeid == requestdata.Typeid).Select(t => t.Zonetypeid).FirstOrDefault();
             var setprice = context.TabSetpriceZonetype.Where(t => t.Zonetypeid == zonetypeid).FirstOrDefault();
             if (setprice == null)
-                return false;
+            {
+                receipt.Result = false;
+                return receipt;
+            }
             double distancekm = HaversineInKM(Convert.ToDouble(requestplace.PickLatitude),Convert.ToDouble(requestplace.PickLongitude), lat, lng);
             DateTime start = Convert.ToDateTime(requestdata.TripStartTime);
-            int timeinminutes = (int)DateTime.UtcNow.Subtract(start).TotalMinutes;
+            DateTime end = Convert.ToDateTime("01-09-2020 17:40:05");
+            //int timeinminutes = (int)DateTime.UtcNow.Subtract(start).TotalMinutes;
+            int timeinminutes = (int)end.Subtract(start).TotalMinutes;
             var baseprice = setprice.Baseprice;
             var basedistance = setprice.Basedistance;
             var priceperdistance = setprice.Priceperdistance;
             var pricepertime = setprice.Pricepertime;
             var waitingcharge = setprice.Waitingcharges;
-            var distanceprice = Convert.ToDecimal(distancekm - basedistance) * priceperdistance;
+            var distanceprice =Math.Round(Convert.ToDecimal(distancekm - basedistance)) * priceperdistance;
             var timeprice = timeinminutes * pricepertime;
-            var subtotal = baseprice + distanceprice + timeprice + waitingcharge;
+            var subtotal = baseprice + distanceprice + timeprice;
 
             var taxpercentage = 2;
-            var taxamount = subtotal * (taxpercentage / 100);
+            var taxamount = subtotal * taxpercentage / 100;
 
             var admincommvalue = setprice.Admincommission;
-            var admincommission = subtotal * (admincommvalue / 100);
+            var admincommission = subtotal * admincommvalue / 100;
 
             var taxandadmincommission = taxamount + admincommission;
 
@@ -331,8 +340,27 @@ namespace TaziappzMobileWebAPI.DALayer
           
             requestdata.UpdatedAt = DateTime.UtcNow;
             context.TabRequest.Update(requestdata);
+
+            requestplace.DropLatitude = Convert.ToDecimal(lat);
+            requestplace.DropLongitude = Convert.ToDecimal(lng);
+            context.TabRequestPlace.Update(requestplace);
+
             context.SaveChanges();
-            return true;
+            receipt.Baseprice = Convert.ToDouble(baseprice);
+            receipt.Basedistance = Convert.ToDouble(basedistance);
+            receipt.Priceperdistance = Convert.ToDouble(priceperdistance);
+            receipt.Duration = Convert.ToDouble(timeinminutes);
+            receipt.Pricepertime = Convert.ToDouble(pricepertime);
+           // receipt.Waitingcharge = Convert.ToDouble(waitingcharge);
+           // receipt.Waitingtime = Convert.ToDouble(wait);
+            receipt.Subtotal = Convert.ToDouble(subtotal);
+
+            receipt.Servicetaxper = 2;
+            receipt.Admincommissionper = Convert.ToDouble(admincommvalue);
+            receipt.Drivercommission = Convert.ToDouble(drivercommission);
+            receipt.Totalamount = Convert.ToDouble(grandtotal);
+            receipt.Result = true;
+            return receipt;
         }
         public bool DriverArrived(long requestid, LatLong latLong, TaxiAppzDBContext context, LoggedInUser loggedInUser)
         {
